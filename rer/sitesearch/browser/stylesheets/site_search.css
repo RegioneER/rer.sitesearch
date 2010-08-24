@@ -1,17 +1,18 @@
 /****** ricerca *******/
 
-
-.firstSearchBlock {
-	border-top-style: solid;
-	border-top-width: 1px;
+dl.searchResults dl{
+	margin-top:2em
 }
 
-.firstSearchBlock{border:none}
-dt{margin:0; padding:0}
-dl.searchResults dl{margin-top:2em}
-dl.searchResults dt {font-size:135%;margin-top:1em;}
-form.searchPage input.searchButton{border:1px solid #aaa; border-bottom-color:#666; border-right-color:#666;}
-dl.searchResults span.documentByLine {display:none;}
+dl.searchResults dt {
+	font-size:135%;
+	margin-top:1em;
+}
+
+dl.searchResults span.documentByLine {
+	display:none;
+}
+
 dl.searchResults dd  {
 	line-height:1.5em;
 	margin-bottom:0;
@@ -21,6 +22,7 @@ dl.searchResults dd  {
 dl.searchResults dd.itemDescr {
 	margin-bottom: 0.3em;
 }
+
 
 .formControls{text-align:right; padding-top:1em; font-size:2em}
 .template-search  legend{ background-color:transparent; font-weight:bold; font-size:120%;}
