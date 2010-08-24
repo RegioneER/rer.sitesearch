@@ -1,30 +1,11 @@
 /****** ricerca *******/
-.linetab {
-  float: left;
-  padding: 0 1.25em;
-  margin-right: 0.5em;
-  border-style: solid solid none;
-  border-width: 1px;
-  height: auto;
-  padding-bottom: 2px;
-}
+
 
 .firstSearchBlock {
 	border-top-style: solid;
 	border-top-width: 1px;
 }
 
-.ddcontent {
-  width: 100%;
-  border-top-style: solid;
-}
-
-.groupSelected {
-	background-color: #efefef;
-}
-
-
-/*** ricerca ***/
 .firstSearchBlock{border:none}
 dt{margin:0; padding:0}
 dl.searchResults dl{margin-top:2em}
@@ -55,22 +36,41 @@ form.searchPage input.searchButton{height:1.4em !important}
 	margin:0 !important;
 	padding:0 !important;
 }
-div.searchResults{float:right; width:65%}
-.rnum{margin-top:-1px; text-align:right; background-color:#900; color:#fff; padding-right:1em;}
-dl dd dl div.rnum{ background-color:transparent; color:#000; font-style:italic;}
 
-a.linetab{
-	border:none;
-	-moz-border-radius-topleft: 10px;
-	-webkit-border-top-left-radius: 10px;
-	-moz-border-radius-topright: 10px;
-	-webkit-border-top-right-radius: 10px;
-	border: 1px solid #ddd;
-	border-bottom:none;
-	padding: 5px 10px;
+
+div.searchResults{
+	float:right;
+	width:65%;
+}
+
+.linetab:hover, .groupSelected {
+	background-color:#DEE7EC;
+	border-color:#8CACBB #8CACBB #DEE7EC;
+	border-style:solid;
+	border-width:1px;
+	color:#436976;
+}
+
+.linetab {
+	float: left;
+	background-color:transparent;
+	border-color:#8CACBB;
+	border-style:solid solid none;
+	border-width:1px;
+	color:#436976;
+	margin-right:0.5em;
+	padding:0 1.25em;
 	text-decoration:none;
-	background-color:#E6E6E6;
-	color:#303030}
-a.linetab:hover, a.groupSelected{ background-color:#900; color:#fff}
-.listingBar {	background-color:#E6E6E6;}
+	text-transform:none;
+}
+
+.rnum {
+	background-color:#DEE7EC;
+	color:#436976;
+	border:1px solid #8CACBB;
+	line-height:1.6em;
+	margin:0;
+	padding:0 3em;
+	text-align:right;
+}
 
