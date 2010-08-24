@@ -1,3 +1,4 @@
+/****** ricerca *******/
 .linetab {
   float: left;
   padding: 0 1.25em;
@@ -13,6 +14,87 @@
 	border-top-width: 1px;
 }
 
+.ddcontent {
+  width: 100%;
+  border-top-style: solid;
+}
+
 .groupSelected {
 	background-color: #efefef;
 }
+
+
+/*** ricerca ***/
+.firstSearchBlock{border:none}
+dt{margin:0; padding:0}
+dl.searchResults dl{margin-top:2em}
+dl.searchResults dt {font-size:135%;margin-top:1em;}
+form.searchPage input.searchButton{border:1px solid #aaa; border-bottom-color:#666; border-right-color:#666;}
+dl.searchResults span.documentByLine {display:none;}
+dl.searchResults dd  {
+	line-height:1.5em;
+	margin-bottom:0;
+	margin-left:0;
+}
+
+dl.searchResults dd.itemDescr {
+	margin-bottom: 0.3em;
+}
+
+.searchData {
+	margin-left: 0px;
+	background:url("++resource++rer.sociale_theme.images/ombra-light.png") repeat-x scroll 0 1.5em transparent;
+
+}
+
+.formControls{text-align:right; padding-top:1em; font-size:2em}
+.template-search  legend{ background-color:transparent; font-weight:bold; font-size:120%;}
+.template-search label{font-weight:normal}
+.template-search #clear-space-before-wrapper-table{height:0}
+.template-search .documentContent{padding:0 !important}
+.template-search form.enableAutoFocus h2, .template-search  h1{font-size:130%;}
+.template-search form.enableAutoFocus{ margin-top:0;  padding:0px; float:left; width:30%;}
+.template-search form.enableAutoFocus fieldset{background-color:#eee;}
+.formControls .context{ background-position: 5px 5px !important; padding-left:20px; background-color:#fff !important}
+form.searchPage input.searchButton{height:1.4em !important}
+.documentEditable {
+	margin:0 !important;
+	padding:0 !important;
+}
+div.searchResults{float:right; width:65%}
+.rnum{margin-top:-1px; text-align:right; background-color:#900; color:#fff; padding-right:1em;}
+dl dd dl div.rnum{ background-color:transparent; color:#000; font-style:italic;}
+
+a.linetab{
+	border:none;
+	-moz-border-radius-topleft: 10px;
+	-webkit-border-top-left-radius: 10px;
+	-moz-border-radius-topright: 10px;
+	-webkit-border-top-right-radius: 10px;
+	border: 1px solid #ddd;
+	border-bottom:none;
+	padding: 5px 10px;
+	text-decoration:none;
+	background-color:#E6E6E6;
+	color:#303030}
+a.linetab:hover, a.groupSelected{ background-color:#900; color:#fff}
+.listingBar {	background-color:#E6E6E6;}
+
+.fieldsets{border-bottom:1px solid #DDDDDD;
+border-right:1px solid #DDDDDD;
+margin-top:1em;
+margin-right:2%;
+padding-bottom:10px;
+padding-right:1%;
+}
+.fieldsets h2{margin:0 0 1em 0}
+
+.context, .formControls .actionButtons .button, .documentEditable * .context {
+	background:url(++resource++rer.sociale_theme.images/vai-home.png) 2px 0 no-repeat !important;
+	padding-left:17px;
+
+}
+.standalone, .documentEditable * .standalone  {
+	background:url(++resource++rer.sociale_theme.images/vai.png) 2px 0 no-repeat;
+}
+
