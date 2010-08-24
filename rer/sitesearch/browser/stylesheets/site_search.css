@@ -89,12 +89,4 @@ padding-right:1%;
 }
 .fieldsets h2{margin:0 0 1em 0}
 
-.context, .formControls .actionButtons .button, .documentEditable * .context {
-	background:url(++resource++rer.sociale_theme.images/vai-home.png) 2px 0 no-repeat !important;
-	padding-left:17px;
-
-}
-.standalone, .documentEditable * .standalone  {
-	background:url(++resource++rer.sociale_theme.images/vai.png) 2px 0 no-repeat;
-}
 
