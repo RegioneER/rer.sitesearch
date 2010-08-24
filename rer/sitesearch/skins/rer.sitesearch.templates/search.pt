@@ -164,7 +164,7 @@
     </div><tal:searchform >
 			<form action="search"
 		          class="enableAutoFocus"
-		          method="get"
+		          method="post"
 		          id="search"
 		          tal:define="DateTime python:modules['DateTime'].DateTime">
 				
