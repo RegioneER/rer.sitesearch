@@ -186,7 +186,7 @@
 		            <div tal:define="portal_types portal/portal_types;
 		            				 allTypes python:putils.getUserFriendlyTypes();"
 		            	 tal:repeat="type allTypes">
-		            	 <tal:block condition="python: type!='Folder'">
+		            	 <tal:block condition="python: type!='Folder' and type!='FolderTaxonomy' ">
 		            	 	<input type="hidden" name="portal_type:list" tal:attributes="value type">
 		            	 </tal:block>
 		            </div>
@@ -198,7 +198,7 @@
 		                
 		             
 						<div 
-							tal:define="usedSubjects python: list(here.portal_catalog.uniqueValuesFor('Subject'));
+							tal:define="usedSubjects python: list(here.portal_catalog.uniqueValuesFor('searchSubject'));
 		                                SubjectsLists python:here.createMultiColumnList(usedSubjects, numCols=4, sort_on='self');"
 		                                tal:repeat="sublist SubjectsLists">
 							<tal:items repeat="subject sublist">

@@ -11,4 +11,22 @@
 	allowed_attributes="getDividedResults"
 	/>
 	
+  <!-- Resource directory for js -->
+  <browser:resourceDirectory
+      name="rer.sitesearch.javascript"
+      directory="javascript"
+      />
+      
+  <!-- Resource directory for stylesheets -->
+  <browser:resourceDirectory
+      name="rer.sitesearch.stylesheets"
+      directory="stylesheets"
+      />
+      
+  <!-- Resource directory for images -->
+  <browser:resourceDirectory
+      name="rer.sitesearch.images"
+      directory="images"
+      />
+      
 </configure>
