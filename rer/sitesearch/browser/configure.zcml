@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="rer.sitesearch">
+	
+  <browser:page
+	for="*"
+	name="results_division"
+	class=".results_division.ResultsDivision"
+	permission="zope2.View"
+	allowed_attributes="getDividedResults"
+	/>
+	
+</configure>

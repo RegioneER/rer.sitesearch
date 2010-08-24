@@ -1,0 +1,48 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rer.sociale_theme\n"
+"POT-Creation-Date: 2010-04-28 15:34+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: Federica D'Elia <federica.delia@redturtle.it>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: it\n"
+"Language-Name: Italian\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+
+msgid "total_results"
+msgstr "risultati totali"
+
+msgid "part_results"
+msgstr "risultati di questo tipo"
+
+msgid "view_number_of_results"
+msgstr "${number_part_results} risultati di questo tipo su ${number_total_results} risultati totali"
+
+msgid "view_number_of_results_part1"
+msgstr "${number_part_results} risultato di questo tipo su ${number_total_results} risultati totali"
+
+msgid "view_number_of_results_total1"
+msgstr "${number_part_results} risultato di questo tipo su ${number_total_results} risultato totale"
+
+msgid "less_results"
+msgstr "Troppi risultati? Cerca solo in:"
+
+msgid "thematic_areas"
+msgstr "Aree tematiche"
+
+msgid "location"
+msgstr "Localizzazione"
+
+msgid "view_similar_recent_results"
+msgstr "Mostra risultati: "
+
+msgid "closer_results"
+msgstr "più simili"
+
+msgid "latest_results"
+msgstr "più recenti"

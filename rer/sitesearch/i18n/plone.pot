@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rer.sociale_theme\n"
+"POT-Creation-Date: 2010-04-28 15:34+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: Federica D'Elia <federica.delia@redturtle.it>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: it\n"
+"Language-Name: Italian\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+
+msgid "total_results"
+msgstr ""
+
+msgid "part_results"
+msgstr ""
+
+msgid "view_number_of_results"
+msgstr ""
+
+msgid "view_number_of_results_part1"
+msgstr ""
+
+msgid "view_number_of_results_total1"
+msgstr ""
+
+msgid "less_results"
+msgstr ""
+
+msgid "thematic_areas"
+msgstr ""
+
+msgid "location"
+msgstr ""
