@@ -41,12 +41,6 @@ dl.searchResults dd.itemDescr {
 	margin-bottom: 0.3em;
 }
 
-.searchData {
-	margin-left: 0px;
-	background:url("++resource++rer.sociale_theme.images/ombra-light.png") repeat-x scroll 0 1.5em transparent;
-
-}
-
 .formControls{text-align:right; padding-top:1em; font-size:2em}
 .template-search  legend{ background-color:transparent; font-weight:bold; font-size:120%;}
 .template-search label{font-weight:normal}
