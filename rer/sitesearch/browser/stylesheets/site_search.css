@@ -1,0 +1,18 @@
+.linetab {
+  float: left;
+  padding: 0 1.25em;
+  margin-right: 0.5em;
+  border-style: solid solid none;
+  border-width: 1px;
+  height: auto;
+  padding-bottom: 2px;
+}
+
+.firstSearchBlock {
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+
+.groupSelected {
+	background-color: #efefef;
+}
