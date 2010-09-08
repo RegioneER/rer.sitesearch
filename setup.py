@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1.0'
+version = '1.0.0'
 
 setup(name='rer.sitesearch',
       version=version,
@@ -30,9 +30,6 @@ setup(name='rer.sitesearch',
       entry_points="""
       # -*- Entry points: -*-
 
-      [z3c.autoinclude.plugin]
-      target = plone
       """,
-      setup_requires=["PasteScript"],
       paster_plugins=["ZopeSkel"],
       )

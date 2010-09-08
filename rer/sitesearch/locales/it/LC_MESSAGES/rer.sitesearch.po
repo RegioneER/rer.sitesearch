@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rer.sociale_theme\n"
+"Project-Id-Version: rer.sitesearch\n"
 "POT-Creation-Date: 2010-04-28 15:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"Last-Translator: Federica D'Elia <federica.delia@redturtle.it>\n"
+"Last-Translator: Andrea Cecchi <andrea.cecchi@redturtle.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Language-Code: it\n"
 "Language-Name: Italian\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: plone\n"
+"Domain: rer.sitesearch\n"
 
 msgid "total_results"
 msgstr "risultati totali"
@@ -46,3 +46,15 @@ msgstr "più simili"
 
 msgid "latest_results"
 msgstr "più recenti"
+
+msgid "less_results"
+msgstr "Raffina la ricerca"
+
+msgid "sort_on"
+msgstr "Ordina per"
+
+msgid "label_categories"
+msgstr "Categorie"
+
+msgid "label_search_text"
+msgstr "Testo"

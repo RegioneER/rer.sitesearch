@@ -4,7 +4,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="rer.sitesearch">
 <head>
     <metal:block metal:fill-slot="head_slot">
         <link rel="alternate" title="RSS 1.0" type="application/rss+xml"
@@ -22,6 +22,9 @@
 			<!--
 				jq(document).ready(function() {
 					jq("#search :radio, #search :checkbox").change(function() {
+						if (this.id === 'sort_on-date') {
+							jq('<input type="hidden" name="sort_order" value="reverse"/> ').insertBefore(jq('#sort_on-date'))
+						}
 						jq("#search :submit").click();
 					});
 				});
@@ -45,7 +48,6 @@
 
    
 
-
     <div  class="searchResults"  tal:condition="not: results">
         <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
     </div>
@@ -54,18 +56,22 @@
           tal:define="results_division nocall: context/@@results_division;
 					  divided_results python: results_division.getDividedResults(results);
 					  portal_types portal/portal_types;">
-		<dl class="searchResults">
-			<dt tal:repeat="keys python: divided_results.keys()">
-				<a class="linetab" tal:content="python:portal_types.getTypeInfo(keys).Title()"
-				   tal:attributes="href python:'#to-block-'+keys.lower().replace(' ','-')">
-					Document
-				</a>
-			</dt>
-			<tal:blocks repeat="keys python:divided_results.keys()">
-				<dd tal:define="isFirst repeat/keys/start"
+		<dl class="searchResults"
+			tal:define="tabs_order python:['All','Document','News Item','Event','File','Link']">
+			<tal:for repeat="key tabs_order">
+				<dt tal:condition="python:divided_results.has_key(key)">
+					<a class="linetab" tal:content="python:divided_results[key].get('title')"
+					   tal:attributes="href python:'#to-block-'+divided_results[key].get('id')">
+						Document
+					</a>
+				</dt>
+			</tal:for>
+			<tal:blocks repeat="key tabs_order">
+				<dd tal:condition="python:divided_results.has_key(key)"
+					tal:define="isFirst repeat/key/start"
 				    tal:attributes="class python:isFirst and 'visualClear searchData firstSearchBlock' or 'visualClear searchData';
-					                id string:searchDataBlock${repeat/keys/number};">
-					<div class="rnum" tal:define="number_part_results python: len(divided_results[keys]);
+					                id string:searchDataBlock${repeat/key/number};">
+					<div class="rnum" tal:define="number_part_results python: len(divided_results[key]['results']);
 												  number_total_results python: len(results)">
 						<span i18n:translate="view_number_of_results" tal:condition="python: number_total_results != 1 and number_part_results != 1">
 							<tal:part replace="number_part_results" i18n:name="number_part_results" /> results of this type of
@@ -81,11 +87,11 @@
 						</span>
 					</div>
 					<h3>
-						<a tal:attributes="name python:'to-block-'+keys.lower().replace(' ','-')"
-					       tal:content="python:portal_types.getTypeInfo(keys).Title()"
+						<a tal:attributes="name python:'#to-block-'+divided_results[key].get('id')"
+					       tal:content="python:divided_results[key].get('title')"
 						   i18n:translate="">Document</a>
 					</h3>
-					<dl tal:define="results python: divided_results[keys];
+					<dl tal:define="results python: divided_results[key]['results'];
 						            batch python:Batch(results, b_size, int(b_start), orphan=1)">
 				        <tal:results repeat="result batch">
 					        <tal:entry define="result_url result/getURL;
@@ -168,9 +174,9 @@
 		          id="search"
 		          tal:define="DateTime python:modules['DateTime'].DateTime">
 				
-		        <fieldset>
+		        <fieldset id="search_column">
 		
-		            <legend i18n:translate="less_results">Refine you search: </legend>
+		            <legend i18n:translate="less_results">Refine your search: </legend>
 		
 		            <div class="field ">
 		                <label for="SearchableText" i18n:translate="label_search_text">Search Text</label>
@@ -221,6 +227,35 @@
 						</div>
 		            </div>
 					
+					
+					<!--Ordinamento-->
+					<div class="fieldsets"
+						tal:define="sort_on request/sort_on|nothing">
+					<h3 i18n:translate="sort_on">Sort on</h3>
+						
+						<input	type="radio"
+								class="noborder"
+								id="sort_on-similarity"
+								name="sort_on"
+								value=""
+								tal:attributes="checked python:str(sort_on) != 'modified'"/>
+						<label for="sort_on-similarity" i18n:translate="closer_results">Closer results</label>
+						<input	type="radio"
+								class="noborder"
+								id="sort_on-date"
+								name="sort_on"
+								value="modified"
+								tal:attributes="checked python: sort_on == 'modified'"/>
+						<label for="sort_on-date" i18n:translate="latest_results">Latest results</label>
+						
+						<!--input tal:condition="python: sort_on == 'modified'"
+							   type="hidden"
+							   name="sort_order"
+							   value="reverse"/--> 
+					</div>
+					
+					
+					
 		 			<div class="visualClear" ><!-- --></div>
 		 			
 		            <div class="visualClear" id="clear-space-before-submit"><!-- --></div>
@@ -230,6 +265,7 @@
 		                       type="submit"
 		                       name="submit"
 		                       value="Search"
+							   i18n:domain="plone"
 		                       i18n:attributes="value label_search;"
 		                       />
 		            </div>
