@@ -58,6 +58,8 @@ class ResultsDivision(BrowserView):
     def getTaxonomies(self,uids):
         catalog = getToolByName(self.context, 'portal_catalog')
         taxonomy_uids=self.getKeywordList(uids,'getSiteAreas')
+        if not taxonomy_uids:
+            return {}
         taxonomies=catalog(portal_type="FolderTaxonomy",UID=taxonomy_uids)
         list_results={}
         for res in taxonomies:
@@ -113,7 +115,10 @@ class ResultsDivision(BrowserView):
         
     def getKeywordList(self,uids,index_name,white_list=()):
         catalog = getToolByName(self.context, 'portal_catalog')
-        allValues = catalog.uniqueValuesFor(index_name)
+        try:
+            allValues = catalog.uniqueValuesFor(index_name)
+        except KeyError:
+            return []
         # BBB: there is a better way to do this, istead of making many query as we find
         # different values?
         final_results = []
