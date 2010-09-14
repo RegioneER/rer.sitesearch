@@ -14,6 +14,12 @@
              enabled="True"
              id="++resource++rer.sitesearch.javascript/sociale_tabs.js"
              inline="False"/>
-
+ 
+ <javascript cacheable="True"
+             compression="safe"
+             cookable="True"
+             enabled="True"
+             id="++resource++rer.sitesearch.javascript/sitesearch.js"
+             inline="False"/>
 
 </object>

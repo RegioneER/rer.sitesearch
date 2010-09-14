@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step
+     id="SiteSearch"
+     version="20100913-01"
+     handler="rer.sitesearch.setuphandlers.Handlers"
+     title="sitesearch_handlers">
+        Add some handlers at sitesearch installations
+  </import-step>
+</import-steps>

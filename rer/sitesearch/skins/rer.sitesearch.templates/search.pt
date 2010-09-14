@@ -18,8 +18,7 @@
     <metal:block fill-slot="column_two_slot" />
 	
 	<metal:block fill-slot="javascript_head_slot">
-		<script type="text/javascript">
-			<!--
+		<!--script type="text/javascript">
 				jq(document).ready(function() {
 					jq("#search :radio, #search :checkbox").change(function() {
 						if (this.id === 'sort_on-date') {
@@ -27,9 +26,24 @@
 						}
 						jq("#search :submit").click();
 					});
+					jq('#deselect-categories').click(function(event) {
+						event.preventDefault();
+						checkedCategorie = jq("#search :checkbox[name=Subject:list]:checked")
+						if (checkedCategorie.size()) {
+							checkedCategorie.removeAttr("checked")
+							jq("#search :submit").click();
+						}
+					});
+					jq('#deselect-siteareas').click(function(event) {
+						event.preventDefault();
+						checkedCategorie = jq("#search :checkbox[name=getSiteAreas:list]:checked")
+						if (checkedCategorie.size()) {
+							checkedCategorie.removeAttr("checked")
+							jq("#search :submit").click();
+						}
+					});
 				});
-			//-->
-		</script>
+		</script-->
 	</metal:block>
 	
 </head>
@@ -47,14 +61,14 @@
                  use_view_action site_properties/typesUseViewActionInListings|python:();">
 
    
-
     <div  class="searchResults"  tal:condition="not: results">
         <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
     </div>
-
+	<tal:search_view define="results_division nocall: context/@@results_division;
+				  			 res_uids python:results_division.getUids(results);">
+		
     <div class="searchResults" tal:condition="results"
-          tal:define="results_division nocall: context/@@results_division;
-					  divided_results python: results_division.getDividedResults(results);
+          tal:define="divided_results python: results_division.getDividedResults(results);
 					  portal_types portal/portal_types;">
 		<dl class="searchResults"
 			tal:define="tabs_order python:['All','Document','News Item','Event','File','Link']">
@@ -165,9 +179,8 @@
 				</dd>
 			</tal:blocks>
 		</dl>
-		 
-
-    </div><tal:searchform >
+    </div>
+	<tal:searchform >
 			<form action="search"
 		          class="enableAutoFocus"
 		          method="post"
@@ -189,44 +202,45 @@
 		                       />
 		            </div>
 		            
-		            <div tal:define="portal_types portal/portal_types;
+					<!--PATH-->
+					<div class="fieldsets"
+						 tal:condition="request/form/path|nothing">
+						
+						<h3 i18n:translate="label_search_in">Search in</h3>
+						
+			            <input id="searchbox_currentfolder_only" 
+			                   class="noborder"
+			                   type="radio" 
+			                   name="path"
+			                   tal:attributes="value request/form/path|string:${context/portal_url};
+							   				   checked request/form/path|nothing"/>
+						<label for="searchbox_currentfolder_only" 
+			                   i18n:translate="label_searchbox_from_path"
+			                   style="cursor: pointer">
+			                Path (if present and selected)
+			            </label>
+						<br />
+						<input id="searchbox_currentfolder_only" 
+			                   class="noborder"
+			                   type="radio" 
+			                   name="path"
+							   value=""
+			                   tal:attributes="checked not:request/form/path|nothing"/>
+							   
+						<label for="searchbox_currentfolder_only" 
+			                   i18n:translate="label_searchbox_all_site"
+			                   style="cursor: pointer">
+			                All the site
+			            </label>
+					</div>
+				
+		            <!--div tal:define="portal_types portal/portal_types;
 		            				 allTypes python:putils.getUserFriendlyTypes();"
 		            	 tal:repeat="type allTypes">
 		            	 <tal:block condition="python: type!='Folder' and type!='FolderTaxonomy' ">
 		            	 	<input type="hidden" name="portal_type:list" tal:attributes="value type">
 		            	 </tal:block>
-		            </div>
-
-		            <div class="fieldsets" tal:define="checked_subjects request/Subject|nothing">
-		            	<h3 i18n:translate="label_categories">Categories</h3>
-		
-		                <!--<div class="visualClear"> </div>-->
-		                
-		             
-						<div 
-							tal:define="usedSubjects python: list(here.portal_catalog.uniqueValuesFor('searchSubject'));
-		                                SubjectsLists python:here.createMultiColumnList(usedSubjects, numCols=4, sort_on='self');"
-		                                tal:repeat="sublist SubjectsLists">
-							<tal:items repeat="subject sublist">
-			                    <input type="checkbox"
-			                           name="Subject:list"
-			                           value="#"
-			                           class="noborder"
-			                           tal:attributes="value subject;
-			                           				   id string:subject_${repeat/sublist/number}_${repeat/subject/number};
-			                           				   checked python: checked_subjects and subject in checked_subjects"/>
-			
-			                    <label for=""
-									i18n:domain="plone-metadata"
-									i18n:translate=""
-									tal:attributes="for string:subject_${repeat/sublist/number}_${repeat/subject/number}"
-									tal:content="subject"
-			                    	/>
-			                    <br />
-			                </tal:items>
-						</div>
-		            </div>
-					
+		            </div-->
 					
 					<!--Ordinamento-->
 					<div class="fieldsets"
@@ -247,17 +261,175 @@
 								value="modified"
 								tal:attributes="checked python: sort_on == 'modified'"/>
 						<label for="sort_on-date" i18n:translate="latest_results">Latest results</label>
-						
-						<!--input tal:condition="python: sort_on == 'modified'"
-							   type="hidden"
-							   name="sort_order"
-							   value="reverse"/--> 
 					</div>
 					
+					<!--TAG-->
+		            <div class="fieldsets" tal:define="checked_subjects request/Subject|nothing;
+													   usedSubjects python:results_division.getKeywordList(res_uids,'Subject');
+													   show_subjects python:results_division.showSubjects()"
+										   tal:condition="python:usedSubjects and show_subjects">
+		            	<h3 i18n:translate="label_categories">Categories</h3>
+		
+						<div tal:define="SubjectsLists python:here.createMultiColumnList(usedSubjects, numCols=4, sort_on='self');"
+		                     tal:repeat="sublist SubjectsLists">
+							<tal:items repeat="subject sublist">
+			                    <input type="checkbox"
+			                           name="Subject:list"
+			                           value="#"
+			                           class="noborder"
+			                           tal:attributes="value subject;
+			                           				   id string:subject_${repeat/sublist/number}_${repeat/subject/number};
+			                           				   checked python: checked_subjects and subject in checked_subjects"/>
+			
+			                    <label for=""
+									i18n:domain="plone-metadata"
+									i18n:translate=""
+									tal:attributes="for string:subject_${repeat/sublist/number}_${repeat/subject/number}"
+									tal:content="subject"
+			                    	/>
+			                    <br />
+			                </tal:items>
+						</div>
+						<input type="hidden"
+							   name="Subject_usage:ignore_empty"
+							   id="Subject_and"
+							   value="operator:and"/>
+		            </div>
 					
-					
-		 			<div class="visualClear" ><!-- --></div>
+					<!--Site Areas-->					
+					<div class="fieldsets" 
+						tal:define="checked_siteareas python:request.get('getSiteAreas',[]);
+									site_areas_list python:results_division.getTaxonomies(res_uids)"
+						tal:condition="site_areas_list">
+		                <h3 i18n:translate="thematic_areas">Thematic areas</h3>
+		               <!--  <div class="visualClear"></div>-->
+		                
+		            
+						<tal:areas define="sorted_areas python:site_areas_list.keys();
+										 dummy_areas python:sorted_areas.sort()">
+							 <div tal:repeat="area sorted_areas">
+			                    <input type="checkbox"
+			                           name="getSiteAreas:list"
+			                           value="#"
+			                           class="noborder"
+			                           tal:attributes="value python:site_areas_list[area];
+			                           				   id string:areas_${repeat/area/number};
+			                           				   checked python:site_areas_list[area] in checked_siteareas"/>
+			
+			                    <label for=""
+									i18n:domain="plone-metadata"
+									i18n:translate=""
+									tal:attributes="for string:areas_${repeat/area/number}"
+									tal:content="area"
+			                    	/>
+			                    <br />
+						</div>
+					 	</tal:areas>
+						<div style="text-align:right"
+							tal:condition="checked_siteareas">
+							<a class="portal-breadcrumbs"
+								id="deselect-siteareas"
+								href="search">
+								<span i18n:translate="label_remove_filters">Remove all filters</span>
+							</a>
+						</div>
+						<input type="hidden"
+							   name="getSiteAreas_usage:ignore_empty"
+							   id="getSiteAreas_and"
+							   value="operator:and"/>
+		 			</div>
 		 			
+					
+					<!--FACETED-->
+					<tal:faceted define="faceted_dict python:results_division.getFacetedList(res_uids);
+										 faceted_keys python:faceted_dict.keys();
+										 dummy_faceted python:faceted_keys.sort()"
+								 tal:repeat="faceted faceted_keys">
+								 	<!--div>
+								 		<span tal:content="faceted"/>
+								 	</div-->
+						<!--ITERATION FACETED-->					
+						<div class="fieldsets" 
+							tal:define="faceted_dict python:faceted_dict.get(faceted);
+										faceted_name python:faceted_dict.get('index_name');
+										faceted_elements python:faceted_dict.get('indexes_list');
+										checked_faceted python:request.get(faceted_name,[]);"
+							tal:condition="faceted_elements">
+			                <h3 tal:content="faceted">Faceted Keyword</h3>
+			            
+								 <div tal:repeat="kw faceted_elements">
+				                    <input type="checkbox"
+				                           value="#"
+				                           class="noborder"
+				                           tal:attributes="name string:${faceted_name}:list; 
+										   				   value python:kw;
+				                           				   id string:${faceted_name}_${repeat/kw/number};
+				                           				   checked python:kw in checked_faceted"/>
+				
+				                    <label for=""
+										i18n:domain="plone-metadata"
+										i18n:translate=""
+										tal:attributes="for string:${faceted_name}_${repeat/kw/number};"
+										tal:content="kw"
+				                    	/>
+				                    <br />
+							</div>
+							<div style="text-align:right"
+								tal:condition="checked_faceted">
+								<a class="portal-breadcrumbs"
+									href="search"
+									tal:condition="checked_faceted"
+									onclick=""
+									tal:attributes="id string:deselect-${faceted_name};
+													onclick string:javascript:removeFacetedFilter('${faceted_name}');;return false">
+									<span i18n:translate="label_remove_filters">Remove all filters</span>
+								</a>
+							</div>
+							<input type="hidden"
+								   tal:attributes="name string:${faceted_name}_usage:ignore_empty;
+								   				   id string:${faceted_name}_and"
+								   value="operator:and"/>
+			 			</div>
+					</tal:faceted>
+					
+					<!--div class="fieldsets"
+							tal:define="checked_subjects request/Subject|nothing;
+										filteredSubjects python:results_division.getFilteredIndex(results,'Subject');
+	 									SubjectsLists python:here.createMultiColumnList(filteredSubjects, numCols=4, sort_on='self');
+										subjectscat python:[sub for sub in SubjectsLists if len(sub)>0]"
+							tal:condition="subjectscat">
+		            	<h3 i18n:translate="label_categories">Categories</h3>
+		
+		                
+		             
+						<div tal:repeat="sublist SubjectsLists">
+							<tal:items repeat="subject sublist">
+			                    <input type="checkbox"
+			                           name="Subject:list"
+			                           value="#"
+			                           class="noborder"
+			                           tal:attributes="value subject;
+			                           				   id string:subject_${repeat/sublist/number}_${repeat/subject/number};
+			                           				   checked python: checked_subjects and subject in checked_subjects"/>
+			
+			                    <label for=""
+									i18n:domain="plone-metadata"
+									i18n:translate=""
+									tal:attributes="for string:subject_${repeat/sublist/number}_${repeat/subject/number}"
+									tal:content="subject"
+			                    	/>
+			                    <br />
+			                </tal:items>
+						</div>
+						<div style="text-align:right"
+							tal:condition="checked_subjects">
+							<a class="portal-breadcrumbs"
+								id="deselect-categories"
+								href="search">
+								Rimuovi tutti i filtri</a>
+						</div>
+		            </div-->
+					
 		            <div class="visualClear" id="clear-space-before-submit"><!-- --></div>
 		
 		            <div class="formControls">
@@ -274,7 +446,7 @@
 		    
 		    </form>
     	</tal:searchform>   
-
+		</tal:search_view>
 </div>
 </body>
 </html>

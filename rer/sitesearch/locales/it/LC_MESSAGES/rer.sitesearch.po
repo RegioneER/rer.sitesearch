@@ -58,3 +58,15 @@ msgstr "Categorie"
 
 msgid "label_search_text"
 msgstr "Testo"
+
+msgid "label_search_in"
+msgstr "Cerca in"
+
+msgid "label_searchbox_from_path"
+msgstr "Percorso (se presente e selezionato)"
+
+msgid "label_searchbox_all_site"
+msgstr "Tutto il sito"
+
+msgid "label_remove_filters"
+msgstr "Rimuovi tutti i filtri"
