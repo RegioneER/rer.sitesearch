@@ -162,13 +162,12 @@
 		
 		            <legend i18n:translate="less_results">Refine your search: </legend>
 		
-		            <div id="searchText" class="field">
+		            <div id="rerSearchText" class="field">
 		                <label for="SearchableText" i18n:translate="label_search_text">Search Text</label>
 		
 		                <input type="text"
 		                       id="SearchableText"
 		                       name="SearchableText"
-		                       size="25"
 		                       tal:attributes="value request/SearchableText|nothing"
 		                       />
 		            </div>
