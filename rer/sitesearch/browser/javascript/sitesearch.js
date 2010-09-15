@@ -5,7 +5,7 @@ jq(document).ready(function() {
 		}
 		jq("#search :submit").click();
 	});
-	jq('#deselect-categories').click(function(event) {
+	jq('#deselect-subjects').click(function(event) {
 		event.preventDefault();
 		var checkedCategorie = jq("#search :checkbox[name=Subject:list]:checked");
 		if (checkedCategorie.size()) {

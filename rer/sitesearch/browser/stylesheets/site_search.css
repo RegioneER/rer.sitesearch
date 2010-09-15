@@ -24,7 +24,8 @@ dl.searchResults dd.itemDescr {
 }
 
 
-#search_column .formControls{text-align:right; padding-top:1em; font-size:2em}
+#search_column .formControls{text-align:right;}
+#searchText {float:left;}
 .template-search  legend{ background-color:transparent; font-weight:bold; font-size:120%;}
 .template-search label{font-weight:normal}
 .template-search #clear-space-before-wrapper-table{height:0}

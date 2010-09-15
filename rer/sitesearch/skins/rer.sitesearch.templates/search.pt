@@ -17,35 +17,6 @@
     <metal:block fill-slot="column_one_slot" />
     <metal:block fill-slot="column_two_slot" />
 	
-	<metal:block fill-slot="javascript_head_slot">
-		<!--script type="text/javascript">
-				jq(document).ready(function() {
-					jq("#search :radio, #search :checkbox").change(function() {
-						if (this.id === 'sort_on-date') {
-							jq('<input type="hidden" name="sort_order" value="reverse"/> ').insertBefore(jq('#sort_on-date'))
-						}
-						jq("#search :submit").click();
-					});
-					jq('#deselect-categories').click(function(event) {
-						event.preventDefault();
-						checkedCategorie = jq("#search :checkbox[name=Subject:list]:checked")
-						if (checkedCategorie.size()) {
-							checkedCategorie.removeAttr("checked")
-							jq("#search :submit").click();
-						}
-					});
-					jq('#deselect-siteareas').click(function(event) {
-						event.preventDefault();
-						checkedCategorie = jq("#search :checkbox[name=getSiteAreas:list]:checked")
-						if (checkedCategorie.size()) {
-							checkedCategorie.removeAttr("checked")
-							jq("#search :submit").click();
-						}
-					});
-				});
-		</script-->
-	</metal:block>
-	
 </head>
 
 <body>
@@ -191,7 +162,7 @@
 		
 		            <legend i18n:translate="less_results">Refine your search: </legend>
 		
-		            <div class="field ">
+		            <div id="searchText" class="field">
 		                <label for="SearchableText" i18n:translate="label_search_text">Search Text</label>
 		
 		                <input type="text"
@@ -202,6 +173,16 @@
 		                       />
 		            </div>
 		            
+					<div class="formControls">
+		                <input class="context"
+		                       type="submit"
+		                       name="submit"
+		                       value="Search"
+							   i18n:domain="plone"
+		                       i18n:attributes="value label_search;"
+		                       />
+		            </div>
+					<div class="visualClear" id="clear-space-before-submit"><!-- --></div>
 					<!--PATH-->
 					<div class="fieldsets"
 						 tal:condition="request/form/path|nothing">
@@ -215,9 +196,9 @@
 			                   tal:attributes="value request/form/path|string:${context/portal_url};
 							   				   checked request/form/path|nothing"/>
 						<label for="searchbox_currentfolder_only" 
-			                   i18n:translate="label_searchbox_from_path"
-			                   style="cursor: pointer">
-			                Path (if present and selected)
+			                   style="cursor: pointer"
+							   tal:content="request/form/path">
+			                
 			            </label>
 						<br />
 						<input id="searchbox_currentfolder_only" 
@@ -289,7 +270,17 @@
 			                    	/>
 			                    <br />
 			                </tal:items>
+							
 						</div>
+						<div style="text-align:right"
+							tal:condition="checked_subjects">
+							<a class="portal-breadcrumbs"
+								id="deselect-subjects"
+								href="search">
+								<span i18n:translate="label_remove_filters">Remove all filters</span>
+							</a>
+						</div>
+						
 						<input type="hidden"
 							   name="Subject_usage:ignore_empty"
 							   id="Subject_and"
@@ -302,8 +293,6 @@
 									site_areas_list python:results_division.getTaxonomies(res_uids)"
 						tal:condition="site_areas_list">
 		                <h3 i18n:translate="thematic_areas">Thematic areas</h3>
-		               <!--  <div class="visualClear"></div>-->
-		                
 		            
 						<tal:areas define="sorted_areas python:site_areas_list.keys();
 										 dummy_areas python:sorted_areas.sort()">
@@ -391,44 +380,6 @@
 								   value="operator:and"/>
 			 			</div>
 					</tal:faceted>
-					
-					<!--div class="fieldsets"
-							tal:define="checked_subjects request/Subject|nothing;
-										filteredSubjects python:results_division.getFilteredIndex(results,'Subject');
-	 									SubjectsLists python:here.createMultiColumnList(filteredSubjects, numCols=4, sort_on='self');
-										subjectscat python:[sub for sub in SubjectsLists if len(sub)>0]"
-							tal:condition="subjectscat">
-		            	<h3 i18n:translate="label_categories">Categories</h3>
-		
-		                
-		             
-						<div tal:repeat="sublist SubjectsLists">
-							<tal:items repeat="subject sublist">
-			                    <input type="checkbox"
-			                           name="Subject:list"
-			                           value="#"
-			                           class="noborder"
-			                           tal:attributes="value subject;
-			                           				   id string:subject_${repeat/sublist/number}_${repeat/subject/number};
-			                           				   checked python: checked_subjects and subject in checked_subjects"/>
-			
-			                    <label for=""
-									i18n:domain="plone-metadata"
-									i18n:translate=""
-									tal:attributes="for string:subject_${repeat/sublist/number}_${repeat/subject/number}"
-									tal:content="subject"
-			                    	/>
-			                    <br />
-			                </tal:items>
-						</div>
-						<div style="text-align:right"
-							tal:condition="checked_subjects">
-							<a class="portal-breadcrumbs"
-								id="deselect-categories"
-								href="search">
-								Rimuovi tutti i filtri</a>
-						</div>
-		            </div-->
 					
 		            <div class="visualClear" id="clear-space-before-submit"><!-- --></div>
 		
