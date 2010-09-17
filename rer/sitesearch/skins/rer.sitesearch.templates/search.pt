@@ -163,7 +163,7 @@
 		            <legend i18n:translate="less_results">Refine your search: </legend>
 		
 		            <div id="rerSearchText" class="field">
-		                <label for="SearchableText" i18n:translate="label_search_text">Search Text</label>
+		                <label for="SearchableText" i18n:translate="label_search_text">Search text</label>
 		
 		                <input type="text"
 		                       id="SearchableText"
@@ -196,7 +196,7 @@
 							   				   checked request/form/path|nothing"/>
 						<label for="searchbox_currentfolder_only" 
 			                   style="cursor: pointer"
-							   tal:content="request/form/path">
+							   tal:content="python:request.form['path'].split('/')[-1]">
 			                
 			            </label>
 						<br />

@@ -5,13 +5,14 @@ dl.searchResults dl{
 }
 
 dl.searchResults dt {
-	font-size:135%;
+	font-size:1em;
 	margin-top:1em;
+	display:inline;
 }
 
-dl.searchResults span.documentByLine {
+/*dl.searchResults span.documentByLine {
 	display:none;
-}
+}*/
 
 dl.searchResults dd  {
 	line-height:1.5em;
@@ -42,29 +43,19 @@ dl.searchResults dd.itemDescr {
 .template-search form.enableAutoFocus h2, .template-search  h1{font-size:130%;}
 .template-search form.enableAutoFocus{ margin-top:0;  padding:0px; float:left; width:30%;}
 .template-search form.enableAutoFocus fieldset{background-color:#eee;}
-.formControls .context{ background-position: 5px 5px !important; padding-left:20px; background-color:#fff !important}
 form.searchPage input.searchButton{height:1.4em !important}
 .documentEditable {
 	margin:0 !important;
 	padding:0 !important;
 }
 
-
 div.searchResults{
 	float:right;
 	width:65%;
-}
-
-.linetab:hover, .groupSelected {
-	background-color:#DEE7EC;
-	border-color:#8CACBB #8CACBB #DEE7EC;
-	border-style:solid;
-	border-width:1px;
-	color:#436976;
+	padding-top:2px;
 }
 
 .linetab {
-	float: left;
 	background-color:transparent;
 	border-color:#8CACBB;
 	border-style:solid solid none;
@@ -74,6 +65,18 @@ div.searchResults{
 	padding:0 1.25em;
 	text-decoration:none;
 	text-transform:none;
+}
+
+.linetab:hover, .groupSelected {
+	background-color:#DEE7EC;
+	border-color:#8CACBB #8CACBB #DEE7EC;
+	border-style:solid solid none;
+	border-width:1px;
+	color:#436976;
+}
+
+a.groupSelected{
+	padding-bottom:0.125em;
 }
 
 .rnum {
