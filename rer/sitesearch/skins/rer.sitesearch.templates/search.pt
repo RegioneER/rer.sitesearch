@@ -232,14 +232,14 @@
 								id="sort_on-similarity"
 								name="sort_on"
 								value=""
-								tal:attributes="checked python:str(sort_on) != 'modified'"/>
+								tal:attributes="checked python:str(sort_on) != 'effective'"/>
 						<label for="sort_on-similarity" i18n:translate="closer_results">Closer results</label>
 						<input	type="radio"
 								class="noborder"
 								id="sort_on-date"
 								name="sort_on"
-								value="modified"
-								tal:attributes="checked python: sort_on == 'modified'"/>
+								value="effective"
+								tal:attributes="checked python: sort_on == 'effective'"/>
 						<label for="sort_on-date" i18n:translate="latest_results">Latest results</label>
 					</div>
 					
