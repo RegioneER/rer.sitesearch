@@ -70,3 +70,6 @@ msgstr "Tutto il sito"
 
 msgid "label_remove_filters"
 msgstr "Rimuovi tutti i filtri"
+
+msgid "search_not_published"
+msgstr "Non ancora pubblicato"

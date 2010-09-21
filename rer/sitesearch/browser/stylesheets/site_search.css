@@ -4,15 +4,18 @@ dl.searchResults dl{
 	margin-top:2em
 }
 
+dl dt.searchResTitle{
+	font-size:1.1em;
+	margin-top:1em;
+	display:inline;
+	font-weight:bold;
+}
 dl.searchResults dt {
 	font-size:1em;
 	margin-top:1em;
 	display:inline;
 }
 
-/*dl.searchResults span.documentByLine {
-	display:none;
-}*/
 
 dl.searchResults dd  {
 	line-height:1.5em;
@@ -22,8 +25,14 @@ dl.searchResults dd  {
 
 dl.searchResults dd.itemDescr {
 	margin-bottom: 0.3em;
+	font-size:0.95em;
 }
 
+
+span.searchResDate{
+	color:#76797C;
+	font-weight:normal;
+}
 
 #search_column .formControls{text-align:right;}
 
