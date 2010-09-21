@@ -95,6 +95,7 @@
 					                    Cropped description
 					                </span>
 					                <span class="documentByLine"
+										  i18n:domain="plone"
 					                	tal:condition="python:not isAnon or site_properties.allowAnonymousViewAbout">
 					                	
 					                	<span class="documentAuthor"
