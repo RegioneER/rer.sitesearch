@@ -102,6 +102,7 @@
 										<span tal:condition="python:result.EffectiveDate == 'None'" i18n:translate="search_not_published">
 						                    Not yet published
 					                    </span>
+										-
 					                </span>
 					                <span tal:replace="python:plone_view.cropText(result.Description, desc_length, desc_ellipsis)">
 					                    Cropped description
