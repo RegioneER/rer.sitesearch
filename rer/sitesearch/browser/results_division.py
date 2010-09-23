@@ -132,3 +132,12 @@ class ResultsDivision(BrowserView):
             if results:
                 final_results.append(kw)
         return final_results
+    
+    def getClass(self,current_block_id,isFirst=None):
+        if self.context.REQUEST.form.has_key('selected_id'):
+            if self.context.REQUEST.form.get('selected_id') == current_block_id:
+                return 'visualClear searchData selectedSearchBlock'
+            return 'visualClear searchData'
+        if isFirst:
+            return 'visualClear searchData selectedSearchBlock'
+        return 'visualClear searchData'

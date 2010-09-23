@@ -25,11 +25,12 @@
                  use_navigation_root request/use_navigation_root | python:True;
                  results python:here.queryCatalog(REQUEST=request,use_types_blacklist=use_types_blacklist, use_navigation_root=use_navigation_root);
                  Batch python:modules['Products.CMFPlone'].Batch;
-                 b_size python:30;b_start python:0;b_start request/b_start | b_start;
+                 b_size python:5;b_start python:0;b_start request/b_start | b_start;
                  desc_length site_properties/search_results_description_length;
                  desc_ellipsis site_properties/ellipsis;
                  searchterm request/SearchableText|nothing;
-                 use_view_action site_properties/typesUseViewActionInListings|python:();">
+                 use_view_action site_properties/typesUseViewActionInListings|python:();
+				 template_id string:search">
 
    
     <div  class="searchResults"  tal:condition="not: results">
@@ -44,9 +45,11 @@
 		<dl class="searchResults"
 			tal:define="tabs_order python:['All','Document','News Item','Event','File','Link']">
 			<tal:for repeat="key tabs_order">
-				<dt tal:condition="python:divided_results.has_key(key)">
-					<a class="linetab" tal:content="python:divided_results[key].get('title')"
-					   tal:attributes="href python:'#to-block-'+divided_results[key].get('id')">
+				<dt tal:condition="python:divided_results.has_key(key)"
+					tal:attributes="id python:divided_results[key].get('id')">
+					<a class="linetab"
+					   tal:attributes="href python:template_id+'?'+request.get('QUERY_STRING')+'#to-block-'+divided_results[key].get('id')"
+					   tal:content="python:divided_results[key].get('title')">
 						Document
 					</a>
 				</dt>
@@ -54,8 +57,8 @@
 			<tal:blocks repeat="key tabs_order">
 				<dd tal:condition="python:divided_results.has_key(key)"
 					tal:define="isFirst repeat/key/start"
-				    tal:attributes="class python:isFirst and 'visualClear searchData firstSearchBlock' or 'visualClear searchData';
-					                id string:searchDataBlock${repeat/key/number};">
+				    tal:attributes="class python:results_division.getClass('searchDataBlock-'+divided_results[key].get('id'),isFirst);
+					                id python:'searchDataBlock-'+divided_results[key].get('id')">
 					<div class="rnum" tal:define="number_part_results python: len(divided_results[key]['results']);
 												  number_total_results python: len(results)">
 						<span i18n:translate="view_number_of_results" tal:condition="python: number_total_results != 1 and number_part_results != 1">
@@ -72,7 +75,7 @@
 						</span>
 					</div>
 					<h3>
-						<a tal:attributes="name python:'#to-block-'+divided_results[key].get('id')"
+						<a tal:attributes="name python:'to-block-'+divided_results[key].get('id')"
 					       tal:content="python:divided_results[key].get('title')"
 						   i18n:translate="">Document</a>
 					</h3>
