@@ -1,7 +1,7 @@
 jq(document).ready(function() {
 	jq("#search :radio, #search :checkbox").change(function() {
 		if (this.id === 'sort_on-date') {
-			jq('<input type="hidden" name="sort_order" value="reverse"/> ').insertBefore(jq('#sort_on-date'));
+			jq('#sortOrderField').attr('value','reverse');
 		}
 		jq("#search :submit").click();
 	});

@@ -25,14 +25,13 @@
                  use_navigation_root request/use_navigation_root | python:True;
                  results python:here.queryCatalog(REQUEST=request,use_types_blacklist=use_types_blacklist, use_navigation_root=use_navigation_root);
                  Batch python:modules['Products.CMFPlone'].Batch;
-                 b_size python:5;b_start python:0;b_start request/b_start | b_start;
+                 b_size python:20;b_start python:0;b_start request/b_start | b_start;
                  desc_length site_properties/search_results_description_length;
                  desc_ellipsis site_properties/ellipsis;
                  searchterm request/SearchableText|nothing;
                  use_view_action site_properties/typesUseViewActionInListings|python:();
 				 template_id string:search">
 
-   
     <div  class="searchResults"  tal:condition="not: results">
         <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
     </div>
@@ -235,7 +234,11 @@
 								name="sort_on"
 								value="effective"
 								tal:attributes="checked python: sort_on == 'effective'"/>
+						
+						
 						<label for="sort_on-date" i18n:translate="latest_results">Latest results</label>
+						<input type="hidden" id="sortOrderField" tal:condition="python:not request.form.has_key('sort_on') or request.form.get('sort_on')==''" name="sort_order" value=""/>
+						<input type="hidden" id="sortOrderField" tal:condition="python:request.form.get('sort_on')=='effective'" name="sort_order" value="reverse"/>
 					</div>
 					
 					<!--TAG-->
