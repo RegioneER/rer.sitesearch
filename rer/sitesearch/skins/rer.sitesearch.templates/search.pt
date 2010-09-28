@@ -194,14 +194,14 @@
 			                
 			            </label>
 						<br />
-						<input id="searchbox_currentfolder_only" 
+						<input id="searchbox_all_site" 
 			                   class="noborder"
 			                   type="radio" 
 			                   name="path"
 							   value=""
 			                   tal:attributes="checked not:request/form/path|nothing"/>
 							   
-						<label for="searchbox_currentfolder_only" 
+						<label for="searchbox_all_site" 
 			                   i18n:translate="label_searchbox_all_site"
 			                   style="cursor: pointer">
 			                All the site

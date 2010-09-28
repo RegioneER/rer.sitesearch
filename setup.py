@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0.0'
+version = '1.0.1-SVN_UNRELEASED'
 
 setup(name='rer.sitesearch',
       version=version,

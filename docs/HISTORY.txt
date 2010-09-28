@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.1-SVN_UNRELEASED (2010/??/??)
+---------------------
+
+- cambiato nome del field per l'ordinamento (#67 attivitˆ rer) [andrea]
+
 1.0.0 (2010/09/23)
 ---------------------
 
