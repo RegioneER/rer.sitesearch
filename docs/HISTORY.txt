@@ -5,6 +5,7 @@ Changelog
 ---------------------
 
 - cambiato nome del field per l'ordinamento (#67 attività rer) [andrea]
+- aggiunto header per segnalare dove si è effettuata la ricerca [jacopo e andrea]
 
 1.0.0 (2010/09/23)
 ---------------------

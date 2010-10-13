@@ -30,19 +30,20 @@
                  desc_ellipsis site_properties/ellipsis;
                  searchterm request/SearchableText|nothing;
                  use_view_action site_properties/typesUseViewActionInListings|python:();
+				 results_division nocall: context/@@results_division;
 				 template_id string:search">
 	
-	<h1 class="" 
-	tal:condition="python:request.form.has_key('path') and request.form.get('path') != '/'.join(context.portal_url.getPortalObject().getPhysicalPath())"
-	tal:content="python:'Hai cercato in: '+request.form['path'].split('/')[-1]">Heading</h1>
+	<h1 class="" i18n:translate=""
+		tal:condition="python:request.form.has_key('path') and request.form.get('path') != '/'.join(context.portal_url.getPortalObject().getPhysicalPath())">
+		You searched in: <span tal:content="python:results_division.getFolderName(request.form.get('path'))" i18n:name="folder_name">Folder</span> 
+	</h1>
 			                
 			           
 
     <div  class="searchResults"  tal:condition="not: results">
         <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
     </div>
-	<tal:search_view define="results_division nocall: context/@@results_division;
-				  			 res_uids python:results_division.getUids(results);">
+	<tal:search_view define="res_uids python:results_division.getUids(results);">
 		
     <div class="searchResults" tal:condition="results"
           tal:define="divided_results python: results_division.getDividedResults(results);
@@ -196,7 +197,7 @@
 							   				   checked request/form/path|nothing"/>
 						<label for="searchbox_currentfolder_only" 
 			                   style="cursor: pointer"
-							   tal:content="python:request.form['path'].split('/')[-1]">
+							   tal:content="python:results_division.getFolderName(request.form.get('path'))">
 			                
 			            </label>
 						<br />

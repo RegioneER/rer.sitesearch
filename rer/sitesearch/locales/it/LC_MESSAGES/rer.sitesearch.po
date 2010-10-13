@@ -73,3 +73,6 @@ msgstr "Rimuovi tutti i filtri"
 
 msgid "search_not_published"
 msgstr "Non ancora pubblicato"
+
+msgid "You searched in: ${folder_name}"
+msgstr "Hai cercato in: ${folder_name}"

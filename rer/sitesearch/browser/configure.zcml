@@ -8,7 +8,7 @@
 	name="results_division"
 	class=".results_division.ResultsDivision"
 	permission="zope2.View"
-	allowed_attributes="getUids getKeywordList getDividedResults getTaxonomies getFacetedList showSubjects getClass"
+	allowed_attributes="getUids getKeywordList getDividedResults getTaxonomies getFacetedList showSubjects getClass getFolderName"
 	/>
 	
   <!-- Resource directory for js -->

@@ -141,3 +141,6 @@ class ResultsDivision(BrowserView):
         if isFirst:
             return 'visualClear searchData selectedSearchBlock'
         return 'visualClear searchData'
+    
+    def getFolderName(self,path):
+        return self.context.unrestrictedTraverse(path).Title()
