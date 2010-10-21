@@ -33,10 +33,7 @@
 				 results_division nocall: context/@@results_division;
 				 template_id string:search">
 	
-	<h1 class="" i18n:translate=""
-		tal:condition="python:request.form.has_key('path') and request.form.get('path') != '/'.join(context.portal_url.getPortalObject().getPhysicalPath())">
-		You searched in: <span tal:content="python:results_division.getFolderName(request.form.get('path'))" i18n:name="folder_name">Folder</span> 
-	</h1>
+
 			                
 			           
 
@@ -80,6 +77,15 @@
 							<tal:total replace="number_total_results" i18n:name="number_total_results" /> total result
 						</span>
 					</div>
+					    <p class="discreet" id="document-action-rss"
+       tal:condition="syntool/isSiteSyndicationAllowed">
+        <a href=""
+			
+           class="link-feed"
+           i18n:translate="title_rss_feed"
+           tal:attributes="href string:$here_url/search_rss?${request/QUERY_STRING}">
+             RSS feed</a>
+    </p>
 					<h3>
 						<a tal:attributes="name python:'to-block-'+divided_results[key].get('id')"
 					       tal:content="python:divided_results[key].get('title')"

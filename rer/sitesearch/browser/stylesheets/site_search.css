@@ -98,3 +98,4 @@ a.groupSelected{
 	text-align:right;
 }
 
+.searchResults p#document-action-rss{ float:right; font-size:100%; margin-top:4px}
