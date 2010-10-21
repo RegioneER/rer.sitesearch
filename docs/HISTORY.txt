@@ -8,6 +8,6 @@ Changelog
 - aggiunto header per segnalare dove si è effettuata la ricerca [jacopo e andrea]
 
 1.0.0 (2010/09/23)
----------------------
+------------------
 
 - Initial release
