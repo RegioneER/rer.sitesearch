@@ -30,20 +30,20 @@
                  desc_ellipsis site_properties/ellipsis;
                  searchterm request/SearchableText|nothing;
                  use_view_action site_properties/typesUseViewActionInListings|python:();
-				 results_division nocall: context/@@results_division;
+				 sitesearch_view nocall: context/@@sitesearch_view;
 				 template_id string:search">
 	
-
+<h1 tal:content="request/form"/>
 			                
 			           
 
     <div  class="searchResults"  tal:condition="not: results">
         <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
     </div>
-	<tal:search_view define="res_uids python:results_division.getUids(results);">
+	<tal:search_view define="res_uids python:sitesearch_view.getUids(results);">
 		
     <div class="searchResults" tal:condition="results"
-          tal:define="divided_results python: results_division.getDividedResults(results);
+          tal:define="divided_results python: sitesearch_view.getDividedResults(results);
 					  portal_types portal/portal_types;">
 		<dl class="searchResults"
 			tal:define="tabs_order python:['All','Document','News Item','Event','File','Link']">
@@ -60,7 +60,7 @@
 			<tal:blocks repeat="key tabs_order">
 				<dd tal:condition="python:divided_results.has_key(key)"
 					tal:define="isFirst repeat/key/start"
-				    tal:attributes="class python:results_division.getClass('searchDataBlock-'+divided_results[key].get('id'),isFirst);
+				    tal:attributes="class python:sitesearch_view.getClass('searchDataBlock-'+divided_results[key].get('id'),isFirst);
 					                id python:'searchDataBlock-'+divided_results[key].get('id')">
 					<div class="rnum" tal:define="number_part_results python: len(divided_results[key]['results']);
 												  number_total_results python: len(results)">
@@ -80,10 +80,10 @@
 					    <p class="discreet" id="document-action-rss"
        tal:condition="syntool/isSiteSyndicationAllowed">
         <a href=""
-			
-           class="link-feed"
-           i18n:translate="title_rss_feed"
-           tal:attributes="href string:$here_url/search_rss?${request/QUERY_STRING}">
+		tal:define="query_string sitesearch_view/getQueryString"
+           	class="link-feed"
+           	i18n:translate="title_rss_feed"
+           	tal:attributes="href string:$here_url/search_rss?${query_string}">
              RSS feed</a>
     </p>
 					<h3>
@@ -108,14 +108,15 @@
 					          <dd class="itemDescr">
 					                <span class="searchResDate"
 										  tal:condition="python:request.get('sort_on') == 'effective'">
-					                    <span tal:condition="result/EffectiveDate" tal:replace="python:toLocalizedTime(result.EffectiveDate)">
-					                    August 16, 2001 at 23:35:59
-					                    </span>
-										<span tal:condition="python:result.EffectiveDate == 'None'" i18n:translate="search_not_published">
-						                    Not yet published
-					                    </span>
-										-
+					                    <tal:date condition="result/EffectiveDate">
+					                    	<span tal:replace="python:toLocalizedTime(result.EffectiveDate)">
+					                    		August 16, 2001 at 23:35:59
+					                    	</span>
+					                    </tal:date>
 					                </span>
+									<tal:separator condition="python:result.EffectiveDate !='None' and result.Description">
+										-
+									</tal:separator>
 					                <span tal:replace="python:plone_view.cropText(result.Description, desc_length, desc_ellipsis)">
 					                    Cropped description
 					                </span>
@@ -203,7 +204,7 @@
 							   				   checked request/form/path|nothing"/>
 						<label for="searchbox_currentfolder_only" 
 			                   style="cursor: pointer"
-							   tal:content="python:results_division.getFolderName(request.form.get('path'))">
+							   tal:content="python:sitesearch_view.getFolderName(request.form.get('path'))">
 			                
 			            </label>
 						<br />
@@ -256,8 +257,8 @@
 					
 					<!--TAG-->
 		            <div class="fieldsets" tal:define="checked_subjects request/Subject|nothing;
-													   usedSubjects python:results_division.getKeywordList(res_uids,'Subject');
-													   show_subjects python:results_division.showSubjects()"
+													   usedSubjects python:sitesearch_view.getKeywordList(res_uids,'Subject');
+													   show_subjects python:sitesearch_view.showSubjects()"
 										   tal:condition="python:usedSubjects and show_subjects">
 		            	<h3 i18n:translate="label_categories">Categories</h3>
 		
@@ -300,7 +301,7 @@
 					<!--Site Areas-->					
 					<div class="fieldsets" 
 						tal:define="checked_siteareas python:request.get('getSiteAreas',[]);
-									site_areas_list python:results_division.getTaxonomies(res_uids)"
+									site_areas_list python:sitesearch_view.getTaxonomies(res_uids)"
 						tal:condition="site_areas_list">
 		                <h3 i18n:translate="thematic_areas">Thematic areas</h3>
 		            
@@ -340,7 +341,7 @@
 		 			
 					
 					<!--FACETED-->
-					<tal:faceted define="faceted_dict python:results_division.getFacetedList(res_uids);
+					<tal:faceted define="faceted_dict python:sitesearch_view.getFacetedList(res_uids);
 										 faceted_keys python:faceted_dict.keys();
 										 dummy_faceted python:faceted_keys.sort()"
 								 tal:repeat="faceted faceted_keys">

@@ -1,7 +1,12 @@
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
+from zope.interface import implements
+from rer.sitesearch.browser.interfaces import IRerSiteSearch
+from urllib import urlencode
 
-class ResultsDivision(BrowserView):
+class RerSiteSearchView(BrowserView):
+    
+    implements(IRerSiteSearch)
     
     def __init__(self,context,request):
         self.context=context
@@ -144,3 +149,6 @@ class ResultsDivision(BrowserView):
     
     def getFolderName(self,path):
         return self.context.unrestrictedTraverse(path).Title()
+    
+    def getQueryString(self):
+        return urlencode(self.context.REQUEST.form,True)

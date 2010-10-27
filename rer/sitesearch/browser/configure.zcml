@@ -5,10 +5,10 @@
 	
   <browser:page
 	for="*"
-	name="results_division"
-	class=".results_division.ResultsDivision"
+	name="sitesearch_view"
+	class=".sitesearch_view.RerSiteSearchView"
 	permission="zope2.View"
-	allowed_attributes="getUids getKeywordList getDividedResults getTaxonomies getFacetedList showSubjects getClass getFolderName"
+	allowed_interface=".interfaces.IRerSiteSearch"
 	/>
 	
   <!-- Resource directory for js -->
