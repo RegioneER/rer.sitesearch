@@ -4,6 +4,7 @@ Changelog
 1.0.1
 ------------------
 
+- rimosso indice searchSubject [andrea]
 - cambiato nome del field per l'ordinamento (#67 attività RER) [andrea]
 - aggiunto header per segnalare dove si è effettuata la ricerca [jacopo e andrea]
 
