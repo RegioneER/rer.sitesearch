@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.1 (UNRELEASED)
+1.0.1
 ------------------
 
 - cambiato nome del field per l'ordinamento (#67 attività RER) [andrea]
