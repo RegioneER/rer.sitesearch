@@ -1,7 +1,12 @@
 Changelog
 =========
 
-1.0.1
+1.0.2 (2010/10/28)
+------------------
+
+- rimesso titolo della cartella nella vista [andrea]
+
+1.0.1 (2010/10/28)
 ------------------
 
 - rimosso indice searchSubject [andrea]
