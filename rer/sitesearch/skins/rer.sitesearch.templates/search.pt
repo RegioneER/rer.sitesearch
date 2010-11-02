@@ -78,7 +78,7 @@
 							<tal:total replace="number_total_results" i18n:name="number_total_results" /> total result
 						</span>
 					</div>
-					    <p class="discreet" id="document-action-rss"
+					    <p class="discreet document-action-rss"
        tal:condition="syntool/isSiteSyndicationAllowed">
         <a href=""
 		tal:define="query_string sitesearch_view/getQueryString"
@@ -92,8 +92,9 @@
 					       tal:content="python:divided_results[key].get('title')"
 						   i18n:translate="">Document</a>
 					</h3>
-					<dl tal:define="results python: divided_results[key]['results'];
+					<div tal:define="results python: divided_results[key]['results'];
 						            batch python:Batch(results, b_size, int(b_start), orphan=1)">
+					<dl >
 				        <tal:results repeat="result batch">
 					        <tal:entry define="result_url result/getURL;
 					                           result_type result/portal_type;
@@ -155,8 +156,10 @@
 					            </dd>
 					        </tal:entry>
 				        </tal:results>
-			        	<div metal:use-macro="here/batch_macros/macros/navigation" />
+			        	
 			        </dl>
+					<div metal:use-macro="here/batch_macros/macros/navigation" />
+					</div>
 				</dd>
 			</tal:blocks>
 		</dl>
@@ -393,7 +396,7 @@
 			 			</div>
 					</tal:faceted>
 					
-		            <div class="visualClear" id="clear-space-before-submit"><!-- --></div>
+		            <div class="visualClear" ><!-- --></div>
 		
 		            <div class="formControls">
 		                <input class="context"
