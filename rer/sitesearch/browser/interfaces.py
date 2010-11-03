@@ -16,7 +16,7 @@ class IRerSiteSearch(Interface):
         """
         """
     
-    def getFacetedList(uids):
+    def getAdditionalIndexesList(uids):
         """
         check if rer.keywordsearch is installed
         """
@@ -26,7 +26,7 @@ class IRerSiteSearch(Interface):
         """
             
             
-    def getFacetedSettings():
+    def getAdditionalIndexesSettings():
         """
         """
         
@@ -35,17 +35,26 @@ class IRerSiteSearch(Interface):
         
         """
     
-    def getClass(current_block_id,isFirst):
+    def getBlockClass(current_block_id,isFirst):
         """
         Return the current class of the tabs
         """
-    
+        
+    def setTabUrl(template_id,tab_id):
+        """
+        """
+        
+    def getTabClass(current_block_id,tab_ids,selected_tab,isFirst):
+        """
+        Return the current class of the tabs
+        """
+        
     def getFolderName(path):
         """
         Return the folder name
         """
     
-    def getQueryString():
+    def getQueryString(request_dict):
         """
         Return the query string for RSS pourpose
         """

@@ -39,7 +39,7 @@ function setSelectedTab(e){
 	}
 
 jq(document).ready(function() {
-	jq('dd.searchData').each(function (index) {
+	/*jq('dd.searchData').each(function (index) {
 		jq(this).children('h3').children().hide();
 		if (jq(this).hasClass('selectedSearchBlock')) {
 			var id = jq(this).attr('id');
@@ -51,8 +51,8 @@ jq(document).ready(function() {
 			jq(this).hide();
 		}
 	
-	});
-	jq('dl.searchResults > dt').each(function (index) {
+	});*/
+	/*jq('dl.searchResults > dt').each(function (index) {
 		jq(this).click(setSelectedTab);
-	});
+	});*/
 });

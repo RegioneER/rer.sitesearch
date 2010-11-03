@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.3-SVN_UNRELEASED
+------------------
+
+- refactoring per avere l'history [andrea]
+
 1.0.2 (2010/10/28)
 ------------------
 

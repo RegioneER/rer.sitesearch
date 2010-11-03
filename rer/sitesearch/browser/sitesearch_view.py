@@ -23,40 +23,36 @@ class RerSiteSearchView(BrowserView):
         
         tabs=['Document','File','News Item','Event','Link','Structured Document', 'FolderTaxonomy']
         divided_results = {}
-        divided_results['All']={'title':self.translation_service.utranslate(msgid="label_all",
+        divided_results['all']={'title':self.translation_service.utranslate(msgid="label_all",
                                                                        domain='plone',
                                                                        default="All",
                                                                        context=self.context),
                                 'id':'all',
                                 'results':[],}
         for result in results:
-#            if self.request.has_key('getSiteAreas'):
-#                if result.getSiteAreas != self.request.get('getSiteAreas'):
-#                    continue 
             result_type=result.portal_type
-            divided_results['All']['results'].append(result)
+            divided_results['all']['results'].append(result)
             if result_type not in tabs:
                 continue
-            if result.portal_type == 'Structured Document':
+            if result_type == 'Structured Document':
                 result_type='Document'
-            if divided_results.has_key(result_type):
-                l = divided_results[result_type]['results']
+            type_id=result_type.lower().replace(' ','-')
+            if divided_results.has_key(type_id):
+                l = divided_results[type_id]['results']
                 l.append(result)
-                divided_results[result_type]['results'] = l
+                divided_results[type_id]['results'] = l
             else:
                 portal_type=pt.getTypeInfo(result_type).Title()
                 title=self.translation_service.utranslate(msgid=portal_type,
                                                           domain='plone',
                                                           default=portal_type,
                                                           context=self.context)
-                divided_results[result_type] = {'title':title,
-                                                'id':portal_type.lower().replace(' ','-'),
+                divided_results[type_id] = {'title':title,
+                                                'id':type_id,
                                                 'results':[]}
-                l = divided_results[result_type]['results']
+                l = divided_results[type_id]['results']
                 l.append(result)
-                divided_results[result_type]['results'] = l
-#        for key in divided_results.keys():
-#            divided_results[key]['results'].sort(lambda y, x: cmp(x.ModificationDate , y.ModificationDate))
+                divided_results[type_id]['results'] = l
                 
         return divided_results
 
@@ -71,49 +67,50 @@ class RerSiteSearchView(BrowserView):
             list_results[res.Title]=res.UID
         return list_results
     
-    def getFacetedList(self,uids):
+    def getAdditionalIndexesList(self,uids):
         """
         check if rer.keywordsearch is installed
         """
-        faceted_settings=self.getFacetedSettings()
-        if not faceted_settings:
+        additional_indexes_settings=self.getAdditionalIndexesSettings()
+        if not additional_indexes_settings:
             return {}
-        faceted_elements={}
-        for keyword in faceted_settings['indexes']:
+        additional_indexes_elements={}
+        for keyword in additional_indexes_settings['indexes']:
             key_info=keyword.split('|')
             index_title=self.translation_service.utranslate(msgid=key_info[1],
                                                             domain='rer.keywordsearch',
                                                             default=key_info[1],
                                                             context=self.context)
-            faceted_elements[index_title]={'index_name':key_info[0],
-                                           'indexes_list':self.getKeywordList(uids,key_info[0],faceted_settings['whitelist'])}
-        return faceted_elements
+            additional_indexes_elements[index_title]={'index_name':key_info[0],
+                                           'indexes_list':self.getKeywordList(uids,key_info[0],additional_indexes_settings['whitelist'])}
+        return additional_indexes_elements
     
     def showSubjects(self):
-        faceted_settings=self.getFacetedSettings()
-        if not faceted_settings:
+        additional_indexes_settings=self.getAdditionalIndexesSettings()
+        if not additional_indexes_settings:
             return True
-        for keyword in faceted_settings['indexes']:
+        for keyword in additional_indexes_settings['indexes']:
             key_info=keyword.split('|')
             if key_info[0] == 'Subject':
                 return False
         return True
             
             
-    def getFacetedSettings(self):
+    def getAdditionalIndexesSettings(self):
+        
         portal_quickinstaller= getToolByName(self.context,'portal_quickinstaller')
-        if not portal_quickinstaller.isProductInstalled('rer.keywordsearch'):
-            return ()
         portal_properties = getToolByName(self.context, 'portal_properties')
         rer_properties = getattr(portal_properties, 'rer_properties')
         if not rer_properties:
             return {}
+        if not rer_properties.getProperty('indexes_in_search',()) and not portal_quickinstaller.isProductInstalled('rer.keywordsearch'):
+            return {}
+            
         if rer_properties.getProperty('indexes_in_search',()):
             keywords=rer_properties.getProperty('indexes_in_search',())
         else:
-            if not rer_properties.hasProperty('keywordview_properties'):
-                return {}
             keywords=rer_properties.getProperty('keywordview_properties',())
+        
         whitelist=rer_properties.getProperty('type_whitelist',())
         return {'indexes':keywords,
                 'whitelist':whitelist}
@@ -138,17 +135,32 @@ class RerSiteSearchView(BrowserView):
                 final_results.append(kw)
         return final_results
     
-    def getClass(self,current_block_id,isFirst=None):
-        if self.context.REQUEST.form.has_key('selected_id'):
-            if self.context.REQUEST.form.get('selected_id') == current_block_id:
-                return 'visualClear searchData selectedSearchBlock'
-            return 'visualClear searchData'
-        if isFirst:
-            return 'visualClear searchData selectedSearchBlock'
-        return 'visualClear searchData'
+    def setTabUrl(self,template_id,tab_id):
+        new_request=self.context.REQUEST.form.copy()
+        new_request['selected_tab']=tab_id
+        if new_request.has_key('b_start'):
+             del new_request['b_start']
+        query_string=self.getQueryString(new_request)
+        
+        return '%s/%s?%s' %(self.context.absolute_url(),template_id,query_string)
     
+    def getTabClass(self,current_block_id,tab_ids,selected_tab,isFirst=None):
+        if not self.context.REQUEST.form.has_key('selected_tab'):
+            if isFirst:
+                return 'linetab groupSelected'
+            return 'linetab'
+        selected_tab=self.context.REQUEST.form.get('selected_tab')
+        if selected_tab not in tab_ids:
+            if isFirst:
+                self.context.REQUEST.form['selected_tab']=current_block_id
+                return 'linetab groupSelected'
+            return 'linetab'
+        if selected_tab == current_block_id:
+                return 'linetab groupSelected'
+        return 'linetab'
+        
     def getFolderName(self,path):
         return self.context.unrestrictedTraverse(path).Title()
     
-    def getQueryString(self):
-        return urlencode(self.context.REQUEST.form,True)
+    def getQueryString(self,request_dict):
+        return urlencode(request_dict,True)
