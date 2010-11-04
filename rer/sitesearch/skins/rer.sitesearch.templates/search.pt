@@ -82,6 +82,15 @@
 						<tal:total replace="number_total_results" i18n:name="number_total_results" /> total result
 					</span>
 				</div>
+				<p class="discreet document-action-rss"
+			       tal:condition="syntool/isSiteSyndicationAllowed">
+			        <a href=""
+					tal:define="query_string python:sitesearch_view.getQueryString(request.form)"
+			           	class="link-feed"
+			           	i18n:translate="title_rss_feed"
+			           	tal:attributes="href string:$here_url/search_rss?${query_string}">
+			             RSS feed</a>
+			    </p>
 				<dl>
 					<tal:results repeat="result batch">
 						        <tal:entry define="result_url result/getURL;
@@ -241,7 +250,6 @@
 						
 						
 						<label for="sort_on-date" i18n:translate="latest_results">Latest results</label>
-						<h3 tal:content="python:request.form.get('sort_on')"/>
 						<input type="hidden" id="sortOrderField" tal:condition="python:not request.form.has_key('sort_on') or request.form.get('sort_on')==''" name="sort_order" value=""/>
 						<input type="hidden" id="sortOrderField" tal:condition="python:request.form.get('sort_on')=='effective'" name="sort_order" value="reverse"/>
 					</div>
