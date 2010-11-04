@@ -54,7 +54,7 @@ jq(document).ready(function() {
 			jq("#search :submit").click();
 		}
 	});
-	jq('dl.searchResults a.linetab').each(function (index) {
+	jq('ul.searchTabs a.linetab').each(function (index) {
 		jq(this).bind('click',doTabSearch);
 	});
 	jq('.listingBar a').each(function (index) {
