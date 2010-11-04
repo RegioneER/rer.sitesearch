@@ -119,7 +119,7 @@
 						                <span tal:replace="python:plone_view.cropText(result.Description, desc_length, desc_ellipsis)">
 						                    Cropped description
 						                </span>
-						                <span class="documentByLine"
+						                <p class="documentByLine"
 											  i18n:domain="plone"
 						                	tal:condition="python:not isAnon or site_properties.allowAnonymousViewAbout">
 						                	
@@ -149,7 +149,7 @@
 							                        </span>
 							                </span>
 							                
-						            	</span>
+						            	</p>
 						            </dd>
 						        </tal:entry>
 					        </tal:results>
