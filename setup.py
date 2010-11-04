@@ -5,7 +5,7 @@ version = '1.0.4'
 
 setup(name='rer.sitesearch',
       version=version,
-      description="",
+      description="A product that change the base site search of Plone with some new features.",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from
