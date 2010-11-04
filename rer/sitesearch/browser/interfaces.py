@@ -35,11 +35,6 @@ class IRerSiteSearch(Interface):
         
         """
     
-    def getBlockClass(current_block_id,isFirst):
-        """
-        Return the current class of the tabs
-        """
-        
     def setTabUrl(template_id,tab_id):
         """
         """
