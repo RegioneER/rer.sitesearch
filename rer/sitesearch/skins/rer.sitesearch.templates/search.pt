@@ -345,9 +345,7 @@
 										 additional_indexes_keys python:additional_indexes_dict.keys();
 										 dummy_additional_indexes python:additional_indexes_keys.sort()"
 								 tal:repeat="additional_indexes additional_indexes_keys">
-								 	<!--div>
-								 		<span tal:content="additional_indexes"/>
-								 	</div-->
+								 	
 						<!--ITERATION additional_indexes-->					
 						<div class="fieldsets" 
 							tal:define="index_dict python:additional_indexes_dict.get(additional_indexes);
