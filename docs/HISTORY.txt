@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.5-SVN_UNRELEASED (2010/11/05)
+------------------
+
+- filtrate le categorie in base al tipo selezionato [andrea]
+
 1.0.4 (2010/11/04)
 ------------------
 
