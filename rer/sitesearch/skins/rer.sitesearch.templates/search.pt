@@ -43,11 +43,12 @@
     <div  class="searchResults"  tal:condition="not: results">
         <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
     </div>
-	<tal:search_view define="res_uids python:sitesearch_view.getUids(results);">
+	<tal:search_view define="divided_results python: sitesearch_view.getDividedResults(results);
+							 results_elements python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get('all');
+					  		 res_uids python:sitesearch_view.getUids(results_elements['results']);">
 		
     <div class="searchResults" tal:condition="results"
-          tal:define="divided_results python: sitesearch_view.getDividedResults(results);
-					  portal_types portal/portal_types;
+          tal:define="portal_types portal/portal_types;
 					  tabs_order python:['all','document','news-item','event','file','link']">
 			<ul class="searchTabs">
 				<tal:tabs repeat="key tabs_order">
