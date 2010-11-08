@@ -57,7 +57,7 @@ jq(document).ready(function() {
 	jq('ul.searchTabs a.linetab').each(function (index) {
 		jq(this).bind('click',doTabSearch);
 	});
-	jq('.listingBar a').each(function (index) {
+	jq('div.searchData .listingBar a').each(function (index) {
 		jq(this).bind('click',doBatchSearch);
 	});
 	
