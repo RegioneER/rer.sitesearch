@@ -107,7 +107,7 @@
 						          </dt>
 						          <dd class="itemDescr">
 						                <span class="searchResDate"
-											  tal:condition="python:request.get('sort_on') == 'effective'">
+											  >
 						                    <tal:date condition="result/EffectiveDate">
 						                    	<span tal:replace="python:toLocalizedTime(result.EffectiveDate)">
 						                    		August 16, 2001 at 23:35:59
