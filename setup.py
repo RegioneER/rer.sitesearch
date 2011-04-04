@@ -29,7 +29,5 @@ setup(name='rer.sitesearch',
       ],
       entry_points="""
       # -*- Entry points: -*-
-
       """,
-      paster_plugins=["ZopeSkel"],
       )
