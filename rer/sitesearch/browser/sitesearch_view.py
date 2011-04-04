@@ -56,17 +56,6 @@ class RerSiteSearchView(BrowserView):
                 
         return divided_results
 
-    def getTaxonomies(self,uids):
-        catalog = getToolByName(self.context, 'portal_catalog')
-        taxonomy_uids=self.getKeywordList(uids,'getSiteAreas')
-        if not taxonomy_uids:
-            return {}
-        taxonomies=catalog(portal_type="FolderTaxonomy",UID=taxonomy_uids)
-        list_results={}
-        for res in taxonomies:
-            list_results[res.Title]=res.UID
-        return list_results
-    
     def getAdditionalIndexesList(self,uids):
         """
         check if rer.keywordsearch is installed

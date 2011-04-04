@@ -11,10 +11,6 @@ class IRerSiteSearch(Interface):
         
         """Retrieves a dictionary of lists of results divided by type, ordered by ModificationDate
         """
-
-    def getTaxonomies(uids):
-        """
-        """
     
     def getAdditionalIndexesList(uids):
         """

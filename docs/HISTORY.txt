@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.1.0 (2011/04/04)
+------------------
+
+- rimossa visualizzazione di default per le tassonomie. Adesso vanno specificate nella property [andrea]
+
 1.0.6 (2010/11/08)
 ------------------
 

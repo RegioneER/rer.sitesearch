@@ -298,47 +298,6 @@
 							   value="operator:and"/>
 		            </div>
 					
-					<!--SITE AREAS-->					
-					<div class="fieldsets" 
-						tal:define="checked_siteareas python:request.get('getSiteAreas',[]);
-									site_areas_list python:sitesearch_view.getTaxonomies(res_uids)"
-						tal:condition="site_areas_list">
-		                <h3 i18n:translate="thematic_areas">Thematic areas</h3>
-		            
-						<tal:areas define="sorted_areas python:site_areas_list.keys();
-										 dummy_areas python:sorted_areas.sort()">
-							 <div tal:repeat="area sorted_areas">
-			                    <input type="checkbox"
-			                           name="getSiteAreas:list"
-			                           value="#"
-			                           class="noborder"
-			                           tal:attributes="value python:site_areas_list[area];
-			                           				   id string:areas_${repeat/area/number};
-			                           				   checked python:site_areas_list[area] in checked_siteareas"/>
-			
-			                    <label for=""
-									i18n:domain="plone-metadata"
-									i18n:translate=""
-									tal:attributes="for string:areas_${repeat/area/number}"
-									tal:content="area"
-			                    	/>
-			                    <br />
-						</div>
-					 	</tal:areas>
-						<div style="text-align:right"
-							tal:condition="checked_siteareas">
-							<a class="portal-breadcrumbs"
-								id="deselect-siteareas"
-								href="search">
-								<span i18n:translate="label_remove_filters">Remove all filters</span>
-							</a>
-						</div>
-						<input type="hidden"
-							   name="getSiteAreas_usage:ignore_empty"
-							   id="getSiteAreas_and"
-							   value="operator:and"/>
-		 			</div>
-		 			
 					
 					<!--ADDITIONAL INDEXES and FACETED-->
 					<tal:additional_indexes define="additional_indexes_dict python:sitesearch_view.getAdditionalIndexesList(res_uids);
