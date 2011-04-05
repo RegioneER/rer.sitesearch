@@ -300,66 +300,65 @@
 					
 					
 					<!--ADDITIONAL INDEXES and FACETED-->
-					<tal:additional_indexes define="additional_indexes_dict python:sitesearch_view.getAdditionalIndexesList(res_uids);
-										 additional_indexes_keys python:additional_indexes_dict.keys();
-										 dummy_additional_indexes python:additional_indexes_keys.sort()"
-								 tal:repeat="additional_indexes additional_indexes_keys">
-								 	
-						<!--ITERATION additional_indexes-->					
-						<div class="fieldsets" 
-							tal:define="index_dict python:additional_indexes_dict.get(additional_indexes);
-										index_name python:index_dict.get('index_name');
-										index_elements python:index_dict.get('indexes_list');
-										checked_index python:request.get(index_name,[]);"
-							tal:condition="index_elements">
-			                <h3 tal:content="additional_indexes">Index Keyword</h3>
-			            
-								 <div tal:repeat="kw index_elements">
-				                    <input type="checkbox"
-				                           value="#"
-				                           class="noborder"
-				                           tal:attributes="name string:${index_name}:list; 
-										   				   value python:kw;
-				                           				   id string:${index_name}_${repeat/kw/number};
-				                           				   checked python:kw in checked_index"/>
-				
-				                    <label for=""
-										i18n:domain="plone-metadata"
-										i18n:translate=""
-										tal:attributes="for string:${index_name}_${repeat/kw/number};"
-										tal:content="kw"
-				                    	/>
-				                    <br />
-							</div>
-							<div style="text-align:right"
-								tal:condition="checked_index">
-								<a class="portal-breadcrumbs"
-									href="search"
-									tal:condition="checked_index"
-									onclick=""
-									tal:attributes="id string:deselect-${index_name};
-													onclick string:javascript:removeAdditionalIndexFilter('${index_name}');;return false">
-									<span i18n:translate="label_remove_filters">Remove all filters</span>
-								</a>
-							</div>
-							<input type="hidden"
-								   tal:attributes="name string:${index_name}_usage:ignore_empty;
-								   				   id string:${index_name}_and"
-								   value="operator:and"/>
-			 			</div>
-					</tal:additional_indexes>
-					
-		            <div class="visualClear" ><!-- --></div>
-		
-		            <div class="formControls">
-		                <input class="context"
-		                       type="submit"
-		                       name="submit"
-		                       value="Search"
-							   i18n:domain="plone"
-		                       i18n:attributes="value label_search;"
-		                       />
-		            </div>
+                    <tal:additional_indexes define="additional_indexes_list python:sitesearch_view.getAdditionalIndexesList(res_uids)"
+                                            condition="additional_indexes_list"
+                                 tal:repeat="additional_index additional_indexes_list">
+                                    
+                        <!--ITERATION additional_indexes-->                 
+                        <div class="fieldsets" 
+                            tal:define="index_name python:additional_index.get('index_name');
+                                        index_title python:additional_index.get('index_title');
+                                        index_elements python:additional_index.get('indexes_list');
+                                        checked_index python:request.get(index_name,[]);"
+                            tal:condition="index_elements">
+                            <h3 tal:content="index_title">Index Keyword</h3>
+                        
+                                 <div tal:repeat="kw index_elements">
+                                    <input type="checkbox"
+                                           value="#"
+                                           class="noborder"
+                                           tal:attributes="name string:${index_name}:list; 
+                                                           value python:kw;
+                                                           id string:${index_name}_${repeat/kw/number};
+                                                           checked python:kw in checked_index"/>
+                
+                                    <label for=""
+                                        i18n:domain="plone-metadata"
+                                        i18n:translate=""
+                                        tal:attributes="for string:${index_name}_${repeat/kw/number};"
+                                        tal:content="kw"
+                                        />
+                                    <br />
+                            </div>
+                            <div style="text-align:right"
+                                tal:condition="checked_index">
+                                <a class="portal-breadcrumbs"
+                                    href="search"
+                                    tal:condition="checked_index"
+                                    onclick=""
+                                    tal:attributes="id string:deselect-${index_name};
+                                                    onclick string:javascript:removeAdditionalIndexFilter('${index_name}');;return false">
+                                    <span i18n:translate="label_remove_filters">Remove all filters</span>
+                                </a>
+                            </div>
+                            <input type="hidden"
+                                   tal:attributes="name string:${index_name}_usage:ignore_empty;
+                                                   id string:${index_name}_and"
+                                   value="operator:and"/>
+                        </div>
+                    </tal:additional_indexes>
+                    
+                    <div class="visualClear" ><!-- --></div>
+        
+                    <div class="formControls">
+                        <input class="context"
+                               type="submit"
+                               name="submit"
+                               value="Search"
+                               i18n:domain="plone"
+                               i18n:attributes="value label_search;"
+                               />
+                    </div>
 				
 		        </fieldset>
 		    	

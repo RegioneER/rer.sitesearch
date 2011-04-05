@@ -63,15 +63,16 @@ class RerSiteSearchView(BrowserView):
         additional_indexes_settings=self.getAdditionalIndexesSettings()
         if not additional_indexes_settings:
             return {}
-        additional_indexes_elements={}
+        additional_indexes_elements=[]
         for keyword in additional_indexes_settings['indexes']:
             key_info=keyword.split('|')
             index_title=self.translation_service.utranslate(msgid=key_info[1],
                                                             domain='rer.keywordsearch',
                                                             default=key_info[1],
                                                             context=self.context)
-            additional_indexes_elements[index_title]={'index_name':key_info[0],
-                                           'indexes_list':self.getKeywordList(uids,key_info[0],additional_indexes_settings['whitelist'])}
+            additional_indexes_elements.append({'index_title':index_title,
+                                                'index_name':key_info[0],
+                                                'indexes_list':self.getKeywordList(uids,key_info[0],additional_indexes_settings['whitelist'])})
         return additional_indexes_elements
     
     def showSubjects(self):
