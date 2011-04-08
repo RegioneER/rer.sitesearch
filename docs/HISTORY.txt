@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.1 (2011/04/??)
+1.1.1 (2011/04/07)
 ------------------
 
 - rimosso ordinamento alfabetico degli indici. Ora prende l'ordine impostato nella property [andrea]
