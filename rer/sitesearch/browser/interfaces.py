@@ -6,7 +6,7 @@ class IRerSiteSearch(Interface):
     def getUids(results):
         """
         """
-    
+
     def getDividedResults(results):
         
         """Retrieves a dictionary of lists of results divided by type, ordered by ModificationDate

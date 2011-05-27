@@ -24,4 +24,13 @@ def insertProperties(context):
     if not rer_properties.hasProperty('indexes_in_search'):
         rer_properties.manage_addProperty(id='indexes_in_search',value='',type='lines')
         portal.plone_log("Added indexes_in_search property")
+    if not rer_properties.hasProperty('tabs_list'):
+        rer_properties.manage_addProperty(id='tabs_list',
+                                          value=('Document|Documents',
+                                                 'News Item|News',
+                                                 'Event|Events'
+                                                 'File|File',
+                                                 'Link|Links'),
+                                          type='lines')
+        portal.plone_log("Added indexes_in_search property")
     

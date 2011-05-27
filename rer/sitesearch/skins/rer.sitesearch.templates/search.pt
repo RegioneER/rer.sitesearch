@@ -49,15 +49,16 @@
 		
     <div class="searchResults" tal:condition="results"
           tal:define="portal_types portal/portal_types;
-					  tabs_order python:['all','document','news-item','event','file','link']">
+					  tabs_order divided_results/tabs_order">
 			<ul class="searchTabs">
 				<tal:tabs repeat="key tabs_order">
-					<li tal:condition="python:divided_results.has_key(key)"
+					<li tal:condition="python:divided_results.has_key(key) and divided_results[key].get('results',[])"
 						tal:define="isFirst repeat/key/start"
 						tal:attributes="id python:divided_results[key].get('id')">				            	
 						<a class=""
 						   tal:attributes="class python:sitesearch_view.getTabClass(divided_results[key].get('id'),divided_results.keys(),selected_tab,isFirst);
 						   				   href python:sitesearch_view.setTabUrl(template_id,divided_results[key].get('id'))"
+						   i18n:translate=""
 						   tal:content="python:divided_results[key].get('title')">
 							Document
 						</a>
@@ -311,7 +312,7 @@
                                         index_elements python:additional_index.get('indexes_list');
                                         checked_index python:request.get(index_name,[]);"
                             tal:condition="index_elements">
-                            <h3 tal:content="index_title">Index Keyword</h3>
+                            <h3 i18n:translate="" tal:content="index_title">Index Keyword</h3>
                         
                                  <div tal:repeat="kw index_elements">
                                     <input type="checkbox"

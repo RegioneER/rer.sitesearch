@@ -3,107 +3,107 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2011-05-27 13:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"Last-Translator: Andrea Cecchi <andrea.cecchi@redturtle.net>\n"
-"Language-Team: LANGUAGE <sviluppoplone@redturtle.net>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: it\n"
-"Language-Name: Italian\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: rer.sitesearch\n"
 
 msgid "All"
-msgstr "Tutti"
+msgstr ""
 
 msgid "Documents"
-msgstr "Documenti"
+msgstr ""
 
 msgid "Events"
-msgstr "Eventi"
+msgstr ""
 
 msgid "File"
 msgstr ""
 
 msgid "Links"
-msgstr "Collegamenti"
+msgstr ""
 
 msgid "News"
-msgstr "Notizie"
+msgstr ""
 
 #. Default: "You searched in: ${folder_name}"
 #: ./skins/rer.sitesearch.templates/search.pt:40
 msgid "You searched in: ${folder_name}"
-msgstr "Hai cercato in: ${folder_name}"
+msgstr ""
 
 #. Default: "Closer results"
 #: ./skins/rer.sitesearch.templates/search.pt:245
 msgid "closer_results"
-msgstr "Più simili"
+msgstr ""
 
 #. Default: "No results were found."
 #: ./skins/rer.sitesearch.templates/search.pt:44
 msgid "description_no_results_found"
-msgstr "Nessun risultato trovato."
+msgstr ""
 
 #. Default: "Categories"
 #: ./skins/rer.sitesearch.templates/search.pt:264
 msgid "label_categories"
-msgstr "Categorie"
+msgstr ""
 
 #. Default: "Remove all filters"
 #: ./skins/rer.sitesearch.templates/search.pt:292
 msgid "label_remove_filters"
-msgstr "Rimuovi tutti i filtri"
+msgstr ""
 
 #. Default: "Search in"
 #: ./skins/rer.sitesearch.templates/search.pt:198
 msgid "label_search_in"
-msgstr "Cerca in"
+msgstr ""
 
 #. Default: "Search text"
 #: ./skins/rer.sitesearch.templates/search.pt:175
 msgid "label_search_text"
-msgstr "Testo"
+msgstr ""
 
 #. Default: "All the site"
 #: ./skins/rer.sitesearch.templates/search.pt:219
 msgid "label_searchbox_all_site"
-msgstr "Tutto il sito"
+msgstr ""
 
 #. Default: "Latest results"
 #: ./skins/rer.sitesearch.templates/search.pt:254
 msgid "latest_results"
-msgstr "Più recenti"
+msgstr ""
 
 #. Default: "Refine your search:"
 #: ./skins/rer.sitesearch.templates/search.pt:172
 msgid "less_results"
-msgstr "Raffina la ricerca:"
+msgstr ""
 
 #. Default: "Sort on"
 #: ./skins/rer.sitesearch.templates/search.pt:237
 msgid "sort_on"
-msgstr "Ordina per"
+msgstr ""
 
 #. Default: "RSS feed"
 #: ./skins/rer.sitesearch.templates/search.pt:89
 msgid "title_rss_feed"
-msgstr "Feed RSS"
+msgstr ""
 
 #. Default: "${number_part_results} results of this type of ${number_total_results} total results"
 #: ./skins/rer.sitesearch.templates/search.pt:76
 msgid "view_number_of_results"
-msgstr "${number_part_results} risultati di questo tipo su ${number_total_results} risultati totali"
+msgstr ""
 
 #. Default: "${number_part_results} result of this type of ${number_total_results} total results"
 #: ./skins/rer.sitesearch.templates/search.pt:80
 msgid "view_number_of_results_part1"
-msgstr "${number_part_results} risultato di questo tipo su ${number_total_results} risultati totali"
+msgstr ""
 
 #. Default: "${number_part_results} result of this type of ${number_total_results} total result"
 #: ./skins/rer.sitesearch.templates/search.pt:84
 msgid "view_number_of_results_total1"
-msgstr "${number_part_results} risultato di questo tipo su ${number_total_results} risultato totale"
+msgstr ""
 
