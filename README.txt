@@ -8,8 +8,7 @@ It has a left column with the search form and some additional fields to refine t
  * some customizable indexes (the list of indexes can be set in site_properties->rer_properties)
  
 In the central frame there are the results, splitted by portaly types 
-('Document','File','News Item','Event','Link','Structured Document', 'FolderTaxonomy'),
-but in the future these tabs will be customizables.
+('Document','File','News Item','Event','Link','Structured Document', 'FolderTaxonomy').
 
 
 Settings
