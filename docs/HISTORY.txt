@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.2.0 (2011/06/??)
+------------------
+
+- Aggiunta customizzaizone dei tab [andrea]
+
 1.1.1 (2011/04/07)
 ------------------
 

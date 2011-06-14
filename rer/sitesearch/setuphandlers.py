@@ -28,7 +28,7 @@ def insertProperties(context):
         rer_properties.manage_addProperty(id='tabs_list',
                                           value=('Document|Documents',
                                                  'News Item|News',
-                                                 'Event|Events'
+                                                 'Event|Events',
                                                  'File|File',
                                                  'Link|Links'),
                                           type='lines')
