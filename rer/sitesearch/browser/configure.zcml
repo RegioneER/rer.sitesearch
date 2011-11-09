@@ -24,9 +24,9 @@
       />
       
   <!-- Resource directory for images -->
-  <!--browser:resourceDirectory
+  <browser:resourceDirectory
       name="rer.sitesearch.images"
       directory="images"
-      /-->
+      />
       
 </configure>

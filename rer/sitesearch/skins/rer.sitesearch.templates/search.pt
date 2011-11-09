@@ -71,10 +71,10 @@
 										   
 				<div class="rnum" tal:define="number_part_results python: len(results_block['results']);
 											  number_total_results python: len(results)">
-					<span i18n:translate="view_number_of_results" tal:condition="python: number_total_results != 1 and number_part_results != 1">
-						<tal:part replace="number_part_results" i18n:name="number_part_results" /> results of this type of
-						<tal:total replace="number_total_results" i18n:name="number_total_results" /> total results
-					</span>
+					<tal:total i18n:translate="view_number_of_results" condition="python: number_total_results != 1 and number_part_results != 1">
+						<span class="resType"><tal:part replace="number_part_results" i18n:name="number_part_results" /> results</span> of this type of
+						<span class="resTot"><tal:total replace="number_total_results" i18n:name="number_total_results" /> total results</span>
+					</tal:total>
 					<span i18n:translate="view_number_of_results_part1" tal:condition="python: number_total_results != 1 and number_part_results == 1">
 						<tal:part replace="number_part_results" i18n:name="number_part_results" /> result of this type of
 						<tal:total replace="number_total_results" i18n:name="number_total_results" /> total results
@@ -179,10 +179,7 @@
 		                       name="SearchableText"
 		                       tal:attributes="value request/SearchableText|nothing"
 		                       />
-		            </div>
-		            
-					<div class="formControls">
-		                <input class="context"
+		                <input class="context submitSearch"
 		                       type="submit"
 		                       name="submit"
 		                       value="Search"
@@ -190,6 +187,7 @@
 		                       i18n:attributes="value label_search;"
 		                       />
 		            </div>
+		            				
 					<div class="visualClear" id="clear-space-before-submit"><!-- --></div>
 					
 					<!--PATH-->
@@ -234,26 +232,27 @@
 					<!--Ordinamento-->
 					<div class="fieldsets"
 						tal:define="sort_on request/sort_on|nothing">
-					<h3 i18n:translate="sort_on">Sort on</h3>
-						
-						<input	type="radio"
-								class="noborder"
-								id="sort_on-similarity"
-								name="sort_on"
-								value=""
-								tal:attributes="checked python:str(sort_on) != 'effective'"/>
-						<label for="sort_on-similarity" i18n:translate="closer_results">Closer results</label>
-						<input	type="radio"
-								class="noborder"
-								id="sort_on-date"
-								name="sort_on"
-								value="effective"
-								tal:attributes="checked python: sort_on == 'effective'"/>
-						
-						
-						<label for="sort_on-date" i18n:translate="latest_results">Latest results</label>
-						<input type="hidden" id="sortOrderField" tal:condition="python:not request.form.has_key('sort_on') or request.form.get('sort_on')==''" name="sort_order" value=""/>
-						<input type="hidden" id="sortOrderField" tal:condition="python:request.form.get('sort_on')=='effective'" name="sort_order" value="reverse"/>
+						<h3 i18n:translate="sort_on">Sort on</h3>
+						<div class="fieldsetsItem fieldsetOrderBy">	
+							<input	type="radio"
+									class="noborder"
+									id="sort_on-similarity"
+									name="sort_on"
+									value=""
+									tal:attributes="checked python:str(sort_on) != 'effective'"/>
+							<label for="sort_on-similarity" i18n:translate="closer_results">Closer results</label>
+							<input	type="radio"
+									class="noborder"
+									id="sort_on-date"
+									name="sort_on"
+									value="effective"
+									tal:attributes="checked python: sort_on == 'effective'"/>
+							
+							
+							<label for="sort_on-date" i18n:translate="latest_results">Latest results</label>
+							<input type="hidden" id="sortOrderField" tal:condition="python:not request.form.has_key('sort_on') or request.form.get('sort_on')==''" name="sort_order" value=""/>
+							<input type="hidden" id="sortOrderField" tal:condition="python:request.form.get('sort_on')=='effective'" name="sort_order" value="reverse"/>
+						</div>
 					</div>
 					
 					<!--SUBJECTS-->
@@ -263,7 +262,8 @@
 										   tal:condition="python:usedSubjects and show_subjects">
 		            	<h3 i18n:translate="label_categories">Categories</h3>
 		
-						<div tal:define="SubjectsLists python:here.createMultiColumnList(usedSubjects, numCols=4, sort_on='self');"
+						<div class="fieldsetsItem"
+							 tal:define="SubjectsLists python:here.createMultiColumnList(usedSubjects, numCols=4, sort_on='self');"
 		                     tal:repeat="sublist SubjectsLists">
 							<tal:items repeat="subject sublist">
 			                    <input type="checkbox"
@@ -284,7 +284,7 @@
 			                </tal:items>
 							
 						</div>
-						<div style="text-align:right"
+						<div class="fieldsetsItem linkRemoveFilters"
 							tal:condition="checked_subjects">
 							<a class="portal-breadcrumbs"
 								id="deselect-subjects"
@@ -314,7 +314,7 @@
                             tal:condition="index_elements">
                             <h3 i18n:translate="" tal:content="index_title">Index Keyword</h3>
                         
-                                 <div tal:repeat="kw index_elements">
+                                 <div tal:repeat="kw index_elements" class="fieldsetsItem">
                                     <input type="checkbox"
                                            value="#"
                                            class="noborder"
@@ -352,7 +352,7 @@
                     <div class="visualClear" ><!-- --></div>
         
                     <div class="formControls">
-                        <input class="context"
+                        <input class="context submitSearch"
                                type="submit"
                                name="submit"
                                value="Search"
@@ -375,6 +375,7 @@
 		    </form>
     	</tal:searchform>   
 		</tal:search_view>
+		<div class="visualClear"><!-- --></div>
 </div>
 </body>
 </html>

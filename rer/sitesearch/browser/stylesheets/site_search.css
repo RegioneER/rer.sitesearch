@@ -5,15 +5,18 @@ div.searchResults dl{
 }
 
 dl dt.searchResTitle{
-	font-size:1.1em;
 	margin-top:1em;
 	display:inline;
-	font-weight:bold;
+    font-size: 1.15em;
+    font-weight: normal;
+    line-height: 1.5em;
+
 }
 
 div.searchResults li {
 	font-size:1em;
-	margin-top:1em;
+	position: relative;
+	top: 1px;
 	display:inline;
 }
 
@@ -25,8 +28,10 @@ div.searchResults dd  {
 }
 
 div.searchResults dd.itemDescr {
-	margin-bottom: 0.3em;
-	font-size:0.95em;
+    color: #666666;
+    font-size: 0.9em;
+    margin-bottom: 1em;
+    margin-left: 20px;
 }
 
 
@@ -38,73 +43,128 @@ span.searchResDate{
 #search_column .formControls{text-align:right;}
 
 #rerSearchText {
-	float:left;
-	margin-left:0.5em;
+	padding: 0.5em 0;
+	margin:0;
 }
 
-#rerSearchText input{
-	width:12em;	
+#rerSearchText input[type="text"]{
+	width:65%;	
 }
 
-.template-search  legend{ background-color:transparent; font-weight:bold; font-size:120%;}
-.template-search label{font-weight:normal}
-.template-search #clear-space-before-wrapper-table{height:0}
-.template-search .documentContent{padding:0 !important}
-.template-search form.enableAutoFocus h2, .template-search  h1{/*font-size:130%;*/}
-.template-search form.enableAutoFocus{ margin-top:0;  padding:0px; float:left; width:30%;}
-.template-search form.enableAutoFocus fieldset{background-color:#eee;}
-form.searchPage input.searchButton{height:1.4em !important}
-.documentEditable {
-	margin:0 !important;
-	padding:0 !important;
-}
+#search_column  legend{ background-color:transparent; font-weight:normal; font-size:120%; padding:0; display: block;}
+#rerSearchText label{font-weight:normal; display: block; font-size: 0.9em;}
+#search_column #clear-space-before-wrapper-table{height:0}
 
+#search_column form.enableAutoFocus h2, .template-search  h1{/*font-size:130%;*/}
+#search_column form.enableAutoFocus{ margin-top:0;  padding:0px; float:left; width:30%;}
+#search_column form.enableAutoFocus fieldset{background-color:#eee;}
+#search_column input.searchButton{height:1.4em !important}
+#search_column label {
+    font-weight: normal;
+}
+#search_column .fieldsetOrderBy label {
+    margin-right: 1em;
+}
 div.searchResults{
 	float:right;
 	width:65%;
-	padding-top:2px;
+    margin-left: 20px;
 }
 
 ul.searchTabs{
-	line-height: 1.35em;
+	line-height: 1.6em;
+    margin:0 1em;
 }
 
-.linetab {
-	background-color:transparent;
-	border-color:#8CACBB;
-	border-style:solid solid none;
-	border-width:1px;
-	color:#436976;
+#content a.linetab {
 	margin-right:0.5em;
-	padding:0 1.25em 0.1em;
+	padding:0.2em 1.25em 0.1em;
 	text-decoration:none;
 	text-transform:none;
+	background-color: #EEE;;
+    border:1px solid #515151;
+    color: #515151;
 }
 
-.documentContent li a{
-	border-bottom:0;
+#content li .linetab:hover, #content li .groupSelected {
+	background-color:#515151;
+    color: #fff ;
+}
+#content li .linetab:hover {
+    text-decoration: underline;
 }
 
-.documentContent li .linetab:hover,.documentContent li .groupSelected {
-	background-color:#DEE7EC;
-	border-color:#8CACBB #8CACBB #DEE7EC;
-	border-style:solid solid none;
-	border-width:1px;
-	color:#436976;
-}
-
-a.groupSelected{
+#content li .groupSelected {
+    border-bottom:2px solid #515151;
+	border:none;
 	padding-bottom:0.125em;
 }
 
 .rnum {
-	background-color:#DEE7EC;
-	color:#436976;
-	border:1px solid #8CACBB;
+	background-color:#F0F0F0;
+	color:#515151;
+	border:1px solid #515151;
+    border-right: medium none;
+    border-style: solid none none;
+    border-width: 2px medium medium;
 	line-height:1.6em;
 	margin:0;
-	padding:0 3em;
+	padding:0.2em 1em;
 	text-align:right;
+	font-size: 0.95em;
+}
+.rnum .resType,
+.rnum .resTot {
+    font-weight: bold;
 }
 
-.searchResults p.document-action-rss{ float:right; font-size:100%; margin-top:4px}
+.searchResults p.document-action-rss{ 
+    float:right; 
+    font-size:100%; 
+    margin-top:4px;
+    background: url("++resource++rer.sitesearch.images/rss-icon.png") no-repeat scroll 2px 0 #FFFFFF;
+    padding-left: 22px;
+}
+
+
+#search_column{
+    border:none;
+    background-color:transparent; 
+    padding:0;
+}
+
+.searchResults .documentAuthor{display:none}
+.searchResTitle a {
+    text-decoration: none;
+    border-bottom: 1px solid #CCC;
+}
+
+.listingBar{text-align:right}
+
+#search_column .fieldsets{
+    background-color:#F0F0F0; 
+    margin-bottom: 15px;
+}
+#search_column .fieldsets h3{ 
+    background-color: #515151;
+    color: #FFFFFF;
+    font-size: 1em;
+    font-weight: normal;
+    padding: 0.2em 0.5em;
+}
+#search_column .fieldsets .fieldsetsItem {
+    padding: 0.2em 0.5em;
+}
+#search_column .fieldsets .linkRemoveFilters {
+    text-align: right;
+    background-color: #DDD;
+    font-size: 0.9em;
+}
+#search_column input.submitSearch
+{
+    background: url("++resource++rer.sitesearch.images/ico_search.gif") no-repeat scroll 2px center transparent;
+    margin-left: 0.5em;
+    padding-left: 22px;
+    height: 2em;
+} 
+

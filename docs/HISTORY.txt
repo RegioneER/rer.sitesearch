@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.3.0 (xxxx/xx/xx)
+------------------
+
+- Sistemata grafica e css [nekorin]
+
 1.2.0 (2011/06/20)
 ------------------
 
