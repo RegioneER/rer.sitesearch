@@ -263,26 +263,22 @@
 		            	<h3 i18n:translate="label_categories">Categories</h3>
 		
 						<div class="fieldsetsItem"
-							 tal:define="SubjectsLists python:here.createMultiColumnList(usedSubjects, numCols=4, sort_on='self');"
-		                     tal:repeat="sublist SubjectsLists">
-							<tal:items repeat="subject sublist">
+		                     tal:repeat="subject usedSubjects">
 			                    <input type="checkbox"
 			                           name="Subject:list"
 			                           value="#"
 			                           class="noborder"
 			                           tal:attributes="value subject;
-			                           				   id string:subject_${repeat/sublist/number}_${repeat/subject/number};
+			                           				   id string:subject_${repeat/subject/number};
 			                           				   checked python: checked_subjects and subject in checked_subjects"/>
 			
 			                    <label for=""
 									i18n:domain="plone-metadata"
 									i18n:translate=""
-									tal:attributes="for string:subject_${repeat/sublist/number}_${repeat/subject/number}"
+									tal:attributes="for string:subject_${repeat/subject/number}"
 									tal:content="subject"
 			                    	/>
 			                    <br />
-			                </tal:items>
-							
 						</div>
 						<div class="fieldsetsItem linkRemoveFilters"
 							tal:condition="checked_subjects">
