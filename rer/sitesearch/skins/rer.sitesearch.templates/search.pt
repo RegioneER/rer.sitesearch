@@ -278,7 +278,6 @@
 									tal:attributes="for string:subject_${repeat/subject/number}"
 									tal:content="subject"
 			                    	/>
-			                    <br />
 						</div>
 						<div class="fieldsetsItem linkRemoveFilters"
 							tal:condition="checked_subjects">
@@ -325,9 +324,8 @@
                                         tal:attributes="for string:${index_name}_${repeat/kw/number};"
                                         tal:content="kw"
                                         />
-                                    <br />
                             </div>
-                            <div style="text-align:right"
+                            <div class="fieldsetsItem linkRemoveFilters"
                                 tal:condition="checked_index">
                                 <a class="portal-breadcrumbs"
                                     href="search"
