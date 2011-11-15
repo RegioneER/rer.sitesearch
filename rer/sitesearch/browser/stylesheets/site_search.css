@@ -16,7 +16,7 @@ dl dt.searchResTitle{
 div.searchResults li {
 	font-size:1em;
 	position: relative;
-	top: 1px;
+	top: 0px;
 	display:inline;
 }
 
@@ -95,8 +95,8 @@ ul.searchTabs{
 }
 
 #content li .groupSelected {
-    border-bottom:2px solid #515151;
 	border:none;
+    border-bottom:2px solid #515151;
 	padding-bottom:0.125em;
 }
 
