@@ -61,46 +61,6 @@ class RerSiteSearchView(BrowserView):
                 continue
             self.tabs_dict[type_id]['results'].append(result)
         return self.tabs_dict
-    
-#    def getDividedResults(self,results):
-#        
-#        """Retrieves a dictionary of lists of results divided by type, ordered by ModificationDate
-#        """
-#        pt= getToolByName(self.context,'portal_types')
-#        tabs=self.rer_properties.getProperty('tabs_list',())
-#        divided_results = {}
-#        divided_results['all']={'title':self.translation_service.utranslate(msgid="label_all",
-#                                                                       domain='plone',
-#                                                                       default="All",
-#                                                                       context=self.context),
-#                                'id':'all',
-#                                'results':[],}
-#        for result in results:
-#            result_type=result.portal_type
-#            divided_results['all']['results'].append(result)
-#            if result_type not in tabs:
-#                continue
-#            if result_type == 'Structured Document':
-#                result_type='Document'
-#            type_id=result_type.lower().replace(' ','-')
-#            if divided_results.has_key(type_id):
-#                l = divided_results[type_id]['results']
-#                l.append(result)
-#                divided_results[type_id]['results'] = l
-#            else:
-#                portal_type=pt.getTypeInfo(result_type).Title()
-#                title=self.translation_service.utranslate(msgid=portal_type,
-#                                                          domain='plone',
-#                                                          default=portal_type,
-#                                                          context=self.context)
-#                divided_results[type_id] = {'title':title,
-#                                                'id':type_id,
-#                                                'results':[]}
-#                l = divided_results[type_id]['results']
-#                l.append(result)
-#                divided_results[type_id]['results'] = l
-#                
-#        return divided_results
 
     def getAdditionalIndexesList(self,uids):
         """
@@ -194,7 +154,11 @@ class RerSiteSearchView(BrowserView):
         return 'linetab'
         
     def getFolderName(self,path):
-        return self.context.unrestrictedTraverse(path).Title()
+        folder=self.context.unrestrictedTraverse(path,None)
+        if folder:
+            return folder.Title()
+        else:
+            return path
     
     def getQueryString(self,request_dict):
         return urlencode(request_dict,True)

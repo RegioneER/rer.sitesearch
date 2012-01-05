@@ -39,7 +39,6 @@
 		tal:condition="python:request.form.get('path','') and request.form.get('path') != '/'.join(context.portal_url.getPortalObject().getPhysicalPath())">
 		You searched in: <span tal:content="python:sitesearch_view.getFolderName(request.form.get('path'))" i18n:name="folder_name">Folder</span> 
 	</h1>	           
-	
     <div  class="searchResults"  tal:condition="not: results">
         <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
     </div>

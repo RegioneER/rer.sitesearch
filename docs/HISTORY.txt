@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.3.1 (2011/11/28)
+------------------
+
+- Fix errore nel titolo quando il path non è corretto (#329) [andrea]
+
 1.3.0 (2011/11/28)
 ------------------
 
