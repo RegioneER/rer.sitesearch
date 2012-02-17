@@ -172,7 +172,7 @@ class RerSiteSearchView(BrowserView):
         hidden_dict={'index_titles':[],
                      'indexes_to_add':[]}
         if not hiddenlist:
-            return []
+            return hidden_dict
         for hidden_index in hiddenlist:
             index_info=hidden_index.split('|')
             index=index_info[0]
