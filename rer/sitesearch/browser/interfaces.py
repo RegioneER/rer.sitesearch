@@ -5,11 +5,17 @@ class IRerSiteSearch(Interface):
     
     def getUids(results):
         """
+        Return a list of uids for given results
         """
-
+    
+    def setTabsDict():
+        """
+        Set the starting dict with all the infos about tabs and results
+        """
+    
     def getDividedResults(results):
-        
-        """Retrieves a dictionary of lists of results divided by type, ordered by ModificationDate
+        """
+        Retrieves a dictionary of lists of results divided by type, ordered by serarchResults
         """
     
     def getAdditionalIndexesList(uids):
@@ -19,8 +25,9 @@ class IRerSiteSearch(Interface):
     
     def showSubjects():
         """
+        Subject is the default index in the left column.
+        If Subject is in additional_indexes, don't show default subject section
         """
-            
             
     def getAdditionalIndexesSettings():
         """
@@ -43,6 +50,10 @@ class IRerSiteSearch(Interface):
     def getFolderName(path):
         """
         Return the folder name
+        """
+    
+    def getHiddenIndexes():
+        """
         """
     
     def getQueryString(request_dict):

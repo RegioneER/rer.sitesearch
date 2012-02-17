@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.4.0 (2012/02/??)
+------------------
+
+- Customizzato indice Date per gli eventi [andrea]
+- Ora vengono visualizzate le informazioni sulle date/luogo negli eventi [andrea]
+- L'ordinamento per data viene effettuato per l'indice Date [andrea]
+- Abilitata la gestione di indici "nascosti" che ci si può portare dietro durante la ricerca [andrea]
+
 1.3.1 (2011/11/28)
 ------------------
 

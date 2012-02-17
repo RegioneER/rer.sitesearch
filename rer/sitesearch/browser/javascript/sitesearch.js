@@ -1,10 +1,22 @@
 function removeAdditionalIndexFilter(index){
+	/*
+	 * Remove the filters for a given index
+	 */
 	checkedIndex = jq("#search :checkbox[name="+index+":list]:checked")
 		if (checkedIndex.size()) {
 			checkedIndex.removeAttr("checked");
 			jq("#search :submit").click();
 		}
 }	
+
+function removeHiddenFilters(event){
+	event.preventDefault();
+	jq(".hiddenIndex").each(function (index) {
+		jq(this).remove();
+	});
+	jq("#search :submit").click();
+		
+}
 
 function doTabSearch(event){
 	event.preventDefault();
@@ -59,6 +71,9 @@ jq(document).ready(function() {
 	});
 	jq('div.searchData .listingBar a').each(function (index) {
 		jq(this).bind('click',doBatchSearch);
+	});
+	jq('#deselect-hidden').each(function (index) {
+		jq(this).bind('click',removeHiddenFilters);
 	});
 	
 });

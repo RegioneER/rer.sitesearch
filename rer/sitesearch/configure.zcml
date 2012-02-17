@@ -29,4 +29,7 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <!-- indexer per i destinatari -->
+  <adapter name="Date" factory=".indexer.Date" />
+  
 </configure>

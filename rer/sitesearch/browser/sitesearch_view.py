@@ -3,6 +3,8 @@ from Products.CMFCore.utils import getToolByName
 from zope.interface import implements
 from rer.sitesearch.browser.interfaces import IRerSiteSearch
 from urllib import urlencode
+from DateTime import DateTime
+from ZPublisher.HTTPRequest import record
 
 class RerSiteSearchView(BrowserView):
     
@@ -16,11 +18,14 @@ class RerSiteSearchView(BrowserView):
         self.tabs_dict=self.setTabsDict()
         
     def getUids(self,results):
+        """
+        Return a list of uids for given results
+        """
         return [x.UID for x in results]
     
     def setTabsDict(self):
         """
-        set the starting dict with all the infos about tabs and results
+        Set the starting dict with all the infos about tabs and results
         """
         tabs_dict={'tabs_order':['all'],
                    'types_map':{},
@@ -43,15 +48,11 @@ class RerSiteSearchView(BrowserView):
                         tabs_dict[tab_name].get('portal_types',[]).append(values[1])
                     if tab_name not in tabs_dict['tabs_order']:
                         tabs_dict['tabs_order'].append(tab_name)
-            
-#        if self.rer_properties:
-#            tabs=[tab.lower().replace(' ','-') for tab in self.rer_properties.getProperty('tabs_list',())]
-#            tabs_list=tabs_list+tabs
         return tabs_dict
     
     def getDividedResults(self,results):
-        
-        """Retrieves a dictionary of lists of results divided by type, ordered by serarchResults
+        """
+        Retrieves a dictionary of lists of results divided by type, ordered by serarchResults
         """
         for result in results:
             result_type=result.portal_type
@@ -66,7 +67,7 @@ class RerSiteSearchView(BrowserView):
         """
         check if rer.keywordsearch is installed
         """
-        additional_indexes_settings=self.getAdditionalIndexesSettings()
+        additional_indexes_settings=self.additional_indexes_settings
         if not additional_indexes_settings:
             return {}
         additional_indexes_elements=[]
@@ -82,7 +83,11 @@ class RerSiteSearchView(BrowserView):
         return additional_indexes_elements
     
     def showSubjects(self):
-        additional_indexes_settings=self.getAdditionalIndexesSettings()
+        """
+        Subject is the default index in the left column.
+        If Subject is in additional_indexes, don't show default subject section
+        """
+        additional_indexes_settings=self.additional_indexes_settings
         if not additional_indexes_settings:
             return True
         for keyword in additional_indexes_settings['indexes']:
@@ -91,14 +96,13 @@ class RerSiteSearchView(BrowserView):
                 return False
         return True
             
-            
-    def getAdditionalIndexesSettings(self):
-        
+    @property   
+    def additional_indexes_settings(self):
         portal_quickinstaller= getToolByName(self.context,'portal_quickinstaller')
         if not self.rer_properties:
             return {}
-        if not self.rer_properties.getProperty('indexes_in_search',()) and not portal_quickinstaller.isProductInstalled('rer.keywordsearch'):
-            return {}
+#        if not self.rer_properties.getProperty('indexes_in_search',()) and not portal_quickinstaller.isProductInstalled('rer.keywordsearch'):
+#            return {}
             
         if self.rer_properties.getProperty('indexes_in_search',()):
             keywords=self.rer_properties.getProperty('indexes_in_search',())
@@ -106,8 +110,10 @@ class RerSiteSearchView(BrowserView):
             keywords=self.rer_properties.getProperty('keywordview_properties',())
         
         whitelist=self.rer_properties.getProperty('type_whitelist',())
+        hiddenlist=self.rer_properties.getProperty('indexes_hiddenlist',())
         return {'indexes':keywords,
-                'whitelist':whitelist}
+                'whitelist':whitelist,
+                'hiddenlist':hiddenlist}
         
     def getKeywordList(self,uids,index_name,white_list=()):
         catalog = getToolByName(self.context, 'portal_catalog')
@@ -159,6 +165,47 @@ class RerSiteSearchView(BrowserView):
             return folder.Title()
         else:
             return path
+    
+    def getHiddenIndexes(self):
+        hiddenlist=self.additional_indexes_settings.get('hiddenlist',[])
+        request_keys=self.context.REQUEST.form.keys()
+        hidden_dict={'index_titles':[],
+                     'indexes_to_add':[]}
+        if not hiddenlist:
+            return []
+        for hidden_index in hiddenlist:
+            index_info=hidden_index.split('|')
+            index=index_info[0]
+            if index not in request_keys:
+                continue
+            if len(index_info) == 1:
+                hidden_dict['index_titles'].append(index_info[0])
+            else:
+                hidden_dict['index_titles'].append(index_info[1])
+            index_id=index
+            index_value=self.context.REQUEST.form[index]
+            if isinstance(index_value,record):
+                for query_part in index_value.keys():
+                    index_id="%s.%s:record" %(index,query_part)
+                    query_value=index_value[query_part]
+                    if isinstance(query_value,list):
+                        index_id += ":list"
+                        for value_item in query_value:
+                            if isinstance(value_item,DateTime):
+                                index_id +=":date"
+                                list_value=value_item.ISO()
+                                hidden_dict['indexes_to_add'].append({'id':index_id,
+                                                       'value':list_value})
+                            else:
+                                hidden_dict['indexes_to_add'].append({'id':index_id,
+                                                       'value':query_value})
+                    else:
+                        hidden_dict['indexes_to_add'].append({'id':index_id,
+                                               'value':query_value})
+            else:
+                hidden_dict['indexes_to_add'].append({'id':index_id,
+                                       'value':index_value})
+        return hidden_dict
     
     def getQueryString(self,request_dict):
         return urlencode(request_dict,True)

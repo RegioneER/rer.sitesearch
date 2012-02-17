@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-05-27 13:33+0000\n"
+"POT-Creation-Date: 2012-02-17 11:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,13 +32,12 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#. Default: "You searched in: ${folder_name}"
-#: ./skins/rer.sitesearch.templates/search.pt:40
+#: ./skins/rer.sitesearch.templates/search.pt:41
 msgid "You searched in: ${folder_name}"
 msgstr ""
 
 #. Default: "Closer results"
-#: ./skins/rer.sitesearch.templates/search.pt:245
+#: ./skins/rer.sitesearch.templates/search.pt:283
 msgid "closer_results"
 msgstr ""
 
@@ -47,43 +46,52 @@ msgstr ""
 msgid "description_no_results_found"
 msgstr ""
 
+#: ./skins/rer.sitesearch.templates/search.pt:147
+msgid "from ${start} to ${end}"
+msgstr ""
+
 #. Default: "Categories"
-#: ./skins/rer.sitesearch.templates/search.pt:264
+#: ./skins/rer.sitesearch.templates/search.pt:303
 msgid "label_categories"
 msgstr ""
 
 #. Default: "Remove all filters"
-#: ./skins/rer.sitesearch.templates/search.pt:292
+#: ./skins/rer.sitesearch.templates/search.pt:329
 msgid "label_remove_filters"
 msgstr ""
 
+#. Default: "Remove these filters"
+#: ./skins/rer.sitesearch.templates/search.pt:108
+msgid "label_remove_hidden_filters"
+msgstr ""
+
 #. Default: "Search in"
-#: ./skins/rer.sitesearch.templates/search.pt:198
+#: ./skins/rer.sitesearch.templates/search.pt:244
 msgid "label_search_in"
 msgstr ""
 
 #. Default: "Search text"
-#: ./skins/rer.sitesearch.templates/search.pt:175
+#: ./skins/rer.sitesearch.templates/search.pt:223
 msgid "label_search_text"
 msgstr ""
 
 #. Default: "All the site"
-#: ./skins/rer.sitesearch.templates/search.pt:219
+#: ./skins/rer.sitesearch.templates/search.pt:265
 msgid "label_searchbox_all_site"
 msgstr ""
 
 #. Default: "Latest results"
-#: ./skins/rer.sitesearch.templates/search.pt:254
+#: ./skins/rer.sitesearch.templates/search.pt:292
 msgid "latest_results"
 msgstr ""
 
 #. Default: "Refine your search:"
-#: ./skins/rer.sitesearch.templates/search.pt:172
+#: ./skins/rer.sitesearch.templates/search.pt:207
 msgid "less_results"
 msgstr ""
 
 #. Default: "Sort on"
-#: ./skins/rer.sitesearch.templates/search.pt:237
+#: ./skins/rer.sitesearch.templates/search.pt:275
 msgid "sort_on"
 msgstr ""
 
@@ -92,7 +100,7 @@ msgstr ""
 msgid "title_rss_feed"
 msgstr ""
 
-#. Default: "${number_part_results} results of this type of ${number_total_results} total results"
+#. Default: "<span class=\"resType\">${number_part_results} results</span> of this type of <span class=\"resTot\">${number_total_results} total results</span>"
 #: ./skins/rer.sitesearch.templates/search.pt:76
 msgid "view_number_of_results"
 msgstr ""

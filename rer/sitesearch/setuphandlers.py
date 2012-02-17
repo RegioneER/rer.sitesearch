@@ -32,5 +32,8 @@ def insertProperties(context):
                                                  'File|File',
                                                  'Link|Links'),
                                           type='lines')
-        portal.plone_log("Added indexes_in_search property")
+        portal.plone_log("Added tabs_list property")
+    if not rer_properties.hasProperty('indexes_hiddenlist'):
+        rer_properties.manage_addProperty(id='indexes_hiddenlist',value='',type='lines')
+        portal.plone_log("Added indexes_hiddenlist property")
     

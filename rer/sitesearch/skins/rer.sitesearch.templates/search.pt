@@ -33,7 +33,8 @@
                  use_view_action site_properties/typesUseViewActionInListings|python:();
 				 sitesearch_view nocall: context/@@sitesearch_view;
 				 template_id string:search;
-				 selected_tab python:request.form.get('selected_tab','');">
+				 selected_tab python:request.form.get('selected_tab','');
+				 hidden_indexes sitesearch_view/getHiddenIndexes">
 	
 	<h1 class="" i18n:translate=""
 		tal:condition="python:request.form.get('path','') and request.form.get('path') != '/'.join(context.portal_url.getPortalObject().getPhysicalPath())">
@@ -92,10 +93,26 @@
 			           	tal:attributes="href string:$here_url/search_rss?${query_string}">
 			             RSS feed</a>
 			    </p>
+			    <div tal:define="index_titles hidden_indexes/index_titles"
+					 tal:condition="index_titles">
+					<p>
+			    		Stai anche cercando per:
+			    		<tal:indexes repeat="index index_titles">
+			    			<strong tal:content="index" />
+			    			<span tal:omit-tag="" tal:condition="not:repeat/index/end">, </span> 
+			    		</tal:indexes>
+			    	</p>
+			    	<a class="portal-breadcrumbs"
+                        href="search"
+                        id="deselect-hidden">
+                        <span i18n:translate="label_remove_hidden_filters">Remove these filters</span>
+                    </a>
+	            </div>
 				<dl>
 					<tal:results repeat="result batch">
 						        <tal:entry define="result_url result/getURL;
 						                           result_type result/portal_type;
+						                           result_effective result/effective;
 						                           item_icon python:plone_view.getIcon(result);
 						                           url python:'%s?searchterm=%s'%(test(result_type in use_view_action, result_url+'/view', result_url+'/'), searchterm);">
 						          <dt tal:define="item_wf_state_class string:state-${result/review_state};"
@@ -106,17 +123,37 @@
 						                 tal:content="result/pretty_title_or_id" />
 						          </dt>
 						          <dd class="itemDescr">
-						                <span class="searchResDate"
-											  >
-						                    <tal:date condition="result/EffectiveDate">
-						                    	<span tal:replace="python:toLocalizedTime(result.EffectiveDate)">
+						          		<tal:item_date
+						          			condition="python:result_type!='Event' and result_effective.Date() != '1000/01/01'">
+							                <span class="searchResDate">
+						                    	<span tal:replace="python:toLocalizedTime(result_effective)">
 						                    		August 16, 2001 at 23:35:59
 						                    	</span>
-						                    </tal:date>
-						                </span>
-										<tal:separator condition="python:result.EffectiveDate !='None' and result.Description">
-											-
-										</tal:separator>
+							                </span>
+					                    	<tal:separator condition="python:result_effective !='None' and result.Description">
+												-
+											</tal:separator>
+						          		</tal:item_date>
+						                <tal:event_date tal:condition="python:result_type=='Event'"
+						                	define="result_start result/start;
+						                		 	result_end result/end">
+						                    <span class="searchResDate">
+				                                <span tal:condition="result/location"
+				                                	  tal:replace="string:${result/location}, "
+				                                       class="location">Oslo</span>
+				                                 <span tal:omit-tag="" i18n:translate="">
+				                                 	from <tal:from content="python:toLocalizedTime(result_start,long_format=1)"
+				                                                   i18n:name="start">from date</tal:from>
+				                                    to <tal:from content="python:toLocalizedTime(result_end,long_format=1)"
+				                                                   i18n:name="end">to date</tal:from>
+				                                 </span>
+				                                 
+				                                 
+				                            </span>
+											<tal:separator condition="result/Description">
+												-
+											</tal:separator>
+						                </tal:event_date>
 						                <span tal:replace="python:plone_view.cropText(result.Description, desc_length, desc_ellipsis)">
 						                    Cropped description
 						                </span>
@@ -163,13 +200,25 @@
 			<form action="search"
 		          class="enableAutoFocus"
 		          method="post"
-		          id="search"
-		          tal:define="DateTime python:modules['DateTime'].DateTime">
+		          id="search">
 				
 		        <fieldset id="search_column">
 		
 		            <legend i18n:translate="less_results">Refine your search: </legend>
-		
+		            <!--div class="fieldsets"
+		            	 tal:define="index_titles hidden_indexes/index_titles"
+						 tal:condition="index_titles">
+						<strong>
+				    		Stai anche cercando per: <span tal:replace="python:', '.join(index_titles)" />
+				    	</strong>
+						<div class="fieldsetsItem linkRemoveFilters">
+					    	<a class="portal-breadcrumbs"
+	                                    href="search"
+	                                    id="deselect-hidden">
+	                                    <span i18n:translate="label_remove_filters">Remove all filters</span>
+	                                </a>
+						</div>
+		            </div-->
 		            <div id="rerSearchText" class="field">
 		                <label for="SearchableText" i18n:translate="label_search_text">Search text</label>
 		
@@ -220,14 +269,6 @@
 			            </label>
 					</div>
 				
-		            <!--div tal:define="portal_types portal/portal_types;
-		            				 allTypes python:putils.getUserFriendlyTypes();"
-		            	 tal:repeat="type allTypes">
-		            	 <tal:block condition="python: type!='Folder' and type!='FolderTaxonomy' ">
-		            	 	<input type="hidden" name="portal_type:list" tal:attributes="value type">
-		            	 </tal:block>
-		            </div-->
-					
 					<!--Ordinamento-->
 					<div class="fieldsets"
 						tal:define="sort_on request/sort_on|nothing">
@@ -244,13 +285,13 @@
 									class="noborder"
 									id="sort_on-date"
 									name="sort_on"
-									value="effective"
-									tal:attributes="checked python: sort_on == 'effective'"/>
+									value="Date"
+									tal:attributes="checked python: sort_on == 'Date'"/>
 							
 							
 							<label for="sort_on-date" i18n:translate="latest_results">Latest results</label>
 							<input type="hidden" id="sortOrderField" tal:condition="python:not request.form.has_key('sort_on') or request.form.get('sort_on')==''" name="sort_order" value=""/>
-							<input type="hidden" id="sortOrderField" tal:condition="python:request.form.get('sort_on')=='effective'" name="sort_order" value="reverse"/>
+							<input type="hidden" id="sortOrderField" tal:condition="python:request.form.get('sort_on')=='Date'" name="sort_order" value="reverse"/>
 						</div>
 					</div>
 					
@@ -281,10 +322,12 @@
 						<div class="fieldsetsItem linkRemoveFilters"
 							tal:condition="checked_subjects">
 							<a class="portal-breadcrumbs"
-								id="deselect-subjects"
-								href="search">
-								<span i18n:translate="label_remove_filters">Remove all filters</span>
-							</a>
+                                    href="search"
+                                    tal:condition="checked_subjects"
+                                    tal:attributes="id string:deselect-Subject;
+                                                    onclick string:javascript:removeAdditionalIndexFilter('Subject');;return false">
+                                    <span i18n:translate="label_remove_filters">Remove all filters</span>
+                                </a>
 						</div>
 						
 						<input type="hidden"
@@ -355,7 +398,19 @@
                     </div>
 				
 		        </fieldset>
-		    	
+		        
+		        <!-- HIDDEN INDEXES -->
+		    	<tal:hidden_indexes
+		    		define="indexes hidden_indexes/indexes_to_add"
+		    		condition="indexes">
+		    		<tal:index repeat="index indexes">
+						<input type="hidden"
+							   class="hiddenIndex"
+							   tal:attributes="id index/id;
+							    			   name index/id;
+							    			   value index/value"/>	    			   
+		    		</tal:index>
+		    	</tal:hidden_indexes>
 				<input type="hidden"
 					   id="selected_tab"
 					   name="selected_tab"
