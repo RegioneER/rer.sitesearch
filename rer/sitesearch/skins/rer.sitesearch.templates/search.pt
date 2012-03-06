@@ -96,7 +96,7 @@
 			    <div tal:define="index_titles hidden_indexes/index_titles"
 					 tal:condition="index_titles">
 					<p>
-			    		Stai anche cercando per:
+			    		You are also searching for:
 			    		<tal:indexes repeat="index index_titles">
 			    			<strong tal:content="index" />
 			    			<span tal:omit-tag="" tal:condition="not:repeat/index/end">, </span> 
@@ -110,87 +110,93 @@
 	            </div>
 				<dl>
 					<tal:results repeat="result batch">
-						        <tal:entry define="result_url result/getURL;
-						                           result_type result/portal_type;
-						                           result_effective result/effective;
-						                           item_icon python:plone_view.getIcon(result);
-						                           url python:'%s?searchterm=%s'%(test(result_type in use_view_action, result_url+'/view', result_url+'/'), searchterm);">
-						          <dt tal:define="item_wf_state_class string:state-${result/review_state};"
-						              tal:attributes="class python:'searchResTitle contenttype-' + normalizeString(result.portal_type)">
-						              <img tal:replace="structure item_icon/html_tag" />
-						              <a href="#" 
-						                 tal:attributes="href url; class string:$item_wf_state_class"
-						                 tal:content="result/pretty_title_or_id" />
-						          </dt>
-						          <dd class="itemDescr">
-						          		<tal:item_date
-						          			condition="python:result_type!='Event' and result_effective.Date() != '1000/01/01'">
-							                <span class="searchResDate">
-						                    	<span tal:replace="python:toLocalizedTime(result_effective)">
-						                    		August 16, 2001 at 23:35:59
-						                    	</span>
-							                </span>
-					                    	<tal:separator condition="python:result_effective !='None' and result.Description">
-												-
-											</tal:separator>
-						          		</tal:item_date>
-						                <tal:event_date tal:condition="python:result_type=='Event'"
-						                	define="result_start result/start;
-						                		 	result_end result/end">
-						                    <span class="searchResDate">
-				                                <span tal:condition="result/location"
-				                                	  tal:replace="string:${result/location}, "
-				                                       class="location">Oslo</span>
-				                                 <span tal:omit-tag="" i18n:translate="">
-				                                 	from <tal:from content="python:toLocalizedTime(result_start,long_format=1)"
-				                                                   i18n:name="start">from date</tal:from>
-				                                    to <tal:from content="python:toLocalizedTime(result_end,long_format=1)"
-				                                                   i18n:name="end">to date</tal:from>
-				                                 </span>
-				                                 
-				                                 
-				                            </span>
-											<tal:separator condition="result/Description">
-												-
-											</tal:separator>
-						                </tal:event_date>
-						                <span tal:replace="python:plone_view.cropText(result.Description, desc_length, desc_ellipsis)">
-						                    Cropped description
-						                </span>
-						                <p class="documentByLine"
-											  i18n:domain="plone"
-						                	tal:condition="python:not isAnon or site_properties.allowAnonymousViewAbout">
-						                	
-						                	<span class="documentAuthor"
-							                    i18n:translate="label_by_author">
-								                by
-								                <a href="#"
-								                   tal:attributes="href string:${portal_url}/author/${result/Creator}"
-								                   tal:content="result/Creator"
-								                   tal:omit-tag="not:result/Creator"
-								                   i18n:name="author">
-								                Bob Dobalina
-								                </a>
-							                </span>
-							                <span tal:define="categories result/Subject|nothing"
-							                      tal:condition="categories">
-							                    &mdash;
-							                    <tal:filedunder i18n:translate="label_filed_under">filed under:</tal:filedunder>
-							                        <span tal:repeat="category categories">
-							                            <a href=""
-							                               class="link-category"
-							                               rel="tag"
-							                               tal:content="category"
-							                               tal:attributes="href string:${portal_url}/search?Subject%3Alist=${category}">
-							                               Category
-							                            </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
-							                        </span>
-							                </span>
-							                
-						            	</p>
-						            </dd>
-						        </tal:entry>
-					        </tal:results>
+				        <tal:entry define="result_url result/getURL;
+				                           result_type result/portal_type;
+				                           result_effective result/effective;
+				                           item_icon python:plone_view.getIcon(result);
+				                           url python:'%s?searchterm=%s'%(test(result_type in use_view_action, result_url+'/view', result_url+'/'), searchterm);">
+				          <dt tal:define="item_wf_state_class string:state-${result/review_state};"
+				              tal:attributes="class python:'searchResTitle contenttype-' + normalizeString(result.portal_type)">
+				              <img tal:replace="structure item_icon/html_tag" />
+				              <a href="#" 
+				                 tal:attributes="href url; class string:$item_wf_state_class"
+				                 tal:content="result/pretty_title_or_id" />
+				          </dt>
+				          <dd class="itemDescr">
+				          		<tal:item_date
+				          			condition="python:result_type!='Event' and result_effective.Date() != '1000/01/01'">
+					                <span class="searchResDate">
+				                    	<span tal:replace="python:toLocalizedTime(result_effective)">
+				                    		August 16, 2001 at 23:35:59
+				                    	</span>
+					                </span>
+			                    	<tal:separator condition="python:result_effective !='None' and result.Description">
+										-
+									</tal:separator>
+				          		</tal:item_date>
+				                <tal:event_date tal:condition="python:result_type=='Event'"
+				                	define="result_start result/start;
+				                		 	result_end result/end">
+			                    	<tal:same_date condition="python:result_start == result_end">
+			                    		&lt; <abbr class="dtstart"
+			                                      tal:attributes="title python:result_start"
+			                                      tal:content="python:toLocalizedTime(result_start,long_format=1)">from date</abbr>
+			                    	</tal:same_date>
+									<tal:different_date condition="python:result_start != result_end">
+			                            &lt; <span tal:omit-tag="" i18n:translate="date_from">from</span>
+								         <abbr class="dtstart"
+			                                   tal:attributes="title python:result_start"
+			                                   tal:content="python:toLocalizedTime(result_start,long_format=1)">
+			                                   	from date</abbr>
+										<span tal:omit-tag="" i18n:translate="date_to">to</span>
+			                             <abbr class="dtend"
+			                                   tal:attributes="title python:result_end"
+			                                   tal:content="python:toLocalizedTime(result_end,long_format=1)">
+			                                   	to date</abbr>
+									</tal:different_date>
+					     			<span tal:condition="result/location"
+                                  		  tal:content="string: - ${result/location}"></span> &gt;
+									<tal:separator condition="result/Description">
+										-
+									</tal:separator>
+				                </tal:event_date>
+				                <span tal:replace="python:plone_view.cropText(result.Description, desc_length, desc_ellipsis)">
+				                    Cropped description
+				                </span>
+				                <p class="documentByLine"
+									  i18n:domain="plone"
+				                	tal:condition="python:not isAnon or site_properties.allowAnonymousViewAbout">
+				                	
+				                	<span class="documentAuthor"
+					                    i18n:translate="label_by_author">
+						                by
+						                <a href="#"
+						                   tal:attributes="href string:${portal_url}/author/${result/Creator}"
+						                   tal:content="result/Creator"
+						                   tal:omit-tag="not:result/Creator"
+						                   i18n:name="author">
+						                Bob Dobalina
+						                </a>
+					                </span>
+					                <span tal:define="categories result/Subject|nothing"
+					                      tal:condition="categories">
+					                    &mdash;
+					                    <tal:filedunder i18n:translate="label_filed_under">filed under:</tal:filedunder>
+					                        <span tal:repeat="category categories">
+					                            <a href=""
+					                               class="link-category"
+					                               rel="tag"
+					                               tal:content="category"
+					                               tal:attributes="href string:${portal_url}/search?Subject%3Alist=${category}">
+					                               Category
+					                            </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
+					                        </span>
+					                </span>
+					                
+				            	</p>
+				            </dd>
+				        </tal:entry>
+			        </tal:results>
 					
 				</dl>
 				<div metal:use-macro="here/batch_macros/macros/navigation" />
