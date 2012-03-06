@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-02-17 11:13+0000\n"
+"POT-Creation-Date: 2012-03-06 15:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,8 +37,18 @@ msgid "You searched in: ${folder_name}"
 msgstr ""
 
 #. Default: "Closer results"
-#: ./skins/rer.sitesearch.templates/search.pt:283
+#: ./skins/rer.sitesearch.templates/search.pt:289
 msgid "closer_results"
+msgstr ""
+
+#. Default: "from"
+#: ./skins/rer.sitesearch.templates/search.pt:146
+msgid "date_from"
+msgstr ""
+
+#. Default: "to"
+#: ./skins/rer.sitesearch.templates/search.pt:151
+msgid "date_to"
 msgstr ""
 
 #. Default: "No results were found."
@@ -46,17 +56,13 @@ msgstr ""
 msgid "description_no_results_found"
 msgstr ""
 
-#: ./skins/rer.sitesearch.templates/search.pt:147
-msgid "from ${start} to ${end}"
-msgstr ""
-
 #. Default: "Categories"
-#: ./skins/rer.sitesearch.templates/search.pt:303
+#: ./skins/rer.sitesearch.templates/search.pt:309
 msgid "label_categories"
 msgstr ""
 
 #. Default: "Remove all filters"
-#: ./skins/rer.sitesearch.templates/search.pt:329
+#: ./skins/rer.sitesearch.templates/search.pt:335
 msgid "label_remove_filters"
 msgstr ""
 
@@ -66,32 +72,32 @@ msgid "label_remove_hidden_filters"
 msgstr ""
 
 #. Default: "Search in"
-#: ./skins/rer.sitesearch.templates/search.pt:244
+#: ./skins/rer.sitesearch.templates/search.pt:250
 msgid "label_search_in"
 msgstr ""
 
 #. Default: "Search text"
-#: ./skins/rer.sitesearch.templates/search.pt:223
+#: ./skins/rer.sitesearch.templates/search.pt:229
 msgid "label_search_text"
 msgstr ""
 
 #. Default: "All the site"
-#: ./skins/rer.sitesearch.templates/search.pt:265
+#: ./skins/rer.sitesearch.templates/search.pt:271
 msgid "label_searchbox_all_site"
 msgstr ""
 
 #. Default: "Latest results"
-#: ./skins/rer.sitesearch.templates/search.pt:292
+#: ./skins/rer.sitesearch.templates/search.pt:298
 msgid "latest_results"
 msgstr ""
 
 #. Default: "Refine your search:"
-#: ./skins/rer.sitesearch.templates/search.pt:207
+#: ./skins/rer.sitesearch.templates/search.pt:213
 msgid "less_results"
 msgstr ""
 
 #. Default: "Sort on"
-#: ./skins/rer.sitesearch.templates/search.pt:275
+#: ./skins/rer.sitesearch.templates/search.pt:281
 msgid "sort_on"
 msgstr ""
 
