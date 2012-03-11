@@ -138,12 +138,12 @@
 				                	define="result_start result/start;
 				                		 	result_end result/end">
 			                    	<tal:same_date condition="python:result_start == result_end">
-			                    		&lt; <abbr class="dtstart"
+			                    		<abbr class="dtstart"
 			                                      tal:attributes="title python:result_start"
 			                                      tal:content="python:toLocalizedTime(result_start,long_format=1)">from date</abbr>
 			                    	</tal:same_date>
 									<tal:different_date condition="python:result_start != result_end">
-			                            &lt; <span tal:omit-tag="" i18n:translate="date_from">from</span>
+			                            <span tal:omit-tag="" i18n:translate="date_from">from</span>
 								         <abbr class="dtstart"
 			                                   tal:attributes="title python:result_start"
 			                                   tal:content="python:toLocalizedTime(result_start,long_format=1)">
@@ -155,7 +155,7 @@
 			                                   	to date</abbr>
 									</tal:different_date>
 					     			<span tal:condition="result/location"
-                                  		  tal:content="string: - ${result/location}"></span> &gt;
+                                  		  tal:content="string: - ${result/location}"></span>
 									<tal:separator condition="result/Description">
 										-
 									</tal:separator>
