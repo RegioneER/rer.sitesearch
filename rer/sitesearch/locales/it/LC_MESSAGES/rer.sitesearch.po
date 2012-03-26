@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-03-06 15:45+0000\n"
+"POT-Creation-Date: 2012-03-26 12:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Andrea Cecchi <andrea.cecchi@redturtle.net>\n"
 "Language-Team: LANGUAGE <sviluppoplone@redturtle.net>\n"
@@ -56,6 +56,11 @@ msgstr "al"
 #: ./skins/rer.sitesearch.templates/search.pt:44
 msgid "description_no_results_found"
 msgstr "Nessun risultato trovato."
+
+#. Default: "You are also searching for:"
+#: ./skins/rer.sitesearch.templates/search.pt:99
+msgid "label_also_searching_for"
+msgstr "Stai anche cercando per:"
 
 #. Default: "Categories"
 #: ./skins/rer.sitesearch.templates/search.pt:309

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-03-06 15:45+0000\n"
+"POT-Creation-Date: 2012-03-26 12:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,6 +54,11 @@ msgstr ""
 #. Default: "No results were found."
 #: ./skins/rer.sitesearch.templates/search.pt:44
 msgid "description_no_results_found"
+msgstr ""
+
+#. Default: "You are also searching for:"
+#: ./skins/rer.sitesearch.templates/search.pt:99
+msgid "label_also_searching_for"
 msgstr ""
 
 #. Default: "Categories"

@@ -96,7 +96,7 @@
 			    <div tal:define="index_titles hidden_indexes/index_titles"
 					 tal:condition="index_titles">
 					<p>
-			    		You are also searching for:
+						<span i18n:translate="label_also_searching_for">You are also searching for:</span>
 			    		<tal:indexes repeat="index index_titles">
 			    			<strong tal:content="index" />
 			    			<span tal:omit-tag="" tal:condition="not:repeat/index/end">, </span> 
