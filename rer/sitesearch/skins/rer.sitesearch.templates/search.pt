@@ -45,7 +45,7 @@
     </div>
 	<tal:search_view define="divided_results python: sitesearch_view.getDividedResults(results);
 							 results_elements python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get('all');
-					  		 res_uids python:sitesearch_view.getUids(results_elements['results']);">
+					  		 indexes_dict python:divided_results.get('indexes_dict', {})">
 		
     <div class="searchResults" tal:condition="results"
           tal:define="portal_types portal/portal_types;
@@ -302,8 +302,7 @@
 					</div>
 					
 					<!--SUBJECTS-->
-		            <div class="fieldsets" tal:define="checked_subjects request/Subject|nothing;
-													   usedSubjects python:sitesearch_view.getKeywordList(res_uids,'Subject');
+		            <!--div class="fieldsets" tal:define="checked_subjects request/Subject|nothing;
 													   show_subjects python:sitesearch_view.showSubjects()"
 										   tal:condition="python:usedSubjects and show_subjects">
 		            	<h3 i18n:translate="label_categories">Categories</h3>
@@ -340,19 +339,20 @@
 							   name="Subject_usage:ignore_empty"
 							   id="Subject_and"
 							   value="operator:and"/>
-		            </div>
+		            </div-->
 					
 					
-					<!--ADDITIONAL INDEXES and FACETED-->
-                    <tal:additional_indexes define="additional_indexes_list python:sitesearch_view.getAdditionalIndexesList(res_uids)"
-                                            condition="additional_indexes_list"
-                                 tal:repeat="additional_index additional_indexes_list">
+					<!--INDEXES and FACETED-->
+                    <tal:additional_indexes condition="indexes_dict">
+                    	<tal:indexes define="index_ids python:indexes_dict.get('indexes_order')"
+                                 tal:repeat="index_id index_ids">
                                     
                         <!--ITERATION additional_indexes-->                 
                         <div class="fieldsets" 
-                            tal:define="index_name python:additional_index.get('index_name');
-                                        index_title python:additional_index.get('index_title');
-                                        index_elements python:additional_index.get('indexes_list');
+                            tal:define="index_dict python:indexes_dict[index_id];
+                            			index_name index_id;
+                                        index_title python:index_dict.get('title');
+                                        index_elements python:index_dict.get('indexes');
                                         checked_index python:request.get(index_name,[]);"
                             tal:condition="index_elements">
                             <h3 i18n:translate="" tal:content="index_title">Index Keyword</h3>
@@ -389,6 +389,7 @@
                                                    id string:${index_name}_and"
                                    value="operator:and"/>
                         </div>
+                       </tal:indexes>
                     </tal:additional_indexes>
                     
                     <div class="visualClear" ><!-- --></div>
