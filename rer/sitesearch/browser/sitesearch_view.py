@@ -26,7 +26,7 @@ class RerSiteSearchView(BrowserView):
                                                               domain='rer.keywordsearch',
                                                               default='Category',
                                                               context=self.context)
-        tabs_dict = {'tabs_order': ['all'],
+        tabs_dict = {'tabs_order': [],
                      'uids': [],
                      'indexes_dict': {'indexes_order': ['Subject'],
                                       'Subject': {'title': subject_label,
@@ -52,6 +52,7 @@ class RerSiteSearchView(BrowserView):
                         tabs_dict[tab_name].get('portal_types', []).append(values[0])
                     if tab_name not in tabs_dict['tabs_order']:
                         tabs_dict['tabs_order'].append(tab_name)
+        tabs_dict['tabs_order'].append('all')
         return tabs_dict
 
     def getDividedResults(self, results):

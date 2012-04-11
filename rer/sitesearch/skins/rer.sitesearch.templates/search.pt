@@ -43,12 +43,13 @@
         <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
     </div>
 	<tal:search_view define="divided_results python: sitesearch_view.getDividedResults(results);
-							 results_elements python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get('all');
+							 tabs_order python:divided_results.get('tabs_order',[]);
+					  		 first_tab python:tabs_order[0];
+							 results_elements python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get(first_tab);
 					  		 indexes_dict python:divided_results.get('indexes_dict', {})">
 		
     <div class="searchResults" tal:condition="results"
-          tal:define="portal_types portal/portal_types;
-					  tabs_order divided_results/tabs_order">
+          tal:define="portal_types portal/portal_types;">
 			<ul class="searchTabs">
 				<tal:tabs repeat="key tabs_order">
 					<li tal:condition="python:divided_results.has_key(key) and divided_results[key].get('results',[])"
@@ -65,7 +66,7 @@
 				</tal:tabs>
 			</ul>
 			<div class="searchData"
-				 tal:define="results_block python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get('all');
+				 tal:define="results_block python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get(first_tab);
 							 batch python:Batch(results_block['results'], b_size, int(b_start), orphan=1)">
 										   
 				<div class="rnum" tal:define="number_part_results python: len(results_block['results']);
