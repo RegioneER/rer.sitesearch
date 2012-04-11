@@ -49,7 +49,7 @@ class RerSiteSearchView(BrowserView):
                                              'title': values[1],
                                              'results': []}
                     else:
-                        tabs_dict[tab_name].get('portal_types', []).append(values[1])
+                        tabs_dict[tab_name].get('portal_types', []).append(values[0])
                     if tab_name not in tabs_dict['tabs_order']:
                         tabs_dict['tabs_order'].append(tab_name)
         return tabs_dict
@@ -58,13 +58,15 @@ class RerSiteSearchView(BrowserView):
         """
         Retrieves a dictionary of lists of results divided by type, ordered by serarchResults
         """
+        active_tab = self.context.REQUEST.form.get('selected_tab', '')
         for result in results:
             result_type = result.portal_type
             type_id = self.tabs_dict['types_map'].get(result_type, '')
             self.tabs_dict['all']['results'].append(result)
             if type_id:
                 self.tabs_dict[type_id]['results'].append(result)
-            self.setIndexesListForItem(result)
+            if self.tabs_dict['types_map'].get(result_type, '') == active_tab or active_tab == 'all' or not active_tab:
+                self.setIndexesListForItem(result)
         return self.tabs_dict
 
     def setIndexesListForItem(self, brain):

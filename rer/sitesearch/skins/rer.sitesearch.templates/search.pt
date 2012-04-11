@@ -16,7 +16,6 @@
                  tal:define="dummy python:request.set('disable_border',1)" />
     <metal:block fill-slot="column_one_slot" />
     <metal:block fill-slot="column_two_slot" />
-	
 </head>
 
 <body>
@@ -405,7 +404,7 @@
                     </div>
 				
 		        </fieldset>
-		        
+
 		        <!-- HIDDEN INDEXES -->
 		    	<tal:hidden_indexes
 		    		define="indexes hidden_indexes/indexes_to_add"
