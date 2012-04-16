@@ -211,20 +211,6 @@
 		        <fieldset id="search_column">
 		
 		            <legend i18n:translate="less_results">Refine your search: </legend>
-		            <!--div class="fieldsets"
-		            	 tal:define="index_titles hidden_indexes/index_titles"
-						 tal:condition="index_titles">
-						<strong>
-				    		Stai anche cercando per: <span tal:replace="python:', '.join(index_titles)" />
-				    	</strong>
-						<div class="fieldsetsItem linkRemoveFilters">
-					    	<a class="portal-breadcrumbs"
-	                                    href="search"
-	                                    id="deselect-hidden">
-	                                    <span i18n:translate="label_remove_filters">Remove all filters</span>
-	                                </a>
-						</div>
-		            </div-->
 		            <div id="rerSearchText" class="field">
 		                <label for="SearchableText" i18n:translate="label_search_text">Search text</label>
 		
