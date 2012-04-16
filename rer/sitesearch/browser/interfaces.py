@@ -33,3 +33,8 @@ class IRerSiteSearch(Interface):
         """
         Return the query string for RSS pourpose
         """
+
+    def getFirstAvailableTab():
+        """
+        Return the first populated tab with results
+        """

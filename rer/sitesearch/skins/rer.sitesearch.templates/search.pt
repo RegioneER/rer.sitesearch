@@ -44,8 +44,8 @@
     </div>
 	<tal:search_view define="divided_results python: sitesearch_view.getDividedResults(results);
 							 tabs_order python:divided_results.get('tabs_order',[]);
-					  		 first_tab python:tabs_order[0];
-							 results_elements python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get(first_tab);
+					  		 first_available_tab sitesearch_view/getFirstAvailableTab;
+							 results_elements python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get(first_available_tab);
 					  		 indexes_dict python:divided_results.get('indexes_dict', {})">
 		
     <div class="searchResults" tal:condition="results"
@@ -66,7 +66,7 @@
 				</tal:tabs>
 			</ul>
 			<div class="searchData"
-				 tal:define="results_block python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get(first_tab);
+				 tal:define="results_block python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get(first_available_tab);
 							 batch python:Batch(results_block['results'], b_size, int(b_start), orphan=1)">
 										   
 				<div class="rnum" tal:define="number_part_results python: len(results_block['results']);
@@ -98,7 +98,7 @@
 					<p>
 						<span i18n:translate="label_also_searching_for">You are also searching for:</span>
 			    		<tal:indexes repeat="index index_titles">
-			    			<strong tal:content="index" />
+			    			<strong i18n:translate="" tal:content="index" />
 			    			<span tal:omit-tag="" tal:condition="not:repeat/index/end">, </span> 
 			    		</tal:indexes>
 			    	</p>
@@ -300,47 +300,6 @@
 							<input type="hidden" id="sortOrderField" tal:condition="python:request.form.get('sort_on')=='Date'" name="sort_order" value="reverse"/>
 						</div>
 					</div>
-					
-					<!--SUBJECTS-->
-		            <!--div class="fieldsets" tal:define="checked_subjects request/Subject|nothing;
-													   show_subjects python:sitesearch_view.showSubjects()"
-										   tal:condition="python:usedSubjects and show_subjects">
-		            	<h3 i18n:translate="label_categories">Categories</h3>
-		
-						<div class="fieldsetsItem"
-		                     tal:repeat="subject usedSubjects">
-			                    <input type="checkbox"
-			                           name="Subject:list"
-			                           value="#"
-			                           class="noborder"
-			                           tal:attributes="value subject;
-			                           				   id string:subject_${repeat/subject/number};
-			                           				   checked python: checked_subjects and subject in checked_subjects"/>
-			
-			                    <label for=""
-									i18n:domain="plone-metadata"
-									i18n:translate=""
-									tal:attributes="for string:subject_${repeat/subject/number}"
-									tal:content="subject"
-			                    	/>
-						</div>
-						<div class="fieldsetsItem linkRemoveFilters"
-							tal:condition="checked_subjects">
-							<a class="portal-breadcrumbs"
-                                    href="search"
-                                    tal:condition="checked_subjects"
-                                    tal:attributes="id string:deselect-Subject;
-                                                    onclick string:javascript:removeAdditionalIndexFilter('Subject');;return false">
-                                    <span i18n:translate="label_remove_filters">Remove all filters</span>
-                                </a>
-						</div>
-						
-						<input type="hidden"
-							   name="Subject_usage:ignore_empty"
-							   id="Subject_and"
-							   value="operator:and"/>
-		            </div-->
-					
 					
 					<!--INDEXES and FACETED-->
                     <tal:additional_indexes condition="indexes_dict">

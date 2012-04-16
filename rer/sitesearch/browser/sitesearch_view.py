@@ -176,7 +176,6 @@ class RerSiteSearchView(BrowserView):
         Return a list of hidden indexes to insert in the query
         """
         hiddenlist = self.additional_indexes_settings.get('hiddenlist', [])
-        request_keys = self.context.REQUEST.form.keys()
         hidden_dict = {'index_titles': [],
                      'indexes_to_add': []}
         if not hiddenlist:
@@ -184,7 +183,7 @@ class RerSiteSearchView(BrowserView):
         for hidden_index in hiddenlist:
             index_info = hidden_index.split('|')
             index = index_info[0]
-            if index not in request_keys:
+            if not self.context.REQUEST.form.get(index,''):
                 continue
             if len(index_info) == 1:
                 hidden_dict['index_titles'].append(index_info[0])
@@ -206,7 +205,7 @@ class RerSiteSearchView(BrowserView):
                                                        'value': list_value})
                             else:
                                 hidden_dict['indexes_to_add'].append({'id': index_id,
-                                                       'value': query_value})
+                                                       'value': value_item})
                     else:
                         hidden_dict['indexes_to_add'].append({'id': index_id,
                                                'value': query_value})
@@ -220,3 +219,12 @@ class RerSiteSearchView(BrowserView):
         Return the query string for RSS pourpose
         """
         return urlencode(request_dict, True)
+
+    def getFirstAvailableTab(self):
+        """
+        Return the first populated tab with results
+        """
+        for tab_id in self.tabs_dict['tabs_order']:
+            if self.tabs_dict[tab_id].get('results', []):
+                return tab_id
+        return ''
