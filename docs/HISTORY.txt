@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.5.1 (2012/04/??)
+------------------
+
+- added class to hidden indexes info div [andrea]
+
 1.5.0 (2012/04/16)
 ------------------
 

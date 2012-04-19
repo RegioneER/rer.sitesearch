@@ -93,7 +93,8 @@
 			           	tal:attributes="href string:$here_url/search_rss?${query_string}">
 			             RSS feed</a>
 			    </p>
-			    <div tal:define="index_titles hidden_indexes/index_titles"
+			    <div class="hiddenIndexesInfo"
+			    	 tal:define="index_titles hidden_indexes/index_titles"
 					 tal:condition="index_titles">
 					<p>
 						<span i18n:translate="label_also_searching_for">You are also searching for:</span>

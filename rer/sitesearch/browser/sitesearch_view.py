@@ -183,18 +183,18 @@ class RerSiteSearchView(BrowserView):
         for hidden_index in hiddenlist:
             index_info = hidden_index.split('|')
             index = index_info[0]
-            if not self.context.REQUEST.form.get(index,''):
+            index_value = self.context.REQUEST.form.get(index, '')
+            if not index_value:
                 continue
-            if len(index_info) == 1:
-                hidden_dict['index_titles'].append(index_info[0])
-            else:
-                hidden_dict['index_titles'].append(index_info[1])
             index_id = index
-            index_value = self.context.REQUEST.form[index]
             if isinstance(index_value, record):
+                if index_value.get('query', '') in ['', ['', '']]:
+                    continue
                 for query_part in index_value.keys():
                     index_id = "%s.%s:record" % (index, query_part)
                     query_value = index_value[query_part]
+                    if not query_value:
+                        continue
                     if isinstance(query_value, list):
                         index_id += ":list"
                         for value_item in query_value:
@@ -209,7 +209,17 @@ class RerSiteSearchView(BrowserView):
                     else:
                         hidden_dict['indexes_to_add'].append({'id': index_id,
                                                'value': query_value})
+                    if len(index_info) == 1:
+                        if not index_info[0] in hidden_dict['index_titles']:
+                            hidden_dict['index_titles'].append(index_info[0])
+                    else:
+                        if not index_info[1] in hidden_dict['index_titles']:
+                            hidden_dict['index_titles'].append(index_info[1])
             else:
+                if len(index_info) == 1:
+                    hidden_dict['index_titles'].append(index_info[0])
+                else:
+                    hidden_dict['index_titles'].append(index_info[1])
                 hidden_dict['indexes_to_add'].append({'id': index_id,
                                        'value': index_value})
         return hidden_dict
