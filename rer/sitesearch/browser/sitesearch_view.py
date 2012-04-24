@@ -181,6 +181,7 @@ class RerSiteSearchView(BrowserView):
         if not hiddenlist:
             return hidden_dict
         for hidden_index in hiddenlist:
+            register_index = False
             index_info = hidden_index.split('|')
             index = index_info[0]
             index_value = self.context.REQUEST.form.get(index, '')
@@ -188,41 +189,61 @@ class RerSiteSearchView(BrowserView):
                 continue
             index_id = index
             if isinstance(index_value, record):
-                if index_value.get('query', '') in ['', ['', '']]:
-                    continue
-                for query_part in index_value.keys():
-                    index_id = "%s.%s:record" % (index, query_part)
-                    query_value = index_value[query_part]
-                    if not query_value:
-                        continue
-                    if isinstance(query_value, list):
-                        index_id += ":list"
-                        for value_item in query_value:
-                            if isinstance(value_item, DateTime):
-                                index_id += ":date"
-                                list_value = value_item.ISO()
-                                hidden_dict['indexes_to_add'].append({'id': index_id,
-                                                       'value': list_value})
-                            else:
-                                hidden_dict['indexes_to_add'].append({'id': index_id,
-                                                       'value': value_item})
-                    else:
-                        hidden_dict['indexes_to_add'].append({'id': index_id,
-                                               'value': query_value})
-                    if len(index_info) == 1:
-                        if not index_info[0] in hidden_dict['index_titles']:
-                            hidden_dict['index_titles'].append(index_info[0])
-                    else:
-                        if not index_info[1] in hidden_dict['index_titles']:
-                            hidden_dict['index_titles'].append(index_info[1])
+                register_index = self.setHiddenRecord(index_value, index, hidden_dict)
+            elif isinstance(index_value, list):
+                register_index = self.setHiddenList(index_value, index, hidden_dict)
             else:
+                register_index = True
+                hidden_dict['indexes_to_add'].append({'id': index_id,
+                                       'value': index_value})
+            if register_index:
                 if len(index_info) == 1:
                     hidden_dict['index_titles'].append(index_info[0])
                 else:
                     hidden_dict['index_titles'].append(index_info[1])
-                hidden_dict['indexes_to_add'].append({'id': index_id,
-                                       'value': index_value})
         return hidden_dict
+
+    def setHiddenList(self, index_value, index, hidden_dict):
+        """
+        set the hidden index if is a list
+        """
+        has_values = False
+        for value in index_value:
+            if value:
+                has_values = True
+                index_id = "%s:list" % (index)
+                hidden_dict['indexes_to_add'].append({'id': index_id,
+                                           'value': value})
+        return has_values
+
+    def setHiddenRecord(self, index_value, index, hidden_dict):
+        """
+        set the hidden index if is a record
+        """
+        has_values = False
+        if index_value.get('query', '') in ['', ['', '']]:
+            return has_values
+        for query_part in index_value.keys():
+            index_id = "%s.%s:record" % (index, query_part)
+            query_value = index_value[query_part]
+            if not query_value:
+                continue
+            has_values = True
+            if isinstance(query_value, list):
+                index_id += ":list"
+                for value_item in query_value:
+                    if isinstance(value_item, DateTime):
+                        index_id += ":date"
+                        list_value = value_item.ISO()
+                        hidden_dict['indexes_to_add'].append({'id': index_id,
+                                               'value': list_value})
+                    else:
+                        hidden_dict['indexes_to_add'].append({'id': index_id,
+                                               'value': value_item})
+            else:
+                hidden_dict['indexes_to_add'].append({'id': index_id,
+                                       'value': query_value})
+        return has_values
 
     def getQueryString(self, request_dict):
         """
