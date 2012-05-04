@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-03-26 12:15+0000\n"
+"POT-Creation-Date: 2012-04-26 15:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,22 @@ msgstr ""
 msgid "All"
 msgstr ""
 
+msgid "Author"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
 msgid "Documents"
+msgstr ""
+
+msgid "Event end"
+msgstr ""
+
+msgid "Event start"
+msgstr ""
+
+msgid "Event type"
 msgstr ""
 
 msgid "Events"
@@ -32,77 +47,72 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: ./skins/rer.sitesearch.templates/search.pt:41
+#: ./skins/rer.sitesearch.templates/search.pt:40
 msgid "You searched in: ${folder_name}"
 msgstr ""
 
 #. Default: "Closer results"
-#: ./skins/rer.sitesearch.templates/search.pt:289
+#: ./skins/rer.sitesearch.templates/search.pt:276
 msgid "closer_results"
 msgstr ""
 
 #. Default: "from"
-#: ./skins/rer.sitesearch.templates/search.pt:146
+#: ./skins/rer.sitesearch.templates/search.pt:147
 msgid "date_from"
 msgstr ""
 
 #. Default: "to"
-#: ./skins/rer.sitesearch.templates/search.pt:151
+#: ./skins/rer.sitesearch.templates/search.pt:152
 msgid "date_to"
 msgstr ""
 
 #. Default: "No results were found."
-#: ./skins/rer.sitesearch.templates/search.pt:44
+#: ./skins/rer.sitesearch.templates/search.pt:43
 msgid "description_no_results_found"
 msgstr ""
 
 #. Default: "You are also searching for:"
-#: ./skins/rer.sitesearch.templates/search.pt:99
+#: ./skins/rer.sitesearch.templates/search.pt:105
 msgid "label_also_searching_for"
 msgstr ""
 
-#. Default: "Categories"
-#: ./skins/rer.sitesearch.templates/search.pt:309
-msgid "label_categories"
-msgstr ""
-
 #. Default: "Remove all filters"
-#: ./skins/rer.sitesearch.templates/search.pt:335
+#: ./skins/rer.sitesearch.templates/search.pt:330
 msgid "label_remove_filters"
 msgstr ""
 
 #. Default: "Remove these filters"
-#: ./skins/rer.sitesearch.templates/search.pt:108
+#: ./skins/rer.sitesearch.templates/search.pt:102
 msgid "label_remove_hidden_filters"
 msgstr ""
 
 #. Default: "Search in"
-#: ./skins/rer.sitesearch.templates/search.pt:250
+#: ./skins/rer.sitesearch.templates/search.pt:237
 msgid "label_search_in"
 msgstr ""
 
 #. Default: "Search text"
-#: ./skins/rer.sitesearch.templates/search.pt:229
+#: ./skins/rer.sitesearch.templates/search.pt:216
 msgid "label_search_text"
 msgstr ""
 
 #. Default: "All the site"
-#: ./skins/rer.sitesearch.templates/search.pt:271
+#: ./skins/rer.sitesearch.templates/search.pt:258
 msgid "label_searchbox_all_site"
 msgstr ""
 
 #. Default: "Latest results"
-#: ./skins/rer.sitesearch.templates/search.pt:298
+#: ./skins/rer.sitesearch.templates/search.pt:285
 msgid "latest_results"
 msgstr ""
 
 #. Default: "Refine your search:"
-#: ./skins/rer.sitesearch.templates/search.pt:213
+#: ./skins/rer.sitesearch.templates/search.pt:214
 msgid "less_results"
 msgstr ""
 
 #. Default: "Sort on"
-#: ./skins/rer.sitesearch.templates/search.pt:281
+#: ./skins/rer.sitesearch.templates/search.pt:268
 msgid "sort_on"
 msgstr ""
 

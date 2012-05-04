@@ -31,3 +31,18 @@ msgstr ""
 
 msgid "Links"
 msgstr ""
+
+msgid "Event type"
+msgstr ""
+
+msgid "Event end"
+msgstr ""
+
+msgid "Event start"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Category"
+msgstr ""

@@ -4,6 +4,11 @@
 """
 from Products.CMFCore.utils import getToolByName
 
+DEFAULT_HIDDEN_INDEXES = ('getEventType|Event type',
+                          'start|Event start',
+                          'end|Event end',
+                          'creator|Author')
+
 def Handlers(context):
     if context.readDataFile('sitesearch_various.txt') is None:
         return
@@ -34,6 +39,8 @@ def insertProperties(context):
                                           type='lines')
         portal.plone_log("Added tabs_list property")
     if not rer_properties.hasProperty('indexes_hiddenlist'):
-        rer_properties.manage_addProperty(id='indexes_hiddenlist',value='',type='lines')
+        rer_properties.manage_addProperty(id='indexes_hiddenlist',
+                                          value=DEFAULT_HIDDEN_INDEXES,
+                                          type='lines')
         portal.plone_log("Added indexes_hiddenlist property")
     

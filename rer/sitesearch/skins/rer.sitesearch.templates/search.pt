@@ -93,22 +93,7 @@
 			           	tal:attributes="href string:$here_url/search_rss?${query_string}">
 			             RSS feed</a>
 			    </p>
-			    <div class="hiddenIndexesInfo"
-			    	 tal:define="index_titles hidden_indexes/index_titles"
-					 tal:condition="index_titles">
-					<p>
-						<span i18n:translate="label_also_searching_for">You are also searching for:</span>
-			    		<tal:indexes repeat="index index_titles">
-			    			<strong i18n:translate="" tal:content="index" />
-			    			<span tal:omit-tag="" tal:condition="not:repeat/index/end">, </span> 
-			    		</tal:indexes>
-			    	</p>
-			    	<a class="portal-breadcrumbs"
-                        href="search"
-                        id="deselect-hidden">
-                        <span i18n:translate="label_remove_hidden_filters">Remove these filters</span>
-                    </a>
-	            </div>
+			    
 				<dl>
 					<tal:results repeat="result batch">
 				        <tal:entry define="result_url result/getURL;
@@ -261,7 +246,24 @@
 			                All the site
 			            </label>
 					</div>
-				
+					<div class="fieldsets hiddenIndexesInfo"
+			    	 tal:define="index_titles hidden_indexes/index_titles"
+					 tal:condition="index_titles">
+					<p>
+						<span i18n:translate="label_also_searching_for">You are also searching for:</span>
+			    		<tal:indexes repeat="index index_titles">
+			    			<strong i18n:translate="" tal:content="index" />
+			    			<span tal:omit-tag="" tal:condition="not:repeat/index/end">, </span> 
+			    		</tal:indexes>
+			    	</p>
+			    	<div class="linkRemoveFilters">
+				    	<a class="portal-breadcrumbs"
+	                        href="search"
+	                        id="deselect-hidden">
+	                        <span i18n:translate="label_remove_filters">Remove all filters</span>
+	                    </a>
+	                </div>
+	            </div>
 					<!--Ordinamento-->
 					<div class="fieldsets"
 						tal:define="sort_on request/sort_on|nothing">
