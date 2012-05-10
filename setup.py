@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.5.3.dev0'
+version = '1.6.0.dev0'
 
 setup(name='rer.sitesearch',
       version=version,
@@ -29,5 +29,7 @@ setup(name='rer.sitesearch',
       ],
       entry_points="""
       # -*- Entry points: -*-
+      [z3c.autoinclude.plugin]
+      target = plone
       """,
       )
