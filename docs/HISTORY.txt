@@ -1,11 +1,10 @@
 Changelog
 =========
 
-1.5.3 (unreleased)
+1.6.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Cleanup old Plone 3.2 garbage [keul] 
 
 1.5.2 (2012-05-04)
 ------------------
