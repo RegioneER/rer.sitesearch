@@ -16,10 +16,10 @@ def upgrade(upgrade_product, version):
     return wrap_func
 
 
-@upgrade('rer.sitesearch', '1.5.3')
-def to_1_5_3(context):
+@upgrade('rer.sitesearch', '1.6.0')
+def to_1_6_0(context):
     """
     """
-    logger.info('Upgrading rer.sitesearch to version 1.5.3')
+    logger.info('Upgrading rer.sitesearch to version 1.6.0')
     context.runImportStepFromProfile(default_profile, 'rolemap')
     logger.info('Reinstalled rolemap')

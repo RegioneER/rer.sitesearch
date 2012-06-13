@@ -5,11 +5,11 @@
        
   <!-- Upgrade steps -->
   <gs:upgradeStep
-        title="Upgrade rer.sitesearch 1.5.3"
+        title="Upgrade rer.sitesearch 1.6.0"
         description="rer.sitesearch upgrade step"
         source="*"
-        destination="153"
-        handler=".upgrades.to_1_5_3"
+        destination="160"
+        handler=".upgrades.to_1_6_0"
         profile="rer.sitesearch:default" />
        
 </configure>
