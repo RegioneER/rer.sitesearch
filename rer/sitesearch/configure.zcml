@@ -16,8 +16,8 @@
      /> 
 
   <include file="skins.zcml" />
+  <include file="upgrades.zcml" />
   <include package=".browser" />
-  <include package=".upgrades" />
 
   <genericsetup:registerProfile
       name="default"
