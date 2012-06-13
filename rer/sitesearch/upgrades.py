@@ -22,4 +22,5 @@ def to_1_6_0(context):
     """
     logger.info('Upgrading rer.sitesearch to version 1.6.0')
     context.runImportStepFromProfile(default_profile, 'rolemap')
-    logger.info('Reinstalled rolemap')
+    context.runImportStepFromProfile(default_profile, 'controlpanel')
+    logger.info('Reinstalled rolemap and controlpanel')
