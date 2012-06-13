@@ -69,7 +69,6 @@ class RerSiteSearchView(BrowserView):
                 self.tabs_dict[type_id]['results'].append(result)
             if self.tabs_dict['types_map'].get(result_type, '') == active_tab or active_tab == 'all' or not active_tab:
                 self.setIndexesListForItem(result)
-        import pdb;pdb.set_trace()
         return self.tabs_dict
 
     def setIndexesListForItem(self, brain):
