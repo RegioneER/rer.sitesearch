@@ -9,12 +9,19 @@
   
   <i18n:registerTranslations directory="locales" />
   
+  <!--Register permission id-->
+  <permission 
+     id="rer.sitesearch.ManageSettings" 
+     title="rer.sitesearch: Manage Settings" 
+     /> 
+
   <include file="skins.zcml" />
   <include package=".browser" />
-  
+  <include package=".upgrades" />
+
   <genericsetup:registerProfile
       name="default"
-      title="RER Site Search"
+      title="RER: Site Search"
       directory="profiles/default"
       description=""
       provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -29,7 +36,7 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
-  <!-- indexer per i destinatari -->
+  <!-- indexer for Date -->
   <adapter name="Date" factory=".indexer.Date" />
   
 </configure>

@@ -5,10 +5,6 @@ Changelog
 ------------------
 
 - Cleanup old Plone 3.2 garbage [keul] 
-
-1.5.2 (2012-05-04)
-------------------
-
 - fixed search view styles [andrea]
 
 1.5.1 (2012/04/23)

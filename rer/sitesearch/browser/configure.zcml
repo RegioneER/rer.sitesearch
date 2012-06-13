@@ -10,7 +10,20 @@
 	permission="zope2.View"
 	allowed_interface=".interfaces.IRerSiteSearch"
 	/>
-	
+  
+  <adapter 
+        provides=".interfaces.IRerSiteSearchSettings"
+        for="Products.CMFCore.interfaces.ISiteRoot"
+        factory=".configlet.SitesearchSettingsAdapter"
+    /> 
+
+  <browser:page
+    for="Products.CMFCore.interfaces.ISiteRoot"
+    name="sitesearch-settings"
+    class=".configlet.SitesearchSettings"
+    permission="rer.sitesearch.ManageSettings"
+    />
+
   <!-- Resource directory for js -->
   <browser:resourceDirectory
       name="rer.sitesearch.javascript"

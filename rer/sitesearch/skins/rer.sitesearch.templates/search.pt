@@ -294,10 +294,9 @@
                     <tal:additional_indexes condition="indexes_dict">
                     	<tal:indexes define="index_ids python:indexes_dict.get('indexes_order')"
                                  tal:repeat="index_id index_ids">
-                                    
                         <!--ITERATION additional_indexes-->                 
-                        <div class="fieldsets" 
-                            tal:define="index_dict python:indexes_dict[index_id];
+                        <div class="fieldsets"
+                            tal:define="index_dict python:indexes_dict.get(index_id,{});
                             			index_name index_id;
                                         index_title python:index_dict.get('title');
                                         index_elements python:index_dict.get('indexes');

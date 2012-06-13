@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-04-26 15:37+0000\n"
+"POT-Creation-Date: 2012-06-13 07:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,22 +47,30 @@ msgstr ""
 msgid "News"
 msgstr ""
 
+#: ./profiles/default/controlpanel.xml
+msgid "RER Sitesearch"
+msgstr ""
+
+#: ./browser/configlet.py:79
+msgid "RER:Sitesearch settings"
+msgstr ""
+
 #: ./skins/rer.sitesearch.templates/search.pt:40
 msgid "You searched in: ${folder_name}"
 msgstr ""
 
 #. Default: "Closer results"
-#: ./skins/rer.sitesearch.templates/search.pt:276
+#: ./skins/rer.sitesearch.templates/search.pt:278
 msgid "closer_results"
 msgstr ""
 
 #. Default: "from"
-#: ./skins/rer.sitesearch.templates/search.pt:147
+#: ./skins/rer.sitesearch.templates/search.pt:132
 msgid "date_from"
 msgstr ""
 
 #. Default: "to"
-#: ./skins/rer.sitesearch.templates/search.pt:152
+#: ./skins/rer.sitesearch.templates/search.pt:137
 msgid "date_to"
 msgstr ""
 
@@ -71,49 +79,74 @@ msgstr ""
 msgid "description_no_results_found"
 msgstr ""
 
+#. Default: "Insert a list of indexes that are not shown in the column, but need to be set in request. One per row. Every row should have a couple of index and title divided by \"pipe\" character. For example \"Subject|Category\""
+#: ./browser/interfaces.py:70
+msgid "indexes_hiddenlist_help"
+msgstr ""
+
+#. Default: "Hidden indexes"
+#: ./browser/interfaces.py:68
+msgid "indexes_hiddenlist_label"
+msgstr ""
+
+#. Default: "Insert a list of indexes to show in search results column. One per row. Every row should have a couple of index and title divided by \"pipe\" character. For example \"Subject|Category\""
+#: ./browser/interfaces.py:63
+msgid "indexes_in_search_help"
+msgstr ""
+
+#. Default: "Indexes in search"
+#: ./browser/interfaces.py:61
+msgid "indexes_in_search_label"
+msgstr ""
+
 #. Default: "You are also searching for:"
-#: ./skins/rer.sitesearch.templates/search.pt:105
+#: ./skins/rer.sitesearch.templates/search.pt:253
 msgid "label_also_searching_for"
 msgstr ""
 
 #. Default: "Remove all filters"
-#: ./skins/rer.sitesearch.templates/search.pt:330
+#: ./skins/rer.sitesearch.templates/search.pt:263
 msgid "label_remove_filters"
 msgstr ""
 
-#. Default: "Remove these filters"
-#: ./skins/rer.sitesearch.templates/search.pt:102
-msgid "label_remove_hidden_filters"
-msgstr ""
-
 #. Default: "Search in"
-#: ./skins/rer.sitesearch.templates/search.pt:237
+#: ./skins/rer.sitesearch.templates/search.pt:222
 msgid "label_search_in"
 msgstr ""
 
 #. Default: "Search text"
-#: ./skins/rer.sitesearch.templates/search.pt:216
+#: ./skins/rer.sitesearch.templates/search.pt:201
 msgid "label_search_text"
 msgstr ""
 
 #. Default: "All the site"
-#: ./skins/rer.sitesearch.templates/search.pt:258
+#: ./skins/rer.sitesearch.templates/search.pt:243
 msgid "label_searchbox_all_site"
 msgstr ""
 
 #. Default: "Latest results"
-#: ./skins/rer.sitesearch.templates/search.pt:285
+#: ./skins/rer.sitesearch.templates/search.pt:287
 msgid "latest_results"
 msgstr ""
 
 #. Default: "Refine your search:"
-#: ./skins/rer.sitesearch.templates/search.pt:214
+#: ./skins/rer.sitesearch.templates/search.pt:199
 msgid "less_results"
 msgstr ""
 
 #. Default: "Sort on"
-#: ./skins/rer.sitesearch.templates/search.pt:268
+#: ./skins/rer.sitesearch.templates/search.pt:270
 msgid "sort_on"
+msgstr ""
+
+#. Default: "Insert a list of tabs to divide results. One per row. Every row should have a couple of portal_type and title divided by \"pipe\" character. For example \"Document|Documents\". You can also group some types using the same title."
+#: ./browser/interfaces.py:57
+msgid "tabs_list_help"
+msgstr ""
+
+#. Default: "Tabs list"
+#: ./browser/interfaces.py:55
+msgid "tabs_list_label"
 msgstr ""
 
 #. Default: "RSS feed"

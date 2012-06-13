@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:gs="http://namespaces.zope.org/genericsetup"
+    i18n_domain="rer.sitesearch">
+       
+  <!-- Upgrade steps -->
+  <gs:upgradeStep
+        title="Upgrade rer.sitesearch 1.5.3"
+        description="rer.sitesearch upgrade step"
+        source="*"
+        destination="153"
+        handler=".upgrades.to_1_5_3"
+        profile="rer.sitesearch:default" />
+       
+</configure>

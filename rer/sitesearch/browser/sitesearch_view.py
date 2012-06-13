@@ -22,13 +22,14 @@ class RerSiteSearchView(BrowserView):
         """
         Set the starting dict with all the infos about tabs and results
         """
+        additional_indexes_settings = self.additional_indexes_settings
         subject_label = self.translation_service.utranslate(msgid='label_category',
                                                               domain='rer.keywordsearch',
                                                               default='Category',
                                                               context=self.context)
         tabs_dict = {'tabs_order': [],
                      'uids': [],
-                     'indexes_dict': {'indexes_order': ['Subject'],
+                     'indexes_dict': {'indexes_order': additional_indexes_settings.get('indexes_order', []),
                                       'Subject': {'title': subject_label,
                                                   'indexes': []},
                                      },
@@ -68,6 +69,7 @@ class RerSiteSearchView(BrowserView):
                 self.tabs_dict[type_id]['results'].append(result)
             if self.tabs_dict['types_map'].get(result_type, '') == active_tab or active_tab == 'all' or not active_tab:
                 self.setIndexesListForItem(result)
+        import pdb;pdb.set_trace()
         return self.tabs_dict
 
     def setIndexesListForItem(self, brain):
@@ -86,8 +88,8 @@ class RerSiteSearchView(BrowserView):
             brain_value = getattr(brain, key_info[0], '')
             if brain_value:
                 if index_id not in indexes_dict and index_id != 'Subject':
-                    indexes_dict['indexes_order'].append(index_id)
-                    index_title_translated = self.translation_service.utranslate(msgid=index_title,
+                    #indexes_dict['indexes_order'].append(index_id)
+                    index_title_translated = self.translation_service.utranslate(msgid=index_title.decode('utf-8'),
                                                               domain='rer.keywordsearch',
                                                               default=index_title,
                                                               context=self.context)
@@ -125,10 +127,17 @@ class RerSiteSearchView(BrowserView):
             keywords = self.rer_properties.getProperty('indexes_in_search', ())
         else:
             keywords = self.rer_properties.getProperty('keywordview_properties', ())
-
+        indexes_order = []
+        if keywords:
+            for index in keywords:
+                key_info = index.split('|')
+                indexes_order.append(key_info[0])
+        else:
+            indexes_order.append('Subject')
         whitelist = self.rer_properties.getProperty('type_whitelist', ())
         hiddenlist = self.rer_properties.getProperty('indexes_hiddenlist', ())
         return {'indexes': keywords,
+                'indexes_order': indexes_order,
                 'whitelist': whitelist,
                 'hiddenlist': hiddenlist}
 
