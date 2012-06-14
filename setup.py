@@ -28,7 +28,9 @@ setup(name='rer.sitesearch',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
-      # -*- Entry points: -*-
+      # -*- entry_points -*-
+      [z3c.autoinclude.plugin]
+      target = plone
       [z3c.autoinclude.plugin]
       target = plone
       """,

@@ -8,6 +8,7 @@
 <head>
     <metal:block metal:fill-slot="head_slot">
         <link rel="alternate" title="RSS 1.0" type="application/rss+xml"
+        	  tal:define="here_url context/@@plone_context_state/object_url;"
               tal:condition="request/SearchableText|nothing"
               tal:attributes="href string:$here_url/search_rss?${request/QUERY_STRING}"/>
     </metal:block>
@@ -33,7 +34,13 @@
 				 sitesearch_view nocall: context/@@sitesearch_view;
 				 template_id string:search;
 				 selected_tab python:request.form.get('selected_tab','');
-				 hidden_indexes sitesearch_view/getHiddenIndexes">
+				 hidden_indexes sitesearch_view/getHiddenIndexes;
+				 portal context/@@plone_portal_state/portal;
+				 syntool context/portal_syndication;
+				 normalizeString nocall:context/@@plone/normalizeString;
+				 toLocalizedTime nocall:context/@@plone/toLocalizedTime;
+				 isAnon context/@@plone_portal_state/anonymous;
+				 here_url context/@@plone_context_state/object_url;">
 	
 	<h1 class="" i18n:translate=""
 		tal:condition="python:request.form.get('path','') and request.form.get('path') != '/'.join(context.portal_url.getPortalObject().getPhysicalPath())">
