@@ -31,7 +31,5 @@ setup(name='rer.sitesearch',
       # -*- entry_points -*-
       [z3c.autoinclude.plugin]
       target = plone
-      [z3c.autoinclude.plugin]
-      target = plone
       """,
       )
