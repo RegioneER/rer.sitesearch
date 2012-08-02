@@ -1,11 +1,12 @@
 Changelog
 =========
 
-1.6.0 (unreleased)
+2.0.0 (unreleased)
 ------------------
 
-- Cleanup old Plone 3.2 garbage [keul] 
+- cleanup old Plone 3.2 garbage [keul] 
 - fixed search view styles [andrea]
+- added configlet to manage sitesearch options [andrea]
 
 1.5.1 (2012/04/23)
 ------------------
