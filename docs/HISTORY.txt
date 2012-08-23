@@ -4,7 +4,7 @@ Changelog
 2.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- fixed style for results [andrea]
 
 
 2.0.1 (2012-08-03)

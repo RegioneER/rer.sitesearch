@@ -6,11 +6,10 @@ div.searchResults dl{
 
 dl dt.searchResTitle{
 	margin-top:1em;
-	display:inline;
+	display:inline-block;
     font-size: 1.15em;
     font-weight: normal;
-    line-height: 1.5em;
-
+    line-height: 2em;
 }
 
 div.searchResults li {
