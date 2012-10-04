@@ -15,7 +15,6 @@
      title="rer.sitesearch: Manage Settings" 
      /> 
 
-  <include file="skins.zcml" />
   <include file="upgrades.zcml" />
   <include package=".browser" />
 
