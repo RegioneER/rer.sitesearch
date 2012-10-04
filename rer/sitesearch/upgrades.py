@@ -32,5 +32,6 @@ def to_2(context):
     """
     """
     logger.info('Upgrading rer.sitesearch to version 2')
+    context.runImportStepFromProfile(default_profile, 'browserlayer')
     context.runImportStepFromProfile(uninstall_profile, 'skins')
     logger.info('Removed skins')
