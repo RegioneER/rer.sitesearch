@@ -3,6 +3,11 @@ from zope import schema
 from rer.sitesearch import sitesearchMessageFactory as _
 
 
+class IRERSiteSearchLayer(Interface):
+    """A layer specific for rer.sitesearch
+    """
+
+
 class IRerSiteSearch(Interface):
     """Interface for SiteSearchView"""
 

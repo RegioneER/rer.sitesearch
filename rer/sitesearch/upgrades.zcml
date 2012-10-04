@@ -12,4 +12,13 @@
         handler=".upgrades.to_1_6_0"
         profile="rer.sitesearch:default" />
        
+  <!-- Upgrade steps -->
+  <gs:upgradeStep
+        title="Upgrade rer.sitesearch 2"
+        description="rer.sitesearch upgrade step"
+        source="160"
+        destination="200"
+        handler=".upgrades.to_2"
+        profile="rer.sitesearch:default" />
+
 </configure>

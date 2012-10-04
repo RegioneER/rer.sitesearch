@@ -3,6 +3,7 @@ from Products.CMFCore.utils import getToolByName
 from rer.sitesearch import logger
 
 default_profile = 'profile-rer.sitesearch:default'
+uninstall_profile = 'profile-rer.sitesearch:uninstall'
 
 
 def upgrade(upgrade_product, version):
@@ -24,3 +25,12 @@ def to_1_6_0(context):
     context.runImportStepFromProfile(default_profile, 'rolemap')
     context.runImportStepFromProfile(default_profile, 'controlpanel')
     logger.info('Reinstalled rolemap and controlpanel')
+
+
+@upgrade('rer.sitesearch', '2.0.3')
+def to_2(context):
+    """
+    """
+    logger.info('Upgrading rer.sitesearch to version 2')
+    context.runImportStepFromProfile(uninstall_profile, 'skins')
+    logger.info('Removed skins')

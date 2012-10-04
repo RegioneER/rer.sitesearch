@@ -13,6 +13,7 @@ class RerSiteSearchView(BrowserView):
 
     def __init__(self, context, request):
         self.context = context
+        self.request = request
         self.translation_service = getToolByName(self.context, 'translation_service')
         self.portal_properties = getToolByName(self.context, 'portal_properties')
         self.rer_properties = getattr(self.portal_properties, 'rer_properties', None)

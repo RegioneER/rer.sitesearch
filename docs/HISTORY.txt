@@ -1,10 +1,11 @@
 Changelog
 =========
 
-2.0.3 (unreleased)
+2.1.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- moved search from skins to a view, for Plone4 compatibility (it isn't new-search like yet) [andrea]
+- added uninstall profile to remove skins [andrea]
 
 
 2.0.2 (2012-08-23)
