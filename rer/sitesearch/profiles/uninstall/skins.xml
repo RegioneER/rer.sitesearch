@@ -5,9 +5,8 @@
     meta_type="Filesystem Directory View"
     directory="rer.sitesearch:skins/rer.sitesearch.templates" remove="True"/>
 
- <skin-path name="*" remove="True">
-  <layer name="rer.sitesearch.templates"
-     insert-after="custom"/>
+ <skin-path name="*" >
+  <layer name="rer.sitesearch.templates" remove="True"/>
  </skin-path>
 
 </object>

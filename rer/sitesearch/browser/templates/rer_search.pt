@@ -64,10 +64,9 @@
             <ul class="searchTabs">
                 <tal:tabs repeat="key tabs_order">
                     <li tal:condition="python:divided_results.has_key(key) and divided_results[key].get('results',[])"
-                        tal:define="isFirst repeat/key/start"
                         tal:attributes="id python:divided_results[key].get('id')">                              
                         <a class=""
-                           tal:attributes="class python:view.getTabClass(divided_results[key].get('id'),divided_results.keys(),selected_tab,isFirst);
+                           tal:attributes="class python:view.getTabClass(divided_results[key].get('id'),divided_results.keys(),selected_tab,first_available_tab);
                                            href python:view.setTabUrl(template_id,divided_results[key].get('id'))"
                            i18n:translate=""
                            tal:content="python:divided_results[key].get('title')">
@@ -184,7 +183,7 @@
                                                    class="link-category"
                                                    rel="tag"
                                                    tal:content="category"
-                                                   tal:attributes="href string:${portal_url}/search?Subject%3Alist=${category}">
+                                                   tal:attributes="href string:${portal_url}/@@search?Subject%3Alist=${category}">
                                                    Category
                                                 </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
                                             </span>
@@ -200,7 +199,7 @@
             </div>
     </div>
     <tal:searchform>
-            <form action="search"
+            <form action="@@search"
                   class="enableAutoFocus"
                   method="post"
                   id="search">
@@ -269,7 +268,7 @@
                     </p>
                     <div class="linkRemoveFilters">
                         <a class="portal-breadcrumbs"
-                            href="search"
+                            href="@@search"
                             id="deselect-hidden">
                             <span i18n:translate="label_remove_filters">Remove all filters</span>
                         </a>
@@ -334,7 +333,7 @@
                             <div class="fieldsetsItem linkRemoveFilters"
                                 tal:condition="checked_index">
                                 <a class="portal-breadcrumbs"
-                                    href="search"
+                                    href="@@search"
                                     tal:condition="checked_index"
                                     onclick=""
                                     tal:attributes="id string:deselect-${index_name};

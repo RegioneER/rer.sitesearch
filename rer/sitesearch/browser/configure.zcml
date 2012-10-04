@@ -12,9 +12,17 @@
        layer=".interfaces.IRERSiteSearchLayer"
        template="templates/rer_search.pt"/>
 
+  <browser:page
+       name="search"
+       class=".sitesearch_view.RerSiteSearchView"
+       permission="zope2.View"
+       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+       layer=".interfaces.IRERSiteSearchLayer"
+       template="templates/rer_search.pt"/>
+
   <adapter 
         provides=".interfaces.IRerSiteSearchSettings"
-        for="Products.CMFCore.interfaces.ISiteRoot"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         factory=".configlet.SitesearchSettingsAdapter"
     /> 
 

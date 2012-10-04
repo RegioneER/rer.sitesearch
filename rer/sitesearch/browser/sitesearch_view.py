@@ -150,19 +150,19 @@ class RerSiteSearchView(BrowserView):
         if 'b_start' in new_request:
             del new_request['b_start']
         query_string = self.getQueryString(new_request)
-        return '%s/%s?%s' % (self.context.absolute_url(), template_id, query_string)
+        return '%s/@@%s?%s' % (self.context.absolute_url(), template_id, query_string)
 
-    def getTabClass(self, current_block_id, tab_ids, selected_tab, isFirst=None):
+    def getTabClass(self, current_block_id, tab_ids, selected_tab, first_available_tab):
         """
         Return the current class of the tabs
         """
         if 'selected_tab' not in self.context.REQUEST.form:
-            if isFirst:
+            if current_block_id == first_available_tab:
                 return 'linetab groupSelected'
             return 'linetab'
         selected_tab = self.context.REQUEST.form.get('selected_tab')
         if selected_tab not in tab_ids:
-            if isFirst:
+            if current_block_id == first_available_tab:
                 self.context.REQUEST.form['selected_tab'] = current_block_id
                 return 'linetab groupSelected'
             return 'linetab'
