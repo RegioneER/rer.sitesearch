@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.1.2 (2012-10-08)
+2.2.0 (2012-10-08)
 ------------------
 
 - refactoring for Plone 4: now the template is removed and replaced by a view [andrea]
