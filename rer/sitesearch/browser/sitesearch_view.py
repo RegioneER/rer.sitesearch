@@ -94,13 +94,14 @@ class RerSiteSearchView(BrowserView):
                                                               default=index_title,
                                                               context=self.context)
                     indexes_dict[index_id] = {'title': index_title_translated, 'indexes': []}
-                    self.updateIndexesList(brain_value, index_id)
                 elif index_id == 'Subject' and index_title != 'Category':
                     new_subject_label = self.translation_service.utranslate(msgid=index_title,
                                                                             domain='rer.keywordsearch',
                                                                             default=index_title,
                                                                             context=self.context)
                     indexes_dict['Subject']['title'] = new_subject_label
+                if index_id != 'Subject':
+                    self.updateIndexesList(brain_value, index_id)
 
     def updateIndexesList(self, index_value, index_id):
         """
