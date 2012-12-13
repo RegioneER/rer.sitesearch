@@ -40,7 +40,7 @@ class RERSearch(Search):
         """
         super(RERSearch, self).__init__(context, request)
         self.catalog = getToolByName(self.context, 'portal_catalog')
-        self.search_settings = self.getSearchSettings()
+        # self.search_settings = self.getSearchSettings()
         self.tabs_order = self.getRegistryInfos('tabs_order')
         self.indexes_order = self.getRegistryInfos('indexes_order')
 

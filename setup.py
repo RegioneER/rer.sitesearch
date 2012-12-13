@@ -25,7 +25,7 @@ setup(name='rer.sitesearch',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          # -*- Extra requirements: -*-
+          'plone.app.search'
       ],
       entry_points="""
       # -*- entry_points -*-
