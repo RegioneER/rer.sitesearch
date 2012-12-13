@@ -13,7 +13,8 @@ jQuery(function ($) {
     $.fn.pullSearchResults = function (query) {
         return this.each(function () {
             var $container = $(this);
-            $container.fadeOut("slow")
+            //$container.fadeOut("slow")
+            $container.children("dl.searchResults").toggleClass("searchingLoader");
             $.get(
                 '@@updated_search',
                 query,

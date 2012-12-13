@@ -1,6 +1,5 @@
 #search-results-wrapper #search-filter .field {
     margin-bottom: 1em;
-    width: 100%;
 }
 
 #search-results-wrapper #search-results-bar > * {
@@ -50,7 +49,7 @@
 }
 
 #tab-options li{
-    margin-bottom: -0.03em;;
+    margin-bottom: -0.04em;;
 }
 
 #tab-options a:link {
@@ -61,3 +60,12 @@
     list-style-image: none;
     list-style-type: none;
  }
+
+#search-filter ul#sorting-options {
+    margin-left: 0;
+}
+
+.searchingLoader {
+    background: url(++resource++rer.sitesearch.images/loader.gif) no-repeat scroll 50% 0 transparent;
+    opacity: 0.5;
+}
