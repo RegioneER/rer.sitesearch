@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-12-13 09:05+0000\n"
+"POT-Creation-Date: 2012-12-13 21:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: rer.sitesearch\n"
 
-#: ./browser/rer_search_new.py:364
+#: ./browser/rer_search_new.py:363
 msgid "${results_len} on ${total_len}"
 msgstr ""
 
@@ -95,8 +95,16 @@ msgstr ""
 msgid "RER:Sitesearch settings"
 msgstr ""
 
+#: ./browser/rer_search_new.pt:224
+msgid "Refine your search:"
+msgstr ""
+
 #: ./browser/controlpanel.py:40
 msgid "Save"
+msgstr ""
+
+#: ./browser/rer_search_new.pt:29
+msgid "Search results"
 msgstr ""
 
 #: ./interfaces.py:17
@@ -194,24 +202,24 @@ msgid "indexes_in_search_label"
 msgstr ""
 
 #. Default: "You are also searching for:"
-#: ./browser/rer_search_new.pt:299
+#: ./browser/rer_search_new.pt:292
 #: ./browser/templates/rer_search.pt:263
 msgid "label_also_searching_for"
 msgstr ""
 
 #. Default: "Remove all filters"
-#: ./browser/rer_search_new.pt:310
+#: ./browser/rer_search_new.pt:303
 #: ./browser/templates/rer_search.pt:273
 msgid "label_remove_filters"
 msgstr ""
 
 #. Default: "Search"
-#: ./browser/rer_search_new.pt:426
+#: ./browser/rer_search_new.pt:419
 msgid "label_search"
 msgstr ""
 
 #. Default: "Search in"
-#: ./browser/rer_search_new.pt:255
+#: ./browser/rer_search_new.pt:248
 #: ./browser/templates/rer_search.pt:231
 msgid "label_search_in"
 msgstr ""
@@ -222,7 +230,7 @@ msgid "label_search_text"
 msgstr ""
 
 #. Default: "All the site"
-#: ./browser/rer_search_new.pt:276
+#: ./browser/rer_search_new.pt:269
 #: ./browser/templates/rer_search.pt:252
 msgid "label_searchbox_all_site"
 msgstr ""

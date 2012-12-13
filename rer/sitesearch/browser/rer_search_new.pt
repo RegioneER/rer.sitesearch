@@ -26,7 +26,10 @@
 <body>
 
   <div id="content-core" metal:fill-slot="main">
-
+    <h1 class="documentFirstHeading"
+        i18n:translate="">
+        Search results
+    </h1>
     <form name="searchform"
           method="POST"
           action="@@search"
@@ -39,21 +42,7 @@
 
         <input type="hidden" name="sort_on" value="" />
         <div class="row">
-          <div class="cell width-16 position-0" i18n:domain="plone">
-              <h1 class="documentFirstHeading"
-                  i18n:translate=""
-                  tal:condition="not:st">
-                  Search results
-              </h1>
-              <h1 class="documentFirstHeading"
-                  i18n:translate=""
-                  tal:condition="st">
-                  Search results for
-                  <strong id="search-term" tal:content="st" i18n:name="term">
-                      Search Term
-                  </strong>
-              </h1>
-          </div>
+          
           <div class="visualClear"><!-- --></div>
           <div id="search-results-wrapper"
                class="cell width-16 position-0"
@@ -232,6 +221,10 @@
               </metal:searchresults>
               <tal:column_filter>
                 <div id="search-filter">
+                  <h2 class="refineSearch"
+                      i18n:translate="">
+                      Refine your search:
+                  </h2>
                     <fieldset id="search-field" i18n:domain="plone" class="noborder">
                           <input class=""
                                  name="SearchableText"
@@ -436,6 +429,7 @@
 
                 </tal:column_filter>
             </div>
+            <div class="visualClear"><!-- --></div>
         </div>
       <div class="visualClear"><!-- --></div>
     </form>

@@ -17,8 +17,6 @@
                   selected_tab python:view.getSelectedTab(tabs);
                   ">
 
-    <span id="updated-search-term" tal:content="st">Search Term</span>
-
     <strong id="updated-search-results-number"
             tal:content="python:view.getResultsLen(results)">234</strong>
 

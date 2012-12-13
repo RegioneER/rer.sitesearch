@@ -23,7 +23,7 @@ class ITabsValueField(Interface):
             title=_("sitesearch_tab_portal_types", default=u"Portal types"),
             description=_("sitesearch_tab_portal_types_help",
                           default=u'Select which portal_types shows on this tab.'),
-            required=False,
+            required=True,
             value_type=FOLDER_TYPES_VALUESTYPE,
     )
 
@@ -41,7 +41,7 @@ class IIndexesValueField(Interface):
             title=_("sitesearch_allowable", default=u"Allowable indexes in catalog"),
             description=_("sitesearch_allowable_help",
                           default=u'Select an index.'),
-            required=False,
+            required=True,
             vocabulary=u"rer.sitesearch.vocabularies.IndexesVocabulary",
     )
 
