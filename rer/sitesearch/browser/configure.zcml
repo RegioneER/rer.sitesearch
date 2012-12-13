@@ -4,7 +4,7 @@
     i18n_domain="rer.sitesearch">
 	
 
-  <browser:page
+  <!--browser:page
        name="search"
        class=".sitesearch_view.RerSiteSearchView"
        permission="zope2.View"
@@ -18,9 +18,37 @@
        permission="zope2.View"
        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
        layer=".interfaces.IRERSiteSearchLayer"
-       template="templates/rer_search.pt"/>
+       template="templates/rer_search.pt"/-->
 
-  <adapter 
+
+  <browser:page
+        name="search"
+        class=".rer_search_new.RERSearch"
+        permission="zope2.View"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        layer=".interfaces.IRERSiteSearchLayer"
+        template="rer_search_new.pt"
+        />
+
+  <browser:page
+        name="search"
+        class=".rer_search_new.RERSearch"
+        permission="zope2.View"
+        for="*"
+        layer=".interfaces.IRERSiteSearchLayer"
+        template="rer_search_new.pt"
+        />
+
+    <browser:page
+        name="updated_search"
+        class=".rer_search_new.RERSearch"
+        permission="zope2.View"
+        for="Products.CMFCore.interfaces.IFolderish"
+        layer=".interfaces.IRERSiteSearchLayer"
+        template="updated_search.pt"
+        />
+
+  <!--adapter 
         provides=".interfaces.IRerSiteSearchSettings"
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         factory=".configlet.SitesearchSettingsAdapter"
@@ -31,14 +59,16 @@
     name="sitesearch-settings"
     class=".configlet.SitesearchSettings"
     permission="rer.sitesearch.ManageSettings"
-    />
+    /-->
+  
+  <browser:page
+        name="sitesearch-settings"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".controlpanel.RERSiteSearchSettingsControlPanel"
+        permission="rer.sitesearch.ManageSettings"
+        layer=".interfaces.IRERSiteSearchLayer"
+        />
 
-  <!-- Resource directory for js -->
-  <browser:resourceDirectory
-      name="rer.sitesearch.javascript"
-      directory="javascript"
-      />
-      
   <!-- Resource directory for stylesheets -->
   <browser:resourceDirectory
       name="rer.sitesearch.stylesheets"
@@ -50,5 +80,11 @@
       name="rer.sitesearch.images"
       directory="images"
       />
-      
+  
+  <browser:resource
+      name="search.js"
+      file="javascript/sitesearch.js"
+      layer=".interfaces.IRERSiteSearchLayer"
+      />
+
 </configure>

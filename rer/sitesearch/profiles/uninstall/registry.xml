@@ -1,0 +1,11 @@
+<registry>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="tabs_mapping"
+            delete="True"/>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="available_indexes"
+            delete="True"/>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="hidden_indexes"
+            delete="True"/>
+</registry>

@@ -1,80 +1,235 @@
-function removeAdditionalIndexFilter(index){
-	/*
-	 * Remove the filters for a given index
-	 */
-	checkedIndex = jq("#search :checkbox[name="+index+":list]:checked")
-		if (checkedIndex.size()) {
-			checkedIndex.removeAttr("checked");
-			jq("#search :submit").click();
-		}
-}	
+/* The following line defines global variables defined elsewhere. */
+/*globals jQuery, portal_url, Modernizr, alert, history, window, location*/
 
-function removeHiddenFilters(event){
-	event.preventDefault();
-	jq(".hiddenIndex").each(function (index) {
-		jq(this).remove();
-	});
-	jq("#search :submit").click();
-		
-}
+jQuery(function ($) {
 
-function doTabSearch(event){
-	event.preventDefault();
-	var select_id=jq(this).parent().attr('id');
-	jq('input#selected_tab').val(select_id);
-	jq('input#b_start').val("0");
-	jq("#search :submit").click();
-}
+    var query, pushState, popState, popped, initialURL,
+        Search = {},
+        $default_res_container = $('#search-results'),
+        navigation_root_url = $('meta[name=navigation_root_url]').attr('content') || window.navigation_root_url || window.portal_url;
 
-function doBatchSearch(event){
-	event.preventDefault();
-	var batch_href=jq(this).attr('href');
-	var b_start=batch_href.indexOf('b_start');
-	if (b_start === -1) {
-		jq("#search :submit").click();
-	}
-	var end_batch=batch_href.indexOf("&",b_start);
-	if (end_batch === -1) {
-		end_batch = batch_href.length;
-	}
-	var batch_val=unescape(batch_href.substring(b_start+'b_start:int='.length,end_batch));
-	jq('input#b_start').val(batch_val);
-	jq("#search :submit").click();
-}
+    // The globally available method to pull the search results for the
+    // 'query' into the element, on which the method is invoked
+    $.fn.pullSearchResults = function (query) {
+        return this.each(function () {
+            var $container = $(this);
+            $.get(
+                '@@updated_search',
+                query,
+                function (data) {
+                    $container.hide();
 
-jq(document).ready(function() {
-	jq("#search :radio, #search :checkbox").click(function() {
-		if (this.id === 'sort_on-date') {
-			jq('#sortOrderField').attr('value','reverse');
-		}
-		jq('input#b_start').val("0");
-		jq("#search :submit").click();
-	});
-	jq('#deselect-subjects').click(function(event) {
-		event.preventDefault();
-		var checkedCategorie = jq("#search :checkbox[name=Subject:list]:checked");
-		if (checkedCategorie.size()) {
-			checkedCategorie.removeAttr("checked");
-			jq("#search :submit").click();
-		}
-	});
-	jq('#deselect-siteareas').click(function(event) {
-		event.preventDefault();
-		var checkedSiteAreas = jq("#search :checkbox[name=getSiteAreas:list]:checked");
-		if (checkedSiteAreas.size()) {
-			checkedSiteAreas.removeAttr("checked");
-			jq("#search :submit").click();
-		}
-	});
-	jq('ul.searchTabs a.linetab').each(function (index) {
-		jq(this).bind('click',doTabSearch);
-	});
-	jq('div.searchData .listingBar a').each(function (index) {
-		jq(this).bind('click',doBatchSearch);
-	});
-	jq('#deselect-hidden').each(function (index) {
-		jq(this).bind('click',removeHiddenFilters);
-	});
-	
+                    // Before assigning any variable we need to make sure we
+                    // have the returned data available (returned somewhere to
+                    // the DOM tree). Otherwise we will not be able to select
+                    // elements from the returned HTML.
+                    if ($('#ajax-search-res').length === 0) {
+                        // Create temporary container for the HTML structure,
+                        // returned by our AJAX request
+                        $('body').append('<div id="ajax-search-res"></div>');
+                    }
+                    $('#ajax-search-res').html(data);
+
+                    var $data_res = $('#ajax-search-res #search-results > *'),
+                        data_search_term = $('#ajax-search-res #updated-search-term').text(),
+                        data_res_number = $('#ajax-search-res #updated-search-results-number').text(),
+                        data_path_opt = $('#ajax-search-res #updated-path-options').html(),
+                        data_sorting_opt = $('#ajax-search-res #updated-sorting-options').html(),
+                        data_tab_opt = $('#ajax-search-res #updated-tab-options').html(),
+                        data_indexes_opt = $('#ajax-search-res #updated-indexes-options').html();
+
+                    $container.html($data_res);
+                    $container.fadeIn();
+
+                    if ($('#search-term').length === 0) {
+                        // Until now we had queries with empty search term. So
+                        // we need a placeholder for the search term in
+                        // result's title.
+                        $('h1.documentFirstHeading').append('<strong id="search-term" />');
+                    }
+
+                    $('#search-term').text(data_search_term);
+                    $('#search-results-number').text(data_res_number);
+                    if (data_path_opt === null) {
+                        $('#path-options').remove();
+                    }
+                    $('#sorting-options').html(data_sorting_opt);
+                    $('#tab-options').html(data_tab_opt);
+                    $('#indexes-options').html(data_indexes_opt);
+                    // Clean after ourselves — empty the ajax results container.
+                    // No need to remove the item itself — probably there will
+                    // be more search requests for filtering, sorting, etc. So,
+                    // we can avoid re-creating the node every time
+                    $('#ajax-search-res').empty();
+
+                    $('#rss-subscription a.link-feed').attr('href', function () {
+                        return navigation_root_url + '/search_rss?' + query;
+                    });
+                });
+        });
+    };
+
+    pushState = function (query) {
+        // Now we need to update the browser's path bar to reflect
+        // the URL we are at now and to push a history state change
+        // in the browser's history. We are using Modernizr
+        // library to check whether browser supports HTML5 History
+        // API natively or it needs a polyfill, that provides
+        // hash-change events to the older browser
+        if (Modernizr.history) {
+            var url = navigation_root_url + '/@@search?' + query;
+            history.pushState(null, null, url);
+        }
+    };
+
+    // THE HANDLER FOR 'POPSTATE' EVENT IS COPIED FROM PJAX.JS
+    // https://github.com/defunkt/jquery-pjax
+
+    // Used to detect initial (useless) popstate.
+    // If history.state exists, assume browser isn't going to fire initial popstate.
+    popped = ('state' in window.history);
+    initialURL = location.href;
+
+
+    // popstate handler takes care of the back and forward buttons
+    //
+    // No need to wrap 'popstate' event handler for window object with
+    // Modernizr check up since popstate event will contain any data only if
+    // a state has been created with history.pushState() that is wrapped in
+    // Modernizr checkup above.
+    $(window).bind('popstate', function (event) {
+        var initialPop, str;
+        // Ignore inital popstate that some browsers fire on page load
+        initialPop = !popped && location.href === initialURL;
+        popped = true;
+        if (initialPop) {
+            return;
+        }
+        
+        if (!location.search){
+            return;
+        }
+
+        query = location.search.split('?')[1];
+        // We need to make sure we update the search field with the search
+        // term from previous query when going back in history
+        str = query.match(/SearchableText=[^&]*/)[0];
+        str = str.replace(/\+/g, ' '); // we remove '+' used between words
+        // in search queries.
+
+        // Now we have something like 'SearchableText=test' in str
+        // variable. So, we know when the actual search term begins at
+        // position 15 in that string.
+        $('#search-field input[name="SearchableText"], input#searchGadget').val(str.substr(15, str.length));
+
+        $default_res_container.pullSearchResults(query);
+    });
+
+    $('#search-filter input.searchPage[type="submit"]').hide();
+
+    // We don't submit the whole form with all the fields when only the
+    // search term is being changed. We just alter the current URL to
+    // substitue the search term and make a new ajax call to get updated
+    // results
+    $('#search-field input.searchButton').click(function (e) {
+        var st, queryString = location.search.substring(1),
+        re = /([^&=]+)=([^&]*)/g, m, queryParameters = {};
+
+        // parse query string into hash
+        while (m = re.exec(queryString)) {
+            queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+        }
+
+        st = $('#search-field input[name="SearchableText"]').val();
+        queryParameters['SearchableText'] = st;
+        queryString = $.param(queryParameters);
+        $default_res_container.pullSearchResults(queryString);
+        pushState(queryString);
+        e.preventDefault();
+    });
+    $('form.searchPage').submit(function (e) {
+        query = $('form.searchPage').serialize();
+        $default_res_container.pullSearchResults(query);
+        pushState(query);
+        e.preventDefault();
+    });
+
+    // We need to update the site-wide search field (at the top right in
+    // stock Plone) when the main search field is updated
+    $('#search-field input[name="SearchableText"]').keyup(function () {
+        $('input#searchGadget').val($(this).val());
+    });
+
+    // When we click any option in the Filter menu, we need to prevent the
+    // menu from being closed as it is dictaded by dropdown.js for all
+    // dl.actionMenu > dd.actionMenuContent
+    $('#search-results-bar dl.actionMenu > dd.actionMenuContent').click(function (e) {
+        e.stopImmediatePropagation();
+    });
+
+    // Now we can handle the actual menu options and update the search
+    // results after any of them has been chosen.
+    $('#search-filter input, #search-filter select').not('input#pt_toggle').live('change',
+        function (e) {
+            query = $('form.searchPage').serialize();
+            $default_res_container.pullSearchResults(query);
+            pushState(query);
+            e.preventDefault();
+        }
+    );
+
+    // Since we replace the whole sorting options with HTML, coming in
+    // AJAX response, we should bind the click event with live() in order
+    // for this to keep working with the HTML elements, coming from AJAX
+    // respons
+    $('#sorting-options a').live('click', function (e) {
+        if ($(this).attr('data-sort')) {
+            $("form.searchPage input[name='sort_on']").val($(this).attr('data-sort'));
+        }
+        else {
+            $("form.searchPage input[name='sort_on']").val('');
+        }
+        query = this.search.split('?')[1];
+        $default_res_container.pullSearchResults(query);
+        pushState(query);
+        e.preventDefault();
+    });
+
+    // Handle clicks in the batch navigation bar. Load those with Ajax as
+    // well.
+    $('#search-results .listingBar a').live('click', function (e) {
+        query = this.search.split('?')[1];
+        $default_res_container.pullSearchResults(query);
+        pushState(query);
+        e.preventDefault();
+    });
+
+    // Handle clicks for tabs. Load those with Ajax like sorting options
+    $('#tab-options a').live('click', function (e) {
+        if ($(this).attr('data-tab')) {
+            $("form.searchPage input[name='filter_tab']").val($(this).attr('data-tab'));
+        }
+        else {
+            $("form.searchPage input[name='filter_tab']").val('all');
+        }
+        query = this.search.split('?')[1];
+        $default_res_container = $('#search-results'),
+        $default_res_container.pullSearchResults(query);
+        pushState(query);
+        e.preventDefault();
+    });
+
+    // Handle clicks for remove filters link. updates form an query with Ajax like sorting options.
+    $('a.linkRemoveFilters').live('click', function (e) {
+        jq(this).parent().find("input:checked").each(function(){
+            jq(this).attr("checked", false);
+        });
+        if ($(this).attr("class").indexOf("linkRemoveFilters") >= 0) {
+            jq(this).parent().remove();
+        }
+        query = $('form.searchPage').serialize();
+        $default_res_container.pullSearchResults(query);
+        pushState(query);
+        e.preventDefault();
+    });
 });
-

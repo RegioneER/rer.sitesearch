@@ -21,4 +21,13 @@
         handler=".upgrades.to_2"
         profile="rer.sitesearch:default" />
 
+  <!-- Upgrade steps -->
+  <gs:upgradeStep
+        title="Upgrade rer.sitesearch 230"
+        description="rer.sitesearch upgrade step"
+        source="200"
+        destination="230"
+        handler=".upgrades.to_230"
+        profile="rer.sitesearch:default" />
+        
 </configure>

@@ -5,6 +5,7 @@ from rer.sitesearch.browser.interfaces import IRerSiteSearch
 from urllib import urlencode
 from DateTime import DateTime
 from ZPublisher.HTTPRequest import record
+from zope.i18n import translate
 
 
 class RerSiteSearchView(BrowserView):

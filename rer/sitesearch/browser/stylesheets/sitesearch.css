@@ -1,0 +1,63 @@
+#search-results-wrapper #search-filter .field {
+    margin-bottom: 1em;
+    width: 100%;
+}
+
+#search-results-wrapper #search-results-bar > * {
+    float: right;
+}
+
+#search-results-wrapper #search-results-bar {
+    border-top: 0;
+}
+
+#search-results-wrapper #rss-subscription {
+    float: right;
+}
+
+#search-results-wrapper #search-results {
+    float:right;
+    width:60%;
+}
+
+#search-results-wrapper #search-filter {
+    float:left;
+    width:35%;
+}
+
+#search-filter fieldset#search-field {
+    padding-bottom: 1em;
+    padding-top: 1em;
+    text-align: left;
+    margin-left: 1em;
+}
+
+#searchResultsSort {
+    float: none;
+}
+
+#tab-options ul {
+    list-style-type: none;
+    margin-left: 0;
+}
+
+#tab-options ul.nav {
+    margin-bottom: 0;
+}
+
+#tab-options ul.nav li.active a {
+    color: #000000;
+}
+
+#tab-options li{
+    margin-bottom: -0.03em;;
+}
+
+#tab-options a:link {
+    border-bottom: 0;
+}
+
+#search-filter ul {
+    list-style-image: none;
+    list-style-type: none;
+ }

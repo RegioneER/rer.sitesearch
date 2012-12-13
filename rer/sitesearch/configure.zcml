@@ -6,7 +6,7 @@
     i18n_domain="rer.sitesearch">
 
   <five:registerPackage package="." initialize=".initialize" />
-  
+  <include package="plone.app.registry" />
   <i18n:registerTranslations directory="locales" />
   
   <!--Register permission id-->
@@ -22,19 +22,38 @@
       name="default"
       title="RER: Site Search"
       directory="profiles/default"
-      description=""
+      description="Install RER Site Search"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
   
-  <!-- Register the installation GenericSetup extension profile -->
   <genericsetup:registerProfile
       name="uninstall"
       title="Uninstall RER Site Search"
       directory="profiles/uninstall"
+      description="Uninstall RER Site Search"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:registerProfile
+      name="migrate_to_230"
+      title="Migrate RER Site Search"
+      directory="profiles/migrate_to_230"
       description=""
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <utility
+    component=".vocabularies.IndexesVocabularyFactory"
+    name="rer.sitesearch.vocabularies.IndexesVocabulary"
+    />
+  <utility
+    component=".vocabularies.SearchTabsVocabularyFactory"
+    name="rer.sitesearch.vocabularies.SearchTabsVocabulary"
+    />
+  <utility
+    component=".vocabularies.SearchIndexesVocabularyFactory"
+    name="rer.sitesearch.vocabularies.SearchIndexesVocabulary"
+    />
   <!-- indexer for Date -->
   <adapter name="Date" factory=".indexer.Date" />
   

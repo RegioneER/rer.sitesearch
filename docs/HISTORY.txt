@@ -1,10 +1,11 @@
 Changelog
 =========
 
-2.2.2 (unreleased)
+2.3.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- refactored view to support plone.app.search [andrea]
+- moved configuration from site_properties to registry [andrea]
 
 
 2.2.1 (2012-10-12)
