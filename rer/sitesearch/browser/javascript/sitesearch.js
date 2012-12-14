@@ -14,7 +14,7 @@ jQuery(function ($) {
         return this.each(function () {
             var $container = $(this);
             //$container.fadeOut("slow")
-            $container.children("dl.searchResults").toggleClass("searchingLoader");
+            $container.addClass("searchingLoader");
             $.get(
                 '@@updated_search',
                 query,
@@ -39,7 +39,7 @@ jQuery(function ($) {
                         data_sorting_opt = $('#ajax-search-res #updated-sorting-options').html(),
                         data_tab_opt = $('#ajax-search-res #updated-tab-options').html(),
                         data_indexes_opt = $('#ajax-search-res #updated-indexes-options').html();
-
+                    $container.removeClass("searchingLoader");
                     $container.html($data_res);
                     $container.fadeIn();
 

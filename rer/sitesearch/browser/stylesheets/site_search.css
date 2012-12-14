@@ -66,6 +66,13 @@
 }
 
 .searchingLoader {
-    background: url(++resource++rer.sitesearch.images/loader.gif) no-repeat scroll 50% 0 transparent;
     opacity: 0.5;
+    filter: alpha(opacity=50); /* IE 7 and Earlier */
+    /* Next 2 lines IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+}
+
+.searchingLoader dl.searchResults {
+    background: url(++resource++rer.sitesearch.images/loader.gif) no-repeat scroll 50% 0 transparent;
 }
