@@ -124,6 +124,10 @@
                                        tal:content="item/Title" />
                                   </dt>
                                   <dd i18n:domain="plone">
+                                    <div tal:content="item/CroppedDescription">
+                                      Cropped description
+                                    </div>
+                                    
                                     <span class="discreet"
                                       tal:condition="show_about">
                                       <span class="documentAuthor"
@@ -181,9 +185,7 @@
                                         </span>
                                       </span>
                                     </span>
-                                    <div tal:content="item/CroppedDescription">
-                                      Cropped description
-                                    </div>
+                                    
 
                                     <cite class="documentLocation link-location"
                                           tal:define="breadcrumbs python: view.breadcrumbs(item);

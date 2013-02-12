@@ -6,5 +6,6 @@
      handler="rer.sitesearch.setuphandlers.Handlers"
      title="sitesearch_handlers">
         Add some handlers at sitesearch installations
+        <dependency step="plone.app.registry"/>
   </import-step>
 </import-steps>

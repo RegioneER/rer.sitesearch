@@ -201,7 +201,7 @@ class RERSearch(Search):
                 results = self.catalog(**query)
             except ParseError:
                 return []
-        if tab != "all":
+        if tab and tab != "all":
             res_dict = {'tot_results_len': results.actual_result_count}
             if tab:
                 filtered_results = self.doFilteredSearch(tab, query)
@@ -211,7 +211,7 @@ class RERSearch(Search):
                     if filtered_results:
                         break
         filtered_infos, available_tabs = self.getFilterInfos(results, filtered_results)
-        if tab != "all" or filtered_results:
+        if tab and (tab != "all" or filtered_results):
             results = IContentListing(filtered_results)
         else:
             results = IContentListing(results)

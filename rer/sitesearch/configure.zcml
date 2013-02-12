@@ -7,6 +7,7 @@
 
   <five:registerPackage package="." initialize=".initialize" />
   <include package="plone.app.registry" />
+  <include package="plone.app.contentlisting" />
   <i18n:registerTranslations directory="locales" />
   
   <!--Register permission id-->
