@@ -178,9 +178,9 @@ class RERSearch(Search):
         tab_infos = self.tabs_mapping.get(tab, {})
         if tab_infos:
             types_filter = tab_infos.get('portal_types', ())
-            if types_filter:
-                query['portal_type'] = self.filter_types(types_filter)
-                return self.catalog(**query)
+            query['portal_type'] = self.filter_types(types_filter)
+            return self.catalog(**query)
+        return None
 
     def getFilterInfos(self, results, filtered_results=[]):
         """

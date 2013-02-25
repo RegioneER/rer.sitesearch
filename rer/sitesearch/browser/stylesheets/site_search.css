@@ -76,3 +76,8 @@
 .searchingLoader dl.searchResults {
     background: url(++resource++rer.sitesearch.images/loader.gif) no-repeat scroll 50% 0 transparent;
 }
+
+#content #search-results div.documentLocation {
+    color: #578308;
+    font-style: italic;
+}

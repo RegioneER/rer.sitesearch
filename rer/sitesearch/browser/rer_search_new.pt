@@ -105,19 +105,11 @@
                       <div class="visualClear"><!-- --></div>
                     </div>
                     <!-- Div for accessibility: it's an help for blind people -->
-                    <div class="hiddenStructure">
-                      <h2 i18n:translate="">Search results</h2>
-                      <h3>
-                        <span i18n:translate=""
-                              tal:omit-tag="">
-                          Results type:
-                        </span>
-                        <tal:tab i18n:translate=""
-                                 define="tab_dict python:tabs_mapping.get(selected_tab, {});
-                                         tab_title python:tab_dict.get('title', selected_tab)"
-                                 replace="tab_title" />
-                      </h3>
-                    </div>
+                      <h3 i18n:translate=""
+                          class="hiddenStructure"
+                          tal:define="tab_dict python:tabs_mapping.get(selected_tab, {});
+                                       tab_title python:tab_dict.get('title', selected_tab)"
+                          tal:content="tab_title" />
                       <metal:noresults tal:condition="not: batch">
                         <p i18n:domain="plone"><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
                       </metal:noresults>
@@ -138,7 +130,8 @@
                                        tal:content="item/Title" />
                                   </dt>
                                   <dd i18n:domain="plone">
-                                    <div tal:content="item/CroppedDescription">
+                                    <div tal:condition="item/CroppedDescription"
+                                         tal:content="item/CroppedDescription">
                                       Cropped description
                                     </div>
                                     
@@ -201,7 +194,7 @@
                                     </span>
                                     
 
-                                    <cite class="documentLocation link-location"
+                                    <div class="documentLocation link-location"
                                           tal:define="breadcrumbs python: view.breadcrumbs(item);
                                                       is_rtl context/@@plone_portal_state/is_rtl;"
                                           tal:condition='breadcrumbs'>
@@ -226,7 +219,7 @@
                                              </tal:item>
                                         </span>
 
-                                    </cite>
+                                    </div>
 
                                   </dd>
                             </tal:results>
