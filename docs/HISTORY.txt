@@ -6,7 +6,8 @@ Changelog
 
 - refactored view to support plone.app.search [andrea]
 - moved configuration from site_properties to registry [andrea]
-
+- added tests [andrea]
+- customized "skip_links" viewlet for search view [andrea]
 
 2.2.1 (2012-10-12)
 ------------------

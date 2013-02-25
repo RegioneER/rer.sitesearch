@@ -14,6 +14,7 @@ from rer.sitesearch import sitesearchMessageFactory as _
 
 class FormTabs(group.Group):
     label = _(u"Tabs settings")
+    description = "bla bla bla"
     fields = field.Fields(IRERSiteSearchTabsSettings)
 
 
@@ -57,6 +58,6 @@ class RERSiteSearchSettingsEditForm(controlpanel.RegistryEditForm):
 
 
 class RERSiteSearchSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
-    """Analytics settings control panel.
+    """Sitesearch settings control panel.
     """
     form = RERSiteSearchSettingsEditForm

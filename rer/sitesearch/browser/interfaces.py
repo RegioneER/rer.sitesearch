@@ -1,6 +1,7 @@
 from zope.interface import Interface
 from zope import schema
 from rer.sitesearch import sitesearchMessageFactory as _
+from plone.app.layout.globals.interfaces import IViewView
 
 
 class IRERSiteSearchLayer(Interface):
@@ -8,43 +9,43 @@ class IRERSiteSearchLayer(Interface):
     """
 
 
-class IRerSiteSearch(Interface):
+class IRerSiteSearch(IViewView):
     """Interface for SiteSearchView"""
 
-    def getDividedResults(results):
-        """
-        Retrieves a dictionary of lists of results divided by type, ordered by serarchResults
-        """
+    # def getDividedResults(results):
+    #     """
+    #     Retrieves a dictionary of lists of results divided by type, ordered by serarchResults
+    #     """
 
-    def setTabUrl(template_id, tab_id):
-        """
-        Set the right tab url
-        """
+    # def setTabUrl(template_id, tab_id):
+    #     """
+    #     Set the right tab url
+    #     """
 
-    def getTabClass(current_block_id, tab_ids, selected_tab, isFirst):
-        """
-        Return the current class of the tabs
-        """
+    # def getTabClass(current_block_id, tab_ids, selected_tab, isFirst):
+    #     """
+    #     Return the current class of the tabs
+    #     """
 
-    def getFolderName(path):
-        """
-        Return folder Title, if exist
-        """
+    # def getFolderName(path):
+    #     """
+    #     Return folder Title, if exist
+    #     """
 
-    def getHiddenIndexes():
-        """
-        Return a list of hidden indexes to insert in the query
-        """
+    # def getHiddenIndexes():
+    #     """
+    #     Return a list of hidden indexes to insert in the query
+    #     """
 
-    def getQueryString(request_dict):
-        """
-        Return the query string for RSS pourpose
-        """
+    # def getQueryString(request_dict):
+    #     """
+    #     Return the query string for RSS pourpose
+    #     """
 
-    def getFirstAvailableTab():
-        """
-        Return the first populated tab with results
-        """
+    # def getFirstAvailableTab():
+    #     """
+    #     Return the first populated tab with results
+    #     """
 
 
 class IRerSiteSearchSettingsForm(Interface):

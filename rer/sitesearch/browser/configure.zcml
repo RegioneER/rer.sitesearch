@@ -47,19 +47,6 @@
         layer=".interfaces.IRERSiteSearchLayer"
         template="updated_search.pt"
         />
-
-  <!--adapter 
-        provides=".interfaces.IRerSiteSearchSettings"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-        factory=".configlet.SitesearchSettingsAdapter"
-    /> 
-
-  <browser:page
-    for="Products.CMFCore.interfaces.ISiteRoot"
-    name="sitesearch-settings"
-    class=".configlet.SitesearchSettings"
-    permission="rer.sitesearch.ManageSettings"
-    /-->
   
   <browser:page
         name="sitesearch-settings"
@@ -67,6 +54,15 @@
         class=".controlpanel.RERSiteSearchSettingsControlPanel"
         permission="rer.sitesearch.ManageSettings"
         layer=".interfaces.IRERSiteSearchLayer"
+        />
+
+  <!-- The skip links for accessibility -->
+    <browser:viewlet
+        name="plone.skip_links"
+        layer=".interfaces.IRERSiteSearchLayer"
+        manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+        class=".viewlets.RERSkipLinksViewlet"
+        permission="zope2.View"
         />
 
   <!-- Resource directory for stylesheets -->

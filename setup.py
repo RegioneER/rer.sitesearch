@@ -3,6 +3,9 @@ import os
 
 version = '2.3.0.dev0'
 
+tests_require = ['plone.app.testing',
+                 'selenium>=2.0a5']
+
 setup(name='rer.sitesearch',
       version=version,
       description="A product that change the base site search of Plone with some new features.",
@@ -23,6 +26,8 @@ setup(name='rer.sitesearch',
       namespace_packages=['rer'],
       include_package_data=True,
       zip_safe=False,
+      tests_require=tests_require,
+      extras_require=dict(test=tests_require),
       install_requires=[
           'setuptools',
           'plone.app.search'

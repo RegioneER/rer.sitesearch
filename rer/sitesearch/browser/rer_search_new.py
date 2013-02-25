@@ -2,18 +2,19 @@
 from DateTime import DateTime
 from plone.app.contentlisting.interfaces import IContentListing
 from plone.app.search.browser import Search
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import getNavigationRoot
 from Products.CMFPlone.PloneBatch import Batch
 from Products.ZCTextIndex.ParseTree import ParseError
 from rer.sitesearch import sitesearchMessageFactory as _
-from zope.i18n import translate
-from ZTUtils import make_query
-from DateTime import DateTime
-from ZPublisher.HTTPRequest import record
+from rer.sitesearch.browser.interfaces import IRerSiteSearch
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
 from zope.component import queryUtility
-from plone.registry.interfaces import IRegistry
+from zope.i18n import translate
+from ZPublisher.HTTPRequest import record
+from ZTUtils import make_query
+from zope.interface import implements
 
 
 MULTISPACE = u'\u3000'.encode('utf-8')
@@ -34,6 +35,7 @@ def quote_chars(s):
 class RERSearch(Search):
     """
     """
+    implements(IRerSiteSearch)
 
     def __init__(self, context, request):
         """
@@ -42,6 +44,8 @@ class RERSearch(Search):
         self.catalog = getToolByName(self.context, 'portal_catalog')
         # self.search_settings = self.getSearchSettings()
         self.tabs_order = self.getRegistryInfos('tabs_order')
+        if not self.tabs_order:
+            self.tabs_order = ('all')
         self.indexes_order = self.getRegistryInfos('indexes_order')
 
     @property
@@ -126,61 +130,6 @@ class RERSearch(Search):
                     return tab
         return "all"
 
-    # def getSearchSettings(self):
-    #     portal_properties = getToolByName(self.context, 'portal_properties')
-    #     rer_properties = getattr(portal_properties, 'rer_properties', None)
-    #     if not rer_properties:
-    #         return []
-    #     tabs_settings = rer_properties.getProperty('tabs_list', ())
-    #     keywords = rer_properties.getProperty('indexes_in_search', ())
-    #     whitelist = rer_properties.getProperty('type_whitelist', ())
-    #     hiddenlist = rer_properties.getProperty('indexes_hiddenlist', ())
-    #     indexes_order = []
-    #     indexes_map = {}
-    #     tabs_dict = {}
-    #     if not keywords:
-    #         keywords = rer_properties.getProperty('keywordview_properties', ())
-    #     if keywords:
-    #         for index in keywords:
-    #             index_values = self.splitSearchOptions(index)
-    #             index_id = index_values.get('id', '')
-    #             index_title = index_values.get('title', '')
-    #             if index_id and index_title:
-    #                 indexes_order.append(index_id)
-    #                 indexes_map[index_id] = {'title': index_title}
-    #     else:
-    #         indexes_order.append('Subject')
-    #     if tabs_settings:
-    #         tabs_dict = self.setTabsInfos(tabs_settings)
-    #     return {'indexes': indexes_map,
-    #             'indexes_order': indexes_order,
-    #             'whitelist': whitelist,
-    #             'hiddenlist': hiddenlist,
-    #             'tabs_dict': tabs_dict}
-
-    # def setTabsInfos(self, tab_infos):
-    #     """
-    #     """
-    #     tabs_dict = {'tabs_order': [], 'tabs_mapping': {}}
-    #     for tab in tab_infos:
-    #         tab_values = self.splitSearchOptions(tab)
-    #         tab_id = tab_values.get('id', '')
-    #         tab_title = tab_values.get('title', '')
-    #         if tab_id and tab_title:
-    #             tab_name = tab_title.lower().replace(' ', '-')
-    #             tabs_dict['tabs_mapping'][tab_id] = tab_name
-    #             if not tabs_dict.get(tab_name, {}):
-    #                 tabs_dict[tab_name] = {'portal_types': [tab_id],
-    #                                        'title': tab_title}
-    #             else:
-    #                 tabs_dict[tab_name].get('portal_types', []).append(tab_id)
-    #             if tab_name not in tabs_dict['tabs_order']:
-    #                 tabs_dict['tabs_order'].append(tab_name)
-    #     if "all" not in tabs_dict['tabs_order']:
-    #         tabs_dict["all"] = {'title': "All"}
-    #         tabs_dict['tabs_order'].append('all')
-    #     return tabs_dict
-
     def results(self, query=None, batch=True, b_size=20, b_start=0, tab=''):
         """ Get properly wrapped search results from the catalog.
         Everything in Plone that performs searches should go through this view.
@@ -201,7 +150,7 @@ class RERSearch(Search):
                 results = self.catalog(**query)
             except ParseError:
                 return []
-        if tab and tab != "all":
+        if tab != "all":
             res_dict = {'tot_results_len': results.actual_result_count}
             if tab:
                 filtered_results = self.doFilteredSearch(tab, query)
@@ -211,12 +160,10 @@ class RERSearch(Search):
                     if filtered_results:
                         break
         filtered_infos, available_tabs = self.getFilterInfos(results, filtered_results)
-        if tab and (tab != "all" or filtered_results):
+        if tab != "all" or filtered_results:
             results = IContentListing(filtered_results)
         else:
             results = IContentListing(results)
-        self.context.plone_log("Risultati: %s" % len(results))
-
         if batch:
             results = Batch(results, b_size, b_start)
         res_dict['results'] = results
@@ -232,7 +179,7 @@ class RERSearch(Search):
         if tab_infos:
             types_filter = tab_infos.get('portal_types', ())
             if types_filter:
-                query['portal_type'] = types_filter
+                query['portal_type'] = self.filter_types(types_filter)
                 return self.catalog(**query)
 
     def getFilterInfos(self, results, filtered_results=[]):
@@ -307,10 +254,10 @@ class RERSearch(Search):
                     del query['created']
 
         # respect `types_not_searched` setting
-        # types = query.get('portal_type', [])
-        # if 'query' in types:
-        #     types = types['query']
-        # query['portal_type'] = self.filter_types(types)
+        types = query.get('portal_type', [])
+        if 'query' in types:
+            types = types['query']
+        query['portal_type'] = self.filter_types(types)
         # respect effective/expiration date
         query['show_inactive'] = False
         # respect navigation root
@@ -460,3 +407,9 @@ class RERSearch(Search):
             return folder.Title()
         else:
             return path
+
+    def filter_types(self, types):
+        plone_utils = getToolByName(self.context, 'plone_utils')
+        if not isinstance(types, list) and not isinstance(types, tuple):
+            types = [types]
+        return plone_utils.getUserFriendlyTypes(types)
