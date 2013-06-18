@@ -81,3 +81,7 @@
     color: #578308;
     font-style: italic;
 }
+
+h4.resultTitle {
+    display: inline;
+}
