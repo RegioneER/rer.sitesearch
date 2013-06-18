@@ -51,7 +51,7 @@ class IRERSiteSearchIndexesSettings(Interface):
                           default=u"Select the indexes that you want to show for faceted navigation. You can define also the order. \"All\" tab shows all results."),
             value_type=schema.Choice(vocabulary=u"rer.sitesearch.vocabularies.SearchIndexesVocabulary"),
             required=False,
-            default=("All",),
+            default=("Subject",),
             missing_value=()
         )
 

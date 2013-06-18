@@ -72,7 +72,8 @@
                                 <a data-tab=""
                                    i18n:translate=""
                                    tal:content="tab_title"
-                                   tal:attributes="href python:view.setQueryUrl(query={'filter_tab':tab}, remove_indexes=['b_start']);
+                                   tal:attributes="class tab;
+                                                   href python:view.setQueryUrl(query={'filter_tab':tab}, remove_indexes=['b_start']);
                                                    data-tab python:tab"></a>
                               </li>
                             </tal:items>

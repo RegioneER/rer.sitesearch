@@ -36,6 +36,7 @@ class SiteSearch(PloneSandboxLayer):
             """
             portal.invokeFactory('Document',
                                  'my-page' + str(i),
+                                 title='My page %s' % str(i),
                                  text='spam spam ham eggs')
         for i in range(0, 5):
             """
@@ -43,6 +44,7 @@ class SiteSearch(PloneSandboxLayer):
             """
             portal.invokeFactory('News Item',
                                  'my-news' + str(i),
+                                 title='My news %s' % str(i),
                                  text='spam chocolate ham eggs',
                                  subject=('apple', 'mango'))
         for i in range(0, 5):
@@ -51,6 +53,7 @@ class SiteSearch(PloneSandboxLayer):
             """
             portal.invokeFactory('Document',
                                  'categorized-page' + str(i),
+                                 title='Categorized page %s' % str(i),
                                  text='spam chocolate ham eggs',
                                  subject=('apple', 'kiwi'))
 

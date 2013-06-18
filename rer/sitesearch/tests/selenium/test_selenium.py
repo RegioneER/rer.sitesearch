@@ -18,7 +18,9 @@ class SimpleScenarioTestCase(BaseTestCase):
         self.markRequestWithLayer()
 
     def test_basic_search(self):
-
+        """
+        Check if all items are displayed correctly in a simple empty search
+        """
         portal = self.layer['portal']
         sel = self.layer['selenium']
 
@@ -29,104 +31,69 @@ class SimpleScenarioTestCase(BaseTestCase):
         # is not clickable?
         sorter = sel.find_element_by_id('sorting-options')
         self.assertEquals(sorter.find_elements_by_link_text('relevance'), [])
-        import pdb;pdb.set_trace()
-    #     # By default there are no search results because there is no
-    #     # SearchableText specified in request when accessing the form directly:
-    #     res_num = sel.find_element_by_id('search-results-number')
-    #     res = sel.find_element_by_id('search-results')
-    #     self.assertEquals(res_num.text, '0')
-    #     self.assertEquals(res.text, 'No results were found.')
 
-    #     # Now we want to get results with all elements in the site.
-    #     # we use the main search form for this search
-    #     content = sel.find_element_by_id('content')
-    #     main_search_form = content.find_element_by_name('searchform')
-    #     search_field = main_search_form.find_element_by_name('SearchableText')
-    #     search_button = main_search_form.find_element_by_css_selector('.searchButton')
-    #     search_field.send_keys('Foo')
-    #     search_button.click()
+        # By default there are no search results because there is no
+        # SearchableText specified in request when accessing the form directly:
+        res_num = sel.find_element_by_id('search-results-number')
+        self.assertEquals(res_num.text, '90 on 90')
 
-    #     # We should give the view some time in order to finish the animation of
-    #     # the search results
-    #     time.sleep(1)
+        #Now we check if all tags are displayed and which is selected tab
+        tabs = sel.find_elements_by_class_name('tabElement')
+        self.assertEquals(len(tabs), 3)
+        selected_tab = sel.find_element_by_class_name('active').find_element_by_css_selector('a')
+        self.assertEquals(selected_tab.text, "All")
 
-    #     # We should get our 5 'Foo' elements:
-    #     res_num = sel.find_element_by_id('search-results-number')
-    #     self.assertEquals(res_num.text, '5')
-    #     # Filter should still be hidden:
-    #     f = sel.find_element_by_id('search-filter')
-    #     self.failIf(f.is_displayed())
+        #Check if there are some filters
+        filters = sel.find_element_by_id('indexes-options').find_elements_by_class_name('field')
+        self.assertEquals(len(filters), 1)
+        subject_div = sel.find_element_by_id('indexes-options').find_element_by_class_name('field')
+        self.assertEquals(subject_div.find_element_by_tag_name('h3').text, "Subject")
+        subjects = [x.get_attribute('value') for x in subject_div.find_elements_by_tag_name('input')]
+        self.assertEquals(subjects, ['apple', 'kiwi', 'mango'])
 
-    #     # Make sure we have search results returned after clicking main
-    #     # 'Search' button on the search results form:
-    #     sel.find_elements_by_class_name('searchButton')[1].click()
-    #     # We should give the view some time in order to finish the animation of
-    #     # the search results
-    #     time.sleep(1)
-    #     # And the search results are actually visible, aren't they?:
-    #     self.assert_(sel.find_element_by_id('search-results').is_displayed(),
-    #                  "Search results are not visible.")
+        #Now we try to filter search results clicking on a tab.
+        documents = sel.find_element_by_class_name('documents')
+        documents.click()
+        # We should give the view some time in order to finish the animation of
+        # the search results
+        time.sleep(1)
+        res_num = sel.find_element_by_id('search-results-number')
+        self.assertEquals(res_num.text, '85 on 90')
 
-    # def test_relevance_sorting_after_ajax(self):
+        #checking which is selected tab
+        selected_tab = sel.find_element_by_class_name('active').find_element_by_css_selector('a')
+        self.assertEquals(selected_tab.text, "Documents")
 
-    #     """The reason to test this - weird behavior of the link to 'relevance'
-    #        sorting option after some ajax calls.
-    #     """
+        #Now we check if all tags are displayed and which is selected tab
+        subject_div = sel.find_element_by_id('indexes-options').find_element_by_class_name('field')
+        self.assertEquals(subject_div.find_element_by_tag_name('h3').text, "Subject")
+        subjects = subject_div.find_elements_by_tag_name('input')
+        self.assertEquals(len(subjects), 2)
 
-    #     # First we test default sorting that should be 'relevance':
-    #     portal = self.layer['portal']
-    #     sel = self.layer['selenium']
-    #     open(sel, portal.absolute_url() + '/@@search?SearchableText=Foo')
-    #     s = sel.find_element_by_id('sorting-options')
-    #     curr = s.find_element_by_tag_name('strong')
-    #     self.assert_('relevance' in curr.text,
-    #                  'Relevance is not default sorting option')
+        #now we try to filter also by subject
+        subj_apple = subject_div.find_element_by_id("Subject_1")
+        self.assertEquals(subj_apple.get_attribute('value'), 'apple')
+        subj_apple.click()
+        # We should give the view some time in order to finish the animation of
+        # the search results
+        time.sleep(1)
+        res_num = sel.find_element_by_id('search-results-number')
+        self.assertEquals(res_num.text, '5 on 10')
 
-    #     # Now we try to change sorting and come back to 'relevance' to see that
-    #     # getting back to it highlights the corresponding item # in the sorting
-    #     # bar:
-    #     s.find_element_by_partial_link_text('date').click()
-    #     # At this point we make an ajax call so it's better to wait for it to
-    #     # be finished:
-    #     time.sleep(1)
-    #     curr = s.find_element_by_tag_name('strong')
-    #     self.assert_('date' in curr.text,
-    #                  'Date is not highlighted sorting option after sorting.')
+        #we check if "apple" is selected
+        subject_div = sel.find_element_by_id('indexes-options').find_element_by_class_name('field')
+        subj_apple = subject_div.find_element_by_id("Subject_1")
+        self.assertEquals(subj_apple.is_selected(), True)
 
-    #     s.find_element_by_partial_link_text('relevance').click()
-    #     # At this point we make an ajax call so it's better to wait for it to
-    #     # be finished:
-    #     time.sleep(1)
-    #     try:
-    #         curr = s.find_element_by_tag_name('strong')
-    #         self.assert_('relevance' in curr.text,
-    #                      'Relevance is not highlighted sorting option.')
-    #     except NoSuchElementException:
-    #         self.fail("No highlighted element found after ajax call.")
-
-    # def test_search_field(self):
-
-    #     """ We need to make sure links in livesearch are updated and link to
-    #         correct search results view.
-    #     """
-
-    #     portal = self.layer['portal']
-    #     sel = self.layer['selenium']
-    #     open(sel, portal.absolute_url())
-    #     search_form = sel.find_element_by_id('portal-searchbox')
-
-    #     # Of course the form is linked to @@search, isn't it?
-    #     form = search_form.find_element_by_name('searchform')
-    #     self.assert_(form.get_attribute('action') ==
-    #                  'http://localhost:55001/plone/@@search')
-
-    #     search_field = search_form.find_element_by_id('searchGadget')
-    #     search_field.send_keys('wel')
-    #     time.sleep(1)
-    #     # livesearch should be visible now...
-    #     self.assert_(search_form.find_element_by_id('LSResult').is_displayed())
-    #     # ... and we should have at least 2 'Advanced Search' links
-    #     adv = search_form.find_elements_by_partial_link_text('Advanced Search')
-    #     for link in adv:
-    #         href = link.get_attribute('href')
-    #         self.assert_(href == 'http://localhost:55001/plone/@@search')
+        #now we try to remove all the filters for Subjects
+        remove_link = subject_div.find_element_by_id("deselect-Subject")
+        remove_link.click()
+        # We should give the view some time in order to finish the animation of
+        # the search results
+        time.sleep(1)
+        res_num = sel.find_element_by_id('search-results-number')
+        self.assertEquals(res_num.text, '85 on 90')
+        #we check if "apple" isn't selected
+        subject_div = sel.find_element_by_id('indexes-options').find_element_by_class_name('field')
+        subj_apple = subject_div.find_element_by_id("Subject_1")
+        self.assertEquals(subj_apple.is_selected(), False)
