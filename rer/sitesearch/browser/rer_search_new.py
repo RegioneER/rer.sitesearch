@@ -242,7 +242,8 @@ class RERSearch(Search):
         catalog = getToolByName(self.context, 'portal_catalog')
         valid_keys = self.valid_keys + tuple(catalog.indexes())
         for k, v in request.form.items():
-            query[k] = self.setFilteredIndex(k, v, valid_keys)
+            if v:
+                query[k] = self.setFilteredIndex(k, v, valid_keys)
         if text:
             query['SearchableText'] = quote_chars(text)
 
