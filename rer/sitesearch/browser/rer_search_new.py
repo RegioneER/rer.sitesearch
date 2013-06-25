@@ -130,7 +130,7 @@ class RERSearch(Search):
                     return tab
         return "all"
 
-    def results(self, query=None, batch=True, b_size=20, b_start=0, tab=''):
+    def results(self, query=None, batch=True, b_size=20, b_start=0, tab='all'):
         """ Get properly wrapped search results from the catalog.
         Everything in Plone that performs searches should go through this view.
         'query' should be a dictionary of catalog parameters.
@@ -150,6 +150,8 @@ class RERSearch(Search):
                 results = self.catalog(**query)
             except ParseError:
                 return []
+        if not tab:
+            tab = 'all'
         if tab != "all":
             res_dict = {'tot_results_len': results.actual_result_count}
             if tab:
