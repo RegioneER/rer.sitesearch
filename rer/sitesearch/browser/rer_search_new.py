@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
 from plone.app.contentlisting.interfaces import IContentListing
-from plone.app.search.browser import Search
+from plone.app.search.browser import Search, SortOption
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import getNavigationRoot
@@ -416,3 +416,12 @@ class RERSearch(Search):
         if not isinstance(types, list) and not isinstance(types, tuple):
             types = [types]
         return plone_utils.getUserFriendlyTypes(types)
+
+    def sort_options(self):
+        """ Sorting options for search results view. """
+        return (
+            SortOption(self.request, _(u'relevance'), ''),
+            SortOption(self.request, _(u'date (newest first)'),
+                       'Date', reverse=True),
+            SortOption(self.request, _(u'alphabetically'), 'sortable_title'),
+        )

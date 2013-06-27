@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-02-25 08:10+0000\n"
+"POT-Creation-Date: 2013-06-27 08:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: rer.sitesearch\n"
 
-#: ./browser/rer_search_new.py:312
+#: ./browser/rer_search_new.py:313
 msgid "${results_len} on ${total_len}"
 msgstr ""
 
@@ -24,21 +24,21 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: ./browser/controlpanel.py:52
+#: ./browser/controlpanel.py:51
 msgid "Cancel"
 msgstr ""
 
 msgid "Category"
 msgstr ""
 
-#: ./browser/controlpanel.py:48
+#: ./browser/controlpanel.py:47
 msgid "Changes saved"
 msgstr ""
 
 msgid "Documents"
 msgstr ""
 
-#: ./browser/controlpanel.py:54
+#: ./browser/controlpanel.py:53
 msgid "Edit cancelled"
 msgstr ""
 
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Hidden indexes"
 msgstr ""
 
-#: ./browser/controlpanel.py:27
+#: ./browser/controlpanel.py:26
 msgid "Hidden indexes settings"
 msgstr ""
 
@@ -77,7 +77,7 @@ msgstr ""
 msgid "Indexes order"
 msgstr ""
 
-#: ./browser/controlpanel.py:22
+#: ./browser/controlpanel.py:21
 msgid "Indexes settings"
 msgstr ""
 
@@ -91,15 +91,11 @@ msgstr ""
 msgid "RER Sitesearch"
 msgstr ""
 
-#: ./browser/rer_search_new.pt:240
+#: ./browser/rer_search_new.pt:237
 msgid "Refine your search:"
 msgstr ""
 
-#: ./browser/rer_search_new.pt:111
-msgid "Results type:"
-msgstr ""
-
-#: ./browser/controlpanel.py:41
+#: ./browser/controlpanel.py:40
 msgid "Save"
 msgstr ""
 
@@ -115,7 +111,7 @@ msgstr ""
 msgid "Search tabs"
 msgstr ""
 
-#: ./browser/controlpanel.py:37
+#: ./browser/controlpanel.py:36
 msgid "Site Search settings"
 msgstr ""
 
@@ -131,9 +127,17 @@ msgstr ""
 msgid "You searched in: ${folder_name}"
 msgstr ""
 
+#: ./browser/rer_search_new.py:426
+msgid "alphabetically"
+msgstr ""
+
 #. Default: "Closer results"
 #: ./browser/templates/rer_search.pt:288
 msgid "closer_results"
+msgstr ""
+
+#: ./browser/rer_search_new.py:424
+msgid "date (newest first)"
 msgstr ""
 
 #. Default: "from"
@@ -167,7 +171,7 @@ msgid "help_sitesearch_hidden_indexes"
 msgstr ""
 
 #. Default: "Set site search configurations"
-#: ./browser/controlpanel.py:38
+#: ./browser/controlpanel.py:37
 msgid "help_sitesearch_settings_editform"
 msgstr ""
 
@@ -202,24 +206,24 @@ msgid "indexes_in_search_label"
 msgstr ""
 
 #. Default: "You are also searching for:"
-#: ./browser/rer_search_new.pt:308
+#: ./browser/rer_search_new.pt:305
 #: ./browser/templates/rer_search.pt:263
 msgid "label_also_searching_for"
 msgstr ""
 
 #. Default: "Remove all filters"
-#: ./browser/rer_search_new.pt:319
+#: ./browser/rer_search_new.pt:316
 #: ./browser/templates/rer_search.pt:273
 msgid "label_remove_filters"
 msgstr ""
 
 #. Default: "Search"
-#: ./browser/rer_search_new.pt:435
+#: ./browser/rer_search_new.pt:432
 msgid "label_search"
 msgstr ""
 
 #. Default: "Search in"
-#: ./browser/rer_search_new.pt:264
+#: ./browser/rer_search_new.pt:261
 #: ./browser/templates/rer_search.pt:231
 msgid "label_search_in"
 msgstr ""
@@ -230,7 +234,7 @@ msgid "label_search_text"
 msgstr ""
 
 #. Default: "All the site"
-#: ./browser/rer_search_new.pt:285
+#: ./browser/rer_search_new.pt:282
 #: ./browser/templates/rer_search.pt:252
 msgid "label_searchbox_all_site"
 msgstr ""
@@ -243,6 +247,10 @@ msgstr ""
 #. Default: "Refine your search:"
 #: ./browser/templates/rer_search.pt:208
 msgid "less_results"
+msgstr ""
+
+#: ./browser/rer_search_new.py:423
+msgid "relevance"
 msgstr ""
 
 #. Default: "Allowable indexes in catalog"
