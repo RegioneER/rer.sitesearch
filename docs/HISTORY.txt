@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.3.0 (unreleased)
+2.3.0 (2013-07-08)
 ------------------
 
 - refactored view to support plone.app.search [andrea]
