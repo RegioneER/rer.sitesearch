@@ -7,7 +7,7 @@ from rer.sitesearch.custom_fields import TabsValueField, IndexesValueField
 from plone.registry.interfaces import IRegistry
 from rer.sitesearch.setuphandlers import DEFAULT_HIDDEN_INDEXES, DEFAULT_INDEXES, DEFAULT_TABS
 from rer.sitesearch.setuphandlers import setRegistyIndexes as defaultSetRegistryIndex
-from rer.sitesearch.setuphandlers import setRegistyTabs as defaultSetRegistyTabs
+from rer.sitesearch.setuphandlers import setRegistryTabs as defaultSetRegistyTabs
 
 default_profile = 'profile-rer.sitesearch:default'
 uninstall_profile = 'profile-rer.sitesearch:uninstall'
