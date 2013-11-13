@@ -6,6 +6,8 @@ from zope.component import queryUtility
 from rer.sitesearch.custom_fields import TabsValueField, IndexesValueField
 from plone.registry.interfaces import IRegistry
 from rer.sitesearch.setuphandlers import DEFAULT_HIDDEN_INDEXES, DEFAULT_INDEXES, DEFAULT_TABS
+from rer.sitesearch.setuphandlers import setRegistyIndexes as defaultSetRegistryIndex
+from rer.sitesearch.setuphandlers import setRegistyTabs as defaultSetRegistyTabs
 
 default_profile = 'profile-rer.sitesearch:default'
 uninstall_profile = 'profile-rer.sitesearch:uninstall'
@@ -70,23 +72,26 @@ def updateRegistryFromProperties(context):
     tabs_list = rer_properties.getProperty('tabs_list', ())
     indexes_hiddenlist = rer_properties.getProperty('indexes_hiddenlist', ())
     if not indexes_in_search:
-        indexes_in_search = DEFAULT_INDEXES
+        defaultSetRegistryIndex(context, DEFAULT_INDEXES)
+    else:
+        new_indexes = setRegistyIndexes(context, indexes_in_search)
+        settings.available_indexes += new_indexes
     if not indexes_hiddenlist:
-        indexes_hiddenlist = DEFAULT_HIDDEN_INDEXES
+        defaultSetRegistryIndex(context, DEFAULT_HIDDEN_INDEXES)
+    else:
+        new_indexes = setRegistyIndexes(context, indexes_hiddenlist)
+        settings.hidden_indexes += new_indexes
     if not tabs_list:
-        tabs_list = DEFAULT_TABS
-    new_indexes = setRegistyIndexes(context, indexes_in_search)
-    settings.available_indexes += new_indexes
-    new_indexes = setRegistyIndexes(context, indexes_hiddenlist)
-    settings.hidden_indexes += new_indexes
-    tabs = setRegistryTabs(context, tabs_list)
-    new_tabs = []
-    for tab in tabs.keys():
-        new_value = TabsValueField()
-        new_value.tab_title = tab
-        new_value.portal_types = tuple(tabs.get(tab))
-        new_tabs.append(new_value)
-    settings.tabs_mapping += tuple(new_tabs)
+        defaultSetRegistyTabs(context, DEFAULT_TABS)
+    else:
+        tabs = setRegistryTabs(context, tabs_list)
+        new_tabs = []
+        for tab in tabs.keys():
+            new_value = TabsValueField()
+            new_value.tab_title = tab
+            new_value.portal_types = tuple(tabs.get(tab))
+            new_tabs.append(new_value)
+        settings.tabs_mapping += tuple(new_tabs)
 
 
 def setRegistyIndexes(context, indexes):
