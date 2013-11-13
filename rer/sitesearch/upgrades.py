@@ -82,7 +82,7 @@ def updateRegistryFromProperties(context):
         new_indexes = setRegistyIndexes(context, indexes_hiddenlist)
         settings.hidden_indexes += new_indexes
     if not tabs_list:
-        defaultSetRegistyTabs(context, DEFAULT_TABS)
+        defaultSetRegistyTabs(context)
     else:
         tabs = setRegistryTabs(context, tabs_list)
         new_tabs = []
