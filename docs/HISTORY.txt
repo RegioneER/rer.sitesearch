@@ -4,7 +4,8 @@ Changelog
 2.3.1 (unreleased)
 ------------------
 
-- Fixed tabs order results [cekk]
+- fixed tabs order results [cekk]
+- fixed bug in Plone timezones handling for start and end dates [cekk]
 
 
 2.3.0 (2013-07-08)

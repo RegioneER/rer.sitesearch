@@ -15,6 +15,8 @@ from zope.i18n import translate
 from ZPublisher.HTTPRequest import record
 from ZTUtils import make_query
 from zope.interface import implements
+from Products.PluginIndexes.DateIndex.DateIndex import DateIndex
+from DateTime.DateTime import safelocaltime
 
 
 MULTISPACE = u'\u3000'.encode('utf-8')
@@ -239,8 +241,7 @@ class RERSearch(Search):
         #     subjects = request.form.get('Subject')
         #     if not subjects:
         #         return
-        catalog = getToolByName(self.context, 'portal_catalog')
-        valid_keys = self.valid_keys + tuple(catalog.indexes())
+        valid_keys = self.valid_keys + tuple(self.catalog.indexes())
         for k, v in request.form.items():
             if v:
                 query[k] = self.setFilteredIndex(k, v, valid_keys)
@@ -267,15 +268,40 @@ class RERSearch(Search):
 
         return query
 
+    def getDateIndexes(self):
+        """
+        method that returns a list of DateIndex indexes.
+        This is an hack that fix a bug in Plone timezones:
+        https://dev.plone.org/ticket/13774
+        """
+        return [x.getId() for x in self.catalog.getIndexObjects() if isinstance(x, DateIndex)]
+
     def setFilteredIndex(self, key, value, valid_keys):
         """
+        Add some customizations to the given query item
         """
+        date_indexes = self.getDateIndexes()
         if value and ((key in valid_keys) or key.startswith('facet.')):
-            if isinstance(value, list) or isinstance(value, tuple):
-                return {"query": value,
-                        "operator": "and"}
+            if key in date_indexes:
+                # Hack to fix a Plone time zone bug:
+                # in the request we have a date timazone naive (GMT+0), but
+                # in the index we have the right timezone (for example GMT+2).
+                # this trick is copied from Products.Archetypes.Field.DateTimeField
+                if isinstance(value, record):
+                    old_dates = value.get('query')
+                    fixed_dates = []
+                    for date in old_dates:
+                        zone = date.localZone(safelocaltime(date.timeTime()))
+                        parts = date.parts()[:-1] + (zone,)
+                        fixed_dates.append(DateTime(*parts))
+                    value.query = fixed_dates
+                    return value
             else:
-                return value
+                if isinstance(value, list) or isinstance(value, tuple):
+                    return {"query": value,
+                            "operator": "and"}
+                else:
+                    return value
         else:
             return value
 
