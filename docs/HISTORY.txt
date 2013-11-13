@@ -4,90 +4,90 @@ Changelog
 2.3.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed tabs order results [cekk]
 
 
 2.3.0 (2013-07-08)
 ------------------
 
-- refactored view to support plone.app.search [andrea]
-- moved configuration from site_properties to registry [andrea]
-- added tests [andrea]
-- customized "skip_links" viewlet for search view [andrea]
+- refactored view to support plone.app.search [cekk]
+- moved configuration from site_properties to registry [cekk]
+- added tests [cekk]
+- customized "skip_links" viewlet for search view [cekk]
 
 2.2.1 (2012-10-12)
 ------------------
 
-- fixed indexes column population [andrea]
+- fixed indexes column population [cekk]
 
 
 2.2.0 (2012-10-08)
 ------------------
 
-- refactoring for Plone 4: now the template is removed and replaced by a view [andrea]
+- refactoring for Plone 4: now the template is removed and replaced by a view [cekk]
 
 
 2.1.1 (2012-10-04)
 ------------------
 
-- fixed update step [andrea]
-- fixed first tab selection [andrea]
+- fixed update step [cekk]
+- fixed first tab selection [cekk]
 
 
 2.1.0 (2012-10-04)
 ------------------
 
-- moved search from skins to a view, for Plone4 compatibility (it isn't new-search like yet) [andrea]
-- added uninstall profile to remove skins [andrea]
+- moved search from skins to a view, for Plone4 compatibility (it isn't new-search like yet) [cekk]
+- added uninstall profile to remove skins [cekk]
 
 
 2.0.2 (2012-08-23)
 ------------------
 
-- fixed style for results [andrea]
+- fixed style for results [cekk]
 
 
 2.0.1 (2012-08-03)
 ------------------
 
-- removed search_form.pt [andrea]
+- removed search_form.pt [cekk]
 
 
 2.0.0 (2012-08-02)
 ------------------
 
 - cleanup old Plone 3.2 garbage [keul] 
-- fixed search view styles [andrea]
-- added configlet to manage sitesearch options [andrea]
+- fixed search view styles [cekk]
+- added configlet to manage sitesearch options [cekk]
 
 1.5.1 (2012/04/23)
 ------------------
 
-- added class to hidden indexes info div [andrea]
-- fixed hidden indexes management [andrea]
+- added class to hidden indexes info div [cekk]
+- fixed hidden indexes management [cekk]
 
 1.5.0 (2012/04/16)
 ------------------
 
-- refactoring sitesearch_view to speed up searches [andrea]
+- refactoring sitesearch_view to speed up searches [cekk]
 
 1.4.1 (2012/03/26)
 ------------------
 
-- fix translation [andrea]
+- fix translation [cekk]
 
 1.4.0 (2012/03/12)
 ------------------
 
-- Customizzato indice Date per gli eventi [andrea]
-- Ora vengono visualizzate le informazioni sulle date/luogo negli eventi [andrea]
-- L'ordinamento per data viene effettuato per l'indice Date [andrea]
-- Abilitata la gestione di indici "nascosti" che ci si può portare dietro durante la ricerca [andrea]
+- Customizzato indice Date per gli eventi [cekk]
+- Ora vengono visualizzate le informazioni sulle date/luogo negli eventi [cekk]
+- L'ordinamento per data viene effettuato per l'indice Date [cekk]
+- Abilitata la gestione di indici "nascosti" che ci si può portare dietro durante la ricerca [cekk]
 
 1.3.1 (2011/11/28)
 ------------------
 
-- Fix errore nel titolo quando il path non è corretto (#329) [andrea]
+- Fix errore nel titolo quando il path non è corretto (#329) [cekk]
 
 1.3.0 (2011/11/28)
 ------------------
@@ -97,49 +97,49 @@ Changelog
 1.2.0 (2011/06/20)
 ------------------
 
-- Aggiunta customizzaizone dei tab [andrea]
+- Aggiunta customizzaizone dei tab [cekk]
 
 1.1.1 (2011/04/07)
 ------------------
 
-- rimosso ordinamento alfabetico degli indici. Ora prende l'ordine impostato nella property [andrea]
+- rimosso ordinamento alfabetico degli indici. Ora prende l'ordine impostato nella property [cekk]
 
 1.1.0 (2011/04/04)
 ------------------
 
-- rimossa visualizzazione di default per le tassonomie. Adesso vanno specificate nella property [andrea]
+- rimossa visualizzazione di default per le tassonomie. Adesso vanno specificate nella property [cekk]
 
 1.0.6 (2010/11/08)
 ------------------
 
-- fissato js per il batching [andrea]
+- fissato js per il batching [cekk]
 
 1.0.5 (2010/11/08)
 ------------------
 
-- filtrate le categorie in base al tipo selezionato [andrea]
+- filtrate le categorie in base al tipo selezionato [cekk]
 
 1.0.4 (2010/11/04)
 ------------------
 
-- rimosso setup.cfg [andrea]
+- rimosso setup.cfg [cekk]
 
 1.0.3 (2010/11/04)
 ------------------
 
-- refactoring per avere l'history [andrea]
+- refactoring per avere l'history [cekk]
 
 1.0.2 (2010/10/28)
 ------------------
 
-- rimesso titolo della cartella nella vista [andrea]
+- rimesso titolo della cartella nella vista [cekk]
 
 1.0.1 (2010/10/28)
 ------------------
 
-- rimosso indice searchSubject [andrea]
-- cambiato nome del field per l'ordinamento (#67 attività RER) [andrea]
-- aggiunto header per segnalare dove si è effettuata la ricerca [jacopo e andrea]
+- rimosso indice searchSubject [cekk]
+- cambiato nome del field per l'ordinamento (#67 attività RER) [cekk]
+- aggiunto header per segnalare dove si è effettuata la ricerca [jacopo e cekk]
 
 1.0.0 (2010/09/23)
 ------------------

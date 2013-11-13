@@ -150,8 +150,6 @@ class RERSearch(Search):
                 results = self.catalog(**query)
             except ParseError:
                 return []
-        if not tab:
-            tab = 'all'
         if tab != "all":
             res_dict = {'tot_results_len': results.actual_result_count}
             if tab:
