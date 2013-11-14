@@ -8,6 +8,7 @@ from plone.registry.interfaces import IRegistry
 from rer.sitesearch.setuphandlers import DEFAULT_HIDDEN_INDEXES, DEFAULT_INDEXES, DEFAULT_TABS
 from rer.sitesearch.setuphandlers import setRegistyIndexes as defaultSetRegistryIndex
 from rer.sitesearch.setuphandlers import setRegistryTabs as defaultSetRegistyTabs
+from zope.schema.interfaces import IVocabularyFactory
 
 default_profile = 'profile-rer.sitesearch:default'
 uninstall_profile = 'profile-rer.sitesearch:uninstall'
@@ -85,17 +86,20 @@ def updateRegistryFromProperties(context):
         settings.hidden_indexes += new_indexes
     if not tabs_list:
         tabs = defaultSetRegistyTabs(context)
-        tabs_order = ('All', 'Documents', 'News', 'Events', 'File', 'Links')
+        settings.tabs_mapping = tabs
+        tabs_order_dict = queryUtility(IVocabularyFactory, name="rer.sitesearch.vocabularies.SearchTabsVocabulary")
+        tabs_order = tabs_order_dict(context).by_token.keys()
+        settings.tabs_order = tuple(tabs_order)
     else:
         tabs, tabs_order = setRegistryTabs(context, tabs_list)
-    new_tabs = []
-    for tab in tabs.keys():
-        new_value = TabsValueField()
-        new_value.tab_title = tab
-        new_value.portal_types = tuple(tabs.get(tab))
-        new_tabs.append(new_value)
-    settings.tabs_mapping += tuple(new_tabs)
-    settings.tabs_order = tabs_order
+        new_tabs = []
+        for tab in tabs.keys():
+            new_value = TabsValueField()
+            new_value.tab_title = tab
+            new_value.portal_types = tuple(tabs.get(tab))
+            new_tabs.append(new_value)
+        settings.tabs_mapping += tuple(new_tabs)
+        settings.tabs_order = tabs_order
 
 
 def setRegistyIndexes(context, indexes):
