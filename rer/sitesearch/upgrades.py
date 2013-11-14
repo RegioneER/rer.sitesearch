@@ -72,26 +72,30 @@ def updateRegistryFromProperties(context):
     tabs_list = rer_properties.getProperty('tabs_list', ())
     indexes_hiddenlist = rer_properties.getProperty('indexes_hiddenlist', ())
     if not indexes_in_search:
-        defaultSetRegistryIndex(context, DEFAULT_INDEXES)
+        indexes = defaultSetRegistryIndex(context, DEFAULT_INDEXES)
+        settings.available_indexes = indexes
     else:
         new_indexes = setRegistyIndexes(context, indexes_in_search)
         settings.available_indexes += new_indexes
     if not indexes_hiddenlist:
-        defaultSetRegistryIndex(context, DEFAULT_HIDDEN_INDEXES)
+        indexes = defaultSetRegistryIndex(context, DEFAULT_HIDDEN_INDEXES)
+        settings.hidden_indexes = indexes
     else:
         new_indexes = setRegistyIndexes(context, indexes_hiddenlist)
         settings.hidden_indexes += new_indexes
     if not tabs_list:
-        defaultSetRegistyTabs(context)
+        tabs = defaultSetRegistyTabs(context)
+        tabs_order = ('All', 'Documents', 'News', 'Events', 'File', 'Links')
     else:
-        tabs = setRegistryTabs(context, tabs_list)
-        new_tabs = []
-        for tab in tabs.keys():
-            new_value = TabsValueField()
-            new_value.tab_title = tab
-            new_value.portal_types = tuple(tabs.get(tab))
-            new_tabs.append(new_value)
-        settings.tabs_mapping += tuple(new_tabs)
+        tabs, tabs_order = setRegistryTabs(context, tabs_list)
+    new_tabs = []
+    for tab in tabs.keys():
+        new_value = TabsValueField()
+        new_value.tab_title = tab
+        new_value.portal_types = tuple(tabs.get(tab))
+        new_tabs.append(new_value)
+    settings.tabs_mapping += tuple(new_tabs)
+    settings.tabs_order = tabs_order
 
 
 def setRegistyIndexes(context, indexes):
@@ -116,16 +120,18 @@ def setRegistryTabs(context, property_value):
     results_dict = {}
     types_tool = getToolByName(context, 'portal_types')
     portal_types = types_tool.listContentTypes()
+    tabs_order = set()
     for value in property_value:
         values_dict = splitOptions(value)
         value_id = values_dict.get('id', '')
         value_title = values_dict.get('title', '')
+        tabs_order.add(value_title)
         if value_id in portal_types:
             if not value_title in results_dict:
                 results_dict[value_title] = [value_id]
             else:
                 results_dict[value_title].append(value_id)
-    return results_dict
+    return results_dict, tuple(tabs_order)
 
 
 def splitOptions(value):
