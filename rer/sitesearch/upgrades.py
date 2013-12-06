@@ -52,7 +52,7 @@ def to_230(context):
     logger.info('Upgrading rer.sitesearch to version 230')
     context.runAllImportStepsFromProfile("profile-rer.sitesearch:migrate_to_230")
     context.runImportStepFromProfile(default_profile, 'plone.app.registry')
-    context.runImportStepFromProfile(default_profile, 'cssregistry')
+    context.runImportStepFromProfile(default_profile, 'cssregistry', run_dependencies=False)
     updateRegistryFromProperties(context)
     logger.info('Migrated settings fro properties to registry')
 
