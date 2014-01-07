@@ -288,13 +288,16 @@ class RERSearch(Search):
                 # in the index we have the right timezone (for example GMT+2).
                 # this trick is copied from Products.Archetypes.Field.DateTimeField
                 if isinstance(value, record):
-                    old_dates = value.get('query')
-                    fixed_dates = []
-                    for date in old_dates:
-                        zone = date.localZone(safelocaltime(date.timeTime()))
-                        parts = date.parts()[:-1] + (zone,)
-                        fixed_dates.append(DateTime(*parts))
-                    value.query = fixed_dates
+                    query_values = value.get('query')
+                    fixed_values = []
+                    for v in query_values:
+                        if isinstance(v, DateTime):
+                            zone = v.localZone(safelocaltime(v.timeTime()))
+                            parts = v.parts()[:-1] + (zone,)
+                            fixed_values.append(DateTime(*parts))
+                        else:
+                            fixed_values.append(v)
+                    value.query = fixed_values
                     return value
             else:
                 if isinstance(value, list) or isinstance(value, tuple):
