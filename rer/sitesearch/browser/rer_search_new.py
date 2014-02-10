@@ -178,9 +178,14 @@ class RERSearch(Search):
         """
         """
         tab_infos = self.tabs_mapping.get(tab, {})
+        types_filter = []
         if tab_infos:
-            types_filter = tab_infos.get('portal_types', ())
-            query['portal_type'] = self.filter_types(types_filter)
+            if tab_infos.get('portal_types', ()):
+                types_filter = tab_infos.get('portal_types', ())
+            elif "portal_type" in self.request.form and 'portal_type' in self.hidden_indexes:
+                types_filter = self.request.form.get('portal_type')
+            if types_filter:
+                query['portal_type'] = self.filter_types(types_filter)
             return self.catalog(**query)
         return None
 
