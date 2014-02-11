@@ -132,16 +132,13 @@ class RERSearch(Search):
                     return tab
         return "all"
 
-    def results(self, query=None, batch=True, b_size=20, b_start=0, tab='all'):
+    def results(self, query=None, batch=True, b_size=20, b_start=0):
         """ Get properly wrapped search results from the catalog.
         Everything in Plone that performs searches should go through this view.
         'query' should be a dictionary of catalog parameters.
         """
         if query is None:
             query = {}
-        # if batch:
-        #     query['b_start'] = b_start = int(b_start)
-        #     query['b_size'] = b_size
         query = self.filter_query(query)
         res_dict = {}
         filtered_results = []
@@ -152,17 +149,17 @@ class RERSearch(Search):
                 results = self.catalog(**query)
             except ParseError:
                 return []
-        if tab != "all":
-            res_dict = {'tot_results_len': results.actual_result_count}
-            if tab:
-                filtered_results = self.doFilteredSearch(tab, query)
-            else:
-                for tab_id in self.tabs_order:
-                    filtered_results = self.doFilteredSearch(tab_id, query)
-                    if filtered_results:
-                        break
+        res_dict = {'tot_results_len': results.actual_result_count}
+        active_tab = self.context.REQUEST.form.get('filter_tab')
+        if active_tab:
+            filtered_results = self.doFilteredSearch(active_tab, query)
+        else:
+            for tab_id in self.tabs_order:
+                filtered_results = self.doFilteredSearch(tab_id, query)
+                if filtered_results:
+                    break
         filtered_infos, available_tabs = self.getFilterInfos(results, filtered_results)
-        if tab != "all" or filtered_results:
+        if filtered_results:
             results = IContentListing(filtered_results)
         else:
             results = IContentListing(results)
@@ -176,27 +173,37 @@ class RERSearch(Search):
 
     def doFilteredSearch(self, tab, query):
         """
+        If current tab have portal_types filter, use its portal_types.
+        Else if current tab doesn't have a portal_types filter (i.e, tab "all")
+        and portal_type is passed in the request and it's an available hidden index,
+        use the value taken from the request. Otherwise doesn't filter for types.
         """
         tab_infos = self.tabs_mapping.get(tab, {})
+        tab_types_filter = tab_infos.get('portal_types', ())
+        request_portal_type = self.request.form.get('portal_type')
         types_filter = []
-        if tab_infos:
-            if tab_infos.get('portal_types', ()):
-                types_filter = tab_infos.get('portal_types', ())
-            elif "portal_type" in self.request.form and 'portal_type' in self.hidden_indexes:
-                types_filter = self.request.form.get('portal_type')
-            if types_filter:
-                query['portal_type'] = self.filter_types(types_filter)
-            return self.catalog(**query)
-        return None
+        if tab_types_filter:
+            if request_portal_type and 'portal_type' in self.hidden_indexes:
+                if request_portal_type in tab_types_filter:
+                    types_filter = tab_types_filter
+                else:
+                    return []
+            else:
+                types_filter = tab_types_filter
+        else:
+            if request_portal_type and 'portal_type' in self.hidden_indexes:
+                types_filter = request_portal_type
+            else:
+                return []
+        query['portal_type'] = self.filter_types(types_filter)
+        return self.catalog(**query)
 
     def getFilterInfos(self, results, filtered_results=[]):
         """
         """
         indexes_order = self.indexes_order
         indexes_mapping = self.available_indexes
-        #filter_dict = {'indexes_order': indexes_order}
         filter_dict = {}
-        #tabs_dict = self.search_settings.get('tabs_dict', {})
         available_tabs = ['all']
         types_mapping = self.types_mapping
         for item in results:
@@ -241,11 +248,6 @@ class RERSearch(Search):
         text = query.get('SearchableText', None)
         if text is None:
             text = request.form.get('SearchableText', '')
-        # if not text:
-        #     # Without text, the only meaningful case is Subject
-        #     subjects = request.form.get('Subject')
-        #     if not subjects:
-        #         return
         valid_keys = self.valid_keys + tuple(self.catalog.indexes())
         for k, v in request.form.items():
             if v:
@@ -304,6 +306,8 @@ class RERSearch(Search):
                             fixed_values.append(v)
                     value.query = fixed_values
                     return value
+                elif isinstance(value, str):
+                    return DateTime(value)
             else:
                 if isinstance(value, list) or isinstance(value, tuple):
                     return {"query": value,
@@ -345,7 +349,6 @@ class RERSearch(Search):
         return translate(_("${results_len} on ${total_len}",
                           mapping={'results_len': results_len, 'total_len': total_len}),
                         context=self.request)
-        # return "%s on %s" % (results_len, total_len)
 
     def indexesChecked(self, index_name):
         """

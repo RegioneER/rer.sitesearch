@@ -2,7 +2,7 @@
 <body tal:define="b_start python:0;
                   b_start request/b_start | b_start;
                   query_tab python:request.form.get('filter_tab','');
-                  results python:view.results(b_start=b_start, tab=query_tab);
+                  results python:view.results(b_start=b_start);
                   batch results/results;
                   batch_results_len batch/sequence_length;
                   total_results_len results/total_results_len | batch_results_len;

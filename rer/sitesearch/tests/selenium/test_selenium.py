@@ -19,7 +19,7 @@ class SimpleScenarioTestCase(BaseTestCase):
 
     def test_basic_search(self):
         """
-        Check if all items are displayed correctly in a simple empty search
+        Check if all items are displayed correctly in a simple search
         """
         portal = self.layer['portal']
         sel = self.layer['selenium']

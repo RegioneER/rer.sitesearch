@@ -50,7 +50,7 @@
                tal:define="b_start python:0;
                            b_start request/b_start | b_start;
                            query_tab python:request.form.get('filter_tab','');
-                           results python: view.results(b_start=b_start,tab=query_tab);
+                           results python: view.results(b_start=b_start);
                            batch results/results;
                            tabs results/tabs|nothing;
                            selected_tab python:view.getSelectedTab(tabs);

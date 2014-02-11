@@ -23,7 +23,7 @@ class TestSearch(BaseTestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.markRequestWithLayer()
-        # login(portal, TEST_USER_NAME)
+        # login(self.portal, TEST_USER_NAME)
         # for i in range(0, 80):
         #     """
         #     create some documents
@@ -73,31 +73,18 @@ class TestSearch(BaseTestCase):
                     'Blacklisted type "Document" has been found in search \
                      results.')
 
-#     def test_filter_empty(self):
-#         """Test filtering for empty query"""
-#         portal = self.layer['portal']
-#         req = test_request()
-#         # Search.filter_query() will get SearchableText from form if not
-#         # passed in explicit query argument:
-#         req.form['SearchableText'] = 'spam'
-#         view = getMultiAdapter((portal, req), name=u'search')
-#         res = view.results(batch=False)
-#         self.failUnless('my-page1' in [r.getId() for r in res],
-#                         'Test document is not found in the results.')
-#         # filter_query() will return None on invalid query (no real indexes):
-#         req = test_request()
-#         req.form['garbanzo'] = 'chickpea'  # just noise, no index for this
-#         view = getMultiAdapter((portal, req), name=u'search')
-#         self.assertIsNone(view.filter_query({'b_start':0, 'b_size':10}))
-#         # resulting empty query, ergo no search performed, empty result:
-#         self.assertFalse(view.results(batch=False))
-#         # filter_query() succeeds if 1+ real index name added to request:
-#         req.form['portal_type'] = 'Document'
-#         self.assertIsNotNone(view.filter_query({'b_start':0, 'b_size':10}))
-#         res = view.results(batch=False)
-#         self.failUnless('my-page1' in [r.getId() for r in res],
-#                         'Test document is not found in the results.')
-
+    def test_search_by_portal_type(self):
+        """
+        check if we pass "portal_type" filter in the query,
+        this is used only if portal_type is an hidden index
+        """
+        q = {'SearchableText': 'spam', 'portal_type': 'News Item'}
+        res = self.portal.restrictedTraverse('@@search').results(query=q,
+                                                            batch=False)
+        results = res.get('results', None)
+        import pdb;pdb.set_trace()
+        self.failUnless('my-page1' in [r.getId() for r in results],
+                        'Test document is not found in the results.')
 
 def test_suite():
     """This sets up a test suite that actually runs the tests in the class
