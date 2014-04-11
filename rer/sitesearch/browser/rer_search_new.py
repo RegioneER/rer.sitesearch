@@ -167,8 +167,6 @@ class RERSearch(Search):
             return {}
         res_dict = {}
         filtered_results = []
-        if "use_solr" in query:
-            results = results.results()
         res_dict = {'tot_results_len': results.actual_result_count}
         active_tab = self.context.REQUEST.form.get('filter_tab')
         if active_tab:
@@ -227,17 +225,19 @@ class RERSearch(Search):
         available_tabs = ['all']
         types_mapping = self.types_mapping
         for item in results:
-            tab_id = types_mapping.get(item.portal_type, '')
-            if tab_id and tab_id not in available_tabs:
-                available_tabs.append(tab_id)
-            if not filtered_results:
-                for index_id in indexes_order:
-                    index_values = self.setIndexesListForItem(item, index_id)
-                    if index_values:
-                        if index_id not in filter_dict:
-                            filter_dict[index_id] = {'title': indexes_mapping.get(index_id, index_id),
-                                                     'values': set()}
-                        filter_dict[index_id]['values'] = filter_dict[index_id]['values'].union(index_values)
+            #BBB DA RIMUOVERE QUESTO IF QUANDO SI IMPLEMENTA SOLR!!!!!
+            if item:
+                tab_id = types_mapping.get(item.portal_type, '')
+                if tab_id and tab_id not in available_tabs:
+                    available_tabs.append(tab_id)
+                if not filtered_results:
+                    for index_id in indexes_order:
+                        index_values = self.setIndexesListForItem(item, index_id)
+                        if index_values:
+                            if index_id not in filter_dict:
+                                filter_dict[index_id] = {'title': indexes_mapping.get(index_id, index_id),
+                                                         'values': set()}
+                            filter_dict[index_id]['values'] = filter_dict[index_id]['values'].union(index_values)
         if filtered_results:
             for item in filtered_results:
                 for index_id in indexes_order:
