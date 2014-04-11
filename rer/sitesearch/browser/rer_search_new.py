@@ -140,15 +140,35 @@ class RERSearch(Search):
         if query is None:
             query = {}
         query = self.filter_query(query)
+        if query is None:
+            return {}
+        # else:
+        #     try:
+        #         results = self.catalog(**query)
+        #     except ParseError:
+        #         return []
+        return self.catalogResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
+        #     return self.solrResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
+        # else:
+        #     return self.catalogResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
+
+    # def solrResults(self, query, batch=True, b_size=20, b_start=0):
+    #     from zope.component import getMultiAdapter
+    #     query['facet'] = 'true'
+    #     query['facet_field'] = ['portal_type']
+    #     results = self.catalog(**query)
+    #     view = getMultiAdapter((self.portal, self.request), name='search-facets')
+    #     # results = results.results()
+
+    def catalogResults(self, query, batch=True, b_size=20, b_start=0):
+        try:
+            results = self.catalog(**query)
+        except ParseError:
+            return {}
         res_dict = {}
         filtered_results = []
-        if query is None:
-            results = []
-        else:
-            try:
-                results = self.catalog(**query)
-            except ParseError:
-                return []
+        if "use_solr" in query:
+            results = results.results()
         res_dict = {'tot_results_len': results.actual_result_count}
         active_tab = self.context.REQUEST.form.get('filter_tab')
         if active_tab:
