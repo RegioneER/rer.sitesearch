@@ -29,5 +29,14 @@
         destination="230"
         handler=".upgrades.to_230"
         profile="rer.sitesearch:default" />
-        
+  
+  <!-- Upgrade steps -->
+  <gs:upgradeStep
+        title="Upgrade rer.sitesearch 240"
+        description="rer.sitesearch upgrade step for solr support"
+        source="230"
+        destination="240"
+        handler=".upgrades.to_240"
+        profile="rer.sitesearch:default" />
+
 </configure>

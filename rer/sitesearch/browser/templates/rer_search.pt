@@ -20,375 +20,460 @@
                tal:define="dummy python:request.set('disable_border',1);
                            disable_column_one python:request.set('disable_plone.leftcolumn',1);
                            disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
+
 </head>
 
 <body>
 
-<div id="content-core" metal:fill-slot="main">
-  <div class="searchWrapper"
-       tal:define="use_types_blacklist request/use_types_blacklist | python:True;
-                 use_navigation_root request/use_navigation_root | python:True;
-                 results python:here.queryCatalog(REQUEST=request,use_types_blacklist=use_types_blacklist, use_navigation_root=use_navigation_root);
-                 Batch python:modules['Products.CMFPlone'].Batch;
-                 b_size python:20;
-                 b_start python:int(request.form.get('b_start','0'));
-                 desc_length site_properties/search_results_description_length;
-                 desc_ellipsis site_properties/ellipsis;
-                 searchterm request/SearchableText|nothing;
-                 use_view_action site_properties/typesUseViewActionInListings|python:();
-                 template_id string:search;
-                 selected_tab python:request.form.get('selected_tab','');
-                 hidden_indexes view/getHiddenIndexes;
-                 portal context/@@plone_portal_state/portal;
-                 syntool context/portal_syndication;
-                 normalizeString nocall:context/@@plone/normalizeString;
-                 toLocalizedTime nocall:context/@@plone/toLocalizedTime;
-                 isAnon context/@@plone_portal_state/anonymous;
-                 here_url context/@@plone_context_state/object_url;">
-    
-    <h1 class="" i18n:translate=""
-        tal:condition="python:request.form.get('path','') and request.form.get('path') != '/'.join(context.portal_url.getPortalObject().getPhysicalPath())">
-        You searched in: <span tal:content="python:view.getFolderName(request.form.get('path'))" i18n:name="folder_name">Folder</span> 
-    </h1>              
-    <div  class="searchResults"  tal:condition="not: results">
-        <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
-    </div>
-    <tal:search_view define="divided_results python: view.getDividedResults(results);
-                             tabs_order python:divided_results.get('tabs_order',[]);
-                             first_available_tab view/getFirstAvailableTab;
-                             results_elements python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get(first_available_tab);
-                             indexes_dict python:divided_results.get('indexes_dict', {})">
-        
-    <div class="searchResults" tal:condition="results"
-          tal:define="portal_types portal/portal_types;">
-            <ul class="searchTabs">
-                <tal:tabs repeat="key tabs_order">
-                    <li tal:condition="python:divided_results.has_key(key) and divided_results[key].get('results',[])"
-                        tal:attributes="id python:divided_results[key].get('id')">                              
-                        <a class=""
-                           tal:attributes="class python:view.getTabClass(divided_results[key].get('id'),divided_results.keys(),selected_tab,first_available_tab);
-                                           href python:view.setTabUrl(template_id,divided_results[key].get('id'))"
-                           i18n:translate=""
-                           tal:content="python:divided_results[key].get('title')">
-                            Document
-                        </a>
-                    </li>
-                </tal:tabs>
-            </ul>
-            <div class="searchData"
-                 tal:define="results_block python:divided_results.has_key(selected_tab) and divided_results.get(selected_tab) or divided_results.get(first_available_tab);
-                             batch python:Batch(results_block['results'], b_size, int(b_start), orphan=1)">
-                                           
-                <div class="rnum" tal:define="number_part_results python: len(results_block['results']);
-                                              number_total_results python: len(results)">
-                    <tal:total i18n:translate="view_number_of_results" condition="python: number_total_results != 1 and number_part_results != 1">
-                        <span class="resType"><tal:part replace="number_part_results" i18n:name="number_part_results" /> results</span> of this type of
-                        <span class="resTot"><tal:total replace="number_total_results" i18n:name="number_total_results" /> total results</span>
-                    </tal:total>
-                    <span i18n:translate="view_number_of_results_part1" tal:condition="python: number_total_results != 1 and number_part_results == 1">
-                        <tal:part replace="number_part_results" i18n:name="number_part_results" /> result of this type of
-                        <tal:total replace="number_total_results" i18n:name="number_total_results" /> total results
-                    </span>
-                    <span i18n:translate="view_number_of_results_total1" tal:condition="python: number_total_results == 1">
-                        <tal:part replace="number_part_results" i18n:name="number_part_results" /> result of this type of
-                        <tal:total replace="number_total_results" i18n:name="number_total_results" /> total result
-                    </span>
-                </div>
-                <p class="discreet document-action-rss"
-                   tal:condition="syntool/isSiteSyndicationAllowed">
-                    <a href=""
-                    tal:define="query_string python:view.getQueryString(request.form)"
-                        class="link-feed"
-                        i18n:translate="title_rss_feed"
-                        tal:attributes="href string:$here_url/search_rss?${query_string}">
-                         RSS feed</a>
-                </p>
-                
-                <dl>
-                    <tal:results repeat="result batch">
-                        <tal:entry define="result_url result/getURL;
-                                           result_type result/portal_type;
-                                           result_effective result/effective;
-                                           item_icon python:plone_view.getIcon(result);
-                                           url python:'%s?searchterm=%s'%((result_type in use_view_action and result_url+'/view' or result_url+'/'), searchterm);">
-                          <dt tal:define="item_wf_state_class string:state-${result/review_state};"
-                              tal:attributes="class python:'searchResTitle contenttype-' + normalizeString(result.portal_type)">
-                              <img tal:replace="structure item_icon/html_tag" />
-                              <a href="#" 
-                                 tal:attributes="href url; class string:$item_wf_state_class"
-                                 tal:content="result/pretty_title_or_id" />
-                          </dt>
-                          <dd class="itemDescr">
-                                <tal:item_date
-                                    condition="python:result_type!='Event' and result_effective.Date() != '1000/01/01'">
-                                    <span class="searchResDate">
-                                        <span tal:replace="python:toLocalizedTime(result_effective)">
-                                            August 16, 2001 at 23:35:59
-                                        </span>
-                                    </span>
-                                    <tal:separator condition="python:result_effective !='None' and result.Description">
-                                        -
-                                    </tal:separator>
-                                </tal:item_date>
-                                <tal:event_date tal:condition="python:result_type=='Event'"
-                                    define="result_start result/start;
-                                            result_end result/end">
-                                    <tal:same_date condition="python:result_start == result_end">
-                                        <abbr class="dtstart"
-                                                  tal:attributes="title python:result_start"
-                                                  tal:content="python:toLocalizedTime(result_start,long_format=1)">from date</abbr>
-                                    </tal:same_date>
-                                    <tal:different_date condition="python:result_start != result_end">
-                                        <span tal:omit-tag="" i18n:translate="date_from">from</span>
-                                         <abbr class="dtstart"
-                                               tal:attributes="title python:result_start"
-                                               tal:content="python:toLocalizedTime(result_start,long_format=1)">
-                                                from date</abbr>
-                                        <span tal:omit-tag="" i18n:translate="date_to">to</span>
-                                         <abbr class="dtend"
-                                               tal:attributes="title python:result_end"
-                                               tal:content="python:toLocalizedTime(result_end,long_format=1)">
-                                                to date</abbr>
-                                    </tal:different_date>
-                                    <span tal:condition="result/location"
-                                          tal:content="string: - ${result/location}"></span>
-                                    <tal:separator condition="result/Description">
-                                        -
-                                    </tal:separator>
-                                </tal:event_date>
-                                <span tal:replace="python:plone_view.cropText(result.Description, desc_length, desc_ellipsis)">
-                                    Cropped description
-                                </span>
-                                <p class="documentByLine"
-                                      i18n:domain="plone"
-                                    tal:condition="python:not isAnon or site_properties.allowAnonymousViewAbout">
+  <div id="content-core" metal:fill-slot="main">
+    <h1 class="documentFirstHeading"
+        tabindex="0"
+        i18n:translate="">
+        Search results
+    </h1>
+    <form name="searchform"
+          method="POST"
+          action="@@search"
+          class="searchPage"
+          tal:define="portal context/@@plone_portal_state/portal;
+                      portal_path context/@@plone_portal_state/navigation_root_path;
+                      st python:request.get('SearchableText', '');
+                      DateTime python:modules['DateTime'].DateTime;
+                      tabs_mapping view/tabs_mapping;">
+
+        <input type="hidden" name="sort_on" value="" />
+        <div class="row">
+          
+          <div class="visualClear"><!-- --></div>
+          <div id="search-results-wrapper"
+               class="cell width-16 position-0"
+               tal:define="b_start python:0;
+                           b_start request/b_start | b_start;
+                           query_tab python:request.form.get('filter_tab','');
+                           results python: view.results(b_start=b_start);
+                           batch results/results;
+                           tabs results/tabs|nothing;
+                           selected_tab python:view.getSelectedTab(tabs);
+                           normalizeString nocall:context/@@plone/normalizeString;
+                           hidden_indexes_dict view/getHiddenIndexes">
+
+              <metal:searchresults define-macro="search_results">
+                  <div id="search-results">
+                    <div class="resultsBar">
+                      <!-- TABS -->
+                      <input type="hidden" name="filter_tab" tal:attributes="value query_tab" />
+                      <div id="tab-options">
+                        <metal:tabs define-macro="tabs-list">
+                          <ul class="nav nav-tabs">
+                            <tal:items repeat="tab view/tabs_order">
+                              <li tal:condition="python:tab in tabs"
+                                  tal:attributes="class python:tab == selected_tab and 'tabElement active' or 'tabElement'"
+                                  tal:define="tabs_dict python:tabs_mapping.get(tab, {});
+                                              tab_title python:tabs_dict.get('title', tab)">
+                                <a data-tab=""
+                                   i18n:translate=""
+                                   tal:content="tab_title"
+                                   tal:attributes="class tab;
+                                                   href python:view.setQueryUrl(query={'filter_tab':tab}, remove_indexes=['b_start']);
+                                                   data-tab python:tab"></a>
+                              </li>
+                            </tal:items>
+                          </ul>
+                        </metal:tabs>
+                      </div>
+                      <div id="search-results-bar"
+                           tal:define="batch_results_len batch/sequence_length;
+                                       total_results_len results/total_results_len | batch_results_len">
+                          <span i18n:translate="batch_x_items_matching_your_criteria" i18n:domain="plone">
+                              <strong i18n:name="number" id="search-results-number"
+                                      tal:content="python:view.getResultsLen(results)">234</strong>
+                              items matching your search terms.
+                          </span>
+                      </div>
+                      <p id="rss-subscription" i18n:domain="plone"
+                         tal:condition="context/portal_syndication/isSiteSyndicationAllowed">
+                            <img src="" alt="RSS"
+                                 tal:define="portal_url here/portal_url"
+                                 tal:attributes="src string:${portal_url}/rss.gif"/>
+                          <a href=""
+                             class="link-feed"
+                             tal:define="here_url context/@@plone_context_state/object_url"
+                             tal:attributes="href string:$here_url/search_rss?${request/QUERY_STRING}">
+                              <span>
+                                RSS
+                              </span>
+                          </a>
+                      </p>
+                      <div class="visualClear"><!-- --></div>
+                    </div>
+                    <!-- Div for accessibility: it's an help for blind people -->
+                      <h3 i18n:translate=""
+                          class="hiddenStructure"
+                          tal:define="tab_dict python:tabs_mapping.get(selected_tab, {});
+                                       tab_title python:tab_dict.get('title', selected_tab)"
+                          tal:content="tab_title" />
+                      <metal:noresults tal:condition="not: batch">
+                        <p i18n:domain="plone"><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
+                      </metal:noresults>
+
+                      <metal:results tal:condition="batch"
+                                     tal:define="isAnon context/@@plone_portal_state/anonymous;
+                                                 toLocalizedTime nocall: context/@@plone/toLocalizedTime;
+                                                 site_properties context/portal_properties/site_properties;
+                                                 allowAnonymousViewAbout site_properties/allowAnonymousViewAbout;
+                                                 show_about python:not isAnon or allowAnonymousViewAbout;">
+                        <dl class="searchResults">
+                            <tal:results repeat="item batch">
+                                  <dt tal:attributes="class item/ContentTypeClass">
+                                    <img tal:replace="structure item/getIcon" />
+                                    <h4 class="resultTitle">
+                                      <a href="#"
+                                       tal:attributes="href item/getURL;
+                                                       class string:state-${item/review_state}"
+                                       tal:content="item/Title" />
+                                    </h4>
+                                  </dt>
+                                  <dd i18n:domain="plone">
+                                    <div tal:condition="item/CroppedDescription"
+                                         tal:content="item/CroppedDescription">
+                                      Cropped description
+                                    </div>
                                     
-                                    <span class="documentAuthor"
-                                        i18n:translate="label_by_author">
-                                        by
-                                        <a href="#"
-                                           tal:attributes="href string:${portal_url}/author/${result/Creator}"
-                                           tal:content="result/Creator"
-                                           tal:omit-tag="not:result/Creator"
-                                           i18n:name="author">
-                                        Bob Dobalina
-                                        </a>
-                                    </span>
-                                    <span tal:define="categories result/Subject|nothing"
-                                          tal:condition="categories">
-                                        &mdash;
-                                        <tal:filedunder i18n:translate="label_filed_under">filed under:</tal:filedunder>
-                                            <span tal:repeat="category categories">
-                                                <a href=""
-                                                   class="link-category"
-                                                   rel="tag"
-                                                   tal:content="category"
-                                                   tal:attributes="href string:${portal_url}/@@search?Subject%3Alist=${category}">
-                                                   Category
-                                                </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
+                                    <span class="discreet"
+                                      tal:condition="show_about">
+                                      <span class="documentAuthor"
+                                          i18n:translate="label_by_author">
+                                      by
+                                          <tal:block tal:condition="item/Creator"
+                                              tal:define="author python:context.portal_membership.getMemberInfo(item.Creator())">
+                                            <a href="#"
+                                               tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/author/${item/Creator}"
+                                               tal:content="python:author and author['fullname'] or item.Creator()"
+                                               tal:omit-tag="not:item/Creator"
+                                               i18n:name="author">
+                                              Bob Dobalina
+                                            </a>
+                                          </tal:block>
+                                      </span>
+
+                                      <span tal:define="publication_date item/EffectiveDate;
+                                                        modification_date item/ModificationDate">
+
+                                          <span class="documentPublished" tal:condition="python: publication_date != 'None'">
+                                            &mdash;
+                                            <span i18n:translate="box_published">
+                                              published
                                             </span>
+                                            <span tal:replace="python:toLocalizedTime(publication_date, long_format=0)">
+                                              August 16, 2001 at 23:35:59
+                                            </span>
+                                          </span>
+
+                                          <span class="documentModified" tal:condition="python: modification_date != publication_date">
+                                            &mdash;
+                                            <span i18n:translate="box_last_modified">
+                                              last modified
+                                            </span>
+                                            <span tal:replace="python:toLocalizedTime(modification_date, long_format=1)">
+                                              August 16, 2001 at 23:35:59
+                                            </span>
+                                          </span>
+
+                                      </span>
+
+                                      <span tal:define="categories item/Subject|nothing"
+                                            tal:condition="categories">
+                                        &mdash;
+                                        <tal:filedunder i18n:translate="">filed under:</tal:filedunder>
+                                        <span tal:repeat="category categories">
+                                          <a href=""
+                                             class="link-category"
+                                             rel="tag"
+                                             tal:content="category"
+                                             tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?Subject%3Alist=${category}">
+                                            Category
+                                          </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
+                                        </span>
+                                      </span>
                                     </span>
                                     
-                                </p>
-                            </dd>
-                        </tal:entry>
-                    </tal:results>
-                    
-                </dl>
-                <div metal:use-macro="here/batch_macros/macros/navigation" />
+
+                                    <div class="documentLocation link-location"
+                                          tal:define="breadcrumbs python: view.breadcrumbs(item);
+                                                      is_rtl context/@@plone_portal_state/is_rtl;"
+                                          tal:condition='breadcrumbs'>
+                                        <span i18n:translate="text_searchitem_location">
+                                            Located in
+                                        </span>
+                                        <span tal:repeat="crumb breadcrumbs"
+                                              tal:attributes="dir python:is_rtl and 'rtl' or 'ltr';">
+                                            <tal:item tal:define="is_last repeat/crumb/end;
+                                                                  url crumb/absolute_url;
+                                                                  title crumb/Title">
+                                                <a href="#"
+                                                   tal:omit-tag="not: url"
+                                                   tal:attributes="href url"
+                                                   tal:content="title">
+                                                    crumb
+                                                </a>
+                                                <span class="breadcrumbSeparator" tal:condition="not: is_last">
+                                                    <tal:ltr condition="not: is_rtl">&rsaquo;</tal:ltr>
+                                                    <tal:rtl condition="is_rtl">&lsaquo;</tal:rtl>
+                                                </span>
+                                             </tal:item>
+                                        </span>
+
+                                    </div>
+
+                                  </dd>
+                            </tal:results>
+                        </dl>
+                        <div metal:use-macro="context/batch_macros/macros/navigation" />
+                      </metal:results>
+                  </div>
+              </metal:searchresults>
+              <tal:column_filter>
+                <div id="search-filter">
+                  <h2 class="refineSearch"
+                      i18n:translate="">
+                      Refine your search:
+                  </h2>
+                    <fieldset id="search-field" i18n:domain="plone" class="noborder">
+                          <input class=""
+                                 name="SearchableText"
+                                 type="text"
+                                 size="25"
+                                 title="Search Site"
+                                 i18n:attributes="title title_search_title;"
+                                 tal:attributes="value st;"
+                                 />
+                          <input class="searchButton allowMultiSubmit"
+                                 type="submit"
+                                 value="Search"
+                                 i18n:attributes="value label_search;"/>
+                      </fieldset>
+                      <fieldset class="noborder">
+                        <div class="field"
+                            id="use_solr">
+                            <input id="use_solr" 
+                                   class="noborder"
+                                   type="checkbox"
+                                   name="use_solr"
+                                   tal:attributes="checked request/form/use_solr|nothing"/>
+                            <label for="use_solr" 
+                                   style="cursor: pointer">
+                                   Cerca su solr
+                            </label>
+                            <br />
+                            <input id="searchbox_all_site" 
+                                   class="noborder"
+                                   type="radio" 
+                                   name="path"
+                                   value=""
+                                   tal:attributes="checked not:request/form/path|nothing"/>
+                                   
+                            <label for="searchbox_all_site" 
+                                   i18n:translate="label_searchbox_all_site"
+                                   style="cursor: pointer">
+                                All the site
+                            </label>
+                        </div>
+                        <!--PATH-->
+                        <metal:path define-macro="path">
+                          <div class="field"
+                               id="path-options"
+                               tal:condition="python:request.form.get('path') and request.form.get('path') != portal_path">
+                              <h3 i18n:translate="label_search_in">Search in</h3>
+                              
+                              <input id="searchbox_currentfolder_only" 
+                                     class="noborder"
+                                     type="radio" 
+                                     name="path"
+                                     tal:attributes="value request/form/path|string:${context/portal_url};
+                                                     checked request/form/path|nothing"/>
+                              <label for="searchbox_currentfolder_only" 
+                                     style="cursor: pointer"
+                                     tal:content="python:view.getFolderName(request.form.get('path'))">
+                                  
+                              </label>
+                              <br />
+                              <input id="searchbox_all_site" 
+                                     class="noborder"
+                                     type="radio" 
+                                     name="path"
+                                     value=""
+                                     tal:attributes="checked not:request/form/path|nothing"/>
+                                     
+                              <label for="searchbox_all_site" 
+                                     i18n:translate="label_searchbox_all_site"
+                                     style="cursor: pointer">
+                                  All the site
+                              </label>
+                          </div>
+                        </metal:path>
+                        <!-- HIDDEN INDEXES -->
+                        <div class="field hiddenIndexesInfo"
+                             tal:define="index_titles python:hidden_indexes_dict.get('index_titles', []);
+                                         index_ids python:hidden_indexes_dict.get('index_ids', []);
+                                         index_list python:hidden_indexes_dict.get('index_to_add', [])"
+                             tal:condition="python:index_titles and index_ids and index_list">
+                            <tal:hidden_indexes condition="index_list">
+                              <tal:index repeat="index index_list">
+                                  <input type="hidden"
+                                         class="hiddenIndex"
+                                         tal:attributes="id index/id;
+                                                         name index/id;
+                                                         value index/value"/>                    
+                              </tal:index>
+                            </tal:hidden_indexes>
+                            <p tal:condition="index_titles">
+                                <span i18n:translate="label_also_searching_for">You are also searching for:</span>
+                                <tal:indexes repeat="index index_titles">
+                                    <strong i18n:translate="" tal:content="index" />
+                                    <span tal:omit-tag="" tal:condition="not:repeat/index/end">, </span> 
+                                </tal:indexes>
+                            </p>
+                            <a class="fieldsetsItem linkRemoveFilters"
+                                  href="#"
+                                  id="deselect-hidden"
+                                  tal:attributes="href python:view.setQueryUrl(remove_indexes=index_ids);
+                                                  data-remove-index string:hidden_indexes">
+                                  <span i18n:translate="label_remove_filters">Remove all filters</span>
+                            </a>
+                        </div>
+                        <!-- SORT ORDER -->
+                        <div class="field" i18n:domain="plone">
+                            <h3 i18n:translate="sort_by">Sort by</h3>
+                            <div id="searchResultsSort">
+                                  <ul id="sorting-options">
+                                      <metal:sorting define-macro="sorting">
+                                          <li tal:repeat="item view/sort_options">
+                                              <tal:item define="selected item/selected">
+                                              <a data-sort=""
+                                                 tal:condition="not:selected"
+                                                 tal:content="item/title"
+                                                 tal:attributes="href item/url;
+                                                                 data-sort python:item.sortkey and item.sortkey or None"></a>
+                                              <strong tal:condition="selected" tal:content="item/title"></strong>
+                                              </tal:item>
+                                          </li>
+                                      </metal:sorting>
+                                  </ul>
+                            </div>
+                          </div>
+                          <div i18n:domain="plone" class="field">
+                              <h3 i18n:translate="label_new_items_since">New items since</h3>
+                              <tal:datetime define="today python:DateTime().earliestTime();
+                                                    yesterday python:(today-1).Date();
+                                                    lastweek python:(today-7).Date();
+                                                    lastmonth python:(today-31).Date();
+                                                    ever string:1970-01-02;
+                                                    checked python:request.get('created', []);
+                                                    checked python:(len(checked) == 1) and checked[0] or ever">
+                                  <input type="radio"
+                                         id="query-date-yesterday"
+                                         name="created.query:record:list:date"
+                                         tal:attributes="value yesterday;
+                                                         checked python:checked==yesterday and 'checked' or '';"
+                                         />
+                                  <label for="query-date-yesterday" i18n:translate="time_yesterday">Yesterday</label>
+                                  <br />
+                                  <input type="radio"
+                                         id="query-date-lastweek"
+                                         name="created.query:record:list:date"
+                                         tal:attributes="value lastweek;
+                                                         checked python:checked==lastweek and 'checked' or '';"
+                                         />
+                                  <label for="query-date-lastweek" i18n:translate="time_last_week">Last week</label>
+                                  <br />
+                                  <input type="radio"
+                                         id="query-date-lastmonth"
+                                         name="created.query:record:list:date"
+                                         tal:attributes="value lastmonth;
+                                                         checked python:checked==lastmonth and 'checked' or '';"
+                                         />
+                                  <label for="query-date-lastmonth" i18n:translate="time_last_month">Last month</label>
+                                  <br />
+                                  <input type="radio"
+                                         id="query-date-ever"
+                                         name="created.query:record:list:date"
+                                         tal:attributes="value ever;
+                                                         checked python:checked==ever and 'checked' or '';"
+                                         />
+                                  <label for="query-date-ever" i18n:translate="time_ever">Ever</label>
+                              </tal:datetime>
+
+                              <input type="hidden" name="created.range:record" value="min" />
+                          </div>
+
+                          <!--INDEXES and FACETED-->
+                          <div id="indexes-options"
+                               tal:define="indexes_dict results/indexes_dict|nothing;
+                                           indexes_order view/indexes_order"
+                               tal:condition="indexes_dict">
+                            <metal:indexes-list define-macro="indexes-list">
+                              <tal:indexes repeat="index_id indexes_order">
+                              <!--ITERATION additional_indexes-->
+
+                              <div class="field"
+                                  tal:define="index_infos python:indexes_dict.get(index_id,{});"
+                                  tal:condition="index_infos">
+                                  <tal:index_checkbox define="index_name python:index_infos.get('title',index_id);
+                                              index_elements python:index_infos.get('values');
+                                              checked_index python:view.indexesChecked(index_id);">
+                                  <h3 i18n:translate="" tal:content="index_name">Index Keyword</h3>
+                                  <tal:index repeat="kw python:sorted(index_elements)">
+                                    <div tal:define="index_counter python:index_elements.get(kw, 0)"
+                                         tal:condition="index_counter"
+                                         class="fieldsetsItem">
+                                      <input type="checkbox"
+                                             value="#"
+                                             class="noborder"
+                                             tal:attributes="name string:${index_id}:list; 
+                                                             value python:kw;
+                                                             id string:${index_id}_${repeat/kw/number};
+                                                             checked python:kw in checked_index"/>
+                  
+                                      <label for=""
+                                          i18n:domain="plone-metadata"
+                                          i18n:translate=""
+                                          tal:attributes="for string:${index_id}_${repeat/kw/number};"
+                                          tal:content="string: ${kw} (${index_counter})" />
+                                    </div>
+                                  </tal:index>
+                                  <a class="fieldsetsItem linkRemoveFilters"
+                                      href="#"
+                                      tal:condition="checked_index"
+                                      onclick=""
+                                      tal:attributes="id string:deselect-${index_id};
+                                                      href python:view.setQueryUrl(remove_indexes=[index_id]);
+                                                      data-remove-index index_id">
+                                      <span i18n:translate="label_remove_filters">Remove all filters</span>
+                                  </a>
+                                </tal:index_checkbox>
+                              </div>
+                             </tal:indexes>
+                            </metal:indexes-list>
+                          </div>
+                          
+                          <div class="formControls">
+                              <input class="searchPage searchButton allowMultiSubmit"
+                                     type="submit"
+                                     value="Search"
+                                     i18n:attributes="value label_search;"/>
+                          </div>
+
+                          <div class="visualClear"><!-- --></div>
+                      </fieldset>
+
+                    </div>
+
+                </tal:column_filter>
             </div>
-    </div>
-    <tal:searchform>
-            <form action="@@search"
-                  class="enableAutoFocus"
-                  method="post"
-                  id="search">
-                
-                <fieldset id="search_column">
-                    <legend i18n:translate="less_results">Refine your search: </legend>
-                    <div id="rerSearchText" class="field">
-                        <label for="SearchableText" i18n:translate="label_search_text">Search text</label>
-        
-                        <input type="text"
-                               id="SearchableText"
-                               name="SearchableText"
-                               tal:attributes="value request/SearchableText|nothing"
-                               />
-                        <input class="context submitSearch"
-                               type="submit"
-                               name="submit"
-                               value="Search"
-                               i18n:domain="plone"
-                               i18n:attributes="value label_search;"
-                               />
-                    </div>
-                                    
-                    <div class="visualClear" id="clear-space-before-submit"><!-- --></div>
-                    
-                    <!--PATH-->
-                    <div class="fieldsets"
-                         tal:condition="python:request.form.get('path') and request.form.get('path') != '/'.join(context.portal_url.getPortalObject().getPhysicalPath())">
-                        <h3 i18n:translate="label_search_in">Search in</h3>
-                        
-                        <input id="searchbox_currentfolder_only" 
-                               class="noborder"
-                               type="radio" 
-                               name="path"
-                               tal:attributes="value request/form/path|string:${context/portal_url};
-                                               checked request/form/path|nothing"/>
-                        <label for="searchbox_currentfolder_only" 
-                               style="cursor: pointer"
-                               tal:content="python:view.getFolderName(request.form.get('path'))">
-                            
-                        </label>
-                        <br />
-                        <input id="searchbox_all_site" 
-                               class="noborder"
-                               type="radio" 
-                               name="path"
-                               value=""
-                               tal:attributes="checked not:request/form/path|nothing"/>
-                               
-                        <label for="searchbox_all_site" 
-                               i18n:translate="label_searchbox_all_site"
-                               style="cursor: pointer">
-                            All the site
-                        </label>
-                    </div>
-
-                    <div class="fieldsets hiddenIndexesInfo"
-                     tal:define="index_titles hidden_indexes/index_titles"
-                     tal:condition="index_titles">
-                    <p>
-                        <span i18n:translate="label_also_searching_for">You are also searching for:</span>
-                        <tal:indexes repeat="index index_titles">
-                            <strong i18n:translate="" tal:content="index" />
-                            <span tal:omit-tag="" tal:condition="not:repeat/index/end">, </span> 
-                        </tal:indexes>
-                    </p>
-                    <div class="linkRemoveFilters">
-                        <a class="portal-breadcrumbs"
-                            href="@@search"
-                            id="deselect-hidden">
-                            <span i18n:translate="label_remove_filters">Remove all filters</span>
-                        </a>
-                    </div>
-                </div>
-                    <!--Ordinamento-->
-                    <div class="fieldsets"
-                        tal:define="sort_on request/sort_on|nothing">
-                        <h3 i18n:translate="sort_on">Sort on</h3>
-                        <div class="fieldsetsItem fieldsetOrderBy"> 
-                            <input  type="radio"
-                                    class="noborder"
-                                    id="sort_on-similarity"
-                                    name="sort_on"
-                                    value=""
-                                    tal:attributes="checked python:str(sort_on) != 'effective'"/>
-                            <label for="sort_on-similarity" i18n:translate="closer_results">Closer results</label>
-                            <input  type="radio"
-                                    class="noborder"
-                                    id="sort_on-date"
-                                    name="sort_on"
-                                    value="Date"
-                                    tal:attributes="checked python: sort_on == 'Date'"/>
-                            
-                            
-                            <label for="sort_on-date" i18n:translate="latest_results">Latest results</label>
-                            <input type="hidden" id="sortOrderField" tal:condition="python:not request.form.has_key('sort_on') or request.form.get('sort_on')==''" name="sort_order" value=""/>
-                            <input type="hidden" id="sortOrderField" tal:condition="python:request.form.get('sort_on')=='Date'" name="sort_order" value="reverse"/>
-                        </div>
-                    </div>
-                    
-                    <!--INDEXES and FACETED-->
-                    <tal:additional_indexes condition="indexes_dict">
-                        <tal:indexes define="index_ids python:indexes_dict.get('indexes_order')"
-                                 tal:repeat="index_id index_ids">
-                        <!--ITERATION additional_indexes-->                 
-                        <div class="fieldsets"
-                            tal:define="index_dict python:indexes_dict.get(index_id,{});
-                                        index_name index_id;
-                                        index_title python:index_dict.get('title');
-                                        index_elements python:index_dict.get('indexes');
-                                        checked_index python:request.get(index_name,[]);"
-                            tal:condition="index_elements">
-                            <h3 i18n:translate="" tal:content="index_title">Index Keyword</h3>
-                        
-                                 <div tal:repeat="kw index_elements" class="fieldsetsItem">
-                                    <input type="checkbox"
-                                           value="#"
-                                           class="noborder"
-                                           tal:attributes="name string:${index_name}:list; 
-                                                           value python:kw;
-                                                           id string:${index_name}_${repeat/kw/number};
-                                                           checked python:kw in checked_index"/>
-                
-                                    <label for=""
-                                        i18n:domain="plone-metadata"
-                                        i18n:translate=""
-                                        tal:attributes="for string:${index_name}_${repeat/kw/number};"
-                                        tal:content="kw"
-                                        />
-                            </div>
-                            <div class="fieldsetsItem linkRemoveFilters"
-                                tal:condition="checked_index">
-                                <a class="portal-breadcrumbs"
-                                    href="@@search"
-                                    tal:condition="checked_index"
-                                    onclick=""
-                                    tal:attributes="id string:deselect-${index_name};
-                                                    onclick string:javascript:removeAdditionalIndexFilter('${index_name}');;return false">
-                                    <span i18n:translate="label_remove_filters">Remove all filters</span>
-                                </a>
-                            </div>
-                            <input type="hidden"
-                                   tal:attributes="name string:${index_name}_usage:ignore_empty;
-                                                   id string:${index_name}_and"
-                                   value="operator:and"/>
-                        </div>
-                       </tal:indexes>
-                    </tal:additional_indexes>
-                    
-                    <div class="visualClear" ><!-- --></div>
-        
-                    <div class="formControls">
-                        <input class="context submitSearch"
-                               type="submit"
-                               name="submit"
-                               value="Search"
-                               i18n:domain="plone"
-                               i18n:attributes="value label_search;"
-                               />
-                    </div>
-                
-                </fieldset>
-
-                <!-- HIDDEN INDEXES -->
-                <tal:hidden_indexes
-                    define="indexes hidden_indexes/indexes_to_add"
-                    condition="indexes">
-                    <tal:index repeat="index indexes">
-                        <input type="hidden"
-                               class="hiddenIndex"
-                               tal:attributes="id index/id;
-                                               name index/id;
-                                               value index/value"/>                    
-                    </tal:index>
-                </tal:hidden_indexes>
-                <input type="hidden"
-                       id="selected_tab"
-                       name="selected_tab"
-                       tal:attributes="value python:request.form.get('selected_tab','')"/>
-                
-                <input type="hidden"
-                       id="b_start"
-                       name="b_start"
-                       tal:attributes="value b_start"/>
-            </form>
-        </tal:searchform>   
-        </tal:search_view>
-        <div class="visualClear"><!-- --></div>
-    </div>
-</div>
+            <div class="visualClear"><!-- --></div>
+        </div>
+      <div class="visualClear"><!-- --></div>
+    </form>
+  </div>
 </body>
 </html>

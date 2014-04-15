@@ -30,6 +30,14 @@ class IRERSiteSearchTabsSettings(Interface):
             missing_value=()
         )
 
+    solr_hidden_folders = schema.List(
+            title=_(u'SOLR hidden folders'),
+            description=_('help_solr_hidden_folders',
+                          default=u"Inser a list of folders that shouldn't appear in search results (when SOLR is enabled)."),
+            required=False,
+            value_type=schema.TextLine(required=True),
+        )
+
 
 class IRERSiteSearchIndexesSettings(Interface):
     """Settings used in the control panel for sitesearch: Indexes to show

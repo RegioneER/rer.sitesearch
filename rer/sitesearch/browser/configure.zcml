@@ -3,31 +3,13 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="rer.sitesearch">
 	
-
-  <!--browser:page
-       name="search"
-       class=".sitesearch_view.RerSiteSearchView"
-       permission="zope2.View"
-       for="*"
-       layer=".interfaces.IRERSiteSearchLayer"
-       template="templates/rer_search.pt"/>
-
-  <browser:page
-       name="search"
-       class=".sitesearch_view.RerSiteSearchView"
-       permission="zope2.View"
-       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-       layer=".interfaces.IRERSiteSearchLayer"
-       template="templates/rer_search.pt"/-->
-
-
   <browser:page
         name="search"
         class=".rer_search_new.RERSearch"
         permission="zope2.View"
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         layer=".interfaces.IRERSiteSearchLayer"
-        template="rer_search_new.pt"
+        template="templates/rer_search.pt"
         />
 
   <browser:page
@@ -36,7 +18,7 @@
         permission="zope2.View"
         for="*"
         layer=".interfaces.IRERSiteSearchLayer"
-        template="rer_search_new.pt"
+        template="templates/rer_search.pt"
         />
 
     <browser:page
@@ -45,7 +27,7 @@
         permission="zope2.View"
         for="Products.CMFCore.interfaces.IFolderish"
         layer=".interfaces.IRERSiteSearchLayer"
-        template="updated_search.pt"
+        template="templates/updated_search.pt"
         />
   
   <browser:page

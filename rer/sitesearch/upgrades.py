@@ -54,7 +54,16 @@ def to_230(context):
     context.runImportStepFromProfile(default_profile, 'plone.app.registry')
     context.runImportStepFromProfile(default_profile, 'cssregistry', run_dependencies=False)
     updateRegistryFromProperties(context)
-    logger.info('Migrated settings fro properties to registry')
+    logger.info('Migrated settings from properties to registry')
+
+
+@upgrade('rer.sitesearch', '2.4.0')
+def to_240(context):
+    """
+    """
+    logger.info('Upgrading rer.sitesearch to version 240')
+    context.runImportStepFromProfile(default_profile, 'plone.app.registry')
+    logger.info('Upgraded for solr support')
 
 
 def updateRegistryFromProperties(context):

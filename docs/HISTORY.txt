@@ -1,10 +1,10 @@
 Changelog
 =========
 
-2.3.4 (unreleased)
+2.4.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add support to collective.solr [cekk]
 
 
 2.3.3 (2014-02-20)

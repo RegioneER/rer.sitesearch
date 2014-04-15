@@ -44,7 +44,6 @@ class RERSearch(Search):
         """
         super(RERSearch, self).__init__(context, request)
         self.catalog = getToolByName(self.context, 'portal_catalog')
-        # self.search_settings = self.getSearchSettings()
         self.tabs_order = self.getRegistryInfos('tabs_order')
         if not self.tabs_order:
             self.tabs_order = ('all')
@@ -147,18 +146,72 @@ class RERSearch(Search):
         #         results = self.catalog(**query)
         #     except ParseError:
         #         return []
-        return self.catalogResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
-        #     return self.solrResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
-        # else:
-        #     return self.catalogResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
+        if 'use_solr' in query:
+            return self.solrResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
+        else:
+            return self.catalogResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
 
-    # def solrResults(self, query, batch=True, b_size=20, b_start=0):
-    #     from zope.component import getMultiAdapter
-    #     query['facet'] = 'true'
-    #     query['facet_field'] = ['portal_type']
-    #     results = self.catalog(**query)
-    #     view = getMultiAdapter((self.portal, self.request), name='search-facets')
-    #     # results = results.results()
+    def solrResults(self, query, batch=True, b_size=20, b_start=0):
+        query['facet'] = 'true'
+        indexes_list = self.available_indexes.keys()
+        indexes_list.append('portal_type')
+        query['facet_field'] = indexes_list
+        skip_folders = self.getRegistryInfos('solr_hidden_folders')
+        if skip_folders:
+            query['-path_parents'] = skip_folders
+        results = self.catalog(**query)
+        res_dict = {}
+        filtered_results = []
+        res_dict = {'tot_results_len': results.actual_result_count}
+        global_facet_counts = getattr(results, 'facet_counts', None)
+        if global_facet_counts:
+            facets = global_facet_counts.get('facet_fields', {})
+            res_dict['tabs'] = self.solrAvailableTabs(facets)
+        active_tab = self.context.REQUEST.form.get('filter_tab')
+        if active_tab:
+            filtered_results = self.doFilteredSearch(active_tab, query)
+        else:
+            if self.tabs_order[0] != "all":
+                for tab_id in self.tabs_order:
+                    filtered_results = self.doFilteredSearch(tab_id, query)
+                    if filtered_results:
+                        break
+        if filtered_results:
+            facet_counts = getattr(filtered_results, 'facet_counts', None)
+            results = IContentListing(filtered_results)
+        else:
+            facet_counts = getattr(results, 'facet_counts', None)
+            results = IContentListing(results)
+        if batch:
+            results = Batch(results, b_size, b_start)
+        res_dict['results'] = results
+        if facet_counts:
+            facets = facet_counts.get('facet_fields', {})
+            res_dict['indexes_dict'] = self.solrFacetsFormatter(facets)
+        return res_dict
+
+    def solrAvailableTabs(self, facets):
+        """
+        """
+        portal_types = facets.get('portal_type', [])
+        types_mapping = self.types_mapping
+        available_tabs = ['all']
+        for portal_type in portal_types:
+            tab_id = types_mapping.get(portal_type, '')
+            if portal_types.get(portal_type) and tab_id and tab_id not in available_tabs:
+                available_tabs.append(tab_id)
+        return available_tabs
+
+    def solrFacetsFormatter(self, facets):
+        """
+        """
+        filter_dict = {}
+        indexes_mapping = self.available_indexes
+        for facet_id, facet_values in facets.items():
+            if facet_id in indexes_mapping:
+                filter_dict[facet_id] = {'title': indexes_mapping.get(facet_id, facet_id),
+                                         'values': facet_values}
+        return filter_dict
 
     def catalogResults(self, query, batch=True, b_size=20, b_start=0):
         try:
@@ -172,10 +225,11 @@ class RERSearch(Search):
         if active_tab:
             filtered_results = self.doFilteredSearch(active_tab, query)
         else:
-            for tab_id in self.tabs_order:
-                filtered_results = self.doFilteredSearch(tab_id, query)
-                if filtered_results:
-                    break
+            if self.tabs_order[0] != "all":
+                for tab_id in self.tabs_order:
+                    filtered_results = self.doFilteredSearch(tab_id, query)
+                    if filtered_results:
+                        break
         filtered_infos, available_tabs = self.getFilterInfos(results, filtered_results)
         if filtered_results:
             results = IContentListing(filtered_results)
@@ -236,8 +290,12 @@ class RERSearch(Search):
                         if index_values:
                             if index_id not in filter_dict:
                                 filter_dict[index_id] = {'title': indexes_mapping.get(index_id, index_id),
-                                                         'values': set()}
-                            filter_dict[index_id]['values'] = filter_dict[index_id]['values'].union(index_values)
+                                                         'values': {}}
+                            for index_value in index_values:
+                                if index_value not in filter_dict[index_id]['values']:
+                                    filter_dict[index_id]['values'][index_value] = 1
+                                else:
+                                    filter_dict[index_id]['values'][index_value] += 1
         if filtered_results:
             for item in filtered_results:
                 for index_id in indexes_order:
@@ -245,8 +303,12 @@ class RERSearch(Search):
                     if index_values:
                         if index_id not in filter_dict:
                             filter_dict[index_id] = {'title': indexes_mapping.get(index_id, index_id),
-                                                     'values': set()}
-                        filter_dict[index_id]['values'] = filter_dict[index_id]['values'].union(index_values)
+                                                     'values': {}}
+                        for index_value in index_values:
+                            if index_value not in filter_dict[index_id]['values']:
+                                filter_dict[index_id]['values'][index_value] = 1
+                            else:
+                                filter_dict[index_id]['values'][index_value] += 1
         return filter_dict, available_tabs
 
     def setIndexesListForItem(self, brain, index_id):
