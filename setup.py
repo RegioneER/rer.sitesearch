@@ -9,7 +9,7 @@ tests_require = ['plone.app.testing',
 setup(name='rer.sitesearch',
       version=version,
       description="A product that change the base site search of Plone with some new features.",
-      long_description=open("README.txt").read() + "\n" +
+      long_description=open("README.rst").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
