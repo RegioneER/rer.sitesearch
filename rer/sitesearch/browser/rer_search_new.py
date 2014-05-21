@@ -10,7 +10,7 @@ from Products.ZCTextIndex.ParseTree import ParseError
 from rer.sitesearch import sitesearchMessageFactory as _
 from rer.sitesearch.browser.interfaces import IRerSiteSearch
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
-from zope.component import queryUtility
+from zope.component import queryUtility, getMultiAdapter
 from zope.i18n import translate
 from ZPublisher.HTTPRequest import record
 from ZTUtils import make_query
@@ -141,11 +141,6 @@ class RERSearch(Search):
         query = self.filter_query(query)
         if query is None:
             return {}
-        # else:
-        #     try:
-        #         results = self.catalog(**query)
-        #     except ParseError:
-        #         return []
         if 'use_solr' in query:
             return self.solrResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
         else:
@@ -157,7 +152,9 @@ class RERSearch(Search):
         indexes_list.append('portal_type')
         query['facet_field'] = indexes_list
         skip_folders = self.getRegistryInfos('solr_hidden_folders')
-        if skip_folders:
+        context = self.context.aq_inner
+        portal_state = getMultiAdapter((context, self.request), name=u'plone_portal_state')
+        if skip_folders and query.get('path', '') == portal_state.navigation_root_path():
             query['-path_parents'] = skip_folders
         results = self.catalog(**query)
         res_dict = {}
