@@ -30,12 +30,11 @@ class IRERSiteSearchTabsSettings(Interface):
             missing_value=()
         )
 
-    solr_hidden_folders = schema.List(
-            title=_(u'SOLR hidden folders'),
-            description=_('help_solr_hidden_folders',
-                          default=u"Inser a list of folders that shouldn't appear in search results (when SOLR is enabled)."),
+    solr_search_enabled = schema.Bool(
+            title=_(u'Enable search with SOLR'),
+            description=_('help_solr_search_enabled',
+                          default=u"If enabled and collective.solr is correctly set, SOLR search engine will be used instead Plone catalog."),
             required=False,
-            value_type=schema.TextLine(required=True),
         )
 
 

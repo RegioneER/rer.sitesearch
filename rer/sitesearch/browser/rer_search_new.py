@@ -141,7 +141,9 @@ class RERSearch(Search):
         query = self.filter_query(query)
         if query is None:
             return {}
-        if 'use_solr' in query:
+        solr_enabled = self.getRegistryInfos('solr_search_enabled')
+        #BBB to fix when remove use_solr checkbox in the template
+        if 'use_solr' in query and solr_enabled:
             return self.solrResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
         else:
             return self.catalogResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
@@ -151,11 +153,6 @@ class RERSearch(Search):
         indexes_list = self.available_indexes.keys()
         indexes_list.append('portal_type')
         query['facet_field'] = indexes_list
-        skip_folders = self.getRegistryInfos('solr_hidden_folders')
-        context = self.context.aq_inner
-        portal_state = getMultiAdapter((context, self.request), name=u'plone_portal_state')
-        if skip_folders and query.get('path', '') == portal_state.navigation_root_path():
-            query['-path_parents'] = skip_folders
         results = self.catalog(**query)
         res_dict = {}
         filtered_results = []
