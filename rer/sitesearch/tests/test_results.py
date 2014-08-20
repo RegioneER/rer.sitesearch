@@ -82,8 +82,8 @@ class TestSearch(BaseTestCase):
         res = self.portal.restrictedTraverse('@@search').results(query=q,
                                                             batch=False)
         results = res.get('results', None)
-        self.failUnless('my-page1' in [r.getId() for r in results],
-                        'Test document is not found in the results.')
+        self.assertFalse('my-page1' in [r.getId() for r in results])
+
 
 def test_suite():
     """This sets up a test suite that actually runs the tests in the class
