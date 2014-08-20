@@ -230,6 +230,17 @@
                         </dl>
                         <div metal:use-macro="context/batch_macros/macros/navigation" />
                       </metal:results>
+                      <div id="search-statusmessages" tal:define="infos view/getDebugInfo" tal:condition="infos">
+                        <dl class="portalMessage info" tal:repeat="info infos">
+                           <dt></dt>
+                           <dd><a href="#" tal:attributes="href info" tal:content="info">http://....</a></dd>
+                        </dl>
+                        <div tal:condition="nothing">
+                        <!--
+                        <div metal:use-macro="context/global_statusmessage/macros/portal_message">Portal status message</div>
+                        -->
+                        </div>
+                      </div>
                   </div>
               </metal:searchresults>
               <tal:column_filter>

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import logging
+from zope.annotation.interfaces import IAnnotations
 from DateTime import DateTime
 from plone.app.contentlisting.interfaces import IContentListing
 from plone.app.search.browser import Search, SortOption
@@ -17,8 +19,9 @@ from ZTUtils import make_query
 from zope.interface import implements
 from Products.PluginIndexes.DateIndex.DateIndex import DateIndex
 from DateTime.DateTime import safelocaltime
+import urllib2
 
-
+logger = logging.getLogger(__name__)
 MULTISPACE = u'\u3000'.encode('utf-8')
 EVER = DateTime('1970-01-03')
 
@@ -48,6 +51,11 @@ class RERSearch(Search):
         if not self.tabs_order:
             self.tabs_order = ('all')
         self.indexes_order = self.getRegistryInfos('indexes_order')
+
+    def getDebugInfo(self):
+        annotations = IAnnotations(self.request)
+        queries = [urllib2.unquote(x) for x in annotations.get('solr.debug', [])]
+        return queries
 
     @property
     def tabs_mapping(self):
@@ -153,6 +161,19 @@ class RERSearch(Search):
         indexes_list = self.available_indexes.keys()
         indexes_list.append('portal_type')
         query['facet_field'] = indexes_list
+        # BBB: temporary
+        solr_fq_default = solr_bq_default = None
+        try:
+            rer_internos = getToolByName(self.context, 'portal_properties').rer_internos
+            solr_fq_default = rer_internos.solr_fq_default.strip()
+            # solr_bq_default = rer_internos.solr_bq_default.strip()
+        except:
+            logger.exception('portal_properties/rer_internos/solr_fq_default or portal_properties/rer_internos/solr_bq_default not found')
+        if solr_fq_default and not 'fq' in query:
+            query['fq'] = solr_fq_default
+        if solr_bq_default and not 'bq' in query:
+            query['bq'] = solr_bq_default
+        # BBB: ...
         results = self.catalog(**query)
         res_dict = {}
         filtered_results = []

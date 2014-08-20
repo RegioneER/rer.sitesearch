@@ -31,6 +31,15 @@
     margin-left: 1em;
 }
 
+#search-statusmessages {
+    width: 100%;
+    word-wrap: break-word;
+}
+
+#search-statusmessages dt {
+    display:none;  /* TODO */
+}
+
 #searchResultsSort {
     float: none;
 }
