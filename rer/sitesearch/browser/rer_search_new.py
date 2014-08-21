@@ -12,7 +12,7 @@ from Products.ZCTextIndex.ParseTree import ParseError
 from rer.sitesearch import sitesearchMessageFactory as _
 from rer.sitesearch.browser.interfaces import IRerSiteSearch
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
-from zope.component import queryUtility, getMultiAdapter
+from zope.component import queryUtility
 from zope.i18n import translate
 from ZPublisher.HTTPRequest import record
 from ZTUtils import make_query
@@ -177,7 +177,8 @@ class RERSearch(Search):
         results = self.catalog(**query)
         res_dict = {}
         filtered_results = []
-        res_dict = {'tot_results_len': results.actual_result_count}
+        res_dict = {'tot_results_len': results.actual_result_count,
+                    'tabs': 'all'}
         global_facet_counts = getattr(results, 'facet_counts', None)
         if global_facet_counts:
             facets = global_facet_counts.get('facet_fields', {})
