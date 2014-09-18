@@ -51,7 +51,8 @@
                            b_start request/b_start | b_start;
                            query_tab python:request.form.get('filter_tab','');
                            results python: view.results(b_start=b_start);
-                           batch results/results;
+                           validation_messages python:results.get('validation_messages', []);
+                           batch results/results|nothing;
                            tabs results/tabs|nothing;
                            selected_tab python:view.getSelectedTab(tabs);
                            normalizeString nocall:context/@@plone/normalizeString;
@@ -112,6 +113,15 @@
                           tal:define="tab_dict python:tabs_mapping.get(selected_tab, {});
                                        tab_title python:tab_dict.get('title', selected_tab)"
                           tal:content="tab_title" />
+                      <div class="validationMessages"
+                           tal:condition="validation_messages"
+                           i18n:domain="plone">
+                        <dl tal:repeat="message validation_messages"
+                            class="portalMessage warning">
+                          <dt i18n:translate="">Warning</dt>
+                          <dd tal:content="message">a message</dd>
+                        </dl>
+                      </div>
                       <metal:noresults tal:condition="not: batch">
                         <p i18n:domain="plone"><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
                       </metal:noresults>

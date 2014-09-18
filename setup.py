@@ -30,7 +30,8 @@ setup(name='rer.sitesearch',
       extras_require=dict(test=tests_require),
       install_requires=[
           'setuptools',
-          'plone.app.search'
+          'plone.app.search',
+          'plone.api'
       ],
       entry_points="""
       # -*- entry_points -*-

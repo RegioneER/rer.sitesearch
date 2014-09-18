@@ -5,7 +5,8 @@ Changelog
 ------------------
 
 - Add support to collective.solr [cekk]
-
+- Add configuration to limit word length and number of words in SearchableText
+  [cekk]
 
 2.3.3 (2014-02-20)
 ------------------

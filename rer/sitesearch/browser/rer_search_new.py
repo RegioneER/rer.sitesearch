@@ -1,25 +1,32 @@
 # -*- coding: utf-8 -*-
-import logging
-from zope.annotation.interfaces import IAnnotations
 from DateTime import DateTime
+from DateTime.DateTime import safelocaltime
+from plone import api
 from plone.app.contentlisting.interfaces import IContentListing
 from plone.app.search.browser import Search, SortOption
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import getNavigationRoot
 from Products.CMFPlone.PloneBatch import Batch
+from Products.PluginIndexes.DateIndex.DateIndex import DateIndex
 from Products.ZCTextIndex.ParseTree import ParseError
 from rer.sitesearch import sitesearchMessageFactory as _
 from rer.sitesearch.browser.interfaces import IRerSiteSearch
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
-from zope.component import queryUtility
+from zope.annotation.interfaces import IAnnotations
+from zope.component import queryUtility, getUtility
 from zope.i18n import translate
+from zope.interface import implements
 from ZPublisher.HTTPRequest import record
 from ZTUtils import make_query
-from zope.interface import implements
-from Products.PluginIndexes.DateIndex.DateIndex import DateIndex
-from DateTime.DateTime import safelocaltime
+import logging
 import urllib2
+
+try:
+    from collective.solr.interfaces import ISolrConnectionConfig
+    HAS_SOLR = True
+except ImportError:
+    HAS_SOLR = False
 
 logger = logging.getLogger(__name__)
 MULTISPACE = u'\u3000'.encode('utf-8')
@@ -46,7 +53,7 @@ class RERSearch(Search):
         """
         """
         super(RERSearch, self).__init__(context, request)
-        self.catalog = getToolByName(self.context, 'portal_catalog')
+        self.catalog = api.portal.get_tool(name='portal_catalog')
         self.tabs_order = self.getRegistryInfos('tabs_order')
         if not self.tabs_order:
             self.tabs_order = ('all')
@@ -146,15 +153,33 @@ class RERSearch(Search):
         """
         if query is None:
             query = {}
-        query = self.filter_query(query)
+        query, validation_messages = self.filter_query(query)
+        result = {}
         if query is None:
             return {}
-        solr_enabled = self.getRegistryInfos('solr_search_enabled')
-        #BBB to fix when remove use_solr checkbox in the template
-        if 'use_solr' in query and solr_enabled:
-            return self.solrResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
+        if self.searchWithSolr(query):
+            result = self.solrResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
         else:
-            return self.catalogResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
+            result = self.catalogResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
+        if validation_messages:
+            result['validation_messages'] = validation_messages
+        return result
+
+    def searchWithSolr(self, query):
+        """
+        Check if c.solr is installed and active,
+        and if required solr queries are in the query
+        """
+        if not HAS_SOLR:
+            return False
+        solr_config = getUtility(ISolrConnectionConfig)
+        if not solr_config.active:
+            return False
+        for field in solr_config.required:
+            if not query.get(field):
+                return False
+        #if is all set, return the value in sitesearch settings
+        return self.getRegistryInfos('solr_search_enabled')
 
     def solrResults(self, query, batch=True, b_size=20, b_start=0):
         query['facet'] = 'true'
@@ -173,7 +198,9 @@ class RERSearch(Search):
             query['fq'] = solr_fq_default
         if solr_bq_default and not 'bq' in query:
             query['bq'] = solr_bq_default
-        # BBB: ...
+        if batch:
+            query['b_size'] = b_size
+            query['b_start'] = b_start
         results = self.catalog(**query)
         res_dict = {}
         filtered_results = []
@@ -342,8 +369,12 @@ class RERSearch(Search):
             return set([index_value])
 
     def filter_query(self, query):
+        """
+        Make some query filtering.
+        """
         request = self.request
         text = query.get('SearchableText', None)
+        validation_messages = []
         if text is None:
             text = request.form.get('SearchableText', '')
         valid_keys = self.valid_keys + tuple(self.catalog.indexes())
@@ -351,15 +382,32 @@ class RERSearch(Search):
             if v:
                 query[k] = self.setFilteredIndex(k, v, valid_keys)
         if text:
+            #Check if SearchableText is too long or has too long words
+            max_word_len = self.getRegistryInfos('max_word_len')
+            max_words = self.getRegistryInfos('max_words')
+            words = text.split()
+            if len(words) > max_words:
+                validation_messages.append(translate(_('search_limit_words_label',
+                                                        default=u'"${word}" (and any subsequent words) was ignored because we limit queries to ${max_words} words.',
+                                                        mapping={'word': words[max_words],
+                                                                 'max_words': max_words}),
+                                                     context=self.request))
+                words = words[:max_words]
+                text = " ".join(words)
+            for word in words:
+                if len(word) > max_word_len:
+                    validation_messages.append(translate(_('search_limit_word_characters_label',
+                                                        default=u'"${word}" is a too long word. Try using a shorter word.',
+                                                        mapping={'word': word}),
+                                                     context=self.request))
+                    text.replace(word, '')
             query['SearchableText'] = quote_chars(text)
-
         # don't filter on created at all if we want all results
         created = query.get('created')
         if created:
             if created.get('query'):
                 if created['query'][0] <= EVER:
                     del query['created']
-
         # respect `types_not_searched` setting
         types = query.get('portal_type', [])
         if 'query' in types:
@@ -371,7 +419,7 @@ class RERSearch(Search):
         if 'path' not in query:
             query['path'] = getNavigationRoot(self.context)
 
-        return query
+        return query, validation_messages
 
     def getDateIndexes(self):
         """

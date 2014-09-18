@@ -6,6 +6,34 @@ from rer.sitesearch import sitesearchMessageFactory as _
 from rer.sitesearch.custom_fields import ITabsValueField, IIndexesValueField, PersistentObject
 
 
+class IRERSiteSearchGeneralSettings(Interface):
+    """Settings used in the control panel for sitesearch: General settings
+    """
+
+    max_word_len = schema.Int(
+            title=_(u'Maximum number of characters in a single word'),
+            description=_('help_max_word_len',
+                          default=u"Set what is the maximum length of a single search word. Longer words will be omitted from the search."),
+            default=128,
+            required=False,
+        )
+
+    max_words = schema.Int(
+            title=_(u'Maximum number of words in search query'),
+            description=_('help_max_words',
+                          default=u"Set what is the maximum number of words in the search query. The other words will be omitted from the search."),
+            default=32,
+            required=False,
+        )
+
+    solr_search_enabled = schema.Bool(
+            title=_(u'Enable search with SOLR'),
+            description=_('help_solr_search_enabled',
+                          default=u"If enabled and collective.solr is correctly set, SOLR search engine will be used instead Plone catalog."),
+            required=False,
+        )
+
+
 class IRERSiteSearchTabsSettings(Interface):
     """Settings used in the control panel for sitesearch: Tab list
     """
@@ -28,13 +56,6 @@ class IRERSiteSearchTabsSettings(Interface):
             required=False,
             default=("All",),
             missing_value=()
-        )
-
-    solr_search_enabled = schema.Bool(
-            title=_(u'Enable search with SOLR'),
-            description=_('help_solr_search_enabled',
-                          default=u"If enabled and collective.solr is correctly set, SOLR search engine will be used instead Plone catalog."),
-            required=False,
         )
 
 
@@ -78,7 +99,7 @@ class IRERSiteSearchHiddensIndexesSettings(Interface):
         )
 
 
-class IRERSiteSearchSettings(IRERSiteSearchTabsSettings, IRERSiteSearchIndexesSettings, IRERSiteSearchHiddensIndexesSettings):
+class IRERSiteSearchSettings(IRERSiteSearchGeneralSettings, IRERSiteSearchTabsSettings, IRERSiteSearchIndexesSettings, IRERSiteSearchHiddensIndexesSettings):
     """
     Settings for Sitesearch
     """

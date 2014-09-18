@@ -64,5 +64,4 @@
       file="javascript/sitesearch.js"
       layer=".interfaces.IRERSiteSearchLayer"
       />
-
 </configure>

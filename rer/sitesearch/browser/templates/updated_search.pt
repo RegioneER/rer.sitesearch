@@ -10,6 +10,7 @@
                   here_url context/@@plone_context_state/object_url;
                   batch_base_url string:${here_url}/@@search;
                   portal_path context/@@plone_portal_state/navigation_root_path;
+                  validation_messages python:results.get('validation_messages', []);
                   indexes_dict results/indexes_dict|nothing;
                   indexes_order view/indexes_order;
                   tabs_mapping view/tabs_mapping;

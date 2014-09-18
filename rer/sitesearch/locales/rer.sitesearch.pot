@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-06-27 08:04+0000\n"
+"POT-Creation-Date: 2014-09-17 14:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: rer.sitesearch\n"
 
-#: ./browser/rer_search_new.py:313
+#: ./browser/rer_search_new.py:495
 msgid "${results_len} on ${total_len}"
 msgstr ""
 
@@ -24,22 +24,26 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: ./browser/controlpanel.py:51
+#: ./browser/controlpanel.py:71
 msgid "Cancel"
 msgstr ""
 
 msgid "Category"
 msgstr ""
 
-#: ./browser/controlpanel.py:47
+#: ./browser/controlpanel.py:67
 msgid "Changes saved"
 msgstr ""
 
 msgid "Documents"
 msgstr ""
 
-#: ./browser/controlpanel.py:53
+#: ./browser/controlpanel.py:73
 msgid "Edit cancelled"
+msgstr ""
+
+#: ./interfaces.py:30
+msgid "Enable search with SOLR"
 msgstr ""
 
 msgid "Event end"
@@ -57,31 +61,40 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: ./interfaces.py:64
+#: ./browser/controlpanel.py:18
+msgid "General settings"
+msgstr ""
+
+#: ./browser/controlpanel.py:33
+#: ./interfaces.py:92
 msgid "Hidden indexes"
 msgstr ""
 
-#: ./browser/controlpanel.py:26
-msgid "Hidden indexes settings"
-msgstr ""
-
-#: ./interfaces.py:42
+#: ./interfaces.py:70
 msgid "Index in search"
 msgstr ""
 
-#: ./interfaces.py:39
+#: ./browser/controlpanel.py:28
+msgid "Indexes"
+msgstr ""
+
+#: ./interfaces.py:67
 msgid "Indexes for search"
 msgstr ""
 
-#: ./interfaces.py:49
+#: ./interfaces.py:77
 msgid "Indexes order"
 msgstr ""
 
-#: ./browser/controlpanel.py:21
-msgid "Indexes settings"
+msgid "Links"
 msgstr ""
 
-msgid "Links"
+#: ./interfaces.py:14
+msgid "Maximum number of characters in a single word"
+msgstr ""
+
+#: ./interfaces.py:22
+msgid "Maximum number of words in search query"
 msgstr ""
 
 msgid "News"
@@ -91,166 +104,148 @@ msgstr ""
 msgid "RER Sitesearch"
 msgstr ""
 
-#: ./browser/rer_search_new.pt:237
+#: ./browser/templates/rer_search.pt:255
 msgid "Refine your search:"
 msgstr ""
 
-#: ./browser/controlpanel.py:40
+#: ./browser/controlpanel.py:60
 msgid "Save"
 msgstr ""
 
-#: ./browser/rer_search_new.pt:29
+#: ./browser/templates/rer_search.pt:29
 msgid "Search results"
 msgstr ""
 
-#: ./interfaces.py:17
+#: ./interfaces.py:45
 msgid "Search tab"
 msgstr ""
 
-#: ./interfaces.py:14
+#: ./interfaces.py:42
 msgid "Search tabs"
 msgstr ""
 
-#: ./browser/controlpanel.py:36
+#: ./browser/controlpanel.py:43
 msgid "Site Search settings"
 msgstr ""
 
-#: ./interfaces.py:24
+#: ./browser/controlpanel.py:23
+msgid "Tabs"
+msgstr ""
+
+#: ./interfaces.py:52
 msgid "Tabs order"
 msgstr ""
 
-#: ./browser/controlpanel.py:16
-msgid "Tabs settings"
-msgstr ""
-
-#: ./browser/templates/rer_search.pt:51
-msgid "You searched in: ${folder_name}"
-msgstr ""
-
-#: ./browser/rer_search_new.py:426
+#: ./browser/rer_search_new.py:607
 msgid "alphabetically"
 msgstr ""
 
-#. Default: "Closer results"
-#: ./browser/templates/rer_search.pt:288
-msgid "closer_results"
-msgstr ""
-
-#: ./browser/rer_search_new.py:424
+#: ./browser/rer_search_new.py:605
 msgid "date (newest first)"
 msgstr ""
 
-#. Default: "from"
-#: ./browser/templates/rer_search.pt:142
-msgid "date_from"
-msgstr ""
-
-#. Default: "to"
-#: ./browser/templates/rer_search.pt:147
-msgid "date_to"
-msgstr ""
-
-#. Default: "No results were found."
-#: ./browser/templates/rer_search.pt:54
-msgid "description_no_results_found"
-msgstr ""
-
 #. Default: "Select the indexes that you want to show for faceted navigation. You can define also the order. \"All\" tab shows all results."
-#: ./interfaces.py:50
+#: ./interfaces.py:78
 msgid "help_indexes_order"
 msgstr ""
 
+#. Default: "Set what is the maximum length of a single search word. Longer words will be omitted from the search."
+#: ./interfaces.py:15
+msgid "help_max_word_len"
+msgstr ""
+
+#. Default: "Set what is the maximum number of words in the search query. The other words will be omitted from the search."
+#: ./interfaces.py:23
+msgid "help_max_words"
+msgstr ""
+
 #. Default: "Insert a list of indexes that should be used for faceted navigation."
-#: ./interfaces.py:40
+#: ./interfaces.py:68
 msgid "help_sitesearch_available_indexes"
 msgstr ""
 
 #. Default: "Insert a list of indexes that can't be used for faceted search, but we need to keep."
-#: ./interfaces.py:65
+#: ./interfaces.py:93
 msgid "help_sitesearch_hidden_indexes"
 msgstr ""
 
 #. Default: "Set site search configurations"
-#: ./browser/controlpanel.py:37
+#: ./browser/controlpanel.py:44
 msgid "help_sitesearch_settings_editform"
 msgstr ""
 
+#. Default: "If enabled and collective.solr is correctly set, SOLR search engine will be used instead Plone catalog."
+#: ./interfaces.py:31
+msgid "help_solr_search_enabled"
+msgstr ""
+
 #. Default: "Insert a list of tabs to show on search results. Each tab can contain different content_types."
-#: ./interfaces.py:15
+#: ./interfaces.py:43
 msgid "help_tabs_mapping"
 msgstr ""
 
 #. Default: "Select the tabs that you want to show in the search and define an order."
-#: ./interfaces.py:25
+#: ./interfaces.py:53
 msgid "help_tabs_order"
 msgstr ""
 
 #. Default: "Insert a list of indexes that are not shown in the column, but need to be set in request. One per row. Every row should have a couple of index and title divided by \"pipe\" character. For example \"Subject|Category\""
-#: ./browser/interfaces.py:79
+#: ./browser/interfaces.py:44
 msgid "indexes_hiddenlist_help"
 msgstr ""
 
 #. Default: "Hidden indexes"
-#: ./browser/interfaces.py:76
+#: ./browser/interfaces.py:41
 msgid "indexes_hiddenlist_label"
 msgstr ""
 
 #. Default: "Insert a list of indexes to show in search results column. One per row. Every row should have a couple of index and title divided by \"pipe\" character. For example \"Subject|Category\""
-#: ./browser/interfaces.py:71
+#: ./browser/interfaces.py:36
 msgid "indexes_in_search_help"
 msgstr ""
 
 #. Default: "Indexes in search"
-#: ./browser/interfaces.py:68
+#: ./browser/interfaces.py:33
 msgid "indexes_in_search_label"
 msgstr ""
 
 #. Default: "You are also searching for:"
-#: ./browser/rer_search_new.pt:305
-#: ./browser/templates/rer_search.pt:263
+#: ./browser/templates/rer_search.pt:335
 msgid "label_also_searching_for"
 msgstr ""
 
 #. Default: "Remove all filters"
-#: ./browser/rer_search_new.pt:316
-#: ./browser/templates/rer_search.pt:273
+#: ./browser/templates/rer_search.pt:346
 msgid "label_remove_filters"
 msgstr ""
 
 #. Default: "Search"
-#: ./browser/rer_search_new.pt:432
+#: ./browser/templates/rer_search.pt:465
 msgid "label_search"
 msgstr ""
 
 #. Default: "Search in"
-#: ./browser/rer_search_new.pt:261
-#: ./browser/templates/rer_search.pt:231
+#: ./browser/templates/rer_search.pt:291
 msgid "label_search_in"
 msgstr ""
 
-#. Default: "Search text"
-#: ./browser/templates/rer_search.pt:210
-msgid "label_search_text"
-msgstr ""
-
 #. Default: "All the site"
-#: ./browser/rer_search_new.pt:282
-#: ./browser/templates/rer_search.pt:252
+#: ./browser/templates/rer_search.pt:312
 msgid "label_searchbox_all_site"
 msgstr ""
 
-#. Default: "Latest results"
-#: ./browser/templates/rer_search.pt:297
-msgid "latest_results"
-msgstr ""
-
-#. Default: "Refine your search:"
-#: ./browser/templates/rer_search.pt:208
-msgid "less_results"
-msgstr ""
-
-#: ./browser/rer_search_new.py:423
+#: ./browser/rer_search_new.py:604
 msgid "relevance"
+msgstr ""
+
+#. Default: "\"${word}\" is a too long word. Try using a shorter word."
+#: ./browser/rer_search_new.py:399
+msgid "search_limit_word_characters_label"
+msgstr ""
+
+#. Default: "\"${word}\" (and any subsequent words) was ignored because we limit queries to ${max_words} words."
+#: ./browser/rer_search_new.py:390
+msgid "search_limit_words_label"
 msgstr ""
 
 #. Default: "Allowable indexes in catalog"
@@ -293,38 +288,13 @@ msgstr ""
 msgid "sitesearch_tab_title_help"
 msgstr ""
 
-#. Default: "Sort on"
-#: ./browser/templates/rer_search.pt:280
-msgid "sort_on"
-msgstr ""
-
 #. Default: "Insert a list of tabs to divide results. One per row. Every row should have a couple of portal_type and title divided by \"pipe\" character. For example \"Document|Documents\". You can also group some types using the same title."
-#: ./browser/interfaces.py:64
+#: ./browser/interfaces.py:29
 msgid "tabs_list_help"
 msgstr ""
 
 #. Default: "Tabs list"
-#: ./browser/interfaces.py:61
+#: ./browser/interfaces.py:26
 msgid "tabs_list_label"
-msgstr ""
-
-#. Default: "RSS feed"
-#: ./browser/templates/rer_search.pt:99
-msgid "title_rss_feed"
-msgstr ""
-
-#. Default: "<span class=\"resType\">${number_part_results} results</span> of this type of <span class=\"resTot\">${number_total_results} total results</span>"
-#: ./browser/templates/rer_search.pt:86
-msgid "view_number_of_results"
-msgstr ""
-
-#. Default: "${number_part_results} result of this type of ${number_total_results} total results"
-#: ./browser/templates/rer_search.pt:90
-msgid "view_number_of_results_part1"
-msgstr ""
-
-#. Default: "${number_part_results} result of this type of ${number_total_results} total result"
-#: ./browser/templates/rer_search.pt:94
-msgid "view_number_of_results_total1"
 msgstr ""
 

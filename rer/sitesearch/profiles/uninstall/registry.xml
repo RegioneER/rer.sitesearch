@@ -1,20 +1,26 @@
 <registry>
-    <record interface="rer.sitesearch.interfaces.IRERSiteSearchTabsSettings"
-            field="tabs_mapping"
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="max_word_len"
             delete="True"/>
-    <record interface="rer.sitesearch.interfaces.IRERSiteSearchTabsSettings"
-            field="tabs_order"
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="max_words"
             delete="True"/>
-    <record interface="rer.sitesearch.interfaces.IRERSiteSearchTabsSettings"
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
             field="solr_search_enabled"
             delete="True"/>
-    <record interface="rer.sitesearch.interfaces.IRERSiteSearchIndexesSettings"
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="tabs_mapping"
+            delete="True"/>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="tabs_order"
+            delete="True"/>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
             field="available_indexes"
             delete="True"/>
-    <record interface="rer.sitesearch.interfaces.IRERSiteSearchIndexesSettings"
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
             field="indexes_order"
             delete="True"/>
-    <record interface="rer.sitesearch.interfaces.IRERSiteSearchHiddensIndexesSettings"
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
             field="hidden_indexes"
             delete="True"/>
 </registry>
