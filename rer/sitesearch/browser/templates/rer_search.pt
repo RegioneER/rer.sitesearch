@@ -205,6 +205,14 @@
                                           </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
                                         </span>
                                       </span>
+
+                                      <!-- BBB DEBUG -->
+                                      <span
+                                          tal:define="elevated item/[elevated]|nothing"
+                                          tal:condition="elevated">
+                                        (elevated
+                                        <i tal:content="elevated">False</i>)
+                                      </span>
                                     </span>
                                     
 
