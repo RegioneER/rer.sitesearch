@@ -389,7 +389,7 @@ class RERSearch(Search):
             if len(words) > max_words:
                 validation_messages.append(translate(_('search_limit_words_label',
                                                         default=u'"${word}" (and any subsequent words) was ignored because we limit queries to ${max_words} words.',
-                                                        mapping={'word': words[max_words],
+                                                        mapping={'word': words[max_words].decode('utf-8'),
                                                                  'max_words': max_words}),
                                                      context=self.request))
                 words = words[:max_words]
@@ -398,7 +398,7 @@ class RERSearch(Search):
                 if len(word) > max_word_len:
                     validation_messages.append(translate(_('search_limit_word_characters_label',
                                                         default=u'"${word}" is a too long word. Try using a shorter word.',
-                                                        mapping={'word': word}),
+                                                        mapping={'word': word.decode('utf-8')}),
                                                      context=self.request))
                     text.replace(word, '')
             query['SearchableText'] = quote_chars(text)
