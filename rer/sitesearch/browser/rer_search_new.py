@@ -202,10 +202,12 @@ class RERSearch(Search):
             query['b_size'] = b_size
             query['b_start'] = b_start
         results = self.catalog(**query)
-        res_dict = {}
+        res_dict = {'tabs': ['all']}
+        if results.actual_result_count is None:
+            res_dict['tot_results_len'] = 0
+            return res_dict
+        res_dict['tot_results_len'] = results.actual_result_count
         filtered_results = []
-        res_dict = {'tot_results_len': results.actual_result_count,
-                    'tabs': 'all'}
         global_facet_counts = getattr(results, 'facet_counts', None)
         if global_facet_counts:
             facets = global_facet_counts.get('facet_fields', {})

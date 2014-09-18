@@ -82,9 +82,7 @@
                           </ul>
                         </metal:tabs>
                       </div>
-                      <div id="search-results-bar"
-                           tal:define="batch_results_len batch/sequence_length;
-                                       total_results_len results/total_results_len | batch_results_len">
+                      <div id="search-results-bar">
                           <span i18n:translate="batch_x_items_matching_your_criteria" i18n:domain="plone">
                               <strong i18n:name="number" id="search-results-number"
                                       tal:content="python:view.getResultsLen(results)">234</strong>
