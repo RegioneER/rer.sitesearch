@@ -58,6 +58,12 @@ jQuery(function ($) {
                     $('#sorting-options').html(data_sorting_opt);
                     $('#tab-options').html(data_tab_opt);
                     $('#indexes-options').html(data_indexes_opt);
+                    if (data_indexes_opt === null) {
+                        $('#indexes-options').hide();
+                    }
+                    else {
+                        $('#indexes-options').show();
+                    }
                     // Clean after ourselves — empty the ajax results container.
                     // No need to remove the item itself — probably there will
                     // be more search requests for filtering, sorting, etc. So,

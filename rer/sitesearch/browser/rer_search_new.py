@@ -140,23 +140,23 @@ class RERSearch(Search):
         tab_in_request = self.request.form.get('filter_tab', '')
         if tab_in_request:
             return tab_in_request
-        else:
+        elif tabs:
             for tab in self.tabs_order:
                 if tab in tabs:
                     return tab
         return "all"
 
-    def results(self, query=None, batch=True, b_size=20, b_start=0):
+    def results(self, batch=True, b_size=20, b_start=0):
         """ Get properly wrapped search results from the catalog.
         Everything in Plone that performs searches should go through this view.
         'query' should be a dictionary of catalog parameters.
         """
-        if query is None:
-            query = {}
-        query, validation_messages = self.filter_query(query)
-        result = {}
-        if query is None:
+        if not self.request.form:
             return {}
+        query, validation_messages = self.filter_query()
+        if not query:
+            return {'validation_messages': validation_messages}
+        result = {}
         if self.searchWithSolr(query):
             result = self.solrResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
         else:
@@ -186,18 +186,6 @@ class RERSearch(Search):
         indexes_list = self.available_indexes.keys()
         indexes_list.append('portal_type')
         query['facet_field'] = indexes_list
-        # BBB: temporary
-        solr_fq_default = solr_bq_default = None
-        try:
-            rer_internos = getToolByName(self.context, 'portal_properties').rer_internos
-            solr_fq_default = rer_internos.solr_fq_default.strip()
-            # solr_bq_default = rer_internos.solr_bq_default.strip()
-        except:
-            logger.exception('portal_properties/rer_internos/solr_fq_default or portal_properties/rer_internos/solr_bq_default not found')
-        if solr_fq_default and not 'fq' in query:
-            query['fq'] = solr_fq_default
-        if solr_bq_default and not 'bq' in query:
-            query['bq'] = solr_bq_default
         if batch:
             query['b_size'] = b_size
             query['b_start'] = b_start
@@ -370,40 +358,26 @@ class RERSearch(Search):
         else:
             return set([index_value])
 
-    def filter_query(self, query):
+    def filter_query(self):
         """
         Make some query filtering.
         """
         request = self.request
-        text = query.get('SearchableText', None)
+        query = {}
         validation_messages = []
-        if text is None:
-            text = request.form.get('SearchableText', '')
+        # text = request.form.get('SearchableText', '')
         valid_keys = self.valid_keys + tuple(self.catalog.indexes())
         for k, v in request.form.items():
+            if k == 'SearchableText':
+                v, text_validation = self.validateSearchableText(v)
+                validation_messages.extend(text_validation)
             if v:
                 query[k] = self.setFilteredIndex(k, v, valid_keys)
-        if text:
-            #Check if SearchableText is too long or has too long words
-            max_word_len = self.getRegistryInfos('max_word_len')
-            max_words = self.getRegistryInfos('max_words')
-            words = text.split()
-            if len(words) > max_words:
-                validation_messages.append(translate(_('search_limit_words_label',
-                                                        default=u'"${word}" (and any subsequent words) was ignored because we limit queries to ${max_words} words.',
-                                                        mapping={'word': words[max_words].decode('utf-8'),
-                                                                 'max_words': max_words}),
-                                                     context=self.request))
-                words = words[:max_words]
-                text = " ".join(words)
-            for word in words:
-                if len(word) > max_word_len:
-                    validation_messages.append(translate(_('search_limit_word_characters_label',
-                                                        default=u'"${word}" is a too long word. Try using a shorter word.',
-                                                        mapping={'word': word.decode('utf-8')}),
-                                                     context=self.request))
-                    text.replace(word, '')
-            query['SearchableText'] = quote_chars(text)
+        if not query:
+            validation_messages.append(translate(_('search_no_query_label',
+                                    default=u'You need to pass some query value.'),
+                                    context=self.request))
+            return query, validation_messages
         # don't filter on created at all if we want all results
         created = query.get('created')
         if created:
@@ -422,6 +396,29 @@ class RERSearch(Search):
             query['path'] = getNavigationRoot(self.context)
 
         return query, validation_messages
+
+    def validateSearchableText(self, text):
+        """Check if SearchableText is too long or has too long words"""
+        validation_messages = []
+        max_word_len = self.getRegistryInfos('max_word_len')
+        max_words = self.getRegistryInfos('max_words')
+        words = text.split()
+        if len(words) > max_words:
+            validation_messages.append(translate(_('search_limit_words_label',
+                                                    default=u'"${word}" (and any subsequent words) was ignored because we limit queries to ${max_words} words.',
+                                                    mapping={'word': words[max_words].decode('utf-8'),
+                                                             'max_words': max_words}),
+                                                 context=self.request))
+            words = words[:max_words]
+            text = " ".join(words)
+        for word in words:
+            if len(word) > max_word_len:
+                validation_messages.append(translate(_('search_limit_word_characters_label',
+                                                    default=u'"${word}" is a too long word and was ignored. Try using a shorter word.',
+                                                    mapping={'word': word.decode('utf-8')}),
+                                                 context=self.request))
+                text = text.replace(word, '')
+        return quote_chars(text), validation_messages
 
     def getDateIndexes(self):
         """

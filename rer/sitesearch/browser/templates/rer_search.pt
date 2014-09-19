@@ -53,7 +53,7 @@
                            results python: view.results(b_start=b_start);
                            validation_messages python:results.get('validation_messages', []);
                            batch results/results|nothing;
-                           tabs results/tabs|nothing;
+                           tabs python:results.get('tabs', ['all']);
                            selected_tab python:view.getSelectedTab(tabs);
                            normalizeString nocall:context/@@plone/normalizeString;
                            hidden_indexes_dict view/getHiddenIndexes">
@@ -419,14 +419,14 @@
 
                               <input type="hidden" name="created.range:record" value="min" />
                           </div>
-
                           <!--INDEXES and FACETED-->
                           <div id="indexes-options"
                                tal:define="indexes_dict results/indexes_dict|nothing;
                                            indexes_order view/indexes_order"
-                               tal:condition="indexes_dict">
+                               tal:attributes="style python:indexes_dict and '' or u'display:none'">
                             <metal:indexes-list define-macro="indexes-list">
-                              <tal:indexes repeat="index_id indexes_order">
+                              <tal:indexes repeat="index_id indexes_order"
+                                           condition="indexes_dict">
                               <!--ITERATION additional_indexes-->
 
                               <div class="field"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-09-17 14:43+0000\n"
+"POT-Creation-Date: 2014-09-19 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: rer.sitesearch\n"
 
-#: ./browser/rer_search_new.py:495
+#: ./browser/rer_search_new.py:494
 msgid "${results_len} on ${total_len}"
 msgstr ""
 
@@ -104,7 +104,7 @@ msgstr ""
 msgid "RER Sitesearch"
 msgstr ""
 
-#: ./browser/templates/rer_search.pt:255
+#: ./browser/templates/rer_search.pt:264
 msgid "Refine your search:"
 msgstr ""
 
@@ -136,11 +136,11 @@ msgstr ""
 msgid "Tabs order"
 msgstr ""
 
-#: ./browser/rer_search_new.py:607
+#: ./browser/rer_search_new.py:606
 msgid "alphabetically"
 msgstr ""
 
-#: ./browser/rer_search_new.py:605
+#: ./browser/rer_search_new.py:604
 msgid "date (newest first)"
 msgstr ""
 
@@ -210,42 +210,47 @@ msgid "indexes_in_search_label"
 msgstr ""
 
 #. Default: "You are also searching for:"
-#: ./browser/templates/rer_search.pt:335
+#: ./browser/templates/rer_search.pt:344
 msgid "label_also_searching_for"
 msgstr ""
 
 #. Default: "Remove all filters"
-#: ./browser/templates/rer_search.pt:346
+#: ./browser/templates/rer_search.pt:355
 msgid "label_remove_filters"
 msgstr ""
 
 #. Default: "Search"
-#: ./browser/templates/rer_search.pt:465
+#: ./browser/templates/rer_search.pt:474
 msgid "label_search"
 msgstr ""
 
 #. Default: "Search in"
-#: ./browser/templates/rer_search.pt:291
+#: ./browser/templates/rer_search.pt:300
 msgid "label_search_in"
 msgstr ""
 
 #. Default: "All the site"
-#: ./browser/templates/rer_search.pt:312
+#: ./browser/templates/rer_search.pt:321
 msgid "label_searchbox_all_site"
 msgstr ""
 
-#: ./browser/rer_search_new.py:604
+#: ./browser/rer_search_new.py:603
 msgid "relevance"
 msgstr ""
 
-#. Default: "\"${word}\" is a too long word. Try using a shorter word."
-#: ./browser/rer_search_new.py:399
+#. Default: "\"${word}\" is a too long word and was ignored. Try using a shorter word."
+#: ./browser/rer_search_new.py:416
 msgid "search_limit_word_characters_label"
 msgstr ""
 
 #. Default: "\"${word}\" (and any subsequent words) was ignored because we limit queries to ${max_words} words."
-#: ./browser/rer_search_new.py:390
+#: ./browser/rer_search_new.py:407
 msgid "search_limit_words_label"
+msgstr ""
+
+#. Default: "You need to pass some query value."
+#: ./browser/rer_search_new.py:377
+msgid "search_no_query_label"
 msgstr ""
 
 #. Default: "Allowable indexes in catalog"
