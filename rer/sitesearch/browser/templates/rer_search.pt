@@ -423,12 +423,11 @@
                           <div id="indexes-options"
                                tal:define="indexes_dict results/indexes_dict|nothing;
                                            indexes_order view/indexes_order"
-                               tal:attributes="style python:indexes_dict and '' or u'display:none'">
+                               tal:attributes="style python:indexes_dict and ' ' or u'display:none'">
                             <metal:indexes-list define-macro="indexes-list">
                               <tal:indexes repeat="index_id indexes_order"
                                            condition="indexes_dict">
                               <!--ITERATION additional_indexes-->
-
                               <div class="field"
                                   tal:define="index_infos python:indexes_dict.get(index_id,{});"
                                   tal:condition="index_infos">
