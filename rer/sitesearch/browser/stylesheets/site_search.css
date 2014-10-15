@@ -94,3 +94,33 @@
 h4.resultTitle {
     display: inline;
 }
+
+/* solr support */
+.elevatedItem {
+    width: 100%;
+}
+
+dt.elevatedItem {
+    padding-left: 20px;
+}
+
+dt.elevatedItem .elevatedLabel {
+    float: right;
+}
+
+dd.elevatedItem,
+dt.elevatedItem .itemTitle {
+    background-color: #e3e3e3;
+}
+
+dt.elevatedItem .itemTitle {
+    width: 100%;
+    clear: both;
+    padding: 0.5em;    
+}
+
+
+#content dd.elevatedItem {
+    margin-left: 20px;
+    padding: 0.5em;
+}

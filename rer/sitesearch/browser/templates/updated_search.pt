@@ -5,6 +5,8 @@
                   results python:view.results(b_start=b_start);
                   batch results/results|nothing;
                   st python:request.get('SearchableText', '');
+                  search_query python:results.get('query', {});
+                  st python:search_query.get('SearchableText', st);
                   here_url context/@@plone_context_state/object_url;
                   batch_base_url string:${here_url}/@@search;
                   portal_path context/@@plone_portal_state/navigation_root_path;
@@ -32,6 +34,10 @@
         <metal:results use-macro="context/@@search/tabs-list" />
     </span>
 
+    <div id="updated-search-term" tal:condition="st">
+      <metal:indexes use-macro="context/@@search/searchfield" />
+    </div>
+    
     <div id="updated-indexes-options" tal:condition="indexes_dict">
       <metal:indexes use-macro="context/@@search/indexes-list" />
     </div>

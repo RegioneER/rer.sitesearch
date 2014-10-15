@@ -8,6 +8,13 @@ jQuery(function ($) {
         $default_res_container = $('#search-results'),
         navigation_root_url = $('meta[name=navigation_root_url]').attr('content') || window.navigation_root_url || window.portal_url;
 
+    //update search viewlet value. This is need, if some search terms was deleted by length check
+    if ($('input#searchGadget').length === 1) {
+        $('input#searchGadget').val($('input#SearchableText').attr('value'));
+    }
+    else {
+        $('input#nolivesearchGadget').val($('input#SearchableText').attr('value'));
+    }
     // The globally available method to pull the search results for the
     // 'query' into the element, on which the method is invoked
     $.fn.pullSearchResults = function (query) {
@@ -33,7 +40,7 @@ jQuery(function ($) {
                     $('#ajax-search-res').html(data);
 
                     var $data_res = $('#ajax-search-res #search-results > *'),
-                        data_search_term = $('#ajax-search-res #updated-search-term').text(),
+                        data_search_term = $('#ajax-search-res #updated-search-term input#SearchableText').attr('value'),
                         data_res_number = $('#ajax-search-res #updated-search-results-number').text(),
                         data_path_opt = $('#ajax-search-res #updated-path-options').html(),
                         data_sorting_opt = $('#ajax-search-res #updated-sorting-options').html(),
@@ -43,14 +50,20 @@ jQuery(function ($) {
                     $container.html($data_res);
                     $container.fadeIn();
 
-                    if ($('#search-term').length === 0) {
-                        // Until now we had queries with empty search term. So
-                        // we need a placeholder for the search term in
-                        // result's title.
-                        $('h1.documentFirstHeading').append('<strong id="search-term" />');
-                    }
+                    // if ($('#search-term').length === 0) {
+                    //     // Until now we had queries with empty search term. So
+                    //     // we need a placeholder for the search term in
+                    //     // result's title.
+                    //     $('h1.documentFirstHeading').append('<strong id="search-term" />');
+                    // }
 
-                    $('#search-term').text(data_search_term);
+                    $('input#SearchableText').attr('value', data_search_term);
+                    if ($('input#searchGadget').length === 1) {
+                        $('input#searchGadget').val(data_search_term);
+                    }
+                    else {
+                        $('input#nolivesearchGadget').val(data_search_term);
+                    }
                     $('#search-results-number').text(data_res_number);
                     if (data_path_opt === null) {
                         $('#path-options').remove();
@@ -165,7 +178,13 @@ jQuery(function ($) {
     // We need to update the site-wide search field (at the top right in
     // stock Plone) when the main search field is updated
     $('#search-field input[name="SearchableText"]').keyup(function () {
-        $('input#searchGadget').val($(this).val());
+        if ($('input#searchGadget').length === 1) {
+            $('input#searchGadget').val($(this).val());
+        }
+        else {
+            $('input#nolivesearchGadget').val($(this).val());
+        }
+        
     });
 
     // When we click any option in the Filter menu, we need to prevent the

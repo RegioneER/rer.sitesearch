@@ -151,18 +151,19 @@ class RERSearch(Search):
         Everything in Plone that performs searches should go through this view.
         'query' should be a dictionary of catalog parameters.
         """
-        if not self.request.form:
-            return {}
-        query, validation_messages = self.filter_query()
-        if not query:
-            return {'validation_messages': validation_messages}
         result = {}
-        if self.searchWithSolr(query):
-            result = self.solrResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
-        else:
-            result = self.catalogResults(query=query, batch=batch, b_size=b_size, b_start=b_start)
+        if not self.request.form:
+            return result
+        query, validation_messages = self.filter_query()
+        result['query'] = query
         if validation_messages:
             result['validation_messages'] = validation_messages
+        if not query:
+            return result
+        if self.searchWithSolr(query):
+            result.update(self.solrResults(query=query, batch=batch, b_size=b_size, b_start=b_start))
+        else:
+            result.update(self.catalogResults(query=query, batch=batch, b_size=b_size, b_start=b_start))
         return result
 
     def searchWithSolr(self, query):
@@ -369,7 +370,7 @@ class RERSearch(Search):
         valid_keys = self.valid_keys + tuple(self.catalog.indexes())
         for k, v in request.form.items():
             if k == 'SearchableText':
-                v, text_validation = self.validateSearchableText(v)
+                v, text_validation = self.validateSearchableText(k, v)
                 validation_messages.extend(text_validation)
             if v:
                 query[k] = self.setFilteredIndex(k, v, valid_keys)
@@ -397,7 +398,7 @@ class RERSearch(Search):
 
         return query, validation_messages
 
-    def validateSearchableText(self, text):
+    def validateSearchableText(self, key, text):
         """Check if SearchableText is too long or has too long words"""
         validation_messages = []
         max_word_len = self.getRegistryInfos('max_word_len')
@@ -418,7 +419,10 @@ class RERSearch(Search):
                                                     mapping={'word': word.decode('utf-8')}),
                                                  context=self.request))
                 text = text.replace(word, '')
-        return quote_chars(text), validation_messages
+        #fix whitespaces
+        text = quote_chars(' '.join(text.split()))
+        self.request.form[key] = text
+        return text, validation_messages
 
     def getDateIndexes(self):
         """

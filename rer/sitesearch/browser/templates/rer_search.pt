@@ -52,6 +52,8 @@
                            query_tab python:request.form.get('filter_tab','');
                            results python: view.results(b_start=b_start);
                            validation_messages python:results.get('validation_messages', []);
+                           search_query python:results.get('query', {});
+                           st python:search_query.get('SearchableText', st);
                            batch results/results|nothing;
                            tabs python:results.get('tabs', ['all']);
                            selected_tab python:view.getSelectedTab(tabs);
@@ -131,17 +133,20 @@
                                                  allowAnonymousViewAbout site_properties/allowAnonymousViewAbout;
                                                  show_about python:not isAnon or allowAnonymousViewAbout;">
                         <dl class="searchResults">
-                            <tal:results repeat="item batch">
-                                  <dt tal:attributes="class item/ContentTypeClass">
-                                    <img tal:replace="structure item/getIcon" />
-                                    <h4 class="resultTitle">
-                                      <a href="#"
-                                       tal:attributes="href item/getURL;
-                                                       class string:state-${item/review_state}"
-                                       tal:content="item/Title" />
-                                    </h4>
+                            <tal:results repeat="item batch"
+                                         tal:define="elevated item/[elevated]|nothing">
+                                  <dt tal:attributes="class python:elevated and '%s elevatedItem' % item.ContentTypeClass() or item.ContentTypeClass">
+                                      <span class="elevatedLabel" tal:condition="elevated">Link suggerito</span>
+                                      <h4 class="resultTitle">
+                                        <img tal:replace="structure item/getIcon" />
+                                        <a href="#"
+                                         tal:attributes="href item/getURL;
+                                                         class string:state-${item/review_state}"
+                                         tal:content="item/Title" />
+                                      </h4>
                                   </dt>
-                                  <dd i18n:domain="plone">
+                                  <dd i18n:domain="plone"
+                                      tal:attributes="class python:elevated and 'itemInfos elevatedItem' or 'itemInfos'">
                                     <div tal:condition="item/CroppedDescription"
                                          tal:content="item/CroppedDescription">
                                       Cropped description
@@ -265,20 +270,23 @@
                       i18n:translate="">
                       Refine your search:
                   </h2>
-                    <fieldset id="search-field" i18n:domain="plone" class="noborder">
-                          <input class=""
-                                 name="SearchableText"
-                                 type="text"
-                                 size="25"
-                                 title="Search Site"
-                                 i18n:attributes="title title_search_title;"
-                                 tal:attributes="value st;"
-                                 />
-                          <input class="searchButton allowMultiSubmit"
-                                 type="submit"
-                                 value="Search"
-                                 i18n:attributes="value label_search;"/>
-                      </fieldset>
+                    <metal:searchfield define-macro="searchfield">
+                      <fieldset id="search-field" i18n:domain="plone" class="noborder">
+                            <input class=""
+                                   name="SearchableText"
+                                   type="text"
+                                   size="25"
+                                   title="Search Site"
+                                   id="SearchableText"
+                                   i18n:attributes="title title_search_title;"
+                                   tal:attributes="value st;"
+                                   />
+                            <input class="searchButton allowMultiSubmit"
+                                   type="submit"
+                                   value="Search"
+                                   i18n:attributes="value label_search;"/>
+                        </fieldset>
+                      </metal:searchfield>
                       <fieldset class="noborder">
                         <div class="field"
                             id="use_solr">
