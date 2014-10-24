@@ -53,7 +53,7 @@ class RERSiteSearchSettingsEditForm(controlpanel.RegistryEditForm):
         if not qi.isProductInstalled('collective.solr'):
             #hide solr enable setting, if collective.solr isn't installed
             for group in self.groups:
-                solr_search = group.fields.getattr('solr_search_enabled', None)
+                solr_search = group.fields.get('solr_search_enabled')
                 if solr_search:
                     solr_search.mode = HIDDEN_MODE
 

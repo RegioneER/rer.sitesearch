@@ -15,13 +15,13 @@ from rer.sitesearch.browser.interfaces import IRerSiteSearch
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
 from zope.annotation.interfaces import IAnnotations
 from zope.component import queryUtility, getUtility
+from zope.component.interfaces import ComponentLookupError
 from zope.i18n import translate
 from zope.interface import implements
 from ZPublisher.HTTPRequest import record
 from ZTUtils import make_query
 import logging
 import urllib2
-
 try:
     from collective.solr.interfaces import ISolrConnectionConfig
     HAS_SOLR = True
@@ -173,7 +173,11 @@ class RERSearch(Search):
         """
         if not HAS_SOLR:
             return False
-        solr_config = getUtility(ISolrConnectionConfig)
+        try:
+            solr_config = getUtility(ISolrConnectionConfig)
+        except ComponentLookupError:
+            #collective.solr is in the buildout, but not installed
+            return False
         if not solr_config.active:
             return False
         for field in solr_config.required:
