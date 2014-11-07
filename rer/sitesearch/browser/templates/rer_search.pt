@@ -132,21 +132,21 @@
                                                  site_properties context/portal_properties/site_properties;
                                                  allowAnonymousViewAbout site_properties/allowAnonymousViewAbout;
                                                  show_about python:not isAnon or allowAnonymousViewAbout;">
-                        <dl class="searchResults">
-                            <tal:results repeat="item batch"
-                                         tal:define="elevated item/[elevated]|nothing">
-                                  <dt tal:attributes="class python:elevated and '%s elevatedItem' % item.ContentTypeClass() or item.ContentTypeClass">
-                                      <span class="elevatedLabel" tal:condition="elevated">Link suggerito</span>
-                                      <h4 class="resultTitle">
-                                        <img tal:replace="structure item/getIcon" />
-                                        <a href="#"
-                                         tal:attributes="href item/getURL;
-                                                         class string:state-${item/review_state}"
-                                         tal:content="item/Title" />
-                                      </h4>
-                                  </dt>
-                                  <dd i18n:domain="plone"
-                                      tal:attributes="class python:elevated and 'itemInfos elevatedItem' or 'itemInfos'">
+                        <ul class="searchResults">
+                          <tal:results repeat="item batch">
+                            <li tal:define="elevated item/[elevated]|nothing">
+                              <span class="elevatedLabel"
+                                    tal:condition="elevated"
+                                    i18n:translate="sponsored_link_label">Sponsored link</span>
+                                <div tal:attributes="class python:elevated and 'searchResult elevatedItem' or 'searchResult'">
+                                  <h4 tal:attributes="class string:resultTitle ${item/ContentTypeClass}">
+                                    <!-- <img tal:replace="structure item/getIcon" /> -->
+                                    <a href="#"
+                                     tal:attributes="href item/getURL;
+                                                     class string:state-${item/review_state}"
+                                     tal:content="item/Title" />
+                                  </h4>
+                                  <div class="itemInfos" i18n:domain="plone">
                                     <div tal:condition="item/CroppedDescription"
                                          tal:content="item/CroppedDescription">
                                       Cropped description
@@ -245,10 +245,11 @@
                                         </span>
 
                                     </div>
-
-                                  </dd>
+                                  </div>
+                                </div>
+                              </li>
                             </tal:results>
-                        </dl>
+                        </ul>
                         <div metal:use-macro="context/batch_macros/macros/navigation" />
                       </metal:results>
                       <div id="search-statusmessages" tal:define="infos view/getDebugInfo" tal:condition="infos">

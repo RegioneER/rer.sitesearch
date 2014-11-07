@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-09-19 09:00+0000\n"
+"POT-Creation-Date: 2014-11-07 08:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: rer.sitesearch\n"
 
-#: ./browser/rer_search_new.py:494
+#: ./browser/rer_search_new.py:502
 msgid "${results_len} on ${total_len}"
 msgstr ""
 
@@ -104,7 +104,7 @@ msgstr ""
 msgid "RER Sitesearch"
 msgstr ""
 
-#: ./browser/templates/rer_search.pt:264
+#: ./browser/templates/rer_search.pt:270
 msgid "Refine your search:"
 msgstr ""
 
@@ -136,11 +136,11 @@ msgstr ""
 msgid "Tabs order"
 msgstr ""
 
-#: ./browser/rer_search_new.py:606
+#: ./browser/rer_search_new.py:614
 msgid "alphabetically"
 msgstr ""
 
-#: ./browser/rer_search_new.py:604
+#: ./browser/rer_search_new.py:612
 msgid "date (newest first)"
 msgstr ""
 
@@ -210,46 +210,46 @@ msgid "indexes_in_search_label"
 msgstr ""
 
 #. Default: "You are also searching for:"
-#: ./browser/templates/rer_search.pt:344
+#: ./browser/templates/rer_search.pt:353
 msgid "label_also_searching_for"
 msgstr ""
 
 #. Default: "Remove all filters"
-#: ./browser/templates/rer_search.pt:355
+#: ./browser/templates/rer_search.pt:364
 msgid "label_remove_filters"
 msgstr ""
 
 #. Default: "Search"
-#: ./browser/templates/rer_search.pt:474
+#: ./browser/templates/rer_search.pt:482
 msgid "label_search"
 msgstr ""
 
 #. Default: "Search in"
-#: ./browser/templates/rer_search.pt:300
+#: ./browser/templates/rer_search.pt:309
 msgid "label_search_in"
 msgstr ""
 
 #. Default: "All the site"
-#: ./browser/templates/rer_search.pt:321
+#: ./browser/templates/rer_search.pt:330
 msgid "label_searchbox_all_site"
 msgstr ""
 
-#: ./browser/rer_search_new.py:603
+#: ./browser/rer_search_new.py:611
 msgid "relevance"
 msgstr ""
 
 #. Default: "\"${word}\" is a too long word and was ignored. Try using a shorter word."
-#: ./browser/rer_search_new.py:416
+#: ./browser/rer_search_new.py:421
 msgid "search_limit_word_characters_label"
 msgstr ""
 
 #. Default: "\"${word}\" (and any subsequent words) was ignored because we limit queries to ${max_words} words."
-#: ./browser/rer_search_new.py:407
+#: ./browser/rer_search_new.py:412
 msgid "search_limit_words_label"
 msgstr ""
 
 #. Default: "You need to pass some query value."
-#: ./browser/rer_search_new.py:377
+#: ./browser/rer_search_new.py:382
 msgid "search_no_query_label"
 msgstr ""
 
@@ -291,6 +291,11 @@ msgstr ""
 #. Default: "Insert a title for this tab. You can provide translations for this title with a proper translation file for rer.sitesearch domain."
 #: ./custom_fields.py:19
 msgid "sitesearch_tab_title_help"
+msgstr ""
+
+#. Default: "Sponsored link"
+#: ./browser/templates/rer_search.pt:138
+msgid "sponsored_link_label"
 msgstr ""
 
 #. Default: "Insert a list of tabs to divide results. One per row. Every row should have a couple of portal_type and title divided by \"pipe\" character. For example \"Document|Documents\". You can also group some types using the same title."
