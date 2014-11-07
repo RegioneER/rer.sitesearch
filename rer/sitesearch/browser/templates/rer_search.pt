@@ -140,7 +140,7 @@
                                     i18n:translate="sponsored_link_label">Sponsored link</span>
                                 <div tal:attributes="class python:elevated and 'searchResult elevatedItem' or 'searchResult'">
                                   <h4 tal:attributes="class string:resultTitle ${item/ContentTypeClass}">
-                                    <!-- <img tal:replace="structure item/getIcon" /> -->
+                                    <img tal:replace="structure item/getIcon" />
                                     <a href="#"
                                      tal:attributes="href item/getURL;
                                                      class string:state-${item/review_state}"
@@ -207,14 +207,6 @@
                                             Category
                                           </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
                                         </span>
-                                      </span>
-
-                                      <!-- BBB DEBUG -->
-                                      <span
-                                          tal:define="elevated item/[elevated]|nothing"
-                                          tal:condition="elevated">
-                                        (elevated
-                                        <i tal:content="elevated">False</i>)
                                       </span>
                                     </span>
                                     
