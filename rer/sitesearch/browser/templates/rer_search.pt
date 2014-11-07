@@ -151,7 +151,32 @@
                                          tal:content="item/CroppedDescription">
                                       Cropped description
                                     </div>
-                                    
+                                    <div class="documentLocation link-location"
+                                          tal:define="breadcrumbs python: view.breadcrumbs(item);
+                                                      is_rtl context/@@plone_portal_state/is_rtl;"
+                                          tal:condition='breadcrumbs'>
+                                        <span i18n:translate="text_searchitem_location">
+                                            Located in
+                                        </span>
+                                        <span tal:repeat="crumb breadcrumbs"
+                                              tal:attributes="dir python:is_rtl and 'rtl' or 'ltr';">
+                                            <tal:item tal:define="is_last repeat/crumb/end;
+                                                                  url crumb/absolute_url;
+                                                                  title crumb/Title">
+                                                <a href="#"
+                                                   tal:omit-tag="not: url"
+                                                   tal:attributes="href url"
+                                                   tal:content="title">
+                                                    crumb
+                                                </a>
+                                                <span class="breadcrumbSeparator" tal:condition="not: is_last">
+                                                    <tal:ltr condition="not: is_rtl">&rsaquo;</tal:ltr>
+                                                    <tal:rtl condition="is_rtl">&lsaquo;</tal:rtl>
+                                                </span>
+                                             </tal:item>
+                                        </span>
+
+                                    </div>
                                     <span class="discreet"
                                       tal:condition="show_about">
                                       <span class="documentAuthor"
@@ -210,33 +235,6 @@
                                       </span>
                                     </span>
                                     
-
-                                    <div class="documentLocation link-location"
-                                          tal:define="breadcrumbs python: view.breadcrumbs(item);
-                                                      is_rtl context/@@plone_portal_state/is_rtl;"
-                                          tal:condition='breadcrumbs'>
-                                        <span i18n:translate="text_searchitem_location">
-                                            Located in
-                                        </span>
-                                        <span tal:repeat="crumb breadcrumbs"
-                                              tal:attributes="dir python:is_rtl and 'rtl' or 'ltr';">
-                                            <tal:item tal:define="is_last repeat/crumb/end;
-                                                                  url crumb/absolute_url;
-                                                                  title crumb/Title">
-                                                <a href="#"
-                                                   tal:omit-tag="not: url"
-                                                   tal:attributes="href url"
-                                                   tal:content="title">
-                                                    crumb
-                                                </a>
-                                                <span class="breadcrumbSeparator" tal:condition="not: is_last">
-                                                    <tal:ltr condition="not: is_rtl">&rsaquo;</tal:ltr>
-                                                    <tal:rtl condition="is_rtl">&lsaquo;</tal:rtl>
-                                                </span>
-                                             </tal:item>
-                                        </span>
-
-                                    </div>
                                   </div>
                                 </div>
                               </li>
