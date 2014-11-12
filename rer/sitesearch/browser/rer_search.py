@@ -59,11 +59,6 @@ class RERSearch(Search):
             self.tabs_order = ('all')
         self.indexes_order = self.getRegistryInfos('indexes_order')
 
-    def getDebugInfo(self):
-        annotations = IAnnotations(self.request)
-        queries = [urllib2.unquote(x) for x in annotations.get('solr.debug', [])]
-        return queries
-
     @property
     def tabs_mapping(self):
         tabs_map = self.getRegistryInfos('tabs_mapping')
@@ -146,6 +141,7 @@ class RERSearch(Search):
                     return tab
         return "all"
 
+    # @memoize
     def results(self, batch=True, b_size=20, b_start=0):
         """ Get properly wrapped search results from the catalog.
         Everything in Plone that performs searches should go through this view.
