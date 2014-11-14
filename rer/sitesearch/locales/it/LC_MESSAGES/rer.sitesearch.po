@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-11-07 08:30+0000\n"
+"POT-Creation-Date: 2014-11-14 11:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Andrea Cecchi <andrea.cecchi@redturtle.net>\n"
 "Language-Team: LANGUAGE <sviluppoplone@redturtle.net>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: rer.sitesearch\n"
 
-#: ./browser/rer_search_new.py:502
+#: ./browser/rer_search.py:498
 msgid "${results_len} on ${total_len}"
 msgstr "${results_len} su ${total_len}"
 
@@ -104,7 +104,7 @@ msgstr "Notizie"
 msgid "RER Sitesearch"
 msgstr ""
 
-#: ./browser/templates/rer_search.pt:270
+#: ./browser/templates/rer_search.pt:249
 msgid "Refine your search:"
 msgstr "Raffina la ricerca:"
 
@@ -128,6 +128,9 @@ msgstr "Tab di ricerca"
 msgid "Site Search settings"
 msgstr "Configurazioni Site Search"
 
+msgid "Subject"
+msgstr "Categorie"
+
 #: ./browser/controlpanel.py:23
 msgid "Tabs"
 msgstr "Categorie"
@@ -136,11 +139,11 @@ msgstr "Categorie"
 msgid "Tabs order"
 msgstr "Ordine dei tab"
 
-#: ./browser/rer_search_new.py:614
+#: ./browser/rer_search.py:610
 msgid "alphabetically"
 msgstr "Alfabeticamente"
 
-#: ./browser/rer_search_new.py:612
+#: ./browser/rer_search.py:608
 msgid "date (newest first)"
 msgstr "Data (prima i più recenti)"
 
@@ -210,46 +213,46 @@ msgid "indexes_in_search_label"
 msgstr "Indici per la ricerca"
 
 #. Default: "You are also searching for:"
-#: ./browser/templates/rer_search.pt:353
+#: ./browser/templates/rer_search.pt:332
 msgid "label_also_searching_for"
 msgstr "Stai anche cercando per:"
 
 #. Default: "Remove all filters"
-#: ./browser/templates/rer_search.pt:364
+#: ./browser/templates/rer_search.pt:343
 msgid "label_remove_filters"
 msgstr "Rimuovi tutti i filtri"
 
 #. Default: "Search"
-#: ./browser/templates/rer_search.pt:482
+#: ./browser/templates/rer_search.pt:461
 msgid "label_search"
 msgstr "Cerca"
 
 #. Default: "Search in"
-#: ./browser/templates/rer_search.pt:309
+#: ./browser/templates/rer_search.pt:288
 msgid "label_search_in"
 msgstr "Cerca in"
 
 #. Default: "All the site"
-#: ./browser/templates/rer_search.pt:330
+#: ./browser/templates/rer_search.pt:309
 msgid "label_searchbox_all_site"
 msgstr "Tutto il sito"
 
-#: ./browser/rer_search_new.py:611
+#: ./browser/rer_search.py:607
 msgid "relevance"
 msgstr "Rilevanza"
 
 #. Default: "\"${word}\" is a too long word and was ignored. Try using a shorter word."
-#: ./browser/rer_search_new.py:421
+#: ./browser/rer_search.py:417
 msgid "search_limit_word_characters_label"
 msgstr "\"${word}\" è una parola troppo lunga ed è stata ignorata. Prova ad usarne una più breve."
 
 #. Default: "\"${word}\" (and any subsequent words) was ignored because we limit queries to ${max_words} words."
-#: ./browser/rer_search_new.py:412
+#: ./browser/rer_search.py:408
 msgid "search_limit_words_label"
 msgstr "\"${word}\" (e tutte le parole successive) sono state ignorate poiché è possibile ricercare solo fino a ${max_words} parole chiave."
 
 #. Default: "You need to pass some query value."
-#: ./browser/rer_search_new.py:382
+#: ./browser/rer_search.py:378
 msgid "search_no_query_label"
 msgstr "Devi fornire qualche chiave di ricerca."
 

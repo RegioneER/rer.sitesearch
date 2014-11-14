@@ -46,3 +46,6 @@ msgstr ""
 
 msgid "Category"
 msgstr ""
+
+msgid "Subject"
+msgstr ""
