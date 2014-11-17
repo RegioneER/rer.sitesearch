@@ -13,7 +13,6 @@ from Products.ZCTextIndex.ParseTree import ParseError
 from rer.sitesearch import sitesearchMessageFactory as _
 from rer.sitesearch.browser.interfaces import IRerSiteSearch
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
-from zope.annotation.interfaces import IAnnotations
 from zope.component import queryUtility, getUtility
 from zope.component.interfaces import ComponentLookupError
 from zope.i18n import translate
@@ -21,7 +20,6 @@ from zope.interface import implements
 from ZPublisher.HTTPRequest import record
 from ZTUtils import make_query
 import logging
-import urllib2
 try:
     from collective.solr.interfaces import ISolrConnectionConfig
     HAS_SOLR = True
@@ -165,7 +163,6 @@ class RERSearch(Search):
     def searchWithSolr(self, query):
         """
         Check if c.solr is installed and active,
-        and if required solr queries are in the query
         """
         if not HAS_SOLR:
             return False
@@ -176,13 +173,17 @@ class RERSearch(Search):
             return False
         if not solr_config.active:
             return False
-        for field in solr_config.required:
-            if not query.get(field):
-                return False
         #if is all set, return the value in sitesearch settings
         return self.getRegistryInfos('solr_search_enabled')
 
     def solrResults(self, query, batch=True, b_size=20, b_start=0):
+        """
+        Do the search with solr.
+        Add to the query some solr parameters.
+        """
+        solr_config = getUtility(ISolrConnectionConfig)
+        for field in solr_config.required:
+            query[field] = True
         query['facet'] = 'true'
         indexes_list = self.available_indexes.keys()
         indexes_list.append('portal_type')
@@ -226,6 +227,7 @@ class RERSearch(Search):
 
     def solrAvailableTabs(self, facets):
         """
+        Get a list of available tabs from solr faceted
         """
         portal_types = facets.get('portal_type', [])
         types_mapping = self.types_mapping
@@ -248,6 +250,9 @@ class RERSearch(Search):
         return filter_dict
 
     def catalogResults(self, query, batch=True, b_size=20, b_start=0):
+        """
+        Make the search on portal_catalog instead solr
+        """
         try:
             results = self.catalog(**query)
         except ParseError:

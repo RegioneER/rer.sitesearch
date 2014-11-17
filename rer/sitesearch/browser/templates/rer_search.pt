@@ -268,18 +268,6 @@
                         </fieldset>
                       </metal:searchfield>
                       <fieldset class="noborder">
-                        <div class="field"
-                            id="use_solr">
-                            <input id="use_solr" 
-                                   class="noborder"
-                                   type="checkbox"
-                                   name="use_solr"
-                                   tal:attributes="checked request/form/use_solr|nothing"/>
-                            <label for="use_solr" 
-                                   style="cursor: pointer">
-                                   Cerca su solr
-                            </label>
-                        </div>
                         <!--PATH-->
                         <metal:path define-macro="path">
                           <div class="field"
