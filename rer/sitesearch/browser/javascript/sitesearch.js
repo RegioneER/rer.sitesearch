@@ -149,18 +149,10 @@ jQuery(function ($) {
     $('#search-filter input.searchPage[type="submit"]').hide();
 
     // We don't submit the whole form with all the fields when only the
-    // search term is being changed. We just alter the current URL to
-    // substitue the search term and make a new ajax call to get updated
-    // results
+    // search term is being changed.
+    // If we change the search term, we reset all query and start a new search
     $('#search-field input.searchButton').click(function (e) {
-        var st, queryString = location.search.substring(1),
-        re = /([^&=]+)=([^&]*)/g, m, queryParameters = {};
-
-        // parse query string into hash
-        while (m = re.exec(queryString)) {
-            queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-        }
-
+        var st, queryString, queryParameters = {};
         st = $('#search-field input[name="SearchableText"]').val();
         queryParameters['SearchableText'] = st;
         queryString = $.param(queryParameters);
@@ -196,7 +188,7 @@ jQuery(function ($) {
 
     // Now we can handle the actual menu options and update the search
     // results after any of them has been chosen.
-    $('#search-filter input, #search-filter select').not('input#pt_toggle').live('change',
+    $('#search-filter .field input, #search-filter select').not('input#pt_toggle').live('change',
         function (e) {
             query = $('form.searchPage').serialize();
             $default_res_container.pullSearchResults(query);
