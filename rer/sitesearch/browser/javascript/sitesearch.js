@@ -161,9 +161,12 @@ jQuery(function ($) {
         e.preventDefault();
     });
     $('form.searchPage').submit(function (e) {
-        query = $('form.searchPage').serialize();
-        $default_res_container.pullSearchResults(query);
-        pushState(query);
+        var st, queryString, queryParameters = {};
+        st = $('#search-field input[name="SearchableText"]').val();
+        queryParameters['SearchableText'] = st;
+        queryString = $.param(queryParameters);
+        $default_res_container.pullSearchResults(queryString);
+        pushState(queryString);
         e.preventDefault();
     });
 
