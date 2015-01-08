@@ -4,7 +4,7 @@ Changelog
 2.4.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix controlpanel icon [cekk]
 
 
 2.4.1 (2014-12-09)

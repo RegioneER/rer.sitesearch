@@ -63,7 +63,8 @@ def to_240(context):
     """
     logger.info('Upgrading rer.sitesearch to version 240')
     context.runImportStepFromProfile(default_profile, 'plone.app.registry')
-    logger.info('Upgraded for solr support')
+    context.runImportStepFromProfile(default_profile, 'controlpanel')
+    logger.info('Upgraded for solr support and fix controlpanel icon')
 
 
 def updateRegistryFromProperties(context):
