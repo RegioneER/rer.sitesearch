@@ -126,7 +126,7 @@ jQuery(function ($) {
         if (initialPop) {
             return;
         }
-        
+
         if (!location.search){
             return;
         }
@@ -179,7 +179,7 @@ jQuery(function ($) {
         else {
             $('input#nolivesearchGadget').val($(this).val());
         }
-        
+
     });
 
     // When we click any option in the Filter menu, we need to prevent the
@@ -235,7 +235,7 @@ jQuery(function ($) {
             $("form.searchPage input[name='filter_tab']").val('all');
         }
         query = this.search.split('?')[1];
-        $default_res_container = $('#search-results'),
+        $default_res_container = $('#search-results');
         $default_res_container.pullSearchResults(query);
         pushState(query);
         e.preventDefault();
@@ -243,11 +243,11 @@ jQuery(function ($) {
 
     // Handle clicks for remove filters link. updates form an query with Ajax like sorting options.
     $('a.linkRemoveFilters').live('click', function (e) {
-        jq(this).parent().find("input:checked").each(function(){
-            jq(this).attr("checked", false);
+        $(this).parent().find("input:checked").each(function(){
+            $(this).attr("checked", false);
         });
         if ($(this).attr("class").indexOf("linkRemoveFilters") >= 0) {
-            jq(this).parent().remove();
+            $(this).parent().remove();
         }
         query = $('form.searchPage').serialize();
         $default_res_container.pullSearchResults(query);
