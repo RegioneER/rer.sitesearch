@@ -43,7 +43,7 @@
 
         <input type="hidden" name="sort_on" value="" />
         <div class="row">
-          
+
           <div class="visualClear"><!-- --></div>
           <div id="search-results-wrapper"
                class="cell width-16 position-0"
@@ -92,7 +92,7 @@
                           </span>
                       </div>
                       <p id="rss-subscription" i18n:domain="plone"
-                         tal:condition="context/portal_syndication/isSiteSyndicationAllowed">
+                         tal:condition="context/portal_syndication/isSiteSyndicationAllowed|nothing">
                             <img src="" alt="RSS"
                                  tal:define="portal_url here/portal_url"
                                  tal:attributes="src string:${portal_url}/rss.gif"/>
@@ -234,7 +234,7 @@
                                         </span>
                                       </span>
                                     </span>
-                                    
+
                                   </div>
                                 </div>
                               </li>
@@ -274,27 +274,27 @@
                                id="path-options"
                                tal:condition="python:request.form.get('path') and request.form.get('path') != portal_path">
                               <h3 i18n:translate="label_search_in">Search in</h3>
-                              
-                              <input id="searchbox_currentfolder_only" 
+
+                              <input id="searchbox_currentfolder_only"
                                      class="noborder"
-                                     type="radio" 
+                                     type="radio"
                                      name="path"
                                      tal:attributes="value request/form/path|string:${context/portal_url};
                                                      checked request/form/path|nothing"/>
-                              <label for="searchbox_currentfolder_only" 
+                              <label for="searchbox_currentfolder_only"
                                      style="cursor: pointer"
                                      tal:content="python:view.getFolderName(request.form.get('path'))">
-                                  
+
                               </label>
                               <br />
-                              <input id="searchbox_all_site" 
+                              <input id="searchbox_all_site"
                                      class="noborder"
-                                     type="radio" 
+                                     type="radio"
                                      name="path"
                                      value=""
                                      tal:attributes="checked not:request/form/path|nothing"/>
-                                     
-                              <label for="searchbox_all_site" 
+
+                              <label for="searchbox_all_site"
                                      i18n:translate="label_searchbox_all_site"
                                      style="cursor: pointer">
                                   All the site
@@ -313,14 +313,14 @@
                                          class="hiddenIndex"
                                          tal:attributes="id index/id;
                                                          name index/id;
-                                                         value index/value"/>                    
+                                                         value index/value"/>
                               </tal:index>
                             </tal:hidden_indexes>
                             <p tal:condition="index_titles">
                                 <span i18n:translate="label_also_searching_for">You are also searching for:</span>
                                 <tal:indexes repeat="index index_titles">
                                     <strong i18n:translate="" tal:content="index" />
-                                    <span tal:omit-tag="" tal:condition="not:repeat/index/end">, </span> 
+                                    <span tal:omit-tag="" tal:condition="not:repeat/index/end">, </span>
                                 </tal:indexes>
                             </p>
                             <a class="fieldsetsItem linkRemoveFilters"
@@ -418,11 +418,11 @@
                                       <input type="checkbox"
                                              value="#"
                                              class="noborder"
-                                             tal:attributes="name string:${index_id}:list; 
+                                             tal:attributes="name string:${index_id}:list;
                                                              value python:kw;
                                                              id string:${index_id}_${repeat/kw/number};
                                                              checked python:kw in checked_index"/>
-                  
+
                                       <label for=""
                                           i18n:domain="plone-metadata"
                                           i18n:translate=""
@@ -444,7 +444,7 @@
                              </tal:indexes>
                             </metal:indexes-list>
                           </div>
-                          
+
                           <div class="formControls">
                               <input class="searchPage searchButton allowMultiSubmit"
                                      type="submit"
