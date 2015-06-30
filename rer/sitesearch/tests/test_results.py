@@ -57,17 +57,15 @@ class TestSearch(BaseTestCase):
         results view.
         """
         sp = getToolByName(self.portal, "portal_properties").site_properties
-        q = {'SearchableText': 'spam'}
-        res = self.portal.restrictedTraverse('@@search').results(query=q,
-                                                            batch=False)
+        self.request.form['SearchableText'] = 'spam'
+        res = self.portal.restrictedTraverse('@@search').results(batch=False)
         results = res.get('results', None)
         self.failUnless('my-page1' in [r.getId() for r in results],
                         'Test document is not found in the results.')
 
         # Now let's exclude 'Document' from the search results:
         sp.types_not_searched += ('Document', )
-        res = self.portal.restrictedTraverse('@@search').results(query=q,
-                                                            batch=False)
+        res = self.portal.restrictedTraverse('@@search').results(batch=False)
         results = res.get('results', None)
         self.failIf('my-page1' in [r.getId() for r in results],
                     'Blacklisted type "Document" has been found in search \
@@ -78,9 +76,9 @@ class TestSearch(BaseTestCase):
         check if we pass "portal_type" filter in the query,
         this is used only if portal_type is an hidden index
         """
-        q = {'SearchableText': 'spam', 'portal_type': 'News Item'}
-        res = self.portal.restrictedTraverse('@@search').results(query=q,
-                                                            batch=False)
+        self.request.form['SearchableText'] = 'spam'
+        self.request.form['portal_type'] = 'News Item'
+        res = self.portal.restrictedTraverse('@@search').results(batch=False)
         results = res.get('results', None)
         self.assertFalse('my-page1' in [r.getId() for r in results])
 

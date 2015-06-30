@@ -4,7 +4,8 @@ Changelog
 2.4.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix tests
+  [mamico]
 
 
 2.4.2 (2015-01-19)
