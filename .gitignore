@@ -5,4 +5,4 @@ develop-eggs/
 include/
 lib/
 parts/
-src/*.egg-info/
+*.egg-info/
