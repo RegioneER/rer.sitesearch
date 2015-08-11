@@ -7,6 +7,9 @@ Changelog
 - Fix tests
   [mamico]
 
+- Plone 4.3 compatibility
+  [cekk]
+
 
 2.4.2 (2015-01-19)
 ------------------
