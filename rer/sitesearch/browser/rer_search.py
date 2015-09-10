@@ -200,7 +200,12 @@ class RERSearch(Search):
         filtered_results = []
         global_facet_counts = getattr(results, 'facet_counts', None)
         if global_facet_counts:
-            facets = global_facet_counts.get('facet_fields', {})
+            if hasattr(global_facet_counts, 'facet_fields'):
+                # new c.solr with scorched lib
+                facets = dict((k, dict(v)) for k, v in global_facet_counts.facet_fields.items())
+            else:
+                # old c.solr
+                facets = global_facet_counts.get('facet_fields', {})
             res_dict['tabs'] = self.solrAvailableTabs(facets)
         active_tab = self.context.REQUEST.form.get('filter_tab')
         if active_tab:
@@ -221,7 +226,12 @@ class RERSearch(Search):
             results = Batch(results, b_size, b_start)
         res_dict['results'] = results
         if facet_counts:
-            facets = facet_counts.get('facet_fields', {})
+            if hasattr(facet_counts, 'facet_fields'):
+                # new c.solr with scorched lib
+                facets = dict((k, dict(v)) for k, v in facet_counts.facet_fields.items())
+            else:
+                # old c.solr
+                facets = facet_counts.get('facet_fields', {})
             res_dict['indexes_dict'] = self.solrFacetsFormatter(facets)
         return res_dict
 
