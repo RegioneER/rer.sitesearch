@@ -37,7 +37,7 @@ class SearchTabsVocabulary(object):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IRERSiteSearchSettings, check=False)
         tabs_mapping = getattr(settings, 'tabs_mapping', ())
-        tabs_list = ['All']
+        tabs_list = ['Tutti']
         available_tabs = [x.tab_title for x in tabs_mapping]
         available_tabs.sort()
         tabs_list.extend(available_tabs)

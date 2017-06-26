@@ -5,6 +5,7 @@
                   results python:view.results(b_start=b_start);
                   batch results/results|nothing;
                   st python:request.get('SearchableText', '');
+                  st_original python:request.get('SearchableTextOriginal');
                   search_query python:results.get('query', {});
                   st python:search_query.get('SearchableText', st);
                   here_url context/@@plone_context_state/object_url;
@@ -17,6 +18,18 @@
                   tabs python:results.get('tabs', ['all']);
                   selected_tab python:view.getSelectedTab(tabs);
                   ">
+
+    <div id="search-results-bar">
+       <span>
+         <tal:row1 i18n:translate="">
+            Numero di risultati che soddisfano la ricerca <strong i18n:name="search" tal:content="st">treno</strong>:
+            <strong i18n:name="number" id="search-results-number" tal:content="python:view.getResultsLen(results)">234</strong>
+         </tal:row1>
+         <tal:row2 i18n:translate="" tal:condition="st_original|nothing">
+             <br />Hai cercato <strong i18n:name="search" tal:content="st_original">trexo</strong>
+         </tal:row2>
+       </span>
+    </div>
 
     <strong id="updated-search-results-number"
             tal:content="python:view.getResultsLen(results)">234</strong>
@@ -41,5 +54,6 @@
     <div id="updated-indexes-options" tal:condition="indexes_dict">
       <metal:indexes use-macro="context/@@search/indexes-list" />
     </div>
+
 </body>
 </html>

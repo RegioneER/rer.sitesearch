@@ -41,7 +41,7 @@ jQuery(function ($) {
 
                     var $data_res = $('#ajax-search-res #search-results > *'),
                         data_search_term = $('#ajax-search-res #updated-search-term input#SearchableText').attr('value'),
-                        data_res_number = $('#ajax-search-res #updated-search-results-number').text(),
+                        search_results_bar = $('#search-results-bar', data).html(),
                         data_path_opt = $('#ajax-search-res #updated-path-options').html(),
                         data_sorting_opt = $('#ajax-search-res #updated-sorting-options').html(),
                         data_tab_opt = $('#ajax-search-res #updated-tab-options').html(),
@@ -64,7 +64,7 @@ jQuery(function ($) {
                     else {
                         $('input#nolivesearchGadget').val(data_search_term);
                     }
-                    $('#search-results-number').text(data_res_number);
+                    $('#search-results-bar').html(search_results_bar);
                     if (data_path_opt === null) {
                         $('#path-options').remove();
                     }
@@ -86,6 +86,8 @@ jQuery(function ($) {
                     $('#rss-subscription a.link-feed').attr('href', function () {
                         return navigation_root_url + '/search_rss?' + query;
                     });
+                    // TODO: con delegate/on/live questo non servirebbe
+                    init_rersolr_mlt();
                 });
         });
     };
@@ -254,4 +256,51 @@ jQuery(function ($) {
         pushState(query);
         e.preventDefault();
     });
+
+    // MLT - preso da rer.solr
+
+    var spinner = $('<img src="' + portal_url + '/spinner.gif">');
+
+    function reset_solr_mlt() {
+        $('.solr_result_item .solrMLTPlaceHolder').fadeOut(500).html('').show();
+        $('.solr_result_item .solrMLTHideTarget:hidden').show();
+        $('a.more_like_this:hidden').show();
+    }
+
+    function init_rersolr_mlt () {
+        function init_rersolr_mlt_link(idx, el) {
+            var el_obj = $(el);
+            var container_li = el_obj.parents('.solr_result_item');
+            var mlt_url = $(this).attr('href');
+
+            function present_mlt(event) {
+                reset_solr_mlt();
+                var spinner_clone = spinner.clone();
+                el_obj.append(spinner_clone);
+                event.preventDefault();
+                $.ajax({
+                    url: mlt_url,
+                    data: {
+                        ajax_include_head: '1',
+                        ajax_load: '1'
+                    },
+                    success: function (data) {
+                        container_li.find('.solrMLTHideTarget').hide();
+                        container_li.find('.solrMLTPlaceHolder').hide().html($('#content-more-like-this', data).html()).fadeIn(500);
+                        spinner_clone.remove();
+                        el_obj.hide();
+                    },
+                    error: function () {
+                        spinner_clone.remove();
+                    }
+                });
+            }
+            $(el).click(present_mlt);
+        }
+        $('a.more_like_this').each(init_rersolr_mlt_link);
+        // $('#search-results').delegate('a.more_like_this' ...
+    }
+
+    $(document).ready(init_rersolr_mlt);
+
 });

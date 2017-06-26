@@ -29,6 +29,15 @@
         layer=".interfaces.IRERSiteSearchLayer"
         template="templates/updated_search.pt"
         />
+
+    <browser:page
+        for="*"
+        name="solr_more_like_this"
+        class=".mlt.MLTView"
+        layer=".interfaces.IRERSiteSearchLayer"
+        template="templates/solr_more_like_this.pt"
+        permission="zope2.View"
+      />
   
   <browser:page
         name="sitesearch-settings"

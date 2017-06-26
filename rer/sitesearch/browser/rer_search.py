@@ -1,18 +1,24 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
 from DateTime.DateTime import safelocaltime
+import json
 from plone import api
 from plone.app.contentlisting.interfaces import IContentListing
-from plone.app.search.browser import Search, SortOption
+from plone.app.search.browser import Search
+from plone.app.search.browser import SortOption
+from plone.memoize.view import memoize
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import getNavigationRoot
 from Products.CMFPlone.PloneBatch import Batch
 from Products.PluginIndexes.DateIndex.DateIndex import DateIndex
 from Products.ZCTextIndex.ParseTree import ParseError
+import re
 from rer.sitesearch import sitesearchMessageFactory as _
 from rer.sitesearch.browser.interfaces import IRerSiteSearch
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
+from urllib import urlencode
+from zope.annotation.interfaces import IAnnotations
 from zope.component import queryUtility, getUtility
 from zope.component.interfaces import ComponentLookupError
 from zope.i18n import translate
@@ -22,6 +28,7 @@ from ZTUtils import make_query
 import logging
 try:
     from collective.solr.interfaces import ISolrConnectionConfig
+    from collective.solr.interfaces import ISolrConnectionManager
     HAS_SOLR = True
 except ImportError:
     HAS_SOLR = False
@@ -41,11 +48,40 @@ def quote_chars(s):
         s = s.replace(MULTISPACE, ' ')
     return s
 
+class RerSearchMixin(object):
+    def truncate(self, text, limit=60, tail=20):
+        ''' Truncate text at max characters
 
-class RERSearch(Search):
+        We will format the urls taking the first ${limit} characters
+        If needed a `tail` is added for very long urls
+        '''
+        if not isinstance(text, unicode):
+            text = text.decode('utf8')
+        text = text.partition('://')[2]
+        if len(text) <= tail + limit + 3:
+            return text
+        text = re.sub(r'^(.{%s}).*(.{%s})$' % (limit, tail), '\g<1>...\g<2>', text)  # noqa
+        text_start, sep, text_tail = text.rpartition('...')
+        if text_tail in text_start:
+            return text_start + sep
+        else:
+            return text
+
+
+class RERSearch(Search, RerSearchMixin):
     """
     """
     implements(IRerSiteSearch)
+
+    _more_like_this_view = "@@solr_more_like_this"
+    _spellcheck_defaults = {}
+    #    'rows': 1,
+    #    'spellcheck': 'on',
+    #    'spellcheck.count': '10',
+    #    'spellcheck.collate': 'false',
+    #    'spellcheck.extendedResults': 'false',
+    query_term = 'query'
+
 
     def __init__(self, context, request):
         """
@@ -56,6 +92,108 @@ class RERSearch(Search):
         if not self.tabs_order:
             self.tabs_order = ('all')
         self.indexes_order = self.getRegistryInfos('indexes_order')
+        self._init_search_term()
+
+    def _init_search_term(self):
+        if self.query_term not in self.request.form:
+            return
+        annotations = IAnnotations(self.request)
+        if 'trysuggestion' not in annotations:
+            annotations['trysuggestion'] = True
+            suggestion = self.suggest(term=self.request.form[self.query_term], encode='utf-8')
+            if suggestion and suggestion != self.request.form[self.query_term]:
+                logger.info("query:%s suggestion:%s term:%s", self.request.form[self.query_term], suggestion, self.query_term)
+                self.request.form[self.query_term + "Original"] = self.request.form[self.query_term]
+                self.request.form[self.query_term] = suggestion
+
+    def suggest(self, term=None, encode=None):
+        if not HAS_SOLR:
+            return
+        suggestions = []
+        if term is None:
+            term = self.request.form.get(self.query_term)
+        if not term:
+            return  # json.dumps(suggestions)
+        manager = getUtility(ISolrConnectionManager)
+        connection = manager.getConnection()
+
+        if connection is None:
+            return   # json.dumps(suggestions)
+
+        params = self._spellcheck_defaults.copy()
+        params['q'] = term
+        params['rows'] = 0
+        params['wt'] = 'json'
+        params['spellcheck.collate'] = 'true'  # BBB: probabilmente configurato anche su solrconfig
+        params['spellcheck.maxCollations'] = 1  # BBB: probabilmente configurato anche su solrconfig
+        params['spellcheck.onlyMorePopular'] = 'true'  # BBB: probabilmente configurato anche su solrconfig
+
+        params = urlencode(params, doseq=True)
+        response = connection.doGet(connection.solrBase + '/spell?' + params, {})
+        results = json.loads(response.read())
+
+        # Check for spellcheck
+        spellcheck = results.get('spellcheck', None)
+        if not spellcheck:
+            return   # json.dumps(suggestions)
+         
+        if spellcheck.get('correctlySpelled'):
+            return
+
+        spellcheck_collations = spellcheck.get('collations', None)
+        if not spellcheck_collations:
+             return
+        collations = dict(zip(spellcheck_collations[::2], spellcheck_collations[1::2]))
+        collation = collations.get('collation', {})
+        suggested_term = collation.get('collationQuery')
+        if not suggested_term:
+            return
+
+        # Check for existing spellcheck suggestions
+        # spellcheck_suggestions = spellcheck.get('suggestions', None)
+        # if not spellcheck_suggestions:
+        #     return
+        # suggested_term = term.decode('utf-8')
+        # for word, suggestions in zip(spellcheck_suggestions[::2], spellcheck_suggestions[1::2]):
+        #      if not suggestions["suggestion"]:
+        #          continue
+        #      if suggestions["origFreq"] < suggestions["suggestion"][0]["freq"]:
+        #          # sugestion ha anche startOffset e endOffset ma un replace
+        #          # generico e' piu' semplice ...
+        #          suggested_term = suggested_term.replace(word, suggestions["suggestion"][0]["word"])
+        # if suggested_term == term:
+        #     return
+        if encode:
+            return suggested_term.encode('utf-8')
+        else:
+            return suggested_term
+
+
+    @property
+    @memoize
+    def portal_url(self):
+        """Return the portal_url"""
+        portal_state = self.context.restrictedTraverse("@@plone_portal_state")
+        return portal_state.portal_url()
+
+    def more_like_this_query(self, item):
+        return 'id:"%s"' % item.id.encode('utf8')
+
+    def get_more_like_this_url(self, item):
+        """We can get results similar to item"""
+        if not HAS_SOLR:
+            return
+        query = {
+            # TODO: trovare la query giusta per mlt
+            # 'query': 'id:"%s"' % item['id'].encode('utf8'),
+            'query': self.more_like_this_query(item),
+            'back_url': '?'.join(
+                (self.request.getURL(),
+                 self.request.QUERY_STRING)
+            )
+        }
+        baseurl = "/".join((self.portal_url, self._more_like_this_view))
+        return "?".join((baseurl, urlencode(query)))
 
     @property
     def tabs_mapping(self):
@@ -510,9 +648,12 @@ class RERSearch(Search):
         total_len = results_dict.get('tot_results_len', results_len)
         if not results_len and not total_len:
             return 0
-        return translate(_("${results_len} on ${total_len}",
-                          mapping={'results_len': results_len, 'total_len': total_len}),
-                        context=self.request)
+        if results_len == total_len:
+            return str(results_len)
+        else:
+            return translate(_("${results_len} on ${total_len}",
+                              mapping={'results_len': results_len, 'total_len': total_len}),
+                            context=self.request)
 
     def indexesChecked(self, index_name):
         """

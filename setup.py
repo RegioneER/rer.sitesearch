@@ -31,7 +31,7 @@ setup(name='rer.sitesearch',
       install_requires=[
           'setuptools',
           'plone.app.search',
-          'plone.api'
+          'plone.api',
       ],
       entry_points="""
       # -*- entry_points -*-

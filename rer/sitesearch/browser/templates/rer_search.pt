@@ -105,6 +105,7 @@
                               </span>
                           </a>
                       </p>
+                      <p tal:define="suggestion view/suggestion|nothing" tal:condition="suggestion">forse cercavi: <span tal:content="suggestion">regione</span></p>
                       <div class="visualClear"><!-- --></div>
                     </div>
                     <!-- Div for accessibility: it's an help for blind people -->

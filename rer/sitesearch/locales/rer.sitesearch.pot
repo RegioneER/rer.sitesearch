@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-11-14 11:06+0000\n"
+"POT-Creation-Date: 2017-04-06 13:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: rer.sitesearch\n"
 
-#: ./browser/rer_search.py:498
+#: ./browser/rer_search.py:649
 msgid "${results_len} on ${total_len}"
 msgstr ""
 
@@ -22,6 +22,10 @@ msgid "All"
 msgstr ""
 
 msgid "Author"
+msgstr ""
+
+#: ./browser/templates/solr_more_like_this.pt:26
+msgid "Back to original search"
 msgstr ""
 
 #: ./browser/controlpanel.py:71
@@ -86,6 +90,10 @@ msgstr ""
 msgid "Indexes order"
 msgstr ""
 
+#: ./configure.zcml:28
+msgid "Install RER Site Search"
+msgstr ""
+
 msgid "Links"
 msgstr ""
 
@@ -97,14 +105,26 @@ msgstr ""
 msgid "Maximum number of words in search query"
 msgstr ""
 
+#: ./configure.zcml:44
+msgid "Migrate RER Site Search"
+msgstr ""
+
 msgid "News"
+msgstr ""
+
+#: ./browser/templates/solr_more_like_this.pt:61
+msgid "No similar results"
 msgstr ""
 
 #: ./profiles/default/controlpanel.xml
 msgid "RER Sitesearch"
 msgstr ""
 
-#: ./browser/templates/rer_search.pt:249
+#: ./configure.zcml:28
+msgid "RER: Site Search"
+msgstr ""
+
+#: ./browser/templates/rer_search.pt:250
 msgid "Refine your search:"
 msgstr ""
 
@@ -124,6 +144,14 @@ msgstr ""
 msgid "Search tabs"
 msgstr ""
 
+#: ./browser/templates/solr_more_like_this.pt:17
+msgid "Similar results"
+msgstr ""
+
+#: ./browser/templates/solr_more_like_this.pt:23
+msgid "Similar results for: ${solr_query_txt}"
+msgstr ""
+
 #: ./browser/controlpanel.py:43
 msgid "Site Search settings"
 msgstr ""
@@ -139,11 +167,15 @@ msgstr ""
 msgid "Tabs order"
 msgstr ""
 
-#: ./browser/rer_search.py:610
+#: ./configure.zcml:36
+msgid "Uninstall RER Site Search"
+msgstr ""
+
+#: ./browser/rer_search.py:761
 msgid "alphabetically"
 msgstr ""
 
-#: ./browser/rer_search.py:608
+#: ./browser/rer_search.py:759
 msgid "date (newest first)"
 msgstr ""
 
@@ -213,46 +245,46 @@ msgid "indexes_in_search_label"
 msgstr ""
 
 #. Default: "You are also searching for:"
-#: ./browser/templates/rer_search.pt:332
+#: ./browser/templates/rer_search.pt:321
 msgid "label_also_searching_for"
 msgstr ""
 
 #. Default: "Remove all filters"
-#: ./browser/templates/rer_search.pt:343
+#: ./browser/templates/rer_search.pt:332
 msgid "label_remove_filters"
 msgstr ""
 
 #. Default: "Search"
-#: ./browser/templates/rer_search.pt:461
+#: ./browser/templates/rer_search.pt:450
 msgid "label_search"
 msgstr ""
 
 #. Default: "Search in"
-#: ./browser/templates/rer_search.pt:288
+#: ./browser/templates/rer_search.pt:277
 msgid "label_search_in"
 msgstr ""
 
 #. Default: "All the site"
-#: ./browser/templates/rer_search.pt:309
+#: ./browser/templates/rer_search.pt:298
 msgid "label_searchbox_all_site"
 msgstr ""
 
-#: ./browser/rer_search.py:607
+#: ./browser/rer_search.py:758
 msgid "relevance"
 msgstr ""
 
 #. Default: "\"${word}\" is a too long word and was ignored. Try using a shorter word."
-#: ./browser/rer_search.py:417
+#: ./browser/rer_search.py:568
 msgid "search_limit_word_characters_label"
 msgstr ""
 
 #. Default: "\"${word}\" (and any subsequent words) was ignored because we limit queries to ${max_words} words."
-#: ./browser/rer_search.py:408
+#: ./browser/rer_search.py:559
 msgid "search_limit_words_label"
 msgstr ""
 
 #. Default: "You need to pass some query value."
-#: ./browser/rer_search.py:378
+#: ./browser/rer_search.py:529
 msgid "search_no_query_label"
 msgstr ""
 
@@ -297,7 +329,7 @@ msgid "sitesearch_tab_title_help"
 msgstr ""
 
 #. Default: "Sponsored link"
-#: ./browser/templates/rer_search.pt:138
+#: ./browser/templates/rer_search.pt:139
 msgid "sponsored_link_label"
 msgstr ""
 
@@ -310,4 +342,3 @@ msgstr ""
 #: ./browser/interfaces.py:26
 msgid "tabs_list_label"
 msgstr ""
-

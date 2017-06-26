@@ -1,9 +1,23 @@
+.solrMLTPlaceHolder {
+    border-left: 1.5em solid #DDD;
+    margin-top: 1em;
+    font-size: 90%;
+    padding-left: 0.5em;
+}
+.solrMLTPlaceHolder li {
+    list-style: none;
+}
+.solrMLTPlaceHolder a {
+    border-bottom: none;
+}
 #search-results-wrapper #search-filter .field {
     margin-bottom: 1em;
 }
 
 #search-results-wrapper #search-results-bar > * {
     float: right;
+    text-align: right;
+    margin-right: 0.5em;
 }
 
 #search-results-wrapper #search-results-bar {
