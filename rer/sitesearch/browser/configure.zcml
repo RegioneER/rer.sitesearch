@@ -1,6 +1,7 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="rer.sitesearch">
 	
   <browser:page
@@ -30,6 +31,7 @@
         template="templates/updated_search.pt"
         />
 
+    <configure zcml:condition="installed collective.solr">
     <browser:page
         for="*"
         name="solr_more_like_this"
@@ -38,6 +40,7 @@
         template="templates/solr_more_like_this.pt"
         permission="zope2.View"
       />
+    </configure>
   
   <browser:page
         name="sitesearch-settings"
