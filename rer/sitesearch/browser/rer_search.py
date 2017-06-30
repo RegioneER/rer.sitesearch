@@ -4,8 +4,14 @@ from DateTime.DateTime import safelocaltime
 import json
 from plone import api
 from plone.app.contentlisting.interfaces import IContentListing
-from plone.app.search.browser import Search
-from plone.app.search.browser import SortOption
+try:
+    # Plone 4
+    from plone.app.search.browser import Search
+    from plone.app.search.browser import SortOption
+except ImportError:
+    # Plone 5
+    from Products.CMFPlone.browser.search import Search
+    from Products.CMFPlone.browser.search import SortOption
 from plone.memoize.view import memoize
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName

@@ -27,10 +27,12 @@ setup(name='rer.sitesearch',
       include_package_data=True,
       zip_safe=False,
       tests_require=tests_require,
-      extras_require=dict(test=tests_require),
+      extras_require={
+          'test': tests_require,
+      },
       install_requires=[
           'setuptools',
-          'plone.app.search',
+          # 'plone.app.search', removed on P5
           'plone.api',
       ],
       entry_points="""
