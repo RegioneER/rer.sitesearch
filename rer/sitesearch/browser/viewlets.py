@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from plone.app.layout.viewlets.common import SkipLinksViewlet
+from plone.app.layout.viewlets.common import ViewletBase
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.sitesearch.browser.interfaces import IRerSiteSearch
 from zope.component import getMultiAdapter
 
 
-class RERSkipLinksViewlet(SkipLinksViewlet):
+class RERSkipLinksViewlet(ViewletBase):
     """
     custom viewlet with custom links
     """
