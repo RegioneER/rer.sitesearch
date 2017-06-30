@@ -129,8 +129,10 @@ class RERSearch(Search, RerSearchMixin):
         params['spellcheck.onlyMorePopular'] = 'true'  # BBB: probabilmente configurato anche su solrconfig
 
         params = urlencode(params, doseq=True)
+
         response = connection.doGet(connection.solrBase + '/spell?' + params, {})
         results = json.loads(response.read())
+        # logger.info("term:%r solr:%s results:%r", term, connection.solrBase + '/spell?' + params, results)
 
         # Check for spellcheck
         spellcheck = results.get('spellcheck', None)
@@ -163,6 +165,11 @@ class RERSearch(Search, RerSearchMixin):
         #          suggested_term = suggested_term.replace(word, suggestions["suggestion"][0]["word"])
         # if suggested_term == term:
         #     return
+
+        # BBB: spellcheck suggerisce "(tre n to)" per "trento" ...
+        if "(" in suggested_term:
+            return
+
         if encode:
             return suggested_term.encode('utf-8')
         else:
@@ -198,7 +205,7 @@ class RERSearch(Search, RerSearchMixin):
     @property
     def tabs_mapping(self):
         tabs_map = self.getRegistryInfos('tabs_mapping')
-        tabs_dict = {'all': {'title': 'All'}}
+        tabs_dict = {'all': {'title': _(u'All')}}
         for tab in tabs_map:
             tab_title = tab.tab_title
             tab_id = tab_title.lower().replace(' ', '-')

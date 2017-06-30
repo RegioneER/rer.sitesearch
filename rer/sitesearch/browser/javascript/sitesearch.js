@@ -42,6 +42,7 @@ jQuery(function ($) {
                     var $data_res = $('#ajax-search-res #search-results > *'),
                         data_search_term = $('#ajax-search-res #updated-search-term input#SearchableText').attr('value'),
                         search_results_bar = $('#search-results-bar', data).html(),
+                        search_results_text = $('#search-results-text', data).html(),
                         data_path_opt = $('#ajax-search-res #updated-path-options').html(),
                         data_sorting_opt = $('#ajax-search-res #updated-sorting-options').html(),
                         data_tab_opt = $('#ajax-search-res #updated-tab-options').html(),
@@ -65,6 +66,7 @@ jQuery(function ($) {
                         $('input#nolivesearchGadget').val(data_search_term);
                     }
                     $('#search-results-bar').html(search_results_bar);
+                    $('#search-results-text').html(search_results_text);
                     if (data_path_opt === null) {
                         $('#path-options').remove();
                     }
