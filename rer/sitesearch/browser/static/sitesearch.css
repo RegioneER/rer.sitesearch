@@ -98,7 +98,7 @@
 }
 
 .searchingLoader .searchResults {
-    background: url(++resource++rer.sitesearch.images/loader.gif) no-repeat scroll 50% 0 transparent;
+    background: url(++plone++rer.sitesearch/images/loader.gif) no-repeat scroll 50% 0 transparent;
 }
 
 #content #search-results .documentLocation {

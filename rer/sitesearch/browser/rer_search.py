@@ -38,6 +38,8 @@ try:
     HAS_SOLR = True
 except ImportError:
     HAS_SOLR = False
+from Products.CMFPlone.resources import add_resource_on_request
+
 
 logger = logging.getLogger(__name__)
 MULTISPACE = u'\u3000'.encode('utf-8')
@@ -100,6 +102,10 @@ class RERSearch(Search, RerSearchMixin):
         self.indexes_order = self.getRegistryInfos('indexes_order')
         self._init_search_term()
 
+    def __call__(self):
+        add_resource_on_request(self.request, 'sitesearch')
+        return super(RERSearch, self).__call__()
+
     def _init_search_term(self):
         if self.query_term not in self.request.form:
             return
@@ -144,7 +150,7 @@ class RERSearch(Search, RerSearchMixin):
         spellcheck = results.get('spellcheck', None)
         if not spellcheck:
             return   # json.dumps(suggestions)
-         
+
         if spellcheck.get('correctlySpelled'):
             return
 

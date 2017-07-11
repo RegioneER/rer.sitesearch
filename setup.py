@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.4.4.dev0'
+version = '3.0.0.dev0'
 
 tests_require = ['plone.app.testing',
                  'selenium>=2.0a5']

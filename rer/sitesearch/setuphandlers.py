@@ -23,12 +23,14 @@ DEFAULT_TABS = [('Document', 'Documents'),
                  ('Link', 'Links')]
 
 
-def Handlers(context):
+def post_install(context):
     if context.readDataFile('sitesearch_various.txt') is None:
         return
     portal = context.getSite()
     insertProperties(portal)
 
+def uninstall(context):
+    """ """
 
 def insertProperties(context):
     """
@@ -36,13 +38,13 @@ def insertProperties(context):
     """
     registry = queryUtility(IRegistry)
     settings = registry.forInterface(IRERSiteSearchSettings, check=False)
-    #set search indexes
+    # set search indexes
     indexes = setRegistyIndexes(context, DEFAULT_INDEXES)
     settings.available_indexes = indexes
-    #set hidden indexes
+    # set hidden indexes
     hidden_indexes = setRegistyIndexes(context, DEFAULT_HIDDEN_INDEXES)
     settings.hidden_indexes = hidden_indexes
-    #set tabs
+    # set tabs
     tabs = setRegistryTabs(context)
     if tabs:
         settings.tabs_mapping = tabs

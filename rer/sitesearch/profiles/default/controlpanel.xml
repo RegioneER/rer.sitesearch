@@ -7,7 +7,7 @@
     appId="rer.sitesearch" category="Products" condition_expr=""
     url_expr="string:${portal_url}/@@sitesearch-settings"
     visible="True" i18n:attributes="title"
-    icon_expr="string:$portal_url/++resource++rer.sitesearch.images/search_tool_icon.png">
+    icon_expr="">
   <permission>Manage portal</permission>
  </configlet>
 </object>

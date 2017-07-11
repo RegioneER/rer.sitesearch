@@ -9,12 +9,12 @@
   <include package="plone.app.registry" />
   <include package="plone.app.contentlisting" />
   <i18n:registerTranslations directory="locales" />
-  
+
   <!--Register permission id-->
-  <permission 
-     id="rer.sitesearch.ManageSettings" 
-     title="rer.sitesearch: Manage Settings" 
-     /> 
+  <permission
+     id="rer.sitesearch.ManageSettings"
+     title="rer.sitesearch: Manage Settings"
+     />
 
   <include file="upgrades.zcml" />
   <include package=".browser" />
@@ -23,25 +23,24 @@
       name="default"
       title="RER: Site Search"
       directory="profiles/default"
-      description="Install RER Site Search"
+      description="Installs the rer.sitesearch add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
-  
-  <genericsetup:registerProfile
-      name="uninstall"
-      title="Uninstall RER Site Search"
-      directory="profiles/uninstall"
-      description="Uninstall RER Site Search"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
+      post_handler=".setuphandlers.post_install"
       />
 
   <genericsetup:registerProfile
-      name="migrate_to_230"
-      title="Migrate RER Site Search"
-      directory="profiles/migrate_to_230"
-      description=""
+      name="uninstall"
+      title="RER: Site Search (uninstall)"
+      directory="profiles/uninstall"
+      description="Uninstalls the rer.sitesearch add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      post_handler=".setuphandlers.uninstall"
       />
+
+
+  <utility
+      factory=".setuphandlers.HiddenProfiles"
+      name="rer.news-hiddenprofiles" />
 
   <utility
     component=".vocabularies.IndexesVocabularyFactory"
@@ -57,5 +56,5 @@
     />
   <!-- indexer for Date -->
   <adapter name="Date" factory=".indexer.Date" />
-  
+
 </configure>

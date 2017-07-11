@@ -37,12 +37,18 @@ class SearchTabsVocabulary(object):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IRERSiteSearchSettings, check=False)
         tabs_mapping = getattr(settings, 'tabs_mapping', ())
-        tabs_list = ['Tutti']
+        tabs_list = [SimpleTerm('all', 'all', 'All')]
         available_tabs = [x.tab_title for x in tabs_mapping]
-        available_tabs.sort()
-        tabs_list.extend(available_tabs)
-        tabs_list = [SimpleTerm(i.lower().replace(' ', '-'), i.lower().replace(' ', '-'), i) for i in tabs_list]
+        tabs_list.extend(map(
+            lambda x: SimpleTerm(
+                x.lower().replace(' ', '-'),
+                x.lower().replace(' ', '-'),
+                x
+            ),
+            sorted(available_tabs)
+        ))
         return SimpleVocabulary(tabs_list)
+
 
 SearchTabsVocabularyFactory = SearchTabsVocabulary()
 

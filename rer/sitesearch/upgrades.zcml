@@ -3,40 +3,4 @@
     xmlns:gs="http://namespaces.zope.org/genericsetup"
     i18n_domain="rer.sitesearch">
        
-  <!-- Upgrade steps -->
-  <gs:upgradeStep
-        title="Upgrade rer.sitesearch 1.6.0"
-        description="rer.sitesearch upgrade step"
-        source="*"
-        destination="160"
-        handler=".upgrades.to_1_6_0"
-        profile="rer.sitesearch:default" />
-       
-  <!-- Upgrade steps -->
-  <gs:upgradeStep
-        title="Upgrade rer.sitesearch 2"
-        description="rer.sitesearch upgrade step"
-        source="160"
-        destination="200"
-        handler=".upgrades.to_2"
-        profile="rer.sitesearch:default" />
-
-  <!-- Upgrade steps -->
-  <gs:upgradeStep
-        title="Upgrade rer.sitesearch 230"
-        description="rer.sitesearch upgrade step"
-        source="200"
-        destination="230"
-        handler=".upgrades.to_230"
-        profile="rer.sitesearch:default" />
-  
-  <!-- Upgrade steps -->
-  <gs:upgradeStep
-        title="Upgrade rer.sitesearch 240"
-        description="rer.sitesearch upgrade step for solr support"
-        source="230"
-        destination="240"
-        handler=".upgrades.to_240"
-        profile="rer.sitesearch:default" />
-
 </configure>

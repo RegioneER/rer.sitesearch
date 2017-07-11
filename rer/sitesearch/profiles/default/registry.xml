@@ -1,3 +1,13 @@
 <registry>
-    <records interface="rer.sitesearch.interfaces.IRERSiteSearchSettings" />
+  <records interface="rer.sitesearch.interfaces.IRERSiteSearchSettings" />
+
+  <records prefix="plone.resources/sitesearch"
+       interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+    <value key="js">++plone++rer.sitesearch/sitesearch.js</value>
+    <value key="css">
+      <element>++plone++rer.sitesearch/sitesearch.css</element>
+      <element>++plone++rer.sitesearch/bootstrap-nav.min.css</element>
+    </value>
+    <value key="deps">jquery</value>
+  </records>
 </registry>

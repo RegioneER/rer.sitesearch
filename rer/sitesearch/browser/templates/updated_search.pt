@@ -17,7 +17,8 @@
                   tabs_mapping view/tabs_mapping;
                   tabs python:results.get('tabs', ['all']);
                   selected_tab python:view.getSelectedTab(tabs);
-                  ">
+                  "
+    i18n:domain="rer.sitesearch">
 
     <div id="search-results-bar">
        <span>
@@ -37,12 +38,12 @@
     <ul id="updated-sorting-options">
         <metal:results use-macro="context/@@search/sorting" />
     </ul>
-    
+
     <div id="updated-path-options" tal:condition="python:request.form.get('path') and request.form.get('path') != portal_path">
         <metal:results use-macro="context/@@search/path" />
     </div>
     <metal:results use-macro="context/@@search/search_results" />
-    
+
     <span id="updated-tab-options">
         <metal:results use-macro="context/@@search/tabs-list" />
     </span>
@@ -50,7 +51,7 @@
     <div id="updated-search-term" tal:condition="st">
       <metal:indexes use-macro="context/@@search/searchfield" />
     </div>
-    
+
     <div id="updated-indexes-options" tal:condition="indexes_dict">
       <metal:indexes use-macro="context/@@search/indexes-list" />
     </div>
