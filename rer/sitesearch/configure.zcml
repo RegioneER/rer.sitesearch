@@ -40,7 +40,7 @@
 
   <utility
       factory=".setuphandlers.HiddenProfiles"
-      name="rer.news-hiddenprofiles" />
+      name="rer.sitesearch-hiddenprofiles" />
 
   <utility
     component=".vocabularies.IndexesVocabularyFactory"
