@@ -2,13 +2,14 @@
 """
 @author: andrea cecchi
 """
+from plone import api
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import INonInstallable
 from rer.sitesearch.custom_fields import TabsValueField, IndexesValueField
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
-from Products.CMFPlone.interfaces import INonInstallable
-from zope.interface import implementer
 from zope.component import queryUtility
+from zope.interface import implementer
 from zope.schema.interfaces import IVocabularyFactory
 
 
@@ -34,14 +35,15 @@ class HiddenProfiles(object):
             'rer.sitesearch:uninstall',
         ]
 
+
 def post_install(context):
-    if context.readDataFile('sitesearch_various.txt') is None:
-        return
-    portal = context.getSite()
+    portal = api.portal.get()
     insertProperties(portal)
+
 
 def uninstall(context):
     """ """
+
 
 def insertProperties(context):
     """
