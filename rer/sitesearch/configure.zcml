@@ -37,10 +37,9 @@
       post_handler=".setuphandlers.uninstall"
       />
 
-
-  <!-- <utility
+  <utility
       factory=".setuphandlers.HiddenProfiles"
-      name="rer.sitesearch-hiddenprofiles" /> -->
+      name="rer.sitesearch-hiddenprofiles" />
 
   <utility
     component=".vocabularies.IndexesVocabularyFactory"
