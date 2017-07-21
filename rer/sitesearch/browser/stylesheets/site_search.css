@@ -10,6 +10,10 @@
 .solrMLTPlaceHolder a {
     border-bottom: none;
 }
+a.more_like_this {
+   float: right;
+   text-decoration: none;
+}
 #search-results-wrapper #search-filter .field {
     margin-bottom: 1em;
 }
@@ -37,7 +41,12 @@
     float:left;
     width:35%;
 }
-
+#search-results-text {
+   font-size: 130%;
+}
+#search-results-text .typo {
+    color: #781d1a;
+}
 #search-filter fieldset#search-field {
     padding-bottom: 1em;
     padding-top: 1em;
@@ -98,7 +107,7 @@
 }
 
 .searchingLoader .searchResults {
-    background: url(++resource++rer.sitesearch.images/loader.gif) no-repeat scroll 50% 0 transparent;
+    background: url(++plone++rer.sitesearch/images/loader.gif) no-repeat scroll 50% 0 transparent;
 }
 
 #content #search-results .documentLocation {
