@@ -44,7 +44,7 @@
             }
         }
 
-        .formControl {
+        .formControls {
             display: none;
         }
 
@@ -93,6 +93,29 @@
     @media (max-width: 991px) {
         display: flex;
         flex-flow: column-reverse;
+        padding: 0 15px;
+
+        #search-results,
+        #search-filter {
+            float: none;
+            width: 100%;
+        }
+
+        #search-filter {
+            .search-options {
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: space-between;
+
+                > div {
+                    padding: 0 10px;
+                }
+
+                .field {
+                    margin-bottom: 0;
+                }
+            }
+        }
     }
 }
 

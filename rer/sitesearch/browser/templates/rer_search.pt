@@ -268,7 +268,7 @@
                                      i18n:attributes="value label_search;"/>
                           </div>
                         </metal:searchfield>
-                        <fieldset class="noborder">
+                        <div class="search-options noborder">
                           <!--PATH-->
                           <metal:path define-macro="path">
                             <div class="field"
@@ -452,7 +452,7 @@
                                        value="Search"
                                        i18n:attributes="value label_search;"/>
                             </div>
-                        </fieldset>
+                        </div>
                       </div>
                   </tal:column_filter>
               </div>
