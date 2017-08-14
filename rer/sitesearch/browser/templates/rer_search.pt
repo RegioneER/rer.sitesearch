@@ -252,7 +252,7 @@
                         Refine your search:
                     </h2>
                       <metal:searchfield define-macro="searchfield">
-                        <fieldset id="search-field" i18n:domain="plone" class="noborder">
+                        <div id="search-field" i18n:domain="plone" class="noborder">
                               <input class=""
                                      name="SearchableText"
                                      type="text"
@@ -266,7 +266,7 @@
                                      type="submit"
                                      value="Search"
                                      i18n:attributes="value label_search;"/>
-                          </fieldset>
+                          </div>
                         </metal:searchfield>
                         <fieldset class="noborder">
                           <!--PATH-->
