@@ -220,10 +220,7 @@
 
                                         </span>
 
-                                        <span tal:define="categories item/Subject|nothing;
-                                                          themes_ader item/temi_ader|nothing;
-                                                          axes_ader item/assi_ader|nothing;
-                                                          targets_ader item/targets_ader|nothing;"
+                                        <span tal:define="categories item/Subject|nothing"
                                               tal:condition="categories">
                                           &mdash;
                                           <tal:filedunder i18n:translate="">filed under:</tal:filedunder>
@@ -235,36 +232,6 @@
                                                tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?Subject%3Alist=${category}">
                                               Category
                                             </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
-                                          </span>
-                                          <tal:separator condition="python: categories">,</tal:separator>
-                                          <span tal:repeat="theme themes_ader">
-                                            <a href=""
-                                               class="link-theme"
-                                               rel="tag"
-                                               tal:content="theme"
-                                               tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?temi_ader%3Alist=${theme}">
-                                              Theme
-                                            </a><tal:separator condition="not: repeat/theme/end">,</tal:separator>
-                                          </span>
-                                          <tal:separator condition="python: themes_ader">,</tal:separator>
-                                          <span tal:repeat="axe axes_ader">
-                                            <a href=""
-                                               class="link-axe"
-                                               rel="tag"
-                                               tal:content="axe"
-                                               tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?assi_ader%3Alist=${axe}">
-                                              Axe
-                                            </a><tal:separator condition="not: repeat/axe/end">,</tal:separator>
-                                          </span>
-                                          <tal:separator condition="python: axes_ader">,</tal:separator>
-                                          <span tal:repeat="target targets_ader">
-                                            <a href=""
-                                               class="link-target"
-                                               rel="tag"
-                                               tal:content="target"
-                                               tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?targets_ader%3Alist=${target}">
-                                              Target
-                                            </a><tal:separator condition="not: repeat/target/end">,</tal:separator>
                                           </span>
                                         </span>
                                       </span>
