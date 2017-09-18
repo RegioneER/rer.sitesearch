@@ -4,7 +4,8 @@ Changelog
 3.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix query generation in sitesearch.js. Now doesn't include ajax_load in the url
+  [cekk]
 
 
 3.0.0 (2017-09-13)
