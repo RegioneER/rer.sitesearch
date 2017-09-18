@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.1 (unreleased)
+3.0.1 (2017-09-18)
 ------------------
 
 - Fix query generation in sitesearch.js. Now doesn't include ajax_load in the url
