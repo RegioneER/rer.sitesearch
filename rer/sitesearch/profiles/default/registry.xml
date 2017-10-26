@@ -10,4 +10,15 @@
     </value>
     <value key="deps">jquery</value>
   </records>
+
+  <records prefix="plone.bundles/sitesearch"
+            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="resources">
+      <element>sitesearch</element>
+    </value>
+    <value key="enabled">False</value>
+    <value key="jscompilation">++plone++rer.sitesearch/build/sitesearch.min.js</value>
+    <value key="csscompilation">++plone++rer.sitesearch/build/sitesearch.min.css</value>
+    <value key="last_compilation">2017-09-24 00:00:00</value>
+  </records>
 </registry>

@@ -1,13 +1,16 @@
-require(['jquery'], function($) {
+'use strict';
+
+require(['jquery'], function ($) {
   'use strict';
+
   var query,
-    pushState,
-    generateQuery,
-    popState,
-    popped,
-    initialURL,
-    Search = {},
-    $default_res_container = $('#search-results');
+      pushState,
+      generateQuery,
+      popState,
+      popped,
+      initialURL,
+      Search = {},
+      $default_res_container = $('#search-results');
   //update search viewlet value. This is need, if some search terms was deleted by length check
   if ($('input#searchGadget').length === 1) {
     $('input#searchGadget').val($('input#SearchableText').attr('value'));
@@ -16,13 +19,13 @@ require(['jquery'], function($) {
   }
   // The globally available method to pull the search results for the
   // 'query' into the element, on which the method is invoked
-  $.fn.pullSearchResults = function(query) {
-    return this.each(function() {
+  $.fn.pullSearchResults = function (query) {
+    return this.each(function () {
       var $container = $(this);
       //$container.fadeOut("slow")
       var searchQuery = $.extend({ ajax_load: 1 }, query);
       $container.addClass('searchingLoader');
-      $.get('@@updated_search', searchQuery, function(data) {
+      $.get('@@updated_search', searchQuery, function (data) {
         $container.hide();
 
         // Before assigning any variable we need to make sure we
@@ -37,19 +40,13 @@ require(['jquery'], function($) {
         $('#ajax-search-res').html(data);
 
         var $data_res = $('#ajax-search-res #search-results > *'),
-          data_search_term = $(
-            '#ajax-search-res #updated-search-term input#SearchableText'
-          ).attr('value'),
-          search_results_bar = $('#search-results-bar', data).html(),
-          search_results_text = $('#search-results-text', data).html(),
-          data_path_opt = $('#ajax-search-res #updated-path-options').html(),
-          data_sorting_opt = $(
-            '#ajax-search-res #updated-sorting-options'
-          ).html(),
-          data_tab_opt = $('#ajax-search-res #updated-tab-options').html(),
-          data_indexes_opt = $(
-            '#ajax-search-res #updated-indexes-options'
-          ).html();
+            data_search_term = $('#ajax-search-res #updated-search-term input#SearchableText').attr('value'),
+            search_results_bar = $('#search-results-bar', data).html(),
+            search_results_text = $('#search-results-text', data).html(),
+            data_path_opt = $('#ajax-search-res #updated-path-options').html(),
+            data_sorting_opt = $('#ajax-search-res #updated-sorting-options').html(),
+            data_tab_opt = $('#ajax-search-res #updated-tab-options').html(),
+            data_indexes_opt = $('#ajax-search-res #updated-indexes-options').html();
         $container.removeClass('searchingLoader');
         $container.html($data_res);
         $container.fadeIn();
@@ -79,13 +76,10 @@ require(['jquery'], function($) {
         // we can avoid re-creating the node every time
         $('#ajax-search-res').empty();
 
-        $('#rss-subscription a.link-feed').attr('href', function() {
+        $('#rss-subscription a.link-feed').attr('href', function () {
           // IE11 fix..seems that he doesn't see previous definitions
           var portalUrl = $('body').data('portalUrl');
-          var navigation_root_url =
-            $('meta[name=navigation_root_url]').attr('content') ||
-            window.navigation_root_url ||
-            portalUrl;
+          var navigation_root_url = $('meta[name=navigation_root_url]').attr('content') || window.navigation_root_url || portalUrl;
           return navigation_root_url + '/search_rss?' + query;
         });
         // TODO: con delegate/on/live questo non servirebbe
@@ -94,15 +88,14 @@ require(['jquery'], function($) {
     });
   };
 
-  generateQuery = function() {
+  generateQuery = function generateQuery() {
     var queryArray = $('form.searchPage').serializeArray();
     var query = {};
     var notAddableIndexes = [
-      // 'created.query:record:list:date',
-      // 'created.range:record',
-      '_authenticator'
-    ];
-    queryArray.map(function(field) {
+    // 'created.query:record:list:date',
+    // 'created.range:record',
+    '_authenticator'];
+    queryArray.map(function (field) {
       if (notAddableIndexes.indexOf(field.name) === -1 && field.value !== '') {
         query[field.name] = field.value;
       }
@@ -110,12 +103,9 @@ require(['jquery'], function($) {
     return query;
   };
 
-  pushState = function(query) {
+  pushState = function pushState(query) {
     var portalUrl = $('body').data('portalUrl');
-    var navigation_root_url =
-      $('meta[name=navigation_root_url]').attr('content') ||
-      window.navigation_root_url ||
-      portalUrl;
+    var navigation_root_url = $('meta[name=navigation_root_url]').attr('content') || window.navigation_root_url || portalUrl;
     var url = navigation_root_url + '/@@search?' + $.param(query);
     history.pushState(null, null, url);
   };
@@ -134,7 +124,7 @@ require(['jquery'], function($) {
   // Modernizr check up since popstate event will contain any data only if
   // a state has been created with history.pushState() that is wrapped in
   // Modernizr checkup above.
-  $(window).bind('popstate', function(event) {
+  $(window).bind('popstate', function (event) {
     var initialPop, str;
     // Ignore inital popstate that some browsers fire on page load
     initialPop = !popped && location.href === initialURL;
@@ -157,9 +147,7 @@ require(['jquery'], function($) {
     // Now we have something like 'SearchableText=test' in str
     // variable. So, we know when the actual search term begins at
     // position 15 in that string.
-    $('#search-field input[name="SearchableText"], input#searchGadget').val(
-      str.substr(15, str.length)
-    );
+    $('#search-field input[name="SearchableText"], input#searchGadget').val(str.substr(15, str.length));
 
     $default_res_container.pullSearchResults(query);
   });
@@ -169,10 +157,11 @@ require(['jquery'], function($) {
   // We don't submit the whole form with all the fields when only the
   // search term is being changed.
   // If we change the search term, we reset all query and start a new search
-  $('#search-field input.searchButton').click(function(e) {
+  $('#search-field input.searchButton').click(function (e) {
     var st,
-      // queryString,
-      queryParameters = {};
+
+    // queryString,
+    queryParameters = {};
     st = $('#search-field input[name="SearchableText"]').val();
     queryParameters['SearchableText'] = st;
     // queryString = $.param(queryParameters);
@@ -180,10 +169,11 @@ require(['jquery'], function($) {
     pushState(queryParameters);
     e.preventDefault();
   });
-  $('form.searchPage').submit(function(e) {
+  $('form.searchPage').submit(function (e) {
     var st,
-      // queryString,
-      queryParameters = {};
+
+    // queryString,
+    queryParameters = {};
     st = $('#search-field input[name="SearchableText"]').val();
     queryParameters['SearchableText'] = st;
     // queryString = $.param(queryParameters);
@@ -194,7 +184,7 @@ require(['jquery'], function($) {
 
   // We need to update the site-wide search field (at the top right in
   // stock Plone) when the main search field is updated
-  $('#search-field input[name="SearchableText"]').keyup(function() {
+  $('#search-field input[name="SearchableText"]').keyup(function () {
     if ($('input#searchGadget').length === 1) {
       $('input#searchGadget').val($(this).val());
     } else {
@@ -205,19 +195,13 @@ require(['jquery'], function($) {
   // When we click any option in the Filter menu, we need to prevent the
   // menu from being closed as it is dictaded by dropdown.js for all
   // dl.actionMenu > dd.actionMenuContent
-  $('#search-results-bar dl.actionMenu > dd.actionMenuContent').click(function(
-    e
-  ) {
+  $('#search-results-bar dl.actionMenu > dd.actionMenuContent').click(function (e) {
     e.stopImmediatePropagation();
   });
 
   // Now we can handle the actual menu options and update the search
   // results after any of them has been chosen.
-  $(
-    document
-  ).on('change', '#search-filter .field input, #search-filter select', function(
-    e
-  ) {
+  $(document).on('change', '#search-filter .field input, #search-filter select', function (e) {
     query = generateQuery();
     $default_res_container.pullSearchResults(query);
     pushState(query);
@@ -228,7 +212,7 @@ require(['jquery'], function($) {
   // AJAX response, we should bind the click event with live() in order
   // for this to keep working with the HTML elements, coming from AJAX
   // respons
-  $(document).on('click', '#sorting-options a', function(e) {
+  $(document).on('click', '#sorting-options a', function (e) {
     if ($(this).attr('data-sort')) {
       $("form.searchPage input[name='sort_on']").val($(this).attr('data-sort'));
     } else {
@@ -243,13 +227,13 @@ require(['jquery'], function($) {
 
   // Handle clicks in the batch navigation bar. Load those with Ajax as
   // well.
-  $(document).on('click', '#search-results nav.pagination a', function(e) {
+  $(document).on('click', '#search-results nav.pagination a', function (e) {
     e.preventDefault();
     var queryString = this.search.split('?')[1];
     var b_start;
     var batchStr = 'b_start:int=';
     if (queryString.length > 0) {
-      b_start = queryString.split('&').reduce(function(acc, field) {
+      b_start = queryString.split('&').reduce(function (acc, field) {
         if (field.indexOf(batchStr) === 0) {
           return field.substr(batchStr.length);
         }
@@ -263,12 +247,10 @@ require(['jquery'], function($) {
   });
 
   // Handle clicks for tabs. Load those with Ajax like sorting options
-  $(document).on('click', '#tab-options a', function(e) {
+  $(document).on('click', '#tab-options a', function (e) {
     e.preventDefault();
     if ($(this).attr('data-tab')) {
-      $("form.searchPage input[name='filter_tab']").val(
-        $(this).attr('data-tab')
-      );
+      $("form.searchPage input[name='filter_tab']").val($(this).attr('data-tab'));
     } else {
       $("form.searchPage input[name='filter_tab']").val('all');
     }
@@ -279,21 +261,12 @@ require(['jquery'], function($) {
   });
 
   // Handle clicks for remove filters link. updates form an query with Ajax like sorting options.
-  $(document).on('click', 'a.linkRemoveFilters', function(e) {
-    $(this)
-      .parent()
-      .find('input:checked')
-      .each(function() {
-        $(this).attr('checked', false);
-      });
-    if (
-      $(this)
-        .attr('class')
-        .indexOf('linkRemoveFilters') >= 0
-    ) {
-      $(this)
-        .parent()
-        .remove();
+  $(document).on('click', 'a.linkRemoveFilters', function (e) {
+    $(this).parent().find('input:checked').each(function () {
+      $(this).attr('checked', false);
+    });
+    if ($(this).attr('class').indexOf('linkRemoveFilters') >= 0) {
+      $(this).parent().remove();
     }
     // query = $('form.searchPage').serialize();
     query = generateQuery();
@@ -304,15 +277,10 @@ require(['jquery'], function($) {
 
   // MLT - preso da rer.solr
 
-  var spinner = $(
-    '<img src="' + portalUrl + '/++plone++rer.sitesearch/images/loader.gif">'
-  );
+  var spinner = $('<img src="' + portalUrl + '/++plone++rer.sitesearch/images/loader.gif">');
 
   function reset_solr_mlt() {
-    $('.solr_result_item .solrMLTPlaceHolder')
-      .fadeOut(500)
-      .html('')
-      .show();
+    $('.solr_result_item .solrMLTPlaceHolder').fadeOut(500).html('').show();
     $('.solr_result_item .solrMLTHideTarget:hidden').show();
     $('a.more_like_this:hidden').show();
   }
@@ -334,17 +302,13 @@ require(['jquery'], function($) {
             ajax_include_head: '1',
             ajax_load: '1'
           },
-          success: function(data) {
+          success: function success(data) {
             container_li.find('.solrMLTHideTarget').hide();
-            container_li
-              .find('.solrMLTPlaceHolder')
-              .hide()
-              .html($('#content-more-like-this', data).html())
-              .fadeIn(500);
+            container_li.find('.solrMLTPlaceHolder').hide().html($('#content-more-like-this', data).html()).fadeIn(500);
             spinner_clone.remove();
             el_obj.hide();
           },
-          error: function() {
+          error: function error() {
             spinner_clone.remove();
           }
         });
@@ -357,3 +321,8 @@ require(['jquery'], function($) {
 
   $(document).ready(init_rersolr_mlt);
 });
+
+define("rer/sitesearch/browser/static/sitesearch.js", function () {});
+
+//# sourceMappingURL=sitesearch-compiled.js.map
+//# sourceMappingURL=sitesearch-compiled.js.map

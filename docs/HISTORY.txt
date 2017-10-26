@@ -1,6 +1,15 @@
 Changelog
 =========
 
+3.0.2 (unreleased)
+------------------
+
+- Move resources to a separate bundle
+  [cekk]
+- Improve IE11 compatibility
+  [cekk]
+
+
 3.0.1 (2017-09-18)
 ------------------
 

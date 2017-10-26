@@ -6,3 +6,5 @@ include/
 lib/
 parts/
 *.egg-info/
+node_modules/
+package-lock.json

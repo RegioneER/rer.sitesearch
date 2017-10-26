@@ -38,7 +38,7 @@ try:
     HAS_SOLR = True
 except ImportError:
     HAS_SOLR = False
-from Products.CMFPlone.resources import add_resource_on_request
+from Products.CMFPlone.resources import add_bundle_on_request
 
 
 logger = logging.getLogger(__name__)
@@ -103,7 +103,7 @@ class RERSearch(Search, RerSearchMixin):
         self._init_search_term()
 
     def __call__(self):
-        add_resource_on_request(self.request, 'sitesearch')
+        add_bundle_on_request(self.request, 'sitesearch')
         return super(RERSearch, self).__call__()
 
     def _init_search_term(self):

@@ -3,12 +3,12 @@ Introduction
 A product that override basic plone search template and add some new features.
 It has a left column with the search form and some additional fields to refine the search:
 
- * a radio button for choose if make the search in all the portal or in the current
- path (this field is visible only if we aren't in the root)
+ * a radio button for choose if make the search in all the portal or in the current path (this field is visible only if we aren't in the root)
  * some customizable indexes (the list of indexes can be set in site_properties->rer_properties)
 
+
 In the central frame there are the results, splitted by portaly types
-('Document','File','News Item','Event','Link','Structured Document', 'FolderTaxonomy').
+(Document, File, News Item, Event, Link, Structured Document, FolderTaxonomy)
 
 
 Settings
@@ -30,3 +30,27 @@ in your product's locales folder with rer.sitesearch domain and a list of entrie
 
 msgid "Attachments"
 msgstr "Allegati"
+
+Development
+===========
+
+Resources are registered on a separate bundle, and are compiled and minified by a grunt task.
+
+To setup node/grunt environment, first of all you need to launch this command::
+
+  npm install
+
+
+When you need to change some resources, you need to recompile them, and you have two ways.
+
+::
+
+  grunt
+
+this start a watch demon that listen to changes and recompile them automatically
+
+::
+
+  grunt compile
+
+compile all resources
