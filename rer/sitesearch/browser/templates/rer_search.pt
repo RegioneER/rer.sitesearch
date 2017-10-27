@@ -96,20 +96,7 @@
                                 items matching your search terms.
                             </span>
                         </div>
-                        <p id="rss-subscription" i18n:domain="plone"
-                           tal:condition="context/portal_syndication/isSiteSyndicationAllowed|context/@@syndication-util/search_rss_enabled">
-                              <img src="" alt="RSS"
-                                   tal:define="portal_url here/portal_url"
-                                   tal:attributes="src string:${portal_url}/rss.png"/>
-                            <a href=""
-                               class="link-feed"
-                               tal:define="here_url context/@@plone_context_state/object_url"
-                               tal:attributes="href string:$here_url/search_rss?${request/QUERY_STRING}">
-                                <span>
-                                  RSS
-                                </span>
-                            </a>
-                        </p>
+                        
                         <p tal:define="suggestion view/suggestion|nothing" tal:condition="suggestion">forse cercavi: <span tal:content="suggestion">regione</span></p>
                       </div>
                       <!-- Div for accessibility: it's an help for blind people -->
@@ -145,7 +132,7 @@
                                       i18n:translate="sponsored_link_label">Sponsored link</span>
                                   <div tal:attributes="class python:elevated and 'searchResult elevatedItem' or 'searchResult'">
                                     <h4 tal:attributes="class string:resultTitle ${item/ContentTypeClass}">
-                                      <a class="contenttype-${item/portal_type} state-${item/review_state}" href="${item/getURL}">${item/Title}</a>
+                                      <a class="state-${item/review_state}" href="${item/getURL}">${item/Title}</a>
                                     </h4>
                                     <div class="itemInfos" i18n:domain="plone">
                                       <div tal:condition="item/CroppedDescription"

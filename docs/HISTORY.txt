@@ -8,6 +8,8 @@ Changelog
   [cekk]
 - Improve IE11 compatibility
   [cekk]
+- Improve documentation
+  [cekk]
 
 
 3.0.1 (2017-09-18)
@@ -148,67 +150,67 @@ Changelog
 1.4.0 (2012/03/12)
 ------------------
 
-- Customizzato indice Date per gli eventi [cekk]
-- Ora vengono visualizzate le informazioni sulle date/luogo negli eventi [cekk]
-- L'ordinamento per data viene effettuato per l'indice Date [cekk]
-- Abilitata la gestione di indici "nascosti" che ci si può portare dietro durante la ricerca [cekk]
+- Customized Date index for events [cekk]
+- Show date and location in events [cekk]
+- Use Date index to sort on dates [cekk]
+- Add "hidden indexes" configuration [cekk]
 
 1.3.1 (2011/11/28)
 ------------------
 
-- Fix errore nel titolo quando il path non è corretto (#329) [cekk]
+- Fix error in title whent the path is incorrect [cekk]
 
 1.3.0 (2011/11/28)
 ------------------
 
-- Sistemata grafica e css [nekorin]
+- Fix layout and css [nekorin]
 
 1.2.0 (2011/06/20)
 ------------------
 
-- Aggiunta customizzaizone dei tab [cekk]
+- Add tabs customization [cekk]
 
 1.1.1 (2011/04/07)
 ------------------
 
-- rimosso ordinamento alfabetico degli indici. Ora prende l'ordine impostato nella property [cekk]
+- Remove alphabetical sorting for indexes. Now indexes are sorted in the configuration panel [cekk]
 
 1.1.0 (2011/04/04)
 ------------------
 
-- rimossa visualizzazione di default per le tassonomie. Adesso vanno specificate nella property [cekk]
+- Remove taxonomies specific tab. Now needs to be set in the config panel [cekk]
 
 1.0.6 (2010/11/08)
 ------------------
 
-- fissato js per il batching [cekk]
+- Fix js for batching [cekk]
 
 1.0.5 (2010/11/08)
 ------------------
 
-- filtrate le categorie in base al tipo selezionato [cekk]
+- Categories are filtered beside the selected type [cekk]
 
 1.0.4 (2010/11/04)
 ------------------
 
-- rimosso setup.cfg [cekk]
+- Remove setup.cfg [cekk]
 
 1.0.3 (2010/11/04)
 ------------------
 
-- refactoring per avere l'history [cekk]
+- Refectoring for browser history [cekk]
 
 1.0.2 (2010/10/28)
 ------------------
 
-- rimesso titolo della cartella nella vista [cekk]
+- Remove folder title in the view [cekk]
 
 1.0.1 (2010/10/28)
 ------------------
 
-- rimosso indice searchSubject [cekk]
-- cambiato nome del field per l'ordinamento (#67 attività RER) [cekk]
-- aggiunto header per segnalare dove si è effettuata la ricerca [jacopo e cekk]
+- Remove searchSubject index [cekk]
+- Change fieldname for sorting [cekk]
+- Add header with folder name [jacopo e cekk]
 
 1.0.0 (2010/09/23)
 ------------------

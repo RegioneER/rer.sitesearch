@@ -6,8 +6,8 @@ require(['jquery'], function($) {
     popState,
     popped,
     initialURL,
-    Search = {},
-    $default_res_container = $('#search-results');
+    Search = {};
+
   //update search viewlet value. This is need, if some search terms was deleted by length check
   if ($('input#searchGadget').length === 1) {
     $('input#searchGadget').val($('input#SearchableText').attr('value'));
@@ -81,7 +81,7 @@ require(['jquery'], function($) {
 
         $('#rss-subscription a.link-feed').attr('href', function() {
           // IE11 fix..seems that he doesn't see previous definitions
-          var portalUrl = $('body').data('portalUrl');
+          var portalUrl = $('body').data('portal-url');
           var navigation_root_url =
             $('meta[name=navigation_root_url]').attr('content') ||
             window.navigation_root_url ||
@@ -111,7 +111,7 @@ require(['jquery'], function($) {
   };
 
   pushState = function(query) {
-    var portalUrl = $('body').data('portalUrl');
+    var portalUrl = $('body').data('portal-url');
     var navigation_root_url =
       $('meta[name=navigation_root_url]').attr('content') ||
       window.navigation_root_url ||
@@ -161,7 +161,7 @@ require(['jquery'], function($) {
       str.substr(15, str.length)
     );
 
-    $default_res_container.pullSearchResults(query);
+    $('#search-results').pullSearchResults(query);
   });
 
   $('#search-filter input.searchPage[type="submit"]').hide();
@@ -176,7 +176,7 @@ require(['jquery'], function($) {
     st = $('#search-field input[name="SearchableText"]').val();
     queryParameters['SearchableText'] = st;
     // queryString = $.param(queryParameters);
-    $default_res_container.pullSearchResults(queryParameters);
+    $('#search-results').pullSearchResults(queryParameters);
     pushState(queryParameters);
     e.preventDefault();
   });
@@ -187,7 +187,7 @@ require(['jquery'], function($) {
     st = $('#search-field input[name="SearchableText"]').val();
     queryParameters['SearchableText'] = st;
     // queryString = $.param(queryParameters);
-    $default_res_container.pullSearchResults(queryParameters);
+    $('#search-results').pullSearchResults(queryParameters);
     pushState(queryParameters);
     e.preventDefault();
   });
@@ -219,7 +219,7 @@ require(['jquery'], function($) {
     e
   ) {
     query = generateQuery();
-    $default_res_container.pullSearchResults(query);
+    $('#search-results').pullSearchResults(query);
     pushState(query);
     e.preventDefault();
   });
@@ -236,7 +236,7 @@ require(['jquery'], function($) {
     }
     // query = this.search.split('?')[1];
     query = generateQuery();
-    $default_res_container.pullSearchResults(query);
+    $('#search-results').pullSearchResults(query);
     pushState(query);
     e.preventDefault();
   });
@@ -258,7 +258,7 @@ require(['jquery'], function($) {
     }
     query = generateQuery();
     query['b_start:int'] = parseInt(b_start, 10);
-    $default_res_container.pullSearchResults(query);
+    $('#search-results').pullSearchResults(query);
     pushState(query);
   });
 
@@ -273,8 +273,7 @@ require(['jquery'], function($) {
       $("form.searchPage input[name='filter_tab']").val('all');
     }
     query = generateQuery();
-    $default_res_container = $('#search-results');
-    $default_res_container.pullSearchResults(query);
+    $('#search-results').pullSearchResults(query);
     pushState(query);
   });
 
@@ -297,15 +296,14 @@ require(['jquery'], function($) {
     }
     // query = $('form.searchPage').serialize();
     query = generateQuery();
-    $default_res_container.pullSearchResults(query);
+    $('#search-results').pullSearchResults(query);
     pushState(query);
     e.preventDefault();
   });
 
   // MLT - preso da rer.solr
-
   var spinner = $(
-    '<img src="' + portalUrl + '/++plone++rer.sitesearch/images/loader.gif">'
+    '<img src="/++plone++rer.sitesearch/images/loader.gif">'
   );
 
   function reset_solr_mlt() {
