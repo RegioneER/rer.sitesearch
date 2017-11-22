@@ -12,7 +12,7 @@ In the central frame there are the results, grouped in tabs (customized in the c
 Settings
 ========
 In the control panel (RER Sitesearch) you can set some search parameters.
-The most important are `tabs`, `indexes`, 'hidden indexes'.
+The most important are "tabs", "indexes" and "hidden indexes".
 
 Tabs
 ----

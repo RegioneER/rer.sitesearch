@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.2 (unreleased)
+3.1.0 (unreleased)
 ------------------
 
 - Move resources to a separate bundle

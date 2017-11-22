@@ -213,16 +213,16 @@ require(['jquery'], function($) {
 
   // Now we can handle the actual menu options and update the search
   // results after any of them has been chosen.
-  $(
-    document
-  ).on('change', '#search-filter .field input, #search-filter select', function(
-    e
-  ) {
-    query = generateQuery();
-    $('#search-results').pullSearchResults(query);
-    pushState(query);
-    e.preventDefault();
-  });
+  $(document).on(
+    'change',
+    '#search-filter .field input, #search-filter select',
+    function(e) {
+      query = generateQuery();
+      $('#search-results').pullSearchResults(query);
+      pushState(query);
+      e.preventDefault();
+    }
+  );
 
   // Since we replace the whole sorting options with HTML, coming in
   // AJAX response, we should bind the click event with live() in order
@@ -302,9 +302,7 @@ require(['jquery'], function($) {
   });
 
   // MLT - preso da rer.solr
-  var spinner = $(
-    '<img src="/++plone++rer.sitesearch/images/loader.gif">'
-  );
+  var spinner = $('<img src="/++plone++rer.sitesearch/images/loader.gif">');
 
   function reset_solr_mlt() {
     $('.solr_result_item .solrMLTPlaceHolder')
