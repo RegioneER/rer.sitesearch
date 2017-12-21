@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.1.0 (unreleased)
+3.1.0 (2017-12-21)
 ------------------
 
 - Move resources to a separate bundle
