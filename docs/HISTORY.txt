@@ -8,6 +8,9 @@ Changelog
   [pnicolli]
 - Accessibility fixes
   [nzambello]
+- Fix solr support: now if solr is installed but disabled in the control panel,
+  all searches doesn't pass through it
+  [cekk]
 
 
 3.1.0 (2017-12-21)
