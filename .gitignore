@@ -1,4 +1,5 @@
 .installed.cfg
+*.mo
 *.pyc
 bin/
 develop-eggs/

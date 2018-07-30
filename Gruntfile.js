@@ -7,41 +7,41 @@ module.exports = function(grunt) {
     sass: {
       options: {
         sourceMap: true,
-        outputStyle: 'compressed'
+        outputStyle: 'compressed',
       },
       dist: {
         files: {
           // 'destination': 'source'
           './rer/sitesearch/browser/static/sitesearch.css':
-            './rer/sitesearch/browser/static/sitesearch.scss'
-        }
-      }
+            './rer/sitesearch/browser/static/sitesearch.scss',
+        },
+      },
     },
     postcss: {
       options: {
         map: true,
         processors: [
           require('autoprefixer')({
-            browsers: ['last 2 versions']
-          })
-        ]
+            browsers: ['last 2 versions'],
+          }),
+        ],
       },
       dist: {
-        src: './rer/sitesearch/browser/static/*.css'
-      }
+        src: './rer/sitesearch/browser/static/*.css',
+      },
     },
     cssmin: {
       target: {
         files: {
           './rer/sitesearch/browser/static/build/sitesearch.min.css': [
             `${productRoot}/sitesearch.css`,
-            `${productRoot}/bootrap-nav.min.css`
-          ]
-        }
+            `${productRoot}/bootrap-nav.min.css`,
+          ],
+        },
       },
       options: {
-        sourceMap: true
-      }
+        sourceMap: true,
+      },
     },
     requirejs: {
       sitesearch: {
@@ -50,27 +50,27 @@ module.exports = function(grunt) {
           generateSourceMaps: true,
           preserveLicenseComments: false,
           paths: {
-            jquery: 'empty:'
+            jquery: 'empty:',
           },
           wrapShim: true,
           name: `${productRoot}/sitesearch.js`,
           exclude: ['jquery'],
           out: `${productRoot}/build/sitesearch-compiled.js`,
-          optimize: 'none'
-        }
-      }
+          optimize: 'none',
+        },
+      },
     },
     babel: {
       options: {
         sourceMap: true,
-        presets: ['env']
+        presets: ['env'],
       },
       dist: {
         files: {
           './rer/sitesearch/browser/static/build/sitesearch-compiled.js':
-            './rer/sitesearch/browser/static/build/sitesearch-compiled.js'
-        }
-      }
+            './rer/sitesearch/browser/static/build/sitesearch-compiled.js',
+        },
+      },
     },
 
     uglify: {
@@ -78,31 +78,31 @@ module.exports = function(grunt) {
         options: {
           sourceMap: true,
           sourceMapName: `./${productRoot}/build/sitesearch-compiled.js.map`,
-          sourceMapIncludeSources: false
+          sourceMapIncludeSources: false,
         },
         files: {
           './rer/sitesearch/browser/static/build/sitesearch.min.js': [
-            './rer/sitesearch/browser/static/build/sitesearch-compiled.js'
-          ]
-        }
-      }
+            './rer/sitesearch/browser/static/build/sitesearch-compiled.js',
+          ],
+        },
+      },
     },
     watch: {
       scripts: {
-        files: [`${productRoot}/static/*.js`],
+        files: [`${productRoot}/*.js`],
         tasks: ['requirejs', 'babel', 'uglify'],
         options: {
-          livereload: true
-        }
+          livereload: true,
+        },
       },
       css: {
-        files: `${productRoot}/static/*.scss`,
+        files: `${productRoot}/*.scss`,
         tasks: ['sass', 'postcss', 'cssmin'],
         options: {
-          livereload: true
-        }
-      }
-    }
+          livereload: true,
+        },
+      },
+    },
   });
 
   grunt.registerTask('default', ['watch']);
@@ -112,6 +112,6 @@ module.exports = function(grunt) {
     'cssmin',
     'requirejs',
     'babel',
-    'uglify'
+    'uglify',
   ]);
 };

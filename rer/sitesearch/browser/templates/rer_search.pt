@@ -49,9 +49,8 @@
                         tabs_mapping view/tabs_mapping;">
 
           <input type="hidden" name="sort_on" value="" />
-          <div class="row">
+          <div>
             <div id="search-results-wrapper"
-                 class="cell width-16 position-0"
                  tal:define="b_start python:0;
                              b_start request/b_start | b_start;
                              query_tab python:request.form.get('filter_tab','');
@@ -237,7 +236,10 @@
                     <h2 class="refineSearch"
                         i18n:translate="">
                         Refine your search:
+                        <i class="fas fa-angle-down" />
+                        <i class="fas fa-angle-up" />
                     </h2>
+                    <div class="search-filters">
                       <metal:searchfield define-macro="searchfield">
                         <div id="search-field" i18n:domain="plone" class="noborder">
                               <input class=""
@@ -441,6 +443,7 @@
                             </div>
                         </div>
                       </div>
+                    </div>
                   </tal:column_filter>
               </div>
           </div>

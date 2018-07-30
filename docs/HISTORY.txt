@@ -4,7 +4,8 @@ Changelog
 3.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Updated mobile styles
+  [pnicolli]
 
 
 3.1.0 (2017-12-21)

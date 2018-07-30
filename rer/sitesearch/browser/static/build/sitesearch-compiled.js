@@ -318,6 +318,12 @@ require(['jquery'], function ($) {
   }
 
   $(document).ready(init_rersolr_mlt);
+
+  // Expand / collapse filters on mobile
+  $(document).on('click', '#search-filter .refineSearch', function () {
+    $('#search-results-wrapper .search-filters').slideToggle('fast');
+    $('#search-filter .refineSearch').toggleClass('open');
+  });
 });
 
 define("rer/sitesearch/browser/static/sitesearch.js", function () {});

@@ -38,17 +38,17 @@ require(['jquery'], function($) {
 
         var $data_res = $('#ajax-search-res #search-results > *'),
           data_search_term = $(
-            '#ajax-search-res #updated-search-term input#SearchableText'
+            '#ajax-search-res #updated-search-term input#SearchableText',
           ).attr('value'),
           search_results_bar = $('#search-results-bar', data).html(),
           search_results_text = $('#search-results-text', data).html(),
           data_path_opt = $('#ajax-search-res #updated-path-options').html(),
           data_sorting_opt = $(
-            '#ajax-search-res #updated-sorting-options'
+            '#ajax-search-res #updated-sorting-options',
           ).html(),
           data_tab_opt = $('#ajax-search-res #updated-tab-options').html(),
           data_indexes_opt = $(
-            '#ajax-search-res #updated-indexes-options'
+            '#ajax-search-res #updated-indexes-options',
           ).html();
         $container.removeClass('searchingLoader');
         $container.html($data_res);
@@ -100,7 +100,7 @@ require(['jquery'], function($) {
     var notAddableIndexes = [
       // 'created.query:record:list:date',
       // 'created.range:record',
-      '_authenticator'
+      '_authenticator',
     ];
     queryArray.map(function(field) {
       if (notAddableIndexes.indexOf(field.name) === -1 && field.value !== '') {
@@ -158,7 +158,7 @@ require(['jquery'], function($) {
     // variable. So, we know when the actual search term begins at
     // position 15 in that string.
     $('#search-field input[name="SearchableText"], input#searchGadget').val(
-      str.substr(15, str.length)
+      str.substr(15, str.length),
     );
 
     $('#search-results').pullSearchResults(query);
@@ -206,7 +206,7 @@ require(['jquery'], function($) {
   // menu from being closed as it is dictaded by dropdown.js for all
   // dl.actionMenu > dd.actionMenuContent
   $('#search-results-bar dl.actionMenu > dd.actionMenuContent').click(function(
-    e
+    e,
   ) {
     e.stopImmediatePropagation();
   });
@@ -221,7 +221,7 @@ require(['jquery'], function($) {
       $('#search-results').pullSearchResults(query);
       pushState(query);
       e.preventDefault();
-    }
+    },
   );
 
   // Since we replace the whole sorting options with HTML, coming in
@@ -267,7 +267,7 @@ require(['jquery'], function($) {
     e.preventDefault();
     if ($(this).attr('data-tab')) {
       $("form.searchPage input[name='filter_tab']").val(
-        $(this).attr('data-tab')
+        $(this).attr('data-tab'),
       );
     } else {
       $("form.searchPage input[name='filter_tab']").val('all');
@@ -328,7 +328,7 @@ require(['jquery'], function($) {
           url: mlt_url,
           data: {
             ajax_include_head: '1',
-            ajax_load: '1'
+            ajax_load: '1',
           },
           success: function(data) {
             container_li.find('.solrMLTHideTarget').hide();
@@ -342,7 +342,7 @@ require(['jquery'], function($) {
           },
           error: function() {
             spinner_clone.remove();
-          }
+          },
         });
       }
       $(el).click(present_mlt);
@@ -352,4 +352,10 @@ require(['jquery'], function($) {
   }
 
   $(document).ready(init_rersolr_mlt);
+
+  // Expand / collapse filters on mobile
+  $(document).on('click', '#search-filter .refineSearch', function() {
+    $('#search-results-wrapper .search-filters').slideToggle('fast');
+    $('#search-filter .refineSearch').toggleClass('open');
+  });
 });
