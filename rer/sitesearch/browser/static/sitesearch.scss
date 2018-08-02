@@ -95,17 +95,31 @@
         width: 60%;
     }
 
+    button.refineSearch {
+        display: none;
+    }
+
     @media (max-width: 991px) {
         display: flex;
         flex-flow: column-reverse;
         padding: 0 15px;
 
-        .refineSearch {
+        h2.refineSearch {
+            display: none;
+        }
+
+        button.refineSearch {
             border: 1px solid #ccc;
             padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
             font-size: 1.8rem;
             display: inline-block;
             border-radius: 3px;
+            background: none;
+            text-shadow: none;
+            color: inherit;
+            box-shadow: none;
+            outline: none;
 
             .svg-inline--fa {
                 margin-left: 1rem;

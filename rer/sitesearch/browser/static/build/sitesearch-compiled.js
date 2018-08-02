@@ -320,9 +320,10 @@ require(['jquery'], function ($) {
   $(document).ready(init_rersolr_mlt);
 
   // Expand / collapse filters on mobile
-  $(document).on('click', '#search-filter .refineSearch', function () {
+  $(document).on('click', '#search-filter button.refineSearch', function () {
     $('#search-results-wrapper .search-filters').slideToggle('fast');
-    $('#search-filter .refineSearch').toggleClass('open');
+    $('#search-filter button.refineSearch').toggleClass('open');
+    $('#search-filter button.refineSearch').attr('aria-expanded', $('#search-filter button.refineSearch').attr('aria-expanded') === 'false');
   });
 });
 
