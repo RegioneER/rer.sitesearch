@@ -6,6 +6,8 @@ Changelog
 
 - Updated mobile styles
   [pnicolli]
+- Accessibility fixes
+  [nzambello]
 
 
 3.1.0 (2017-12-21)

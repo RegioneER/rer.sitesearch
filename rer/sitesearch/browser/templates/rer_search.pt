@@ -26,7 +26,6 @@
   <metal:content-title fill-slot="content-title">
     <metal:content-title define-macro="content-title">
       <h1 class="documentFirstHeading"
-          tabindex="0"
           i18n:translate="">
           Search results
       </h1>
@@ -95,7 +94,7 @@
                                 items matching your search terms.
                             </span>
                         </div>
-                        
+
                         <p tal:define="suggestion view/suggestion|nothing" tal:condition="suggestion">forse cercavi: <span tal:content="suggestion">regione</span></p>
                       </div>
                       <!-- Div for accessibility: it's an help for blind people -->
@@ -236,10 +235,17 @@
                     <h2 class="refineSearch"
                         i18n:translate="">
                         Refine your search:
+                    </h2>
+                    <button class="refineSearch"
+                            type="button"
+                            id="refineSearchButton"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        <span i18n:translate="">Refine your search</span>
                         <i class="fas fa-angle-down" />
                         <i class="fas fa-angle-up" />
-                    </h2>
-                    <div class="search-filters">
+                    </button>
+                    <div class="search-filters" aria-labelledby="refineSearchButton">
                       <metal:searchfield define-macro="searchfield">
                         <div id="search-field" i18n:domain="plone" class="noborder">
                               <input class=""
