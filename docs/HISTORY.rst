@@ -9,6 +9,7 @@ Changelog
 - Remove custom persistent fields in registry.
   [cekk]
 
+
 3.1.1 (2018-10-11)
 ------------------
 
