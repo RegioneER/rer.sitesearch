@@ -1,79 +1,94 @@
 # -*- coding: utf-8 -*-
-
-from zope.configuration import xmlconfig
-
+from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE
+from plone.app.robotframework.testing import REMOTE_LIBRARY_BUNDLE_FIXTURE
+from plone.app.testing import applyProfile
+from plone.app.testing import FunctionalTesting
+from plone.app.testing import IntegrationTesting
+from plone.app.testing import PloneSandboxLayer
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
 from plone.testing import z2
 
-from plone.app.testing import PLONE_FIXTURE
-from plone.app.testing import PloneSandboxLayer
-from plone.app.testing import IntegrationTesting
-from plone.app.testing import FunctionalTesting
-from plone.app.testing import applyProfile
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_NAME, TEST_USER_ID
-from plone.app.testing import login
-from plone.app.testing.selenium_layers import SELENIUM_PLONE_FUNCTIONAL_TESTING
+import rer.sitesearch
+import collective.z3cform.datagridfield
 
 
-class SiteSearch(PloneSandboxLayer):
+class RERSitesearchLayer(PloneSandboxLayer):
 
-    defaultBases = (PLONE_FIXTURE, )
+    defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        # Load ZCML for this package
-        import rer.sitesearch
-        xmlconfig.file('configure.zcml',
-                       rer.sitesearch,
-                       context=configurationContext)
-        z2.installProduct(app, 'rer.sitesearch')
+        # Load any other ZCML that is required for your tests.
+        # The z3c.autoinclude feature is disabled in the Plone fixture base
+        # layer.
+        self.loadZCML(package=collective.z3cform.datagridfield)
+        self.loadZCML(package=rer.sitesearch)
 
     def setUpPloneSite(self, portal):
         applyProfile(portal, 'rer.sitesearch:default')
         setRoles(portal, TEST_USER_ID, ['Member', 'Manager'])
-        for i in range(0, 80):
+        # create some example contents
+        for i in range(0, 20):
             """
             create some documents
             """
-            portal.invokeFactory('Document',
-                                 'my-page' + str(i),
-                                 title='My page %s' % str(i),
-                                 text='spam spam ham eggs')
+            portal.invokeFactory(
+                'Document',
+                'my-page-{0}'.format(str(i)),
+                title='My page plone {0}'.format(str(i)),
+            )
         for i in range(0, 5):
             """
             create some news with a Subject
             """
-            portal.invokeFactory('News Item',
-                                 'my-news' + str(i),
-                                 title='My news %s' % str(i),
-                                 text='spam chocolate ham eggs',
-                                 subject=('apple', 'mango'))
+            portal.invokeFactory(
+                'News Item',
+                'my-news-{0}'.format(str(i)),
+                title='My news plone {0}'.format(str(i)),
+                subject=i % 2 == 0 and ['apple'] or ['mango'],
+            )
+        for i in range(0, 5):
+            """
+            create some news with a Subject
+            """
+            portal.invokeFactory(
+                'Event',
+                'my-event-{0}'.format(str(i)),
+                title='My event plone {0}'.format(str(i)),
+                subject=['apple', 'mango'],
+            )
         for i in range(0, 5):
             """
             create some documents with a Subject
             """
-            portal.invokeFactory('Document',
-                                 'categorized-page' + str(i),
-                                 title='Categorized page %s' % str(i),
-                                 text='spam chocolate ham eggs',
-                                 subject=('apple', 'kiwi'))
+            portal.invokeFactory(
+                'Document',
+                'categorized-page-{0}'.format(str(i)),
+                title='Categorized page plone {0}'.format(str(i)),
+                text='spam chocolate ham eggs',
+                subject=i % 2 == 0 and ['apple'] or ['kiwi'],
+            )
 
 
-class SearchSeleniumLayer(SiteSearch):
-    """Install rer.sitesearch"""
-
-    defaultBases = (PLONE_FIXTURE, )
+RER_SITESEARCH_FIXTURE = RERSitesearchLayer()
 
 
-SITESEARCH_FIXTURE = SiteSearch()
-SELENIUM_SITESEARCH_FIXTURE = SearchSeleniumLayer()
+RER_SITESEARCH_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(RER_SITESEARCH_FIXTURE,),
+    name='RERSitesearchLayer:IntegrationTesting',
+)
 
-SITESEARCH_INTEGRATION_TESTING = \
-    IntegrationTesting(bases=(SITESEARCH_FIXTURE, ),
-                       name="SiteSearch:Integration")
-SITESEARCH_FUNCTIONAL_TESTING = \
-    FunctionalTesting(bases=(SITESEARCH_FIXTURE, ),
-                       name="SiteSearch:Functional")
-SELENIUM_SITESEARCH_TESTING = \
-    FunctionalTesting(bases=(SELENIUM_SITESEARCH_FIXTURE,
-                             SELENIUM_PLONE_FUNCTIONAL_TESTING),
-                             name="SiteSearch:Selenium")
+
+RER_SITESEARCH_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(RER_SITESEARCH_FIXTURE,), name='RERSitesearchLayer:FunctionalTesting'
+)
+
+
+RER_SITESEARCH_ACCEPTANCE_TESTING = FunctionalTesting(
+    bases=(
+        RER_SITESEARCH_FIXTURE,
+        REMOTE_LIBRARY_BUNDLE_FIXTURE,
+        z2.ZSERVER_FIXTURE,
+    ),
+    name='RERSitesearchLayer:AcceptanceTesting',
+)

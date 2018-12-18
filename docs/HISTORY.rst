@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.1.1 (unreleased)
+3.2.0 (unreleased)
 ------------------
 
 - Updated mobile styles
@@ -11,7 +11,8 @@ Changelog
 - Fix solr support: now if solr is installed but disabled in the control panel,
   all searches doesn't pass through it
   [cekk]
-
+- Remove custom persistent fields in registry.
+  [cekk]
 
 3.1.0 (2017-12-21)
 ------------------

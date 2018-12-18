@@ -9,7 +9,7 @@
         name="search"
         class=".rer_search.RERSearch"
         permission="zope2.View"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
         layer=".interfaces.IRERSiteSearchLayer"
         template="templates/rer_search.pt"
         />
