@@ -1,44 +1,40 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
 from DateTime.DateTime import safelocaltime
-import json
 from plone import api
 from plone.app.contentlisting.interfaces import IContentListing
-try:
-    # Plone 4
-    from plone.app.search.browser import Search
-    from plone.app.search.browser import SortOption
-except ImportError:
-    # Plone 5
-    from Products.CMFPlone.browser.search import Search
-    from Products.CMFPlone.browser.search import SortOption
 from plone.memoize.view import memoize
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import getNavigationRoot
+from Products.CMFPlone.browser.search import Search
+from Products.CMFPlone.browser.search import SortOption
 from Products.CMFPlone.PloneBatch import Batch
+from Products.CMFPlone.resources import add_bundle_on_request
 from Products.PluginIndexes.DateIndex.DateIndex import DateIndex
 from Products.ZCTextIndex.ParseTree import ParseError
-import re
 from rer.sitesearch import sitesearchMessageFactory as _
 from rer.sitesearch.browser.interfaces import IRerSiteSearch
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
 from urllib import urlencode
 from zope.annotation.interfaces import IAnnotations
 from zope.component import queryUtility, getUtility
-from zope.component.interfaces import ComponentLookupError
 from zope.i18n import translate
-from zope.interface import implements
+from zope.interface import implementer
 from ZPublisher.HTTPRequest import record
 from ZTUtils import make_query
-import logging
+
 try:
-    from collective.solr.interfaces import ISolrConnectionConfig
-    from collective.solr.interfaces import ISolrConnectionManager
+    from collective.solr.utils import isActive as solrIsActive
+
     HAS_SOLR = True
 except ImportError:
     HAS_SOLR = False
-from Products.CMFPlone.resources import add_bundle_on_request
+
+
+import logging
+import json
+import re
 
 
 logger = logging.getLogger(__name__)
@@ -56,19 +52,22 @@ def quote_chars(s):
         s = s.replace(MULTISPACE, ' ')
     return s
 
+
 class RerSearchMixin(object):
     def truncate(self, text, limit=60, tail=20):
-        ''' Truncate text at max characters
+        """ Truncate text at max characters
 
         We will format the urls taking the first ${limit} characters
         If needed a `tail` is added for very long urls
-        '''
+        """
         if not isinstance(text, unicode):
             text = text.decode('utf8')
         text = text.partition('://')[2]
         if len(text) <= tail + limit + 3:
             return text
-        text = re.sub(r'^(.{%s}).*(.{%s})$' % (limit, tail), '\g<1>...\g<2>', text)  # noqa
+        text = re.sub(
+            r'^(.{%s}).*(.{%s})$' % (limit, tail), '\g<1>...\g<2>', text
+        )  # noqa
         text_start, sep, text_tail = text.rpartition('...')
         if text_tail in text_start:
             return text_start + sep
@@ -76,12 +75,12 @@ class RerSearchMixin(object):
             return text
 
 
+@implementer(IRerSiteSearch)
 class RERSearch(Search, RerSearchMixin):
     """
     """
-    implements(IRerSiteSearch)
 
-    _more_like_this_view = "@@solr_more_like_this"
+    _more_like_this_view = '@@solr_more_like_this'
     _spellcheck_defaults = {}
     #    'rows': 1,
     #    'spellcheck': 'on',
@@ -90,15 +89,12 @@ class RERSearch(Search, RerSearchMixin):
     #    'spellcheck.extendedResults': 'false',
     query_term = 'query'
 
-
     def __init__(self, context, request):
-        """
-        """
         super(RERSearch, self).__init__(context, request)
         self.catalog = api.portal.get_tool(name='portal_catalog')
         self.tabs_order = self.getRegistryInfos('tabs_order')
         if not self.tabs_order:
-            self.tabs_order = ('all')
+            self.tabs_order = 'all'
         self.indexes_order = self.getRegistryInfos('indexes_order')
         self._init_search_term()
 
@@ -112,10 +108,19 @@ class RERSearch(Search, RerSearchMixin):
         annotations = IAnnotations(self.request)
         if 'trysuggestion' not in annotations:
             annotations['trysuggestion'] = True
-            suggestion = self.suggest(term=self.request.form[self.query_term], encode='utf-8')
+            suggestion = self.suggest(
+                term=self.request.form[self.query_term], encode='utf-8'
+            )
             if suggestion and suggestion != self.request.form[self.query_term]:
-                logger.info("query:%s suggestion:%s term:%s", self.request.form[self.query_term], suggestion, self.query_term)
-                self.request.form[self.query_term + "Original"] = self.request.form[self.query_term]
+                logger.info(
+                    "query:%s suggestion:%s term:%s",
+                    self.request.form[self.query_term],
+                    suggestion,
+                    self.query_term,
+                )
+                self.request.form[
+                    self.query_term + "Original"
+                ] = self.request.form[self.query_term]
                 self.request.form[self.query_term] = suggestion
 
     def suggest(self, term=None, encode=None):
@@ -130,34 +135,44 @@ class RERSearch(Search, RerSearchMixin):
         connection = manager.getConnection()
 
         if connection is None:
-            return   # json.dumps(suggestions)
+            return  # json.dumps(suggestions)
 
         params = self._spellcheck_defaults.copy()
         params['q'] = term
         params['rows'] = 0
         params['wt'] = 'json'
-        params['spellcheck.collate'] = 'true'  # BBB: probabilmente configurato anche su solrconfig
-        params['spellcheck.maxCollations'] = 1  # BBB: probabilmente configurato anche su solrconfig
-        params['spellcheck.onlyMorePopular'] = 'true'  # BBB: probabilmente configurato anche su solrconfig
+        params[
+            'spellcheck.collate'
+        ] = 'true'  # BBB: probabilmente configurato anche su solrconfig
+        params[
+            'spellcheck.maxCollations'
+        ] = 1  # BBB: probabilmente configurato anche su solrconfig
+        params[
+            'spellcheck.onlyMorePopular'
+        ] = 'true'  # BBB: probabilmente configurato anche su solrconfig
 
         params = urlencode(params, doseq=True)
 
-        response = connection.doGet(connection.solrBase + '/spell?' + params, {})
+        response = connection.doGet(
+            connection.solrBase + '/spell?' + params, {}
+        )
         results = json.loads(response.read())
         # logger.info("term:%r solr:%s results:%r", term, connection.solrBase + '/spell?' + params, results)
 
         # Check for spellcheck
         spellcheck = results.get('spellcheck', None)
         if not spellcheck:
-            return   # json.dumps(suggestions)
+            return  # json.dumps(suggestions)
 
         if spellcheck.get('correctlySpelled'):
             return
 
         spellcheck_collations = spellcheck.get('collations', None)
         if not spellcheck_collations:
-             return
-        collations = dict(zip(spellcheck_collations[::2], spellcheck_collations[1::2]))
+            return
+        collations = dict(
+            zip(spellcheck_collations[::2], spellcheck_collations[1::2])
+        )
         collation = collations.get('collation', {})
         suggested_term = collation.get('collationQuery')
         if not suggested_term:
@@ -187,7 +202,6 @@ class RERSearch(Search, RerSearchMixin):
         else:
             return suggested_term
 
-
     @property
     @memoize
     def portal_url(self):
@@ -207,9 +221,8 @@ class RERSearch(Search, RerSearchMixin):
             # 'query': 'id:"%s"' % item['id'].encode('utf8'),
             'query': self.more_like_this_query(item),
             'back_url': '?'.join(
-                (self.request.getURL(),
-                 self.request.QUERY_STRING)
-            )
+                (self.request.getURL(), self.request.QUERY_STRING)
+            ),
         }
         baseurl = "/".join((self.portal_url, self._more_like_this_view))
         return "?".join((baseurl, urlencode(query)))
@@ -219,9 +232,13 @@ class RERSearch(Search, RerSearchMixin):
         tabs_map = self.getRegistryInfos('tabs_mapping')
         tabs_dict = {'all': {'title': _(u'All')}}
         for tab in tabs_map:
-            tab_title = tab.tab_title
-            tab_id = tab_title.lower().replace(' ', '-')
-            tabs_dict[tab_id] = {'title': tab_title, 'portal_types': tab.portal_types}
+            title = tab.get('tab_title', '')
+            tab_title = title
+            tab_id = title.lower().replace(' ', '-')
+            tabs_dict[tab_id] = {
+                'title': tab_title,
+                'portal_types': tab.get('portal_types', []),
+            }
         return tabs_dict
 
     @property
@@ -229,8 +246,9 @@ class RERSearch(Search, RerSearchMixin):
         tabs_map = self.getRegistryInfos('tabs_mapping')
         types_dict = {}
         for tab in tabs_map:
-            tab_id = tab.tab_title.lower().replace(' ', '-')
-            tab_types = tab.portal_types
+            title = tab.get('tab_title', '')
+            tab_id = title.lower().replace(' ', '-')
+            tab_types = tab.get('portal_types', [])
             for portal_type in tab_types:
                 types_dict[portal_type] = tab_id
         return types_dict
@@ -240,7 +258,7 @@ class RERSearch(Search, RerSearchMixin):
         indexes_map = self.getRegistryInfos('available_indexes')
         indexes_dict = {}
         for index in indexes_map:
-            indexes_dict[index.index] = index.index_title
+            indexes_dict[index.get('index', '')] = index.get('index_title', '')
         return indexes_dict
 
     @property
@@ -248,7 +266,7 @@ class RERSearch(Search, RerSearchMixin):
         indexes_map = self.getRegistryInfos('hidden_indexes')
         indexes_dict = {}
         for index in indexes_map:
-            indexes_dict[index.index] = index.index_title
+            indexes_dict[index.get('index', '')] = index.get('index_title', '')
         return indexes_dict
 
     def getRegistryInfos(self, registry_item):
@@ -266,11 +284,19 @@ class RERSearch(Search, RerSearchMixin):
     def valid_keys(self):
         """
         """
-        valid_keys = ['sort_on', 'sort_order', 'sort_limit', 'fq', 'fl', 'facet', 'filter_tab']
+        valid_keys = [
+            'sort_on',
+            'sort_order',
+            'sort_limit',
+            'fq',
+            'fl',
+            'facet',
+            'filter_tab',
+        ]
         hidden_indexes = self.hidden_indexes
         for index in hidden_indexes.keys():
             if index not in valid_keys:
-                    valid_keys.append(index)
+                valid_keys.append(index)
         return tuple(valid_keys)
 
     def splitSearchOptions(self, value):
@@ -294,7 +320,7 @@ class RERSearch(Search, RerSearchMixin):
             for tab in self.tabs_order:
                 if tab in tabs:
                     return tab
-        return "all"
+        return 'all'
 
     # @memoize
     def results(self, batch=True, b_size=20, b_start=0):
@@ -312,10 +338,29 @@ class RERSearch(Search, RerSearchMixin):
         if not query:
             return result
         if self.searchWithSolr(query):
-            result.update(self.solrResults(query=query, batch=batch, b_size=b_size, b_start=b_start))
+            result.update(
+                self.solrResults(
+                    query=query, batch=batch, b_size=b_size, b_start=b_start
+                )
+            )
         else:
-            result.update(self.catalogResults(query=query, batch=batch, b_size=b_size, b_start=b_start))
+            result.update(
+                self.catalogResults(
+                    query=query, batch=batch, b_size=b_size, b_start=b_start
+                )
+            )
         return result
+
+    def doSearch(self, query):
+        if HAS_SOLR:
+            if self.searchWithSolr(query):
+                return self.catalog(**query)  # noqa
+            else:
+                # c.solr patches plone's catalog tool
+                # so we need to use old method
+                return self.catalog._cs_old_searchResults(**query)  # noqa
+        else:
+            return self.catalog(**query)  # noqa
 
     def searchWithSolr(self, query):
         """
@@ -323,14 +368,9 @@ class RERSearch(Search, RerSearchMixin):
         """
         if not HAS_SOLR:
             return False
-        try:
-            solr_config = getUtility(ISolrConnectionConfig)
-        except ComponentLookupError:
-            #collective.solr is in the buildout, but not installed
+        if not solrIsActive():
             return False
-        if not solr_config.active:
-            return False
-        #if is all set, return the value in sitesearch settings
+        # if is all set, return the value in sitesearch settings
         return self.getRegistryInfos('solr_search_enabled')
 
     def solrResults(self, query, batch=True, b_size=20, b_start=0):
@@ -338,9 +378,11 @@ class RERSearch(Search, RerSearchMixin):
         Do the search with solr.
         Add to the query some solr parameters.
         """
-        solr_config = getUtility(ISolrConnectionConfig)
-        for field in solr_config.required:
-            query[field] = True
+        # registry = getUtility(IRegistry)
+        # required_solr_fields = registry['collective.solr.required']
+        # # if required_solr_fields:
+        # #     for field in required_solr_fields:
+        # #         query[field] = True
         query['facet'] = 'true'
         indexes_list = self.available_indexes.keys()
         indexes_list.append('portal_type')
@@ -348,7 +390,7 @@ class RERSearch(Search, RerSearchMixin):
         if batch:
             query['b_size'] = b_size
             query['b_start'] = b_start
-        results = self.catalog(**query)
+        results = self.doSearch(query)
         res_dict = {'tabs': ['all']}
         if results.actual_result_count is None:
             res_dict['tot_results_len'] = 0
@@ -357,9 +399,10 @@ class RERSearch(Search, RerSearchMixin):
         filtered_results = []
         global_facet_counts = getattr(results, 'facet_counts', None)
         if global_facet_counts:
-            if hasattr(global_facet_counts, 'facet_fields'):
+            if getattr(global_facet_counts, 'facet_fields', None):
                 # new c.solr with scorched lib
-                facets = dict((k, dict(v)) for k, v in global_facet_counts.facet_fields.items())
+                facet_fields = global_facet_counts.facet_fields.items()
+                facets = dict((k, dict(v)) for k, v in facet_fields)
             else:
                 # old c.solr
                 facets = global_facet_counts.get('facet_fields', {})
@@ -368,7 +411,7 @@ class RERSearch(Search, RerSearchMixin):
         if active_tab:
             filtered_results = self.doFilteredSearch(active_tab, query)
         else:
-            if self.tabs_order[0] != "all":
+            if self.tabs_order[0] != 'all':
                 for tab_id in self.tabs_order:
                     filtered_results = self.doFilteredSearch(tab_id, query)
                     if filtered_results:
@@ -383,9 +426,11 @@ class RERSearch(Search, RerSearchMixin):
             results = Batch(results, b_size, b_start)
         res_dict['results'] = results
         if facet_counts:
-            if hasattr(facet_counts, 'facet_fields'):
+            if getattr(facet_counts, 'facet_fields', None):
                 # new c.solr with scorched lib
-                facets = dict((k, dict(v)) for k, v in facet_counts.facet_fields.items())
+                facets = dict(
+                    (k, dict(v)) for k, v in facet_counts.facet_fields.items()
+                )
             else:
                 # old c.solr
                 facets = facet_counts.get('facet_fields', {})
@@ -401,7 +446,11 @@ class RERSearch(Search, RerSearchMixin):
         available_tabs = ['all']
         for portal_type in portal_types:
             tab_id = types_mapping.get(portal_type, '')
-            if portal_types.get(portal_type) and tab_id and tab_id not in available_tabs:
+            if (
+                portal_types.get(portal_type)
+                and tab_id
+                and tab_id not in available_tabs
+            ):
                 available_tabs.append(tab_id)
         return available_tabs
 
@@ -412,16 +461,19 @@ class RERSearch(Search, RerSearchMixin):
         indexes_mapping = self.available_indexes
         for facet_id, facet_values in facets.items():
             if facet_id in indexes_mapping:
-                filter_dict[facet_id] = {'title': indexes_mapping.get(facet_id, facet_id),
-                                         'values': facet_values}
+                filter_dict[facet_id] = {
+                    'title': indexes_mapping.get(facet_id, facet_id),
+                    'values': facet_values,
+                }
         return filter_dict
 
     def catalogResults(self, query, batch=True, b_size=20, b_start=0):
         """
         Make the search on portal_catalog instead solr
         """
+
         try:
-            results = self.catalog(**query)
+            results = self.doSearch(query)
         except ParseError:
             return {}
         res_dict = {}
@@ -431,12 +483,14 @@ class RERSearch(Search, RerSearchMixin):
         if active_tab:
             filtered_results = self.doFilteredSearch(active_tab, query)
         else:
-            if self.tabs_order[0] != "all":
+            if self.tabs_order[0] != 'all':
                 for tab_id in self.tabs_order:
                     filtered_results = self.doFilteredSearch(tab_id, query)
                     if filtered_results:
                         break
-        filtered_infos, available_tabs = self.getFilterInfos(results, filtered_results)
+        filtered_infos, available_tabs = self.getFilterInfos(
+            results, filtered_results
+        )
         if filtered_results:
             results = IContentListing(filtered_results)
         else:
@@ -474,7 +528,7 @@ class RERSearch(Search, RerSearchMixin):
             else:
                 return []
         query['portal_type'] = self.filter_types(types_filter)
-        return self.catalog(**query)
+        return self.doSearch(query)
 
     def getFilterInfos(self, results, filtered_results=[]):
         """
@@ -485,36 +539,58 @@ class RERSearch(Search, RerSearchMixin):
         available_tabs = ['all']
         types_mapping = self.types_mapping
         for item in results:
-            #BBB DA RIMUOVERE QUESTO IF QUANDO SI IMPLEMENTA SOLR!!!!!
+            # BBB DA RIMUOVERE QUESTO IF QUANDO SI IMPLEMENTA SOLR!!!!!
             if item:
                 tab_id = types_mapping.get(item.portal_type, '')
                 if tab_id and tab_id not in available_tabs:
                     available_tabs.append(tab_id)
                 if not filtered_results:
                     for index_id in indexes_order:
-                        index_values = self.setIndexesListForItem(item, index_id)
+                        index_values = self.setIndexesListForItem(
+                            item, index_id
+                        )
                         if index_values:
                             if index_id not in filter_dict:
-                                filter_dict[index_id] = {'title': indexes_mapping.get(index_id, index_id),
-                                                         'values': {}}
+                                filter_dict[index_id] = {
+                                    'title': indexes_mapping.get(
+                                        index_id, index_id
+                                    ),
+                                    'values': {},
+                                }
                             for index_value in index_values:
-                                if index_value not in filter_dict[index_id]['values']:
-                                    filter_dict[index_id]['values'][index_value] = 1
+                                if (
+                                    index_value
+                                    not in filter_dict[index_id]['values']
+                                ):
+                                    filter_dict[index_id]['values'][
+                                        index_value
+                                    ] = 1
                                 else:
-                                    filter_dict[index_id]['values'][index_value] += 1
+                                    filter_dict[index_id]['values'][
+                                        index_value
+                                    ] += 1
         if filtered_results:
             for item in filtered_results:
                 for index_id in indexes_order:
                     index_values = self.setIndexesListForItem(item, index_id)
                     if index_values:
                         if index_id not in filter_dict:
-                            filter_dict[index_id] = {'title': indexes_mapping.get(index_id, index_id),
-                                                     'values': {}}
+                            filter_dict[index_id] = {
+                                'title': indexes_mapping.get(
+                                    index_id, index_id
+                                ),
+                                'values': {},
+                            }
                         for index_value in index_values:
-                            if index_value not in filter_dict[index_id]['values']:
+                            if (
+                                index_value
+                                not in filter_dict[index_id]['values']
+                            ):
                                 filter_dict[index_id]['values'][index_value] = 1
                             else:
-                                filter_dict[index_id]['values'][index_value] += 1
+                                filter_dict[index_id]['values'][
+                                    index_value
+                                ] += 1
         return filter_dict, available_tabs
 
     def setIndexesListForItem(self, brain, index_id):
@@ -547,9 +623,15 @@ class RERSearch(Search, RerSearchMixin):
             if v:
                 query[k] = self.setFilteredIndex(k, v, valid_keys)
         if not query:
-            validation_messages.append(translate(_('search_no_query_label',
-                                    default=u'You need to pass some query value.'),
-                                    context=self.request))
+            validation_messages.append(
+                translate(
+                    _(
+                        'search_no_query_label',
+                        default=u'You need to pass some query value.',
+                    ),
+                    context=self.request,
+                )
+            )
             return query, validation_messages
         # don't filter on created at all if we want all results
         created = query.get('created')
@@ -577,21 +659,35 @@ class RERSearch(Search, RerSearchMixin):
         max_words = self.getRegistryInfos('max_words')
         words = text.split()
         if len(words) > max_words:
-            validation_messages.append(translate(_('search_limit_words_label',
-                                                    default=u'"${word}" (and any subsequent words) was ignored because we limit queries to ${max_words} words.',
-                                                    mapping={'word': words[max_words].decode('utf-8'),
-                                                             'max_words': max_words}),
-                                                 context=self.request))
+            validation_messages.append(
+                translate(
+                    _(
+                        'search_limit_words_label',
+                        default=u'"${word}" (and any subsequent words) was ignored because we limit queries to ${max_words} words.',
+                        mapping={
+                            'word': words[max_words].decode('utf-8'),
+                            'max_words': max_words,
+                        },
+                    ),
+                    context=self.request,
+                )
+            )
             words = words[:max_words]
             text = " ".join(words)
         for word in words:
             if len(word) > max_word_len:
-                validation_messages.append(translate(_('search_limit_word_characters_label',
-                                                    default=u'"${word}" is a too long word and was ignored. Try using a shorter word.',
-                                                    mapping={'word': word.decode('utf-8')}),
-                                                 context=self.request))
+                validation_messages.append(
+                    translate(
+                        _(
+                            'search_limit_word_characters_label',
+                            default=u'"${word}" is a too long word and was ignored. Try using a shorter word.',
+                            mapping={'word': word.decode('utf-8')},
+                        ),
+                        context=self.request,
+                    )
+                )
                 text = text.replace(word, '')
-        #fix whitespaces
+        # fix whitespaces
         text = quote_chars(' '.join(text.split()))
         self.request.form[key] = text
         return text, validation_messages
@@ -602,7 +698,11 @@ class RERSearch(Search, RerSearchMixin):
         This is an hack that fix a bug in Plone timezones:
         https://dev.plone.org/ticket/13774
         """
-        return [x.getId() for x in self.catalog.getIndexObjects() if isinstance(x, DateIndex)]
+        return [
+            x.getId()
+            for x in self.catalog.getIndexObjects()
+            if isinstance(x, DateIndex)
+        ]
 
     def setFilteredIndex(self, key, value, valid_keys):
         """
@@ -631,8 +731,7 @@ class RERSearch(Search, RerSearchMixin):
                     return DateTime(value)
             else:
                 if isinstance(value, list) or isinstance(value, tuple):
-                    return {"query": value,
-                            "operator": "and"}
+                    return {"query": value, "operator": "and"}
                 else:
                     return value
         else:
@@ -670,9 +769,16 @@ class RERSearch(Search, RerSearchMixin):
         if results_len == total_len:
             return str(results_len)
         else:
-            return translate(_("${results_len} on ${total_len}",
-                              mapping={'results_len': results_len, 'total_len': total_len}),
-                            context=self.request)
+            return translate(
+                _(
+                    "${results_len} on ${total_len}",
+                    mapping={
+                        'results_len': results_len,
+                        'total_len': total_len,
+                    },
+                ),
+                context=self.request,
+            )
 
     def indexesChecked(self, index_name):
         """
@@ -694,9 +800,7 @@ class RERSearch(Search, RerSearchMixin):
         Return a list of hidden indexes to insert in the query
         """
         hiddenlist = self.hidden_indexes
-        hidden_dict = {'index_titles': [],
-                       'index_ids': [],
-                     'index_to_add': []}
+        hidden_dict = {'index_titles': [], 'index_ids': [], 'index_to_add': []}
         if not hiddenlist:
             return hidden_dict
         for index_id in hiddenlist:
@@ -706,13 +810,18 @@ class RERSearch(Search, RerSearchMixin):
             register_index = False
             index_title = hiddenlist.get(index_id, index_id)
             if isinstance(index_value, record):
-                register_index = self.setHiddenRecord(index_value, index_id, hidden_dict)
+                register_index = self.setHiddenRecord(
+                    index_value, index_id, hidden_dict
+                )
             elif isinstance(index_value, list):
-                register_index = self.setHiddenList(index_value, index_id, hidden_dict)
+                register_index = self.setHiddenList(
+                    index_value, index_id, hidden_dict
+                )
             else:
                 register_index = True
-                hidden_dict['index_to_add'].append({'id': index_id,
-                                       'value': index_value})
+                hidden_dict['index_to_add'].append(
+                    {'id': index_id, 'value': index_value}
+                )
             if register_index:
                 hidden_dict['index_titles'].append(index_title)
                 hidden_dict['index_ids'].append(index_id)
@@ -727,8 +836,9 @@ class RERSearch(Search, RerSearchMixin):
             if value:
                 has_values = True
                 index_id = "%s:list" % (index)
-                hidden_dict['index_to_add'].append({'id': index_id,
-                                           'value': value})
+                hidden_dict['index_to_add'].append(
+                    {'id': index_id, 'value': value}
+                )
         return has_values
 
     def setHiddenRecord(self, index_value, index, hidden_dict):
@@ -750,14 +860,17 @@ class RERSearch(Search, RerSearchMixin):
                     if isinstance(value_item, DateTime):
                         index_id += ":date"
                         list_value = value_item.ISO()
-                        hidden_dict['index_to_add'].append({'id': index_id,
-                                               'value': list_value})
+                        hidden_dict['index_to_add'].append(
+                            {'id': index_id, 'value': list_value}
+                        )
                     else:
-                        hidden_dict['index_to_add'].append({'id': index_id,
-                                               'value': value_item})
+                        hidden_dict['index_to_add'].append(
+                            {'id': index_id, 'value': value_item}
+                        )
             else:
-                hidden_dict['index_to_add'].append({'id': index_id,
-                                       'value': query_value})
+                hidden_dict['index_to_add'].append(
+                    {'id': index_id, 'value': query_value}
+                )
         return has_values
 
     def getFolderName(self, path):
@@ -780,7 +893,8 @@ class RERSearch(Search, RerSearchMixin):
         """ Sorting options for search results view. """
         return (
             SortOption(self.request, _(u'relevance'), ''),
-            SortOption(self.request, _(u'date (newest first)'),
-                       'Date', reverse=True),
+            SortOption(
+                self.request, _(u'date (newest first)'), 'Date', reverse=True
+            ),
             SortOption(self.request, _(u'alphabetically'), 'sortable_title'),
         )
