@@ -1,11 +1,13 @@
 Changelog
 =========
 
-3.1.2 (unreleased)
+3.2.0 (unreleased)
 ------------------
-
-- Nothing changed yet.
-
+- Fix solr support: now if solr is installed but disabled in the control panel,
+  all searches doesn't pass through it
+  [cekk]
+- Remove custom persistent fields in registry.
+  [cekk]
 
 3.1.1 (2018-10-11)
 ------------------
@@ -14,9 +16,6 @@ Changelog
   [pnicolli]
 - Accessibility fixes
   [nzambello]
-- Fix solr support: now if solr is installed but disabled in the control panel,
-  all searches doesn't pass through it
-  [cekk]
 
 
 3.1.0 (2017-12-21)

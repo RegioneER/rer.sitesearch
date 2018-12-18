@@ -6,34 +6,34 @@ from plone import api
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import INonInstallable
-from rer.sitesearch.custom_fields import TabsValueField, IndexesValueField
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
 from zope.component import queryUtility
 from zope.interface import implementer
 from zope.schema.interfaces import IVocabularyFactory
 
 
-DEFAULT_HIDDEN_INDEXES = [('start', 'Event start'),
-                          ('end', 'Event end'),
-                          ('Creator', 'Author')]
+DEFAULT_HIDDEN_INDEXES = [
+    {'index': 'start', 'index_title': 'Event start'},
+    {'index': 'end', 'index_title': 'Event end'},
+    {'index': 'Creator', 'index_title': 'Author'},
+]
 
-DEFAULT_INDEXES = [('Subject', 'Subject')]
+DEFAULT_INDEXES = [{'index_title': 'Subject', 'index': 'Subject'}]
 
-DEFAULT_TABS = [('Document', 'Documents'),
-                 ('News Item', 'News'),
-                 ('Event', 'Events'),
-                 ('File', 'File'),
-                 ('Link', 'Links')]
+DEFAULT_TABS = [
+    {'portal_types': ('Document',), 'tab_title': 'Documents'},
+    {'portal_types': ('News Item',), 'tab_title': 'News'},
+    {'portal_types': ('Event',), 'tab_title': 'Events'},
+    {'portal_types': ('File',), 'tab_title': 'File'},
+    {'portal_types': ('Link',), 'tab_title': 'Links'},
+]
 
 
 @implementer(INonInstallable)
 class HiddenProfiles(object):
-
     def getNonInstallableProfiles(self):
         """Hide uninstall profile from site-creation and quickinstaller"""
-        return [
-            'rer.sitesearch:uninstall',
-        ]
+        return ['rer.sitesearch:uninstall']
 
 
 def post_install(context):
@@ -51,50 +51,12 @@ def insertProperties(context):
     """
     registry = queryUtility(IRegistry)
     settings = registry.forInterface(IRERSiteSearchSettings, check=False)
-    # set search indexes
-    indexes = setRegistyIndexes(context, DEFAULT_INDEXES)
-    settings.available_indexes = indexes
-    # set hidden indexes
-    hidden_indexes = setRegistyIndexes(context, DEFAULT_HIDDEN_INDEXES)
-    settings.hidden_indexes = hidden_indexes
-    # set tabs
-    tabs = setRegistryTabs(context)
-    if tabs:
-        settings.tabs_mapping = tabs
-        tabs_order_dict = queryUtility(IVocabularyFactory, name="rer.sitesearch.vocabularies.SearchTabsVocabulary")
-        tabs_order = tabs_order_dict(context).by_token.keys()
-        settings.tabs_order = tuple(tabs_order)
-
-
-def setRegistyIndexes(context, indexes_list):
-    """
-    """
-    pc = getToolByName(context, 'portal_catalog')
-    catalog_indexes = pc.indexes()
-    new_items = []
-    for index in indexes_list:
-        index_id = index[0]
-        index_title = index[1]
-        if index_id in catalog_indexes:
-            new_value = IndexesValueField()
-            new_value.index = index_id
-            new_value.index_title = index_title
-            new_items.append(new_value)
-    return tuple(new_items)
-
-
-def setRegistryTabs(context):
-    """
-    """
-    types_tool = getToolByName(context, 'portal_types')
-    portal_types = types_tool.listContentTypes()
-    new_tabs = []
-    for tab in DEFAULT_TABS:
-        tab_ptype = tab[0]
-        tab_title = tab[1]
-        if tab_ptype in portal_types:
-            new_value = TabsValueField()
-            new_value.tab_title = tab_title
-            new_value.portal_types = (tab_ptype,)
-            new_tabs.append(new_value)
-    return tuple(new_tabs)
+    settings.available_indexes = DEFAULT_INDEXES
+    settings.hidden_indexes = DEFAULT_HIDDEN_INDEXES
+    settings.tabs_mapping = DEFAULT_TABS
+    tabs_order_dict = queryUtility(
+        IVocabularyFactory,
+        name="rer.sitesearch.vocabularies.SearchTabsVocabulary",
+    )
+    tabs_order = tabs_order_dict(context).by_token.keys()
+    settings.tabs_order = tuple(tabs_order)
