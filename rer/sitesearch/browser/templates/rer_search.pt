@@ -107,7 +107,7 @@
                              tal:condition="validation_messages"
                              i18n:domain="plone">
                           <dl tal:repeat="message validation_messages"
-                              class="portalMessage warning">
+                              class="portalMessage warning" role="status">
                             <dt i18n:translate="">Warning</dt>
                             <dd tal:content="message">a message</dd>
                           </dl>

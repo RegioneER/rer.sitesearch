@@ -8,6 +8,8 @@ Changelog
   [cekk]
 - Remove custom persistent fields in registry.
   [cekk]
+- a11y: Added role attribute for portalMessage
+  [nzambello]
 
 
 3.1.1 (2018-10-11)
