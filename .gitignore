@@ -9,3 +9,4 @@ parts/
 *.egg-info/
 node_modules/
 package-lock.json
+.mr.developer.cfg
