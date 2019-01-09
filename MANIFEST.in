@@ -5,3 +5,5 @@ include *.rst
 exclude .nvmrc
 exclude Gruntfile.js
 exclude package.json
+exclude *.cfg
+exclude requirements.txt
