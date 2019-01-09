@@ -1,6 +1,12 @@
 Changelog
 =========
 
+3.2.1 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
 3.2.0 (2019-01-09)
 ------------------
 - Fix solr support: now if solr is installed but disabled in the control panel,
