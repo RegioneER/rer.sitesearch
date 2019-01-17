@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.2.1 (unreleased)
+3.2.1 (2019-01-17)
 ------------------
 
 - Reverted changes for custom persistent fields. We have some problems with shared zeoserver.
