@@ -41,9 +41,15 @@ class TestSetup(unittest.TestCase):
         """
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IRERSiteSearchSettings, check=False)
-        self.assertEqual(settings.available_indexes, DEFAULT_INDEXES)
-        self.assertEqual(settings.hidden_indexes, DEFAULT_HIDDEN_INDEXES)
-        self.assertEqual(settings.tabs_mapping, DEFAULT_TABS)
+        available_indexes = settings.available_indexes
+        hidden_indexes = settings.hidden_indexes
+        tabs_mapping = settings.tabs_mapping
+        self.assertEqual(len(available_indexes), len(DEFAULT_INDEXES))
+        self.assertEqual(available_indexes[0].index, DEFAULT_INDEXES[0][0])
+        self.assertEqual(len(hidden_indexes), len(DEFAULT_HIDDEN_INDEXES))
+        self.assertEqual(hidden_indexes[0].index, DEFAULT_HIDDEN_INDEXES[0][0])
+        self.assertEqual(len(tabs_mapping), len(DEFAULT_TABS))
+        self.assertEqual(tabs_mapping[0].portal_types, (DEFAULT_TABS[0][0],))
         self.assertEqual(
             settings.tabs_order,
             ('all', 'documents', 'links', 'file', 'news', 'events'),

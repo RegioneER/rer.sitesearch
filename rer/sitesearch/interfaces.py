@@ -1,52 +1,13 @@
 # -*- coding: utf-8 -*-
-from collective.z3cform.datagridfield.registry import DictRow
 from zope.interface import Interface
 from zope import schema
-
-from rer.sitesearch import sitesearchMessageFactory as _
-
-FOLDER_TYPES_VALUESTYPE = schema.Choice(
-    vocabulary=u"plone.app.vocabularies.ReallyUserFriendlyTypes"
+from rer.sitesearch.custom_fields import (
+    ITabsValueField,
+    IIndexesValueField,
+    PersistentObject,
 )
 
-
-class ITabsValueField(Interface):
-    tab_title = schema.ASCIILine(
-        title=_("sitesearch_tab_title", default=u"Tab title"),
-        description=_(
-            "sitesearch_tab_title_help",
-            default=u"Insert a title for this tab. You can provide translations for this title with a proper translation file for rer.sitesearch domain.",
-        ),
-        required=True,
-    )
-    portal_types = schema.Tuple(
-        title=_("sitesearch_tab_portal_types", default=u"Portal types"),
-        description=_(
-            "sitesearch_tab_portal_types_help",
-            default=u'Select which portal_types shows on this tab.',
-        ),
-        required=True,
-        value_type=FOLDER_TYPES_VALUESTYPE,
-    )
-
-
-class IIndexesValueField(Interface):
-    index_title = schema.ASCIILine(
-        title=_("sitesearch_index_title", default=u"Index title"),
-        description=_(
-            "sitesearch_index_title_help",
-            default=u"Insert a title for this search filter. You can provide translations for this title with a proper translation file for rer.sitesearch domain.",
-        ),
-        required=True,
-    )
-    index = schema.Choice(
-        title=_(
-            "sitesearch_allowable", default=u"Allowable indexes in catalog"
-        ),
-        description=_("sitesearch_allowable_help", default=u'Select an index.'),
-        required=True,
-        vocabulary=u"rer.sitesearch.vocabularies.IndexesVocabulary",
-    )
+from rer.sitesearch import sitesearchMessageFactory as _
 
 
 class IRERSiteSearchGeneralSettings(Interface):
@@ -87,16 +48,16 @@ class IRERSiteSearchTabsSettings(Interface):
     """Settings used in the control panel for sitesearch: Tab list
     """
 
-    tabs_mapping = schema.List(
+    tabs_mapping = schema.Tuple(
         title=_(u'Search tabs'),
         description=_(
             'help_tabs_mapping',
             default=u"Insert a list of tabs to show on search results. Each tab can contain different content_types.",
         ),
-        value_type=DictRow(title=_(u"Search tab"), schema=ITabsValueField),
+        value_type=PersistentObject(ITabsValueField, title=_(u"Search tab")),
         required=False,
-        default=[],
-        missing_value=[],
+        default=(),
+        missing_value=(),
     )
 
     tabs_order = schema.Tuple(
@@ -118,18 +79,18 @@ class IRERSiteSearchIndexesSettings(Interface):
     """Settings used in the control panel for sitesearch: Indexes to show
     """
 
-    available_indexes = schema.List(
+    available_indexes = schema.Tuple(
         title=_(u'Indexes for search'),
         description=_(
             'help_sitesearch_available_indexes',
             default=u"Insert a list of indexes that should be used for faceted navigation.",
         ),
-        value_type=DictRow(
-            title=_(u"Index in search"), schema=IIndexesValueField
+        value_type=PersistentObject(
+            IIndexesValueField, title=_(u"Index in search")
         ),
         required=False,
-        default=[],
-        missing_value=[],
+        default=(),
+        missing_value=(),
     )
 
     indexes_order = schema.Tuple(
@@ -151,18 +112,18 @@ class IRERSiteSearchHiddensIndexesSettings(Interface):
     """Settings used in the control panel for sitesearch: Hidden indexes
     """
 
-    hidden_indexes = schema.List(
+    hidden_indexes = schema.Tuple(
         title=_(u'Hidden indexes'),
         description=_(
             'help_sitesearch_hidden_indexes',
             default=u"Insert a list of indexes that can't be used for faceted search, but we need to keep.",
         ),
-        value_type=DictRow(
-            title=_(u"Hidden indexes"), schema=IIndexesValueField
+        value_type=PersistentObject(
+            IIndexesValueField, title=_(u"Hidden indexes")
         ),
         required=False,
-        default=[],
-        missing_value=[],
+        default=(),
+        missing_value=(),
     )
 
 

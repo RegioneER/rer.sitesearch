@@ -10,7 +10,6 @@ from plone.app.testing import TEST_USER_ID
 from plone.testing import z2
 
 import rer.sitesearch
-import collective.z3cform.datagridfield
 
 
 class RERSitesearchLayer(PloneSandboxLayer):
@@ -21,7 +20,6 @@ class RERSitesearchLayer(PloneSandboxLayer):
         # Load any other ZCML that is required for your tests.
         # The z3c.autoinclude feature is disabled in the Plone fixture base
         # layer.
-        self.loadZCML(package=collective.z3cform.datagridfield)
         self.loadZCML(package=rer.sitesearch)
 
     def setUpPloneSite(self, portal):

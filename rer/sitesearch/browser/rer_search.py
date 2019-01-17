@@ -232,12 +232,11 @@ class RERSearch(Search, RerSearchMixin):
         tabs_map = self.getRegistryInfos('tabs_mapping')
         tabs_dict = {'all': {'title': _(u'All')}}
         for tab in tabs_map:
-            title = tab.get('tab_title', '')
-            tab_title = title
-            tab_id = title.lower().replace(' ', '-')
+            tab_title = tab.tab_title
+            tab_id = tab_title.lower().replace(' ', '-')
             tabs_dict[tab_id] = {
                 'title': tab_title,
-                'portal_types': tab.get('portal_types', []),
+                'portal_types': tab.portal_types,
             }
         return tabs_dict
 
@@ -246,9 +245,8 @@ class RERSearch(Search, RerSearchMixin):
         tabs_map = self.getRegistryInfos('tabs_mapping')
         types_dict = {}
         for tab in tabs_map:
-            title = tab.get('tab_title', '')
-            tab_id = title.lower().replace(' ', '-')
-            tab_types = tab.get('portal_types', [])
+            tab_id = tab.tab_title.lower().replace(' ', '-')
+            tab_types = tab.portal_types
             for portal_type in tab_types:
                 types_dict[portal_type] = tab_id
         return types_dict
@@ -258,7 +256,7 @@ class RERSearch(Search, RerSearchMixin):
         indexes_map = self.getRegistryInfos('available_indexes')
         indexes_dict = {}
         for index in indexes_map:
-            indexes_dict[index.get('index', '')] = index.get('index_title', '')
+            indexes_dict[index.index] = index.index_title
         return indexes_dict
 
     @property
@@ -266,7 +264,7 @@ class RERSearch(Search, RerSearchMixin):
         indexes_map = self.getRegistryInfos('hidden_indexes')
         indexes_dict = {}
         for index in indexes_map:
-            indexes_dict[index.get('index', '')] = index.get('index_title', '')
+            indexes_dict[index.index] = index.index_title
         return indexes_dict
 
     def getRegistryInfos(self, registry_item):

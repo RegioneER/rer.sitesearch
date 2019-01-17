@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 """Setup tests for this package."""
 from plone import api
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
+from rer.sitesearch.custom_fields import TabsValueField, IndexesValueField
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
-from rer.sitesearch.setuphandlers import DEFAULT_HIDDEN_INDEXES
-from rer.sitesearch.setuphandlers import DEFAULT_INDEXES
-from rer.sitesearch.setuphandlers import DEFAULT_TABS
 from rer.sitesearch.testing import RER_SITESEARCH_INTEGRATION_TESTING  # noqa
 
 import unittest
@@ -57,19 +53,19 @@ class TestMethods(unittest.TestCase):
         )
         new_settings = []
         for record in old_settings:
-            if record.get('tab_title') in ['News', 'Events']:
+            if record.tab_title in ['News', 'Events']:
                 continue
-            if record.get('tab_title') == 'Documents':
-                new_settings.append(
-                    {
-                        'tab_title': record.get('tab_title'),
-                        'portal_types': ('Document', 'Event', 'News Item'),
-                    }
-                )
+            if record.tab_title == 'Documents':
+                new_record = TabsValueField()
+                new_record.tab_title = record.tab_title
+                new_record.portal_types = ('Document', 'Event', 'News Item')
+                new_settings.append(new_record)
             else:
                 new_settings.append(record)
         api.portal.set_registry_record(
-            'tabs_mapping', new_settings, interface=IRERSiteSearchSettings
+            'tabs_mapping',
+            tuple(new_settings),
+            interface=IRERSiteSearchSettings,
         )
 
         tabs_mapping = self.view.tabs_mapping
@@ -115,19 +111,19 @@ class TestMethods(unittest.TestCase):
 
         new_settings = []
         for record in old_settings:
-            if record.get('tab_title') in ['News', 'Events']:
+            if record.tab_title in ['News', 'Events']:
                 continue
-            if record.get('tab_title') == 'Documents':
-                new_settings.append(
-                    {
-                        'tab_title': record.get('tab_title'),
-                        'portal_types': ('Document', 'Event', 'News Item'),
-                    }
-                )
+            if record.tab_title == 'Documents':
+                new_record = TabsValueField()
+                new_record.tab_title = record.tab_title
+                new_record.portal_types = ('Document', 'Event', 'News Item')
+                new_settings.append(new_record)
             else:
                 new_settings.append(record)
         api.portal.set_registry_record(
-            'tabs_mapping', new_settings, interface=IRERSiteSearchSettings
+            'tabs_mapping',
+            tuple(new_settings),
+            interface=IRERSiteSearchSettings,
         )
 
         types_mapping = self.view.types_mapping

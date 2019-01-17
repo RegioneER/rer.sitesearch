@@ -38,11 +38,7 @@ setup(
             'plone.app.robotframework[debug]',
         ]
     },
-    install_requires=[
-        'setuptools',
-        'collective.z3cform.datagridfield',
-        'plone.api',
-    ],
+    install_requires=['setuptools', 'plone.api'],
     entry_points="""
       # -*- entry_points -*-
       [z3c.autoinclude.plugin]

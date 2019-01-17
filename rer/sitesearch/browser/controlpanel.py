@@ -8,7 +8,6 @@ from rer.sitesearch.interfaces import IRERSiteSearchHiddensIndexesSettings
 from rer.sitesearch.interfaces import IRERSiteSearchIndexesSettings
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
 from rer.sitesearch.interfaces import IRERSiteSearchTabsSettings
-from rer.sitesearch.widgets.blockdatagridfield import BlockDataGridFieldFactory
 from z3c.form import button
 from z3c.form import field
 from z3c.form import group
@@ -23,19 +22,16 @@ class FormGeneral(group.Group):
 class FormTabs(group.Group):
     label = _(u"Tabs")
     fields = field.Fields(IRERSiteSearchTabsSettings)
-    fields['tabs_mapping'].widgetFactory = BlockDataGridFieldFactory
 
 
 class FormIndexes(group.Group):
     label = _(u"Indexes")
     fields = field.Fields(IRERSiteSearchIndexesSettings)
-    fields['available_indexes'].widgetFactory = BlockDataGridFieldFactory
 
 
 class FormHiddenIndexes(group.Group):
     label = _(u"Hidden indexes")
     fields = field.Fields(IRERSiteSearchHiddensIndexesSettings)
-    fields['hidden_indexes'].widgetFactory = BlockDataGridFieldFactory
 
 
 class RERSiteSearchSettingsEditForm(controlpanel.RegistryEditForm):
@@ -67,10 +63,6 @@ class RERSiteSearchSettingsEditForm(controlpanel.RegistryEditForm):
 
     @button.buttonAndHandler(_('Save'), name='save')
     def handleSave(self, action):
-        for k, v in self.request.form.items():
-            if ".AA" in k:
-                self.request.form[k.replace('.AA', '.0')] = v
-                del self.request.form[k]
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage

@@ -4,7 +4,8 @@ Changelog
 3.2.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Reverted changes for custom persistent fields. We have some problems with shared zeoserver.
+  [cekk]
 
 
 3.2.0 (2019-01-09)

@@ -41,7 +41,7 @@ class SearchTabsVocabulary(object):
         settings = registry.forInterface(IRERSiteSearchSettings, check=False)
         tabs_mapping = getattr(settings, 'tabs_mapping', ())
         tabs_list = [SimpleTerm('all', 'all', 'All')]
-        available_tabs = [x.get('tab_title') for x in tabs_mapping]
+        available_tabs = [x.tab_title for x in tabs_mapping]
         tabs_list.extend(
             map(
                 lambda x: SimpleTerm(
@@ -67,7 +67,7 @@ class SearchIndexesVocabulary(object):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IRERSiteSearchSettings, check=False)
         indexes_mapping = getattr(settings, 'available_indexes', ())
-        available_indexes = [x.get('index') for x in indexes_mapping]
+        available_indexes = [x.index for x in indexes_mapping]
         available_indexes.sort()
         indexes_list = [SimpleTerm(i, i, i) for i in available_indexes]
         return SimpleVocabulary(indexes_list)
