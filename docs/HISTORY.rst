@@ -4,7 +4,8 @@ Changelog
 3.2.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Remove unused upgrade-step for previous revert.
+  [cekk]
 
 
 3.2.1 (2019-01-17)
