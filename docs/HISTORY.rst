@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.2.3 (unreleased)
+3.2.3 (2019-09-11)
 ------------------
 
 - Fix translations.
