@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2018-08-02 13:50+0000\n"
+"POT-Creation-Date: 2019-09-11 15:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: rer.sitesearch\n"
 
-#: ../browser/rer_search.py:673
+#: ../browser/rer_search.py:771
 msgid "${results_len} on ${total_len}"
 msgstr ""
 
@@ -25,28 +25,52 @@ msgstr ""
 msgid "<br />Hai cercato ${search}"
 msgstr ""
 
-#: ../browser/rer_search.py:220
+#: ../browser/rer_search.py:233
 msgid "All"
+msgstr ""
+
+msgid "Author"
 msgstr ""
 
 #: ../browser/templates/solr_more_like_this.pt:26
 msgid "Back to original search"
 msgstr ""
 
-#: ../browser/controlpanel.py:71
+#: ../browser/controlpanel.py:76
 msgid "Cancel"
 msgstr ""
 
-#: ../browser/controlpanel.py:67
+msgid "Category"
+msgstr ""
+
+#: ../browser/controlpanel.py:72
 msgid "Changes saved"
 msgstr ""
 
-#: ../browser/controlpanel.py:73
+msgid "Documents"
+msgstr ""
+
+#: ../browser/controlpanel.py:79
 msgid "Edit cancelled"
 msgstr ""
 
-#: ../interfaces.py:30
+#: ../interfaces.py:38
 msgid "Enable search with SOLR"
+msgstr ""
+
+msgid "Event end"
+msgstr ""
+
+msgid "Event start"
+msgstr ""
+
+msgid "Event type"
+msgstr ""
+
+msgid "Events"
+msgstr ""
+
+msgid "File"
 msgstr ""
 
 #: ../browser/controlpanel.py:18
@@ -54,11 +78,11 @@ msgid "General settings"
 msgstr ""
 
 #: ../browser/controlpanel.py:33
-#: ../interfaces.py:92
+#: ../interfaces.py:116
 msgid "Hidden indexes"
 msgstr ""
 
-#: ../interfaces.py:70
+#: ../interfaces.py:89
 msgid "Index in search"
 msgstr ""
 
@@ -66,11 +90,11 @@ msgstr ""
 msgid "Indexes"
 msgstr ""
 
-#: ../interfaces.py:67
+#: ../interfaces.py:83
 msgid "Indexes for search"
 msgstr ""
 
-#: ../interfaces.py:77
+#: ../interfaces.py:97
 msgid "Indexes order"
 msgstr ""
 
@@ -78,12 +102,18 @@ msgstr ""
 msgid "Installs the rer.sitesearch add-on."
 msgstr ""
 
-#: ../interfaces.py:14
+msgid "Links"
+msgstr ""
+
+#: ../interfaces.py:18
 msgid "Maximum number of characters in a single word"
 msgstr ""
 
-#: ../interfaces.py:22
+#: ../interfaces.py:28
 msgid "Maximum number of words in search query"
+msgstr ""
+
+msgid "News"
 msgstr ""
 
 #: ../browser/templates/solr_more_like_this.pt:61
@@ -114,7 +144,7 @@ msgstr ""
 msgid "Refine your search:"
 msgstr ""
 
-#: ../browser/controlpanel.py:60
+#: ../browser/controlpanel.py:64
 msgid "Save"
 msgstr ""
 
@@ -122,11 +152,11 @@ msgstr ""
 msgid "Search results"
 msgstr ""
 
-#: ../interfaces.py:45
+#: ../interfaces.py:57
 msgid "Search tab"
 msgstr ""
 
-#: ../interfaces.py:42
+#: ../interfaces.py:52
 msgid "Search tabs"
 msgstr ""
 
@@ -138,15 +168,18 @@ msgstr ""
 msgid "Similar results for: ${solr_query_txt}"
 msgstr ""
 
-#: ../browser/controlpanel.py:43
+#: ../browser/controlpanel.py:44
 msgid "Site Search settings"
+msgstr ""
+
+msgid "Subject"
 msgstr ""
 
 #: ../browser/controlpanel.py:23
 msgid "Tabs"
 msgstr ""
 
-#: ../interfaces.py:52
+#: ../interfaces.py:64
 msgid "Tabs order"
 msgstr ""
 
@@ -154,56 +187,56 @@ msgstr ""
 msgid "Uninstalls the rer.sitesearch add-on."
 msgstr ""
 
-#: ../browser/rer_search.py:785
+#: ../browser/rer_search.py:897
 msgid "alphabetically"
 msgstr ""
 
-#: ../browser/rer_search.py:783
+#: ../browser/rer_search.py:895
 msgid "date (newest first)"
 msgstr ""
 
 #. Default: "Select the indexes that you want to show for faceted navigation. You can define also the order. \"All\" tab shows all results."
-#: ../interfaces.py:78
+#: ../interfaces.py:98
 msgid "help_indexes_order"
 msgstr ""
 
 #. Default: "Set what is the maximum length of a single search word. Longer words will be omitted from the search."
-#: ../interfaces.py:15
+#: ../interfaces.py:19
 msgid "help_max_word_len"
 msgstr ""
 
 #. Default: "Set what is the maximum number of words in the search query. The other words will be omitted from the search."
-#: ../interfaces.py:23
+#: ../interfaces.py:29
 msgid "help_max_words"
 msgstr ""
 
 #. Default: "Insert a list of indexes that should be used for faceted navigation."
-#: ../interfaces.py:68
+#: ../interfaces.py:84
 msgid "help_sitesearch_available_indexes"
 msgstr ""
 
 #. Default: "Insert a list of indexes that can't be used for faceted search, but we need to keep."
-#: ../interfaces.py:93
+#: ../interfaces.py:117
 msgid "help_sitesearch_hidden_indexes"
 msgstr ""
 
 #. Default: "Set site search configurations"
-#: ../browser/controlpanel.py:44
+#: ../browser/controlpanel.py:45
 msgid "help_sitesearch_settings_editform"
 msgstr ""
 
 #. Default: "If enabled and collective.solr is correctly set, SOLR search engine will be used instead Plone catalog."
-#: ../interfaces.py:31
+#: ../interfaces.py:39
 msgid "help_solr_search_enabled"
 msgstr ""
 
 #. Default: "Insert a list of tabs to show on search results. Each tab can contain different content_types."
-#: ../interfaces.py:43
+#: ../interfaces.py:53
 msgid "help_tabs_mapping"
 msgstr ""
 
 #. Default: "Select the tabs that you want to show in the search and define an order."
-#: ../interfaces.py:53
+#: ../interfaces.py:65
 msgid "help_tabs_order"
 msgstr ""
 
@@ -232,62 +265,62 @@ msgstr ""
 msgid "label_searchbox_all_site"
 msgstr ""
 
-#: ../browser/rer_search.py:782
+#: ../browser/rer_search.py:893
 msgid "relevance"
 msgstr ""
 
 #. Default: "\"${word}\" is a too long word and was ignored. Try using a shorter word."
-#: ../browser/rer_search.py:589
+#: ../browser/rer_search.py:679
 msgid "search_limit_word_characters_label"
 msgstr ""
 
 #. Default: "\"${word}\" (and any subsequent words) was ignored because we limit queries to ${max_words} words."
-#: ../browser/rer_search.py:580
+#: ../browser/rer_search.py:662
 msgid "search_limit_words_label"
 msgstr ""
 
 #. Default: "You need to pass some query value."
-#: ../browser/rer_search.py:550
+#: ../browser/rer_search.py:626
 msgid "search_no_query_label"
 msgstr ""
 
 #. Default: "Allowable indexes in catalog"
-#: ../custom_fields.py:41
+#: ../custom_fields.py:54
 msgid "sitesearch_allowable"
 msgstr ""
 
 #. Default: "Select an index."
-#: ../custom_fields.py:42
+#: ../custom_fields.py:57
 msgid "sitesearch_allowable_help"
 msgstr ""
 
 #. Default: "Index title"
-#: ../custom_fields.py:36
+#: ../custom_fields.py:46
 msgid "sitesearch_index_title"
 msgstr ""
 
 #. Default: "Insert a title for this search filter. You can provide translations for this title with a proper translation file for rer.sitesearch domain."
-#: ../custom_fields.py:37
+#: ../custom_fields.py:47
 msgid "sitesearch_index_title_help"
 msgstr ""
 
 #. Default: "Portal types"
-#: ../custom_fields.py:23
+#: ../custom_fields.py:30
 msgid "sitesearch_tab_portal_types"
 msgstr ""
 
 #. Default: "Select which portal_types shows on this tab."
-#: ../custom_fields.py:24
+#: ../custom_fields.py:31
 msgid "sitesearch_tab_portal_types_help"
 msgstr ""
 
 #. Default: "Tab title"
-#: ../custom_fields.py:18
+#: ../custom_fields.py:22
 msgid "sitesearch_tab_title"
 msgstr ""
 
 #. Default: "Insert a title for this tab. You can provide translations for this title with a proper translation file for rer.sitesearch domain."
-#: ../custom_fields.py:19
+#: ../custom_fields.py:23
 msgid "sitesearch_tab_title_help"
 msgstr ""
 
