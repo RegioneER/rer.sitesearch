@@ -584,7 +584,9 @@ class RERSearch(Search, RerSearchMixin):
                                 index_value
                                 not in filter_dict[index_id]['values']
                             ):
-                                filter_dict[index_id]['values'][index_value] = 1
+                                filter_dict[index_id]['values'][
+                                    index_value
+                                ] = 1
                             else:
                                 filter_dict[index_id]['values'][
                                     index_value
@@ -892,7 +894,10 @@ class RERSearch(Search, RerSearchMixin):
         return (
             SortOption(self.request, _(u'relevance'), ''),
             SortOption(
-                self.request, _(u'date (newest first)'), 'Date', reverse=True
+                self.request,
+                _(u'date (newest first)'),
+                'modified',
+                reverse=True,
             ),
             SortOption(self.request, _(u'alphabetically'), 'sortable_title'),
         )

@@ -4,7 +4,10 @@ Changelog
 3.2.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Sort by date now is for *modified* index.
+  [cekk]
+- Now take care also for sort_order.
+  [cekk]
 
 
 3.2.3 (2019-09-11)

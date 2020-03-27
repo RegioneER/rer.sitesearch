@@ -19,5 +19,9 @@
     "grunt-sass": "^2.0.0",
     "less-plugin-inline-urls": "^1.2.0",
     "load-grunt-tasks": "^3.5.2"
+  },
+  "scripts": {
+    "compile": "grunt compile",
+    "develop": "grunt"
   }
 }

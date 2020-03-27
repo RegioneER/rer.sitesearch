@@ -48,6 +48,7 @@
                         tabs_mapping view/tabs_mapping;">
 
           <input type="hidden" name="sort_on" value="" />
+          <input type="hidden" name="sort_order" value="" />
           <div>
             <div id="search-results-wrapper"
                  tal:define="b_start python:0;
@@ -339,7 +340,8 @@
                                                    tal:condition="not:selected"
                                                    tal:content="item/title"
                                                    tal:attributes="href item/url;
-                                                                   data-sort python:item.sortkey and item.sortkey or None"></a>
+                                                                   data-sort python:item.sortkey and item.sortkey or None;
+                                                                   data-sort_order python:getattr(item, 'reverse', False) and 'reverse' or ''"></a>
                                                 <strong tal:condition="selected" tal:content="item/title"></strong>
                                                 </tal:item>
                                             </li>
@@ -354,11 +356,11 @@
                                                       lastweek python:(today-7).Date();
                                                       lastmonth python:(today-31).Date();
                                                       ever string:1970-01-02;
-                                                      checked python:request.get('created', []);
+                                                      checked python:request.get('modified', []);
                                                       checked python:(len(checked) == 1) and checked[0] or ever">
                                     <input type="radio"
                                            id="query-date-yesterday"
-                                           name="created.query:record:list:date"
+                                           name="modified.query:record:list:date"
                                            tal:attributes="value yesterday;
                                                            checked python:checked==yesterday and 'checked' or '';"
                                            />
@@ -366,7 +368,7 @@
                                     <br />
                                     <input type="radio"
                                            id="query-date-lastweek"
-                                           name="created.query:record:list:date"
+                                           name="modified.query:record:list:date"
                                            tal:attributes="value lastweek;
                                                            checked python:checked==lastweek and 'checked' or '';"
                                            />
@@ -374,7 +376,7 @@
                                     <br />
                                     <input type="radio"
                                            id="query-date-lastmonth"
-                                           name="created.query:record:list:date"
+                                           name="modified.query:record:list:date"
                                            tal:attributes="value lastmonth;
                                                            checked python:checked==lastmonth and 'checked' or '';"
                                            />
@@ -382,14 +384,14 @@
                                     <br />
                                     <input type="radio"
                                            id="query-date-ever"
-                                           name="created.query:record:list:date"
+                                           name="modified.query:record:list:date"
                                            tal:attributes="value ever;
                                                            checked python:checked==ever and 'checked' or '';"
                                            />
                                     <label for="query-date-ever" i18n:translate="time_ever">Ever</label>
                                 </tal:datetime>
 
-                                <input type="hidden" name="created.range:record" value="min" />
+                                <input type="hidden" name="modified.range:record" value="min" />
                             </div>
                             <!--INDEXES and FACETED-->
                             <div id="indexes-options"
