@@ -13,9 +13,10 @@ setup(
     # Get more strings from
     # http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        "Framework :: Plone",
-        "Framework :: Plone :: 5.0",
         "Framework :: Plone :: 5.1",
+        "Framework :: Plone :: Addon",
+        "Framework :: Plone",
+        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python",
     ],
     keywords='',

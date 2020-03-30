@@ -58,20 +58,20 @@ Resources are registered on a separate bundle, and are compiled and minified by 
 
 To setup node/grunt environment, first of all you need to launch this command::
 
-  npm install
+  yarn install
 
 
 When you need to change some resources, you need to recompile them, and you have two ways.
 
 ::
 
-  grunt
+  yarn develop
 
 this start a watch demon that listen to changes and recompile them automatically
 
 ::
 
-  grunt compile
+  yarn compile
 
 compile all resources
 
