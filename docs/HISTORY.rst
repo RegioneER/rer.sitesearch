@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.2.4 (unreleased)
+3.2.4 (2020-04-22)
 ------------------
 
 - Sort by date now is for *modified* index.
