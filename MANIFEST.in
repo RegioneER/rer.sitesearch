@@ -7,3 +7,5 @@ exclude Gruntfile.js
 exclude package.json
 exclude *.cfg
 exclude requirements.txt
+exclude *.lock
+include *.txt
