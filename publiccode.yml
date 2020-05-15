@@ -1,0 +1,122 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+categories:
+  - application-development
+  - communications
+  - contact-management
+  - customer-service-and-support
+  - help-desk
+  - instant-messaging
+dependsOn:
+  open:
+    - name: Plone
+      optional: false
+      version: ''
+      versionMax: ''
+      versionMin: '5'
+logo: docs/rer-logo.png
+description:
+  it:
+    features:
+      - sottosito
+      - stili personalizzabili
+      - testata per i sottositi
+      - configurazione avanzata per gli stili
+    genericName: Plone addon
+    longDescription: >
+      ## Features
+
+
+      - Nessun Content Type aggiuntivo
+
+      - Viewlet con il colore e l'immagine di sfondo personalizzabili del
+      sottosito in ogni figlio di questo
+
+      - Pannello di controllo dove impostare stili aggiuntiivi per il sottosito
+
+
+      ## Abilitare un sottosito
+
+
+      I tipi di contenuto folderish hanno una nuova azione chiamata "Imposta
+      come sottosito" per contrassegnarli come tali.
+
+
+      ## Disabilitare un sottosito
+
+
+      I tipi di contenuto folderish contrassegnati come sottositi hanno una
+      nuova azione chiamata "Disabilita come sottoosito" per deselezionarli come
+      tali.
+
+
+      ## Impostazioni dei sottositi
+
+
+      Un sottosito ha una nuova voce nella barra degli strumenti: Stili
+      sottositi.
+
+      In questa vista si possono impostare due parametri: il colore e l'immagine
+      di sfondo.
+
+
+      Questi parametri snoo usati per dare gli stili alla testata dei sottositi
+      (è una viewlet). Questi stili sono combinati in una viewlet custom che li
+      inietta come stili CSS.
+
+
+      ## Personalizzare il layout dei sottositi
+
+
+      Nel pannello di controllo del sito c'è una configurazione con una textarea
+      dove si può inserire del codice CSS che verrà applicato in ogni sottosito
+      e nei rispettivi figli.
+
+
+      Questo è utile per esempio se si volesse che tutte le intestazioni (h1 o
+      h2) nel sottosito avessero il colore impostato per questo.
+    shortDescription: Sottositi per i portali della Regione Emilia-Romagna
+developmentStatus: stable
+it:
+  conforme:
+    gdpr: true
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: true
+    modelloInteroperabilita: false
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: false
+legal:
+  license: GPL-2.0-only
+  mainCopyrightOwner: Regione Emilia-Romagna
+  repoOwner: Regione Emilia-Romagna
+localisation:
+  availableLanguages:
+    - it
+    - en
+  localisationReady: true
+maintenance:
+  contacts:
+    - affiliation: Regione Emilia-Romagna
+      email: webmaster@regione.emilia-romagna.it
+      name: Sara Turra
+  contractors:
+    - name: RedTurtle
+      until: '2020-08-31'
+      website: 'https://www.redturtle.it/'
+  type: contract
+name: rer.subsites
+platforms:
+  - web
+releaseDate: '2011-03-14'
+softwareType: addon
+softwareVersion: 1.4.1
+url: 'https://github.com/RegioneER/rer.subsites'
+usedBy:
+  - Regione Emilia-Romagna
