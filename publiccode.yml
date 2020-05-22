@@ -5,80 +5,106 @@
 publiccodeYmlVersion: '0.2'
 categories:
   - application-development
-  - communications
-  - contact-management
-  - customer-service-and-support
-  - help-desk
-  - instant-messaging
+  - content-management
 dependsOn:
   open:
     - name: Plone
       optional: false
       version: ''
       versionMax: ''
-      versionMin: '5'
+      versionMin: '4'
 logo: docs/rer-logo.png
 description:
   it:
     features:
-      - sottosito
-      - stili personalizzabili
-      - testata per i sottositi
-      - configurazione avanzata per gli stili
+      - Ricerca
+      - Ricerca avanzata
+      - Tabs
+      - Indici
     genericName: Plone addon
     longDescription: >
-      ## Features
+      ## Introduzione
 
 
-      - Nessun Content Type aggiuntivo
-
-      - Viewlet con il colore e l'immagine di sfondo personalizzabili del
-      sottosito in ogni figlio di questo
-
-      - Pannello di controllo dove impostare stili aggiuntiivi per il sottosito
+      Un prodotto che sostituisce il modello di ricerca di base di Plone e
+      aggiunge alcune nuove funzionalità. Ha una colonna a sinistra con il
+      modulo di ricerca e alcuni campi aggiuntivi per affinare la ricerca:
 
 
-      ## Abilitare un sottosito
+      - Un pulsante di opzione per scegliere se cercare nel percorso corrente o
+      in tutto il portale
+
+      - Un elenco di indici personalizzabili dal pannello di controllo
 
 
-      I tipi di contenuto folderish hanno una nuova azione chiamata "Imposta
-      come sottosito" per contrassegnarli come tali.
+      Nella cornice centrale ci sono i risultati, raggruppati in schede
+      (personalizzate nel pannello di controllo)
 
 
-      ## Disabilitare un sottosito
+      ​
 
 
-      I tipi di contenuto folderish contrassegnati come sottositi hanno una
-      nuova azione chiamata "Disabilita come sottoosito" per deselezionarli come
-      tali.
+      ## Impostazioni
 
 
-      ## Impostazioni dei sottositi
+      Nel pannello di controllo (RER Sitesearch) è possibile impostare alcuni
+      parametri di ricerca. I più importanti sono "tab", "indici" e "indici
+      nascosti".
 
 
-      Un sottosito ha una nuova voce nella barra degli strumenti: Stili
-      sottositi.
-
-      In questa vista si possono impostare due parametri: il colore e l'immagine
-      di sfondo.
+      ### Tabs
 
 
-      Questi parametri snoo usati per dare gli stili alla testata dei sottositi
-      (è una viewlet). Questi stili sono combinati in una viewlet custom che li
-      inietta come stili CSS.
+      C'è sempre una scheda generica "Tutto" che mostra tutti i risultati della
+      ricerca. In questo pannello di configurazione, è possibile impostare un
+      elenco di schede aggiuntive che raggrupperanno i risultati per
+      portal\_type.
 
 
-      ## Personalizzare il layout dei sottositi
+      Ad esempio è possibile aggiungere una scheda "Documenti" che contiene
+      documenti e file. Un'altra scheda "Notizie / eventi" può contenere notizie
+      ed eventi. E così via.
 
 
-      Nel pannello di controllo del sito c'è una configurazione con una textarea
-      dove si può inserire del codice CSS che verrà applicato in ogni sottosito
-      e nei rispettivi figli.
+      Puoi anche definire l'ordine di queste schede.
 
 
-      Questo è utile per esempio se si volesse che tutte le intestazioni (h1 o
-      h2) nel sottosito avessero il colore impostato per questo.
-    shortDescription: Sottositi per i portali della Regione Emilia-Romagna
+      Se sei uno sviluppatore e fornisci un file di traduzione con dominio
+      "rer.sitesearch", puoi tradurre le schede in diverse lingue.
+
+
+      ### Indici
+
+
+      La vista di ricerca mostra un elenco di parametri (indici nel catalogo)
+      nella colonna di sinistra per perfezionare i risultati.
+
+
+      Nel pannello di controllo di Sitesearch puoi definire quali indici
+      mostrare, con quale etichetta e ordine.
+
+
+      ### Indici nascosti
+
+
+      A volte gli utenti sono arrivati nel modulo di ricerca dopo aver fatto
+      clic in qualche punto del sito, ad esempio in un portlet di calendario.
+      L'URL generato aggiunge alcuni parametri di query come "start" e "end" per
+      eseguire la ricerca e mostrare solo gli eventi nelle date selezionate.
+
+
+      Il motore di ricerca di rer.sitesearch rimuove tutti gli indici passati
+      nella query che non corrispondono alla sua configurazione degli indici,
+      per evitare ricerche indesiderate, quindi ad esempio se non vuoi mostrare
+      alcuni filtri di data nella barra laterale, questi filtri ( inizio e fine)
+      verrà rimosso dalla query e la ricerca sarà utile.
+
+
+      La configurazione degli indici nascosti consente di definire un insieme di
+      indici che devono essere conservati per ricerche speciali come queste.
+      Pertanto, se un parametro corrisponde a questo elenco verrà incluso nella
+      query e non eliminato.
+    shortDescription: Funzionalità aggiuntive per la ricerca di Plone
 developmentStatus: stable
 it:
   conforme:
@@ -111,12 +137,12 @@ maintenance:
       until: '2020-08-31'
       website: 'https://www.redturtle.it/'
   type: contract
-name: rer.subsites
+name: rer.sitesearch
 platforms:
   - web
-releaseDate: '2011-03-14'
+releaseDate: '2014-11-24'
 softwareType: addon
-softwareVersion: 1.4.1
-url: 'https://github.com/RegioneER/rer.subsites'
+softwareVersion: 3.2.4
+url: 'https://github.com/RegioneER/rer.sitesearch'
 usedBy:
   - Regione Emilia-Romagna
