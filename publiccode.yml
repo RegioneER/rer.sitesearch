@@ -1,0 +1,148 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+categories:
+  - application-development
+  - content-management
+dependsOn:
+  open:
+    - name: Plone
+      optional: false
+      version: ''
+      versionMax: ''
+      versionMin: '4'
+logo: docs/rer-logo.png
+description:
+  it:
+    features:
+      - Ricerca
+      - Ricerca avanzata
+      - Tabs
+      - Indici
+    genericName: Plone addon
+    longDescription: >
+      ## Introduzione
+
+
+      Un prodotto che sostituisce il modello di ricerca di base di Plone e
+      aggiunge alcune nuove funzionalità. Ha una colonna a sinistra con il
+      modulo di ricerca e alcuni campi aggiuntivi per affinare la ricerca:
+
+
+      - Un pulsante di opzione per scegliere se cercare nel percorso corrente o
+      in tutto il portale
+
+      - Un elenco di indici personalizzabili dal pannello di controllo
+
+
+      Nella cornice centrale ci sono i risultati, raggruppati in schede
+      (personalizzate nel pannello di controllo)
+
+
+      ​
+
+
+      ## Impostazioni
+
+
+      Nel pannello di controllo (RER Sitesearch) è possibile impostare alcuni
+      parametri di ricerca. I più importanti sono "tab", "indici" e "indici
+      nascosti".
+
+
+      ### Tabs
+
+
+      C'è sempre una scheda generica "Tutto" che mostra tutti i risultati della
+      ricerca. In questo pannello di configurazione, è possibile impostare un
+      elenco di schede aggiuntive che raggrupperanno i risultati per
+      portal\_type.
+
+
+      Ad esempio è possibile aggiungere una scheda "Documenti" che contiene
+      documenti e file. Un'altra scheda "Notizie / eventi" può contenere notizie
+      ed eventi. E così via.
+
+
+      Puoi anche definire l'ordine di queste schede.
+
+
+      Se sei uno sviluppatore e fornisci un file di traduzione con dominio
+      "rer.sitesearch", puoi tradurre le schede in diverse lingue.
+
+
+      ### Indici
+
+
+      La vista di ricerca mostra un elenco di parametri (indici nel catalogo)
+      nella colonna di sinistra per perfezionare i risultati.
+
+
+      Nel pannello di controllo di Sitesearch puoi definire quali indici
+      mostrare, con quale etichetta e ordine.
+
+
+      ### Indici nascosti
+
+
+      A volte gli utenti sono arrivati nel modulo di ricerca dopo aver fatto
+      clic in qualche punto del sito, ad esempio in un portlet di calendario.
+      L'URL generato aggiunge alcuni parametri di query come "start" e "end" per
+      eseguire la ricerca e mostrare solo gli eventi nelle date selezionate.
+
+
+      Il motore di ricerca di rer.sitesearch rimuove tutti gli indici passati
+      nella query che non corrispondono alla sua configurazione degli indici,
+      per evitare ricerche indesiderate, quindi ad esempio se non vuoi mostrare
+      alcuni filtri di data nella barra laterale, questi filtri ( inizio e fine)
+      verrà rimosso dalla query e la ricerca sarà utile.
+
+
+      La configurazione degli indici nascosti consente di definire un insieme di
+      indici che devono essere conservati per ricerche speciali come queste.
+      Pertanto, se un parametro corrisponde a questo elenco verrà incluso nella
+      query e non eliminato.
+    shortDescription: Funzionalità aggiuntive per la ricerca di Plone
+developmentStatus: stable
+it:
+  conforme:
+    gdpr: true
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: true
+    modelloInteroperabilita: false
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: false
+legal:
+  license: GPL-2.0-only
+  mainCopyrightOwner: Regione Emilia-Romagna
+  repoOwner: Regione Emilia-Romagna
+localisation:
+  availableLanguages:
+    - it
+    - en
+  localisationReady: true
+maintenance:
+  contacts:
+    - affiliation: Regione Emilia-Romagna
+      email: webmaster@regione.emilia-romagna.it
+      name: Sara Turra
+  contractors:
+    - name: RedTurtle
+      until: '2020-08-31'
+      website: 'https://www.redturtle.it/'
+  type: contract
+name: rer.sitesearch
+platforms:
+  - web
+releaseDate: '2014-11-24'
+softwareType: addon
+softwareVersion: 3.2.4
+url: 'https://github.com/RegioneER/rer.sitesearch'
+usedBy:
+  - Regione Emilia-Romagna
