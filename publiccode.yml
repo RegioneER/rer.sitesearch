@@ -107,6 +107,8 @@ description:
     shortDescription: Funzionalità aggiuntive per la ricerca di Plone
 developmentStatus: stable
 it:
+  riuso:
+    codiceIPA: r_emiro
   conforme:
     gdpr: true
     lineeGuidaDesign: false
