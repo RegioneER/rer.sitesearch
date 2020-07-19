@@ -754,7 +754,7 @@ class RERSearch(Search, RerSearchMixin):
         if not values:
             return []
         if isinstance(values, list):
-            return values
+            return [x.decode("utf-8") for x in values]
         elif getattr(values, "query", None):
             return values.query
         else:
