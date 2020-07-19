@@ -23,9 +23,10 @@ require(["jquery"], function ($) {
     return this.each(function () {
       var $container = $(this);
       //$container.fadeOut("slow")
-      var searchQuery = $.extend({ ajax_load: 1 }, query);
+      // var searchQuery = $.extend({ ajax_load: 1 }, query);
+      var searchQuery = query + "&ajax_load=1";
       $container.addClass("searchingLoader");
-      $.get("@@updated_search", searchQuery, function (data) {
+      $.get("@@updated_search?" + searchQuery, function (data) {
         $container.hide();
 
         // Before assigning any variable we need to make sure we
@@ -89,18 +90,20 @@ require(["jquery"], function ($) {
   };
 
   generateQuery = function generateQuery() {
-    var queryArray = $("form.searchPage").serializeArray();
-    var query = {};
-    var notAddableIndexes = [
-    // 'created.query:record:list:date',
-    // 'created.range:record',
-    "_authenticator"];
-    queryArray.map(function (field) {
-      if (notAddableIndexes.indexOf(field.name) === -1 && field.value !== "") {
-        query[field.name] = field.value;
-      }
-    });
-    return query;
+    return $("form.searchPage").serialize();
+
+    // var query = {};
+    // var notAddableIndexes = [
+    //   // 'created.query:record:list:date',
+    //   // 'created.range:record',
+    //   "_authenticator",
+    // ];
+    // queryArray.map(function (field) {
+    //   if (notAddableIndexes.indexOf(field.name) === -1 && field.value !== "") {
+    //     query[field.name] = field.value;
+    //   }
+    // });
+    // return query;
   };
 
   pushState = function pushState(query) {
@@ -235,7 +238,7 @@ require(["jquery"], function ($) {
   $(document).on("click", "#search-results nav.pagination a", function (e) {
     e.preventDefault();
     var queryString = this.search.split("?")[1];
-    var b_start;
+    var b_start = "";
     var batchStr = "b_start:int=";
     if (queryString.length > 0) {
       b_start = queryString.split("&").reduce(function (acc, field) {
@@ -246,7 +249,10 @@ require(["jquery"], function ($) {
       }, 0);
     }
     query = generateQuery();
-    query["b_start:int"] = parseInt(b_start, 10);
+    if (b_start.length) {
+      query += "&b_start:int=" + parseInt(b_start, 10);
+    }
+    // query["b_start:int"] = parseInt(b_start, 10);
     $("#search-results").pullSearchResults(query);
     pushState(query);
   });
