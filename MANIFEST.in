@@ -2,6 +2,7 @@ recursive-include docs *
 recursive-include rer *
 global-exclude *pyc
 include *.rst
+include *.yml
 exclude .nvmrc
 exclude Gruntfile.js
 exclude package.json
