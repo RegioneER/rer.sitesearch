@@ -4,7 +4,8 @@ Changelog
 3.2.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix query serialization and sort order.
+  [cekk]
 
 
 3.2.4 (2020-04-22)
