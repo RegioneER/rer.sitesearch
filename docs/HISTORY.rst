@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.2.5 (unreleased)
+3.2.5 (2020-08-13)
 ------------------
 
 - Fix query serialization and sort order.
