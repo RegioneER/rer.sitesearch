@@ -109,7 +109,7 @@ require(["jquery"], function ($) {
   pushState = function pushState(query) {
     var portalUrl = $("body").data("portal-url");
     var navigation_root_url = $("meta[name=navigation_root_url]").attr("content") || window.navigation_root_url || portalUrl;
-    var url = navigation_root_url + "/@@search?" + $.param(query);
+    var url = navigation_root_url + "/@@search?" + query;
     history.pushState(null, null, url);
   };
 

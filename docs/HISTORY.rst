@@ -4,7 +4,8 @@ Changelog
 3.2.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix bug in query serialization.
+  [cekk]
 
 
 3.2.5 (2020-08-13)

@@ -118,7 +118,7 @@ require(["jquery"], function ($) {
       $("meta[name=navigation_root_url]").attr("content") ||
       window.navigation_root_url ||
       portalUrl;
-    var url = navigation_root_url + "/@@search?" + $.param(query);
+    var url = navigation_root_url + "/@@search?" + query;
     history.pushState(null, null, url);
   };
 
