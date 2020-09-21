@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '3.2.6'
+version = '3.2.7.dev0'
 
 setup(
     name='rer.sitesearch',
