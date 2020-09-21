@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.2.6 (unreleased)
+3.2.6 (2020-09-21)
 ------------------
 
 - Fix bug in query serialization.
