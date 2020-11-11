@@ -64,4 +64,3 @@ class TestUninstall(unittest.TestCase):
         from plone.browserlayer import utils
 
         self.assertNotIn(IRERSiteSearchLayer, utils.registered_layers())
-

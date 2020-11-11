@@ -1,4 +1,4 @@
-from Acquisition import aq_get
+# -*- coding: utf-8 -*-
 from zope.interface import implements
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary
@@ -19,7 +19,7 @@ class IndexesVocabulary(object):
 
     def __call__(self, context):
         site = getSite()
-        pc = getToolByName(site, 'portal_catalog')
+        pc = getToolByName(site, "portal_catalog")
         indexes = pc.indexes()
         indexes.sort()
         indexes = [SimpleTerm(i, i, i) for i in indexes]
@@ -39,13 +39,13 @@ class SearchTabsVocabulary(object):
     def __call__(self, context):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IRERSiteSearchSettings, check=False)
-        tabs_mapping = getattr(settings, 'tabs_mapping', ())
-        tabs_list = [SimpleTerm('all', 'all', 'All')]
+        tabs_mapping = getattr(settings, "tabs_mapping", ())
+        tabs_list = [SimpleTerm("all", "all", "All")]
         available_tabs = [x.tab_title for x in tabs_mapping]
         tabs_list.extend(
             map(
                 lambda x: SimpleTerm(
-                    x.lower().replace(' ', '-'), x.lower().replace(' ', '-'), x
+                    x.lower().replace(" ", "-"), x.lower().replace(" ", "-"), x
                 ),
                 sorted(available_tabs),
             )
@@ -66,7 +66,7 @@ class SearchIndexesVocabulary(object):
     def __call__(self, context):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IRERSiteSearchSettings, check=False)
-        indexes_mapping = getattr(settings, 'available_indexes', ())
+        indexes_mapping = getattr(settings, "available_indexes", ())
         available_indexes = [x.index for x in indexes_mapping]
         available_indexes.sort()
         indexes_list = [SimpleTerm(i, i, i) for i in available_indexes]
