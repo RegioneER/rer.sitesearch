@@ -14,8 +14,10 @@ htmlcov/
 include/
 lib/
 local/
+node_modules/
 parts/
 src/*
+src/rer/sitesearch/browser/static/dist/dev/*
 test.plone_addon/
 var/
 # files

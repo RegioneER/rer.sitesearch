@@ -20,7 +20,8 @@
   </metal:content-description>
   <metal:content-core fill-slot="content-core">
     <metal:content-core define-macro="content-core">
-      qui ci va il div
+      <div id="sitesearch"/>
+      <script src="${view/get_resource_js}"></script>
     </metal:content-core>
   </metal:content-core>
 </body>

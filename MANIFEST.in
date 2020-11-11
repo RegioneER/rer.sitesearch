@@ -10,3 +10,4 @@ exclude *.cfg
 exclude requirements.txt
 exclude *.lock
 include *.txt
+exclude node_modules
