@@ -21,7 +21,8 @@ class RERSiteSearchSettingsEditForm(controlpanel.RegistryEditForm):
     )
 
     fields = field.Fields(IRERSiteSearchSettings)
-    fields["tabs_mapping"].widgetFactory = BlockDataGridFieldFactory
+    fields["types_grouping"].widgetFactory = BlockDataGridFieldFactory
+    fields["available_indexes"].widgetFactory = BlockDataGridFieldFactory
 
     def updateWidgets(self):
         """
@@ -29,8 +30,9 @@ class RERSiteSearchSettingsEditForm(controlpanel.RegistryEditForm):
         """
         super(RERSiteSearchSettingsEditForm, self).updateWidgets()
 
-        self.widgets["tabs_mapping"].allow_reorder = True
-        self.widgets["tabs_mapping"].main_table_css_class = "my_custom_class"
+        self.widgets["types_grouping"].allow_reorder = True
+        # self.widgets["types_grouping"].main_table_css_class = ""
+        # self.widgets["available_indexes"].main_table_css_class = ""
 
 
 @implementer(IRerSiteSearchSettingsForm)

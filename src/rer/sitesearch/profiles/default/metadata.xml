@@ -2,5 +2,7 @@
 <metadata>
   <version>4000</version>
   <dependencies>
+    <dependency>profile-plone.restapi:default</dependency>
+    <dependency>profile-collective.z3cform.datagridfield:default</dependency>
   </dependencies>
 </metadata>
