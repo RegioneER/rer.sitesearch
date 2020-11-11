@@ -1,8 +1,8 @@
-from zope.interface import Interface
+from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from z3c.form.interfaces import IForm
 
 
-class IRERSiteSearchLayer(Interface):
+class IRERSiteSearchLayer(IDefaultBrowserLayer):
     """A layer specific for rer.sitesearch
     """
 
