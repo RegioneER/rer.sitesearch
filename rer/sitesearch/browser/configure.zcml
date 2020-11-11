@@ -4,44 +4,30 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="rer.sitesearch">
+  
+  <plone:static
+      directory="static"
+      type="plone"
+      name="rer.sitesearch"
+      />
 
   <browser:page
         name="search"
-        class=".rer_search.RERSearch"
+        class=".search.View"
         permission="zope2.View"
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
         layer=".interfaces.IRERSiteSearchLayer"
-        template="templates/rer_search.pt"
+        template="templates/search.pt"
         />
 
   <browser:page
         name="search"
-        class=".rer_search.RERSearch"
+        class=".search.View"
         permission="zope2.View"
         for="*"
         layer=".interfaces.IRERSiteSearchLayer"
-        template="templates/rer_search.pt"
+        template="templates/search.pt"
         />
-
-    <browser:page
-        name="updated_search"
-        class=".rer_search.RERSearch"
-        permission="zope2.View"
-        for="Products.CMFCore.interfaces.IFolderish"
-        layer=".interfaces.IRERSiteSearchLayer"
-        template="templates/updated_search.pt"
-        />
-
-    <configure zcml:condition="installed collective.solr">
-    <browser:page
-        for="*"
-        name="solr_more_like_this"
-        class=".mlt.MLTView"
-        layer=".interfaces.IRERSiteSearchLayer"
-        template="templates/solr_more_like_this.pt"
-        permission="zope2.View"
-      />
-    </configure>
 
   <browser:page
         name="sitesearch-settings"
@@ -50,20 +36,5 @@
         permission="rer.sitesearch.ManageSettings"
         layer=".interfaces.IRERSiteSearchLayer"
         />
-
-  <!-- The skip links for accessibility -->
-    <browser:viewlet
-        name="plone.skip_links"
-        layer=".interfaces.IRERSiteSearchLayer"
-        manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
-        class=".viewlets.RERSkipLinksViewlet"
-        permission="zope2.View"
-        />
-
-    <plone:static
-      directory="static"
-      type="plone"
-      name="rer.sitesearch"
-      />
 
 </configure>

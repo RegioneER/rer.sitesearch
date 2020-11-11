@@ -2,9 +2,8 @@
 from plone import api
 from plone.app.registry.browser import controlpanel
 from Products.statusmessages.interfaces import IStatusMessage
-from rer.sitesearch import sitesearchMessageFactory as _
+from rer.sitesearch import _
 from rer.sitesearch.interfaces import IRERSiteSearchGeneralSettings
-from rer.sitesearch.interfaces import IRERSiteSearchHiddensIndexesSettings
 from rer.sitesearch.interfaces import IRERSiteSearchIndexesSettings
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
 from rer.sitesearch.interfaces import IRERSiteSearchTabsSettings
@@ -29,17 +28,12 @@ class FormIndexes(group.Group):
     fields = field.Fields(IRERSiteSearchIndexesSettings)
 
 
-class FormHiddenIndexes(group.Group):
-    label = _(u"Hidden indexes")
-    fields = field.Fields(IRERSiteSearchHiddensIndexesSettings)
-
-
 class RERSiteSearchSettingsEditForm(controlpanel.RegistryEditForm):
     """Media settings form.
     """
 
     schema = IRERSiteSearchSettings
-    groups = (FormGeneral, FormTabs, FormIndexes, FormHiddenIndexes)
+    groups = (FormGeneral, FormTabs, FormIndexes)
     id = "RERSiteSearchSettingsEditForm"
     label = _(u"Site Search settings")
     description = _(
@@ -53,15 +47,15 @@ class RERSiteSearchSettingsEditForm(controlpanel.RegistryEditForm):
         """
         super(RERSiteSearchSettingsEditForm, self).updateWidgets()
 
-        qi = api.portal.get_tool(name='portal_quickinstaller')
-        if not qi.isProductInstalled('collective.solr'):
+        qi = api.portal.get_tool(name="portal_quickinstaller")
+        if not qi.isProductInstalled("collective.solr"):
             # hide solr enable setting, if collective.solr isn't installed
-            for group in self.groups:
-                solr_search = group.fields.get('solr_search_enabled')
+            for fieldset in self.groups:
+                solr_search = fieldset.fields.get("solr_search_enabled")
                 if solr_search:
                     solr_search.mode = HIDDEN_MODE
 
-    @button.buttonAndHandler(_('Save'), name='save')
+    @button.buttonAndHandler(_("Save"), name="save")
     def handleSave(self, action):
         data, errors = self.extractData()
         if errors:
@@ -73,7 +67,7 @@ class RERSiteSearchSettingsEditForm(controlpanel.RegistryEditForm):
         )
         self.context.REQUEST.RESPONSE.redirect("@@sitesearch-settings")
 
-    @button.buttonAndHandler(_('Cancel'), name='cancel')
+    @button.buttonAndHandler(_("Cancel"), name="cancel")
     def handleCancel(self, action):
         IStatusMessage(self.request).addStatusMessage(
             _(u"Edit cancelled"), "info"

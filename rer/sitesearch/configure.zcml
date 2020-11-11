@@ -5,9 +5,6 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="rer.sitesearch">
 
-  <five:registerPackage package="." initialize=".initialize" />
-  <include package="plone.app.registry" />
-  <include package="plone.app.contentlisting" />
   <i18n:registerTranslations directory="locales" />
 
   <!--Register permission id-->
@@ -36,24 +33,17 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       post_handler=".setuphandlers.uninstall"
       />
+  
+  <genericsetup:registerProfile
+      name="to_4000"
+      title="Migrate to new version"
+      directory="profiles/to_4000"
+      description=""
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
 
   <utility
       factory=".setuphandlers.HiddenProfiles"
       name="rer.sitesearch-hiddenprofiles" />
-
-  <utility
-    component=".vocabularies.IndexesVocabularyFactory"
-    name="rer.sitesearch.vocabularies.IndexesVocabulary"
-    />
-  <utility
-    component=".vocabularies.SearchTabsVocabularyFactory"
-    name="rer.sitesearch.vocabularies.SearchTabsVocabulary"
-    />
-  <utility
-    component=".vocabularies.SearchIndexesVocabularyFactory"
-    name="rer.sitesearch.vocabularies.SearchIndexesVocabulary"
-    />
-  <!-- indexer for Date -->
-  <adapter name="Date" factory=".indexer.Date" />
 
 </configure>
