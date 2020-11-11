@@ -16,6 +16,7 @@
   <include file="upgrades.zcml" />
   <include package=".adapters" />
   <include package=".browser" />
+  <include package=".restapi" />
 
   <genericsetup:registerProfile
       name="default"
@@ -47,4 +48,8 @@
       factory=".setuphandlers.HiddenProfiles"
       name="rer.sitesearch-hiddenprofiles" />
 
+  <utility
+    component=".vocabularies.IndexesVocabularyFactory"
+    name="rer.sitesearch.vocabularies.IndexesVocabulary"
+    />
 </configure>
