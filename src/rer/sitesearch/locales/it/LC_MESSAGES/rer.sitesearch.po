@@ -1,0 +1,327 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2019-09-11 15:40+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: Andrea Cecchi <andrea.cecchi@redturtle.net>\n"
+"Language-Team: LANGUAGE <sviluppoplone@redturtle.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: it\n"
+"Language-Name: Italian\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: rer.sitesearch\n"
+
+#: ../browser/rer_search.py:771
+msgid "${results_len} on ${total_len}"
+msgstr "${results_len} su ${total_len}"
+
+#: ../browser/templates/updated_search.pt:30
+msgid "<br />Hai cercato ${search}"
+msgstr ""
+
+#: ../browser/rer_search.py:233
+msgid "All"
+msgstr "Tutti"
+
+msgid "Author"
+msgstr "Autore"
+
+#: ../browser/templates/solr_more_like_this.pt:26
+msgid "Back to original search"
+msgstr "Torna alla ricerca originale"
+
+#: ../browser/controlpanel.py:76
+msgid "Cancel"
+msgstr "Annulla"
+
+msgid "Category"
+msgstr "Categoria"
+
+#: ../browser/controlpanel.py:72
+msgid "Changes saved"
+msgstr "Modifiche salvate"
+
+msgid "Documents"
+msgstr "Documenti"
+
+#: ../browser/controlpanel.py:79
+msgid "Edit cancelled"
+msgstr "Modifiche annullate"
+
+#: ../interfaces.py:38
+msgid "Enable search with SOLR"
+msgstr "Abilita la ricerca con SOLR"
+
+msgid "Event end"
+msgstr "Fine evento"
+
+msgid "Event start"
+msgstr "Inizio evento"
+
+msgid "Event type"
+msgstr "Tipologia di evento"
+
+msgid "Events"
+msgstr "Eventi"
+
+msgid "File"
+msgstr ""
+
+#: ../browser/controlpanel.py:18
+msgid "General settings"
+msgstr "Configurazioni generali"
+
+#: ../browser/controlpanel.py:33
+#: ../interfaces.py:116
+msgid "Hidden indexes"
+msgstr "Indici nascosti"
+
+#: ../interfaces.py:89
+msgid "Index in search"
+msgstr "Criterio di ricerca"
+
+#: ../browser/controlpanel.py:28
+msgid "Indexes"
+msgstr "Indici"
+
+#: ../interfaces.py:83
+msgid "Indexes for search"
+msgstr "Indici per la ricerca"
+
+#: ../interfaces.py:97
+msgid "Indexes order"
+msgstr "Ordine criteri"
+
+#: ../configure.zcml:29
+msgid "Installs the rer.sitesearch add-on."
+msgstr ""
+
+msgid "Links"
+msgstr "Collegamenti"
+
+#: ../interfaces.py:18
+msgid "Maximum number of characters in a single word"
+msgstr "Numero massimo di lettere in una singola parola"
+
+#: ../interfaces.py:28
+msgid "Maximum number of words in search query"
+msgstr "Numero massimo di parole da cercare"
+
+msgid "News"
+msgstr "Notizie"
+
+#: ../browser/templates/solr_more_like_this.pt:61
+msgid "No similar results"
+msgstr "Nessun risultato simile"
+
+#: ../browser/templates/updated_search.pt:27
+msgid "Numero di risultati che soddisfano la ricerca ${search}: ${number}"
+msgstr ""
+
+#: ../profiles/default/controlpanel.xml
+msgid "RER Sitesearch"
+msgstr ""
+
+#: ../configure.zcml:29
+msgid "RER: Site Search"
+msgstr ""
+
+#: ../configure.zcml:38
+msgid "RER: Site Search (uninstall)"
+msgstr ""
+
+#: ../browser/templates/rer_search.pt:244
+msgid "Refine your search"
+msgstr "Raffina la ricerca"
+
+#: ../browser/templates/rer_search.pt:235
+msgid "Refine your search:"
+msgstr "Raffina la ricerca:"
+
+#: ../browser/controlpanel.py:64
+msgid "Save"
+msgstr "Salva"
+
+#: ../browser/templates/rer_search.pt:28
+msgid "Search results"
+msgstr "Risultati ricerca"
+
+#: ../interfaces.py:57
+msgid "Search tab"
+msgstr "Tab di ricerca"
+
+#: ../interfaces.py:52
+msgid "Search tabs"
+msgstr "Tab di ricerca"
+
+#: ../browser/templates/solr_more_like_this.pt:17
+msgid "Similar results"
+msgstr "Risultati simili"
+
+#: ../browser/templates/solr_more_like_this.pt:23
+msgid "Similar results for: ${solr_query_txt}"
+msgstr "Risultati simili per: ${solr_query_txt}"
+
+#: ../browser/controlpanel.py:44
+msgid "Site Search settings"
+msgstr "Configurazioni Site Search"
+
+msgid "Subject"
+msgstr "Categorie"
+
+#: ../browser/controlpanel.py:23
+msgid "Tabs"
+msgstr "Categorie"
+
+#: ../interfaces.py:64
+msgid "Tabs order"
+msgstr "Ordine dei tab"
+
+#: ../configure.zcml:38
+msgid "Uninstalls the rer.sitesearch add-on."
+msgstr ""
+
+#: ../browser/rer_search.py:897
+msgid "alphabetically"
+msgstr "Alfabeticamente"
+
+#: ../browser/rer_search.py:895
+msgid "date (newest first)"
+msgstr "Data (prima i più recenti)"
+
+#. Default: "Select the indexes that you want to show for faceted navigation. You can define also the order. \"All\" tab shows all results."
+#: ../interfaces.py:98
+msgid "help_indexes_order"
+msgstr "Seleziona gli indici che vuoi mostrare nella ricerca. Puoi definirne anche l'ordine. Il tab \"All\" mostra tutti i risultati."
+
+#. Default: "Set what is the maximum length of a single search word. Longer words will be omitted from the search."
+#: ../interfaces.py:19
+msgid "help_max_word_len"
+msgstr "Imposta la dimensione massima di una singola parola. Parole più lunghe verranno omesse dalla ricerca."
+
+#. Default: "Set what is the maximum number of words in the search query. The other words will be omitted from the search."
+#: ../interfaces.py:29
+msgid "help_max_words"
+msgstr "Imposta il massimo numero di parole da ricercare. Le parole successive verranno omesse dalla ricerca."
+
+#. Default: "Insert a list of indexes that should be used for faceted navigation."
+#: ../interfaces.py:84
+msgid "help_sitesearch_available_indexes"
+msgstr "Inserisci una lista di indici che verranno utilizzati per filtrare la ricerca."
+
+#. Default: "Insert a list of indexes that can't be used for faceted search, but we need to keep."
+#: ../interfaces.py:117
+msgid "help_sitesearch_hidden_indexes"
+msgstr "Inserisci una lista di indici che non verranno usati per filtrare la ricerca, ma serve mantenerli."
+
+#. Default: "Set site search configurations"
+#: ../browser/controlpanel.py:45
+msgid "help_sitesearch_settings_editform"
+msgstr "Imposta le configurazioni di Site Search"
+
+#. Default: "If enabled and collective.solr is correctly set, SOLR search engine will be used instead Plone catalog."
+#: ../interfaces.py:39
+msgid "help_solr_search_enabled"
+msgstr "Se collective.solr è installato e correttamente configurato, verrà utilizzato il motore di ricerca di SOLR al posto del catalogo Plone."
+
+#. Default: "Insert a list of tabs to show on search results. Each tab can contain different content_types."
+#: ../interfaces.py:53
+msgid "help_tabs_mapping"
+msgstr "Inserisci una lista di tab da mostrare nei risultati dalle ricerca. Ogni tab può racchiudere diversti content_type."
+
+#. Default: "Select the tabs that you want to show in the search and define an order."
+#: ../interfaces.py:65
+msgid "help_tabs_order"
+msgstr "Seleziona i tab che vuoi mostrare nella ricerca. Puoi definirne anche l'ordine."
+
+#. Default: "You are also searching for:"
+#: ../browser/templates/rer_search.pt:316
+msgid "label_also_searching_for"
+msgstr "Stai anche cercando per:"
+
+#. Default: "Remove all filters"
+#: ../browser/templates/rer_search.pt:327
+msgid "label_remove_filters"
+msgstr "Rimuovi tutti i filtri"
+
+#. Default: "Search"
+#: ../browser/templates/rer_search.pt:445
+msgid "label_search"
+msgstr "Cerca"
+
+#. Default: "Search in"
+#: ../browser/templates/rer_search.pt:272
+msgid "label_search_in"
+msgstr "Cerca in"
+
+#. Default: "All the site"
+#: ../browser/templates/rer_search.pt:293
+msgid "label_searchbox_all_site"
+msgstr "Tutto il sito"
+
+#: ../browser/rer_search.py:893
+msgid "relevance"
+msgstr "Rilevanza"
+
+#. Default: "\"${word}\" is a too long word and was ignored. Try using a shorter word."
+#: ../browser/rer_search.py:679
+msgid "search_limit_word_characters_label"
+msgstr "\"${word}\" è una parola troppo lunga ed è stata ignorata. Prova ad usarne una più breve."
+
+#. Default: "\"${word}\" (and any subsequent words) was ignored because we limit queries to ${max_words} words."
+#: ../browser/rer_search.py:662
+msgid "search_limit_words_label"
+msgstr "\"${word}\" (e tutte le parole successive) sono state ignorate poiché è possibile ricercare solo fino a ${max_words} parole chiave."
+
+#. Default: "You need to pass some query value."
+#: ../browser/rer_search.py:626
+msgid "search_no_query_label"
+msgstr "Devi fornire qualche chiave di ricerca."
+
+#. Default: "Allowable indexes in catalog"
+#: ../custom_fields.py:54
+msgid "sitesearch_allowable"
+msgstr "Indici disponibili nel catalogo"
+
+#. Default: "Select an index."
+#: ../custom_fields.py:57
+msgid "sitesearch_allowable_help"
+msgstr "Seleziona un indice."
+
+#. Default: "Index title"
+#: ../custom_fields.py:46
+msgid "sitesearch_index_title"
+msgstr "Titolo indice"
+
+#. Default: "Insert a title for this search filter. You can provide translations for this title with a proper translation file for rer.sitesearch domain."
+#: ../custom_fields.py:47
+msgid "sitesearch_index_title_help"
+msgstr "Inserisci un titolo per questo filtro di ricerca. Puoi fornirne anche una traduzione mediante un file di traduzione con dominio rer.sitesearch."
+
+#. Default: "Portal types"
+#: ../custom_fields.py:30
+msgid "sitesearch_tab_portal_types"
+msgstr "Tipi di contenuto"
+
+#. Default: "Select which portal_types shows on this tab."
+#: ../custom_fields.py:31
+msgid "sitesearch_tab_portal_types_help"
+msgstr "Seleziona quali tipi di contenuto mostrare in questo tab."
+
+#. Default: "Tab title"
+#: ../custom_fields.py:22
+msgid "sitesearch_tab_title"
+msgstr "Titolo tab"
+
+#. Default: "Insert a title for this tab. You can provide translations for this title with a proper translation file for rer.sitesearch domain."
+#: ../custom_fields.py:23
+msgid "sitesearch_tab_title_help"
+msgstr "Inserisci un titolo per questo tab. Puoi fornirne anche una traduzione mediante un file di traduzione con dominio rer.sitesearch."
+
+#. Default: "Sponsored link"
+#: ../browser/templates/rer_search.pt:128
+msgid "sponsored_link_label"
+msgstr "Link suggerito"
