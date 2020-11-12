@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<layers>
+  <layer name="rer.sitesearch"
+         interface="rer.sitesearch.interfaces.IRERSiteSearchLayer" remove="True"/>
+</layers>

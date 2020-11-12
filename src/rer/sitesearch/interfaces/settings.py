@@ -9,10 +9,10 @@ from zope.interface import Interface
 
 
 class ITypesMappingRowSchema(model.Schema):
-    labels = schema.List(
-        title=_("types_mapping_labels_label", default=u"Label"),
+    label = schema.List(
+        title=_("types_mapping_label_label", default=u"Label"),
         description=_(
-            "types_mapping_labels_help",
+            "types_mapping_label_help",
             default=u"Insert the label for this group. One per row. "
             u"If the site has only one language, type the simple name. "
             u"If it has multiple languages, insert one row per language in "
@@ -24,7 +24,7 @@ class ITypesMappingRowSchema(model.Schema):
     types = schema.Tuple(
         title=_("types_mapping_types_label", default=u"Portal types"),
         description=_(
-            "types_mapping_types_label",
+            "types_mapping_types_help",
             default=u"Select which portal_types to show in this group.",
         ),
         required=True,
@@ -38,10 +38,10 @@ class ITypesMappingRowSchema(model.Schema):
 
 
 class IIndexesRowSchema(model.Schema):
-    labels = schema.List(
-        title=_("available_indexes_labels_label", default=u"Label"),
+    label = schema.List(
+        title=_("available_indexes_label_label", default=u"Label"),
         description=_(
-            "available_indexes_labels_help",
+            "available_indexes_label_help",
             default=u"Insert the label for this index. One per row. "
             u"If the site has only one language, type the simple name. "
             u"If it has multiple languages, insert one row per language in "
@@ -50,11 +50,11 @@ class IIndexesRowSchema(model.Schema):
         required=True,
         value_type=schema.TextLine(),
     )
-    types = schema.Choice(
-        title=_("available_indexes_types_label", default=u"Portal types"),
+    index = schema.Choice(
+        title=_("available_indexes_index_label", default=u"Index"),
         description=_(
-            "available_indexes_types_label",
-            default=u"Select which portal_types to show in this group.",
+            "available_indexes_index_help",
+            default=u"Select which catalog index to use as filter.",
         ),
         required=True,
         vocabulary=u"rer.sitesearch.vocabularies.IndexesVocabulary",
