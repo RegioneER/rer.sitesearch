@@ -9,10 +9,10 @@ from zope.interface import Interface
 
 
 class ITypesMappingRowSchema(model.Schema):
-    labels = schema.List(
-        title=_("types_mapping_labels_label", default=u"Label"),
+    label = schema.List(
+        title=_("types_mapping_label_label", default=u"Label"),
         description=_(
-            "types_mapping_labels_help",
+            "types_mapping_label_help",
             default=u"Insert the label for this group. One per row. "
             u"If the site has only one language, type the simple name. "
             u"If it has multiple languages, insert one row per language in "
@@ -38,10 +38,10 @@ class ITypesMappingRowSchema(model.Schema):
 
 
 class IIndexesRowSchema(model.Schema):
-    labels = schema.List(
-        title=_("available_indexes_labels_label", default=u"Label"),
+    label = schema.List(
+        title=_("available_indexes_label_label", default=u"Label"),
         description=_(
-            "available_indexes_labels_help",
+            "available_indexes_label_help",
             default=u"Insert the label for this index. One per row. "
             u"If the site has only one language, type the simple name. "
             u"If it has multiple languages, insert one row per language in "

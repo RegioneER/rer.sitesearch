@@ -16,7 +16,7 @@
   <include file="upgrades.zcml" />
   <include package=".adapters" />
   <include package=".browser" />
-  <!-- <include package=".restapi" /> -->
+  <include package=".restapi" />
 
   <genericsetup:registerProfile
       name="default"
