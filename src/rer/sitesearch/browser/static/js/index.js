@@ -1,3 +1,5 @@
+import '../styles/index.less';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SearchContainer from './SearchContainer';

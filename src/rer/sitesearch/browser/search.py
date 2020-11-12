@@ -36,3 +36,11 @@ class View(BrowserView):
             name=name,
             version=self.get_version(),
         )
+
+    def get_resource_css(self, name="main"):
+        return CSS_TEMPLATE.format(
+            portal_url=api.portal.get().absolute_url(),
+            env_mode=self.get_env_mode(),
+            name=name,
+            version=self.get_version(),
+        )
