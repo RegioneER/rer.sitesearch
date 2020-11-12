@@ -32,6 +32,51 @@ The search view shows a list of parameters (indexes in catalog) in the left colu
 In Sitesearch control-panel you can define which indexes to show, with which label and the order.
 
 
+Restapi endpoint
+================
+
+@search-filters
+---------------
+
+There is an helper api endpoint that returns the list of available groups and indexes for the search interface: *@search-filters*::
+
+    > curl -i http://localhost:8080/Plone/@search-filters -H 'Accept: application/json'
+
+And will return a response like this::
+
+    {
+      "grouping": [
+        {
+          "label":
+            "Documents"
+          ],
+          "types": [
+            "Document",
+            "File"
+          ]
+        },
+        {
+          "label": "News and Events",
+          "types": [
+            "News Item",
+            "Event"
+          ]
+        },
+      ],
+      "indexes": [
+        {
+          "label": [
+            "Type"
+          ],
+          "index": "portal_type"
+        },
+        {
+          "label": "Keywords",
+          "index": "Subject"
+        },
+      ]
+    }
+
 Dependencies
 ============
 

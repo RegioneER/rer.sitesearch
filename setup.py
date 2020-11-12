@@ -61,6 +61,6 @@ setup(
     [z3c.autoinclude.plugin]
     target = plone
     [console_scripts]
-    update_locale = rer.search.locales.update:update_locale
+    update_locale = rer.sitesearch.locales.update:update_locale
     """,
 )
