@@ -26,7 +26,7 @@ description:
       ## Introduzione
 
 
-      Un prodotto che sostituisce il modello di ricerca di base di Plone e
+      Plugin per Plone che sostituisce il modello di ricerca di base e
       aggiunge alcune nuove funzionalità. Ha una colonna a sinistra con il
       modulo di ricerca e alcuni campi aggiuntivi per affinare la ricerca:
 
@@ -38,16 +38,13 @@ description:
 
 
       Nella cornice centrale ci sono i risultati, raggruppati in schede
-      (personalizzate nel pannello di controllo)
-
-
-      ​
+      (personalizzabili nel pannello di controllo)
 
 
       ## Impostazioni
 
 
-      Nel pannello di controllo (RER Sitesearch) è possibile impostare alcuni
+      Tramite apposito pannello di configurazione è possibile impostare alcuni
       parametri di ricerca. I più importanti sono "tab", "indici" e "indici
       nascosti".
 
@@ -57,16 +54,14 @@ description:
 
       C'è sempre una scheda generica "Tutto" che mostra tutti i risultati della
       ricerca. In questo pannello di configurazione, è possibile impostare un
-      elenco di schede aggiuntive che raggrupperanno i risultati per
-      portal\_type.
+      elenco di schede aggiuntive che raggrupperanno i risultati in base al tipo di contenuto.
 
 
       Ad esempio è possibile aggiungere una scheda "Documenti" che contiene
-      documenti e file. Un'altra scheda "Notizie / eventi" può contenere notizie
-      ed eventi. E così via.
+      pagine e file e un'altra scheda "Attualità" che contiene notizie ed eventi, e così via.
 
 
-      Puoi anche definire l'ordine di queste schede.
+      Si può anche definire l'ordine di queste schede.
 
 
       Se sei uno sviluppatore e fornisci un file di traduzione con dominio
@@ -77,7 +72,7 @@ description:
 
 
       La vista di ricerca mostra un elenco di parametri (indici nel catalogo)
-      nella colonna di sinistra per perfezionare i risultati.
+      nella colonna di sinistra per ottimizzare i risultati.
 
 
       Nel pannello di controllo di Sitesearch puoi definire quali indici
@@ -95,16 +90,19 @@ description:
 
       Il motore di ricerca di rer.sitesearch rimuove tutti gli indici passati
       nella query che non corrispondono alla sua configurazione degli indici,
-      per evitare ricerche indesiderate, quindi ad esempio se non vuoi mostrare
-      alcuni filtri di data nella barra laterale, questi filtri ( inizio e fine)
-      verrà rimosso dalla query e la ricerca sarà utile.
+      per evitare ricerche indesiderate, quindi ad esempio se non si vogliono mostrare
+      alcuni filtri di data nella barra laterale, questi filtri (inizio e fine)
+      verranno rimossi dalla query e la ricerca sarà più efficace.
 
 
       La configurazione degli indici nascosti consente di definire un insieme di
       indici che devono essere conservati per ricerche speciali come queste.
       Pertanto, se un parametro corrisponde a questo elenco verrà incluso nella
       query e non eliminato.
-    shortDescription: Funzionalità aggiuntive per la ricerca di Plone
+    shortDescription: Funzionalità aggiuntive per migliorare la ricerca nei siti Plone
+    screenshots: 
+      - docs/SiteSearch_Risultati-ricerca.JPG
+      - docs/SiteSearch_Configurazione.JPG
 developmentStatus: stable
 it:
   riuso:
@@ -139,7 +137,7 @@ maintenance:
       until: '2020-08-31'
       website: 'https://www.redturtle.it/'
   type: contract
-name: rer.sitesearch
+name: Estensione motore di ricerca per CMS Plone
 platforms:
   - web
 releaseDate: '2014-11-24'
