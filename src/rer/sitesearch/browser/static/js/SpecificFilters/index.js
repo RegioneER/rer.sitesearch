@@ -4,7 +4,9 @@ import Select from 'react-select';
 const SpecificFilters = () => {
   return (
     <div className="specific-filters">
-      <strong>Filtra i bandi per finanziamenti ed opportunità</strong>
+      <div className="title">
+        Filtra i bandi per finanziamenti ed opportunità
+      </div>
       <div className="row">
         <div className="col-xs-2">
           <Select

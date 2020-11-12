@@ -5,7 +5,6 @@ import SpecificFilters from '../SpecificFilters';
 
 const SearchContainer = () => (
   <div>
-    CIAO MONDO
     <div className="row">
       <div className="col col-md-3">
         <SearchFilters />
