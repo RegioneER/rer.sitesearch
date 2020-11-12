@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ExampleContainer from './ExampleContainer';
+import SearchContainer from './SearchContainer';
 
 const rootElement = document.getElementById('sitesearch');
 
 if (rootElement) {
-  ReactDOM.render(<ExampleContainer />, rootElement);
+  ReactDOM.render(<SearchContainer />, rootElement);
 }
