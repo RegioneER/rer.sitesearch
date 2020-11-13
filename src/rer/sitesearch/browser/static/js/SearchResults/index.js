@@ -46,8 +46,16 @@ const SearchResults = () => {
 
   let inEvidenceResults = [
     {
+      id: 'giovani',
       url: '/ambiente/i-giovani-alberi',
       title: 'I giovani alberi',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipiscing elit dui vivamus suscipit sed risus, dictum porttitor laoreet sodales aenean vestibulum iaculis aliquam auctor vel sem. Sociis enim nostra egestas',
+    },
+    {
+      id: 'vecchi',
+      url: '/ambiente/i-vecchi-alberi',
+      title: 'I vecchi alberi',
       description:
         'Lorem ipsum dolor sit amet consectetur adipiscing elit dui vivamus suscipit sed risus, dictum porttitor laoreet sodales aenean vestibulum iaculis aliquam auctor vel sem. Sociis enim nostra egestas',
     },
