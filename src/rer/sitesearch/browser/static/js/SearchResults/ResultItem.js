@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import SearchContext from '../utils/searchContext';
 
 const ResultItem = ({ item, inEvidence = false }) => {
   const hasSimilarResults =
@@ -59,139 +60,147 @@ const ResultItem = ({ item, inEvidence = false }) => {
   };
 
   return (
-    <div className={`result-item ${inEvidence ? 'in-evidence' : ''}`}>
-      {inEvidence && (
-        <div className="in-evidence-title desktop-only">In evidenza</div>
-      )}
-
-      {(item.date || item.path) && !inEvidence && (
-        <div className="row-item row-item-infos">
-          <div className="col-icon"></div>
-          <div className="col-content">
-            <div className="item-infos">
-              {item.date && <div className="item-date">{item.date}</div>}
-              {item.path && <div className="item-path">{item.path}</div>}
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="row-item row-item-content">
-        <div className="col-icon">
-          <div className="main">
-            <i
-              className={`${getIcon(item)}`}
-              title={getItemTypeLabel(item)}
-            ></i>
-            <span className="mobile-only">{getItemTypeLabel(item)}</span>
-          </div>
-          <div className="more">+ stato bando</div>
-        </div>
-        <div className="col-content">
-          <div className="item-title">
-            <a href={item.url}>
-              <h3 title={title}>{item.title}</h3>
-            </a>
-          </div>
-          {(item.description || hasSimilarResults) && (
-            <div className="description">
-              {item.description}
-              {hasSimilarResults && (
-                <a
-                  href="javascript:void(null);"
-                  role="button"
-                  className="similar-results-link"
-                  onClick={() => {
-                    setShowSimilarResults(!showSimilarResults);
-                  }}
-                >
-                  {' '}
-                  | Risultati simili
-                </a>
-              )}
-
-              {showSimilarResults && (
-                <div className="similar-results">
-                  {item.similarResults.map(sr => (
-                    <ResultItem item={sr} key={sr.id} />
-                  ))}
-                </div>
-              )}
+    <SearchContext.Consumer>
+      {({ translations }) => (
+        <div className={`result-item ${inEvidence ? 'in-evidence' : ''}`}>
+          {inEvidence && (
+            <div className="in-evidence-title desktop-only">
+              {translations['In evidenza']}
             </div>
           )}
 
-          {!showSimilarResults && (
-            <>
-              {item.expire_date && (
-                <div className="expire">
-                  Scadenza partecipazione: {item.expire_date}
+          {(item.date || item.path) && !inEvidence && (
+            <div className="row-item row-item-infos">
+              <div className="col-icon"></div>
+              <div className="col-content">
+                <div className="item-infos">
+                  {item.date && <div className="item-date">{item.date}</div>}
+                  {item.path && <div className="item-path">{item.path}</div>}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="row-item row-item-content">
+            <div className="col-icon">
+              <div className="main">
+                <i
+                  className={`${getIcon(item)}`}
+                  title={getItemTypeLabel(item)}
+                ></i>
+                <span className="mobile-only">{getItemTypeLabel(item)}</span>
+              </div>
+              <div className="more">+ stato bando</div>
+            </div>
+            <div className="col-content">
+              <div className="item-title">
+                <a href={item.url}>
+                  <h3 title={title}>{item.title}</h3>
+                </a>
+              </div>
+              {(item.description || hasSimilarResults) && (
+                <div className="description">
+                  {item.description}
+                  {hasSimilarResults && (
+                    <a
+                      href="#"
+                      role="button"
+                      className="similar-results-link"
+                      onClick={e => {
+                        e.preventDefault();
+                        setShowSimilarResults(!showSimilarResults);
+                      }}
+                    >
+                      {' '}
+                      | {translations['Risultati simili']}
+                    </a>
+                  )}
+
+                  {showSimilarResults && (
+                    <div className="similar-results">
+                      {item.similarResults.map(sr => (
+                        <ResultItem item={sr} key={sr.id} />
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
-              {!inEvidence && (
+              {!showSimilarResults && (
                 <>
-                  {breadcrumbs && breadcrumbs.length > 0 && (
-                    <div className="item-breadcrumbs">
-                      <i className="fas fa-folder" />{' '}
-                      {breadcrumbs.map((brdc, index) => {
-                        return (
-                          <span key={brdc.url}>
-                            <a
-                              href={brdc.url}
-                              className={brdcIsInPath(brdc) ? 'active' : ''}
-                            >
-                              {brdc.title}
-                            </a>{' '}
-                            {index < breadcrumbs.length - 1 && <> {'>'} </>}
-                          </span>
-                        );
-                      })}
+                  {item.expire_date && (
+                    <div className="expire">
+                      {translations['Scadenza partecipazione']}:{' '}
+                      {item.expire_date}
                     </div>
                   )}
 
-                  {(item.themes || item.categories) && (
-                    <div className="item-tags">
-                      {item.themes && (
-                        <div className="item-themes">
-                          <i className="fas fa-tag" />
-                          {item.themes.map(theme => (
-                            <a
-                              href="#"
-                              key={theme}
-                              className={
-                                isInFilters('theme', theme) ? 'active' : ''
-                              }
-                            >
-                              {theme}
-                            </a>
-                          ))}
+                  {!inEvidence && (
+                    <>
+                      {breadcrumbs && breadcrumbs.length > 0 && (
+                        <div className="item-breadcrumbs">
+                          <i className="fas fa-folder" />{' '}
+                          {breadcrumbs.map((brdc, index) => {
+                            return (
+                              <span key={brdc.url}>
+                                <a
+                                  href={brdc.url}
+                                  className={brdcIsInPath(brdc) ? 'active' : ''}
+                                >
+                                  {brdc.title}
+                                </a>{' '}
+                                {index < breadcrumbs.length - 1 && <> {'>'} </>}
+                              </span>
+                            );
+                          })}
                         </div>
                       )}
-                      {item.categories && (
-                        <div className="item-categories">
-                          <i className="fas fa-list" />
-                          {item.categories.map(cat => (
-                            <a
-                              href="#"
-                              key={cat}
-                              className={
-                                isInFilters('category', cat) ? 'active' : ''
-                              }
-                            >
-                              {cat}
-                            </a>
-                          ))}
+
+                      {(item.themes || item.categories) && (
+                        <div className="item-tags">
+                          {item.themes && (
+                            <div className="item-themes">
+                              <i className="fas fa-tag" />
+                              {item.themes.map(theme => (
+                                <a
+                                  href="#"
+                                  key={theme}
+                                  className={
+                                    isInFilters('theme', theme) ? 'active' : ''
+                                  }
+                                >
+                                  {theme}
+                                </a>
+                              ))}
+                            </div>
+                          )}
+                          {item.categories && (
+                            <div className="item-categories">
+                              <i className="fas fa-list" />
+                              {item.categories.map(cat => (
+                                <a
+                                  href="#"
+                                  key={cat}
+                                  className={
+                                    isInFilters('category', cat) ? 'active' : ''
+                                  }
+                                >
+                                  {cat}
+                                </a>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       )}
-                    </div>
+                    </>
                   )}
                 </>
               )}
-            </>
-          )}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </SearchContext.Consumer>
   );
 };
 ResultItem.propTypes = {

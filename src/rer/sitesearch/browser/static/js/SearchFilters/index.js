@@ -11,30 +11,29 @@ const SearchFilters = () => {
   );
 
   useEffect(() => {
-    console.log('useEffect', isMobile);
     setShowAdvancedSearch(isMobile ? false : true);
   }, [isMobile]);
 
   return (
     <SearchContext.Consumer>
-      {({ setFilters, filters, isMobile }) => (
+      {({ setFilters, filters, isMobile, translations }) => (
         <div className="filters-wrapper">
           <h2 className="sr-only" id="search-filters">
-            Parametri di ricerca
+            {translations['Parametri di ricerca']}
           </h2>
           <a href="#search-results" className="sr-only skip-link">
-            Vai ai risultati
+            {translations['Vai ai risultati']}
           </a>
 
           {/* Cerca */}
           <div className="filter-item">
-            <h3>Cerca</h3>
+            <h3>{translations['filters_title_Cerca']}</h3>
             <div className="default-search">
               <div className="input-group">
                 <input
                   type="search"
                   className="form-control"
-                  placeholder="Digita il testo da cercare..."
+                  placeholder={translations['Digita il testo da cercare...']}
                   name="searchableText"
                   value={filters.searchableText}
                   onChange={e => setFilters({ searchableText: e.target.value })}
@@ -43,7 +42,7 @@ const SearchFilters = () => {
                   <button
                     className="btn btn-default"
                     type="button"
-                    aria-label="Cerca"
+                    aria-label={translations['button_Cerca']}
                   >
                     <i className="fas fa-search" />
                   </button>
@@ -55,8 +54,10 @@ const SearchFilters = () => {
                     setShowAdvancedSearch(!showAdvancedSearch);
                   }}
                   className="plone-btn plone-btn-primary"
+                  title={translations['Ricerca avanzata']}
                 >
-                  Ricerca avanzata <i className="fas fa-chevron-right" />
+                  {translations['Ricerca avanzata']}
+                  <i className="fas fa-chevron-right" />
                 </button>
               )}
             </div>
@@ -73,13 +74,13 @@ const SearchFilters = () => {
                       setShowAdvancedSearch(false);
                     }}
                     className="plone-btn plone-btn-link"
-                    title="Chiudi la ricerca avanzata"
+                    title={translations['Chiudi la ricerca avanzata']}
                   >
                     <i className="fas fa-times" />
                   </button>
                 </div>
 
-                <h3>Ricerca avanzata</h3>
+                <h3>{translations['Ricerca avanzata']}</h3>
               </>
             )}
 
@@ -235,9 +236,9 @@ const SearchFilters = () => {
               <div className="submit-wrapper">
                 <button
                   className="plone-btn plone-btn-primary"
-                  title="Filtra i risultati"
+                  title={translations['Filtra i risultati']}
                 >
-                  Filtra i risultati
+                  {translations['Filtra i risultati']}
                 </button>
               </div>
             )}

@@ -1,0 +1,109 @@
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: unife.masterschool\n"
+
+#search
+msgid "Parametri di ricerca"
+msgstr ""
+
+msgid "Vai ai risultati"
+msgstr ""
+
+msgid "filters_title_Cerca"
+msgstr ""
+
+msgid "Digita il testo da cercare..."
+msgstr ""
+
+msgid "button_Cerca"
+msgstr ""
+
+msgid "Ricerca avanzata"
+msgstr ""
+
+msgid "Chiudi la ricerca avanzata"
+msgstr ""
+
+msgid "Filtra i risultati"
+msgstr ""
+
+msgid "Filtra i bandi per finanziamenti ed opportunità"
+msgstr ""
+
+msgid "bando_Stato"
+msgstr ""
+
+msgid "bando_Tipologia"
+msgstr ""
+
+msgid "bando_Beneficiari"
+msgstr ""
+
+msgid "bando_Fondo"
+msgstr ""
+
+msgid "bando_Materia"
+msgstr ""
+
+msgid "Risultati della ricerca"
+msgstr ""
+
+msgid "Vai ai filtri"
+msgstr ""
+
+msgid "In evidenza"
+msgstr ""
+
+msgid "Risultati simili"
+msgstr ""
+
+msgid "Scadenza partecipazione"
+msgstr ""
+
+msgid "previous_label"
+msgstr ""
+
+msgid "next_label"
+msgstr ""
+
+msgid "elementi su"
+msgstr ""
+
+msgid "filtrati"
+msgstr ""
+
+msgid "Annulla filtri"
+msgstr ""
+
+msgid "Ordina per"
+msgstr ""
+
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""

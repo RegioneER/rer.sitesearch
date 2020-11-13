@@ -1,11 +1,11 @@
 import React from 'react';
 //import SearchContext from '../../utils/searchContext';
 import ReactPaginate from 'react-paginate';
+import SearchContext from '../utils/searchContext';
 
 const Pagination = () => {
   return (
-    <>
-      {/* <SearchContext.Consumer> vedi unife per implementarlo*/}
+    <SearchContext.Consumer>
       {({ setFilters, batching, translations }) => {
         const { numpages, pagesize, current_page } = batching;
 
@@ -16,7 +16,6 @@ const Pagination = () => {
         if (numpages && numpages > 1) {
           return (
             <div className="navigation">
-              {' '}
               <ReactPaginate
                 previousLabel={
                   translations ? translations.previous_label : 'Previous >'
@@ -37,8 +36,7 @@ const Pagination = () => {
           return '';
         }
       }}
-      {/* </SearchContext.Consumer> */}
-    </>
+    </SearchContext.Consumer>
   );
 };
 

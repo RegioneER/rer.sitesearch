@@ -6,7 +6,8 @@ const parseParams = params => {
 
   keys.forEach(key => {
     const isParamTypeObject = typeof params[key] === 'object';
-    const isParamTypeArray = isParamTypeObject && params[key].length >= 0;
+    const isParamTypeArray =
+      isParamTypeObject && params[key] !== null && params[key].length >= 0;
 
     if (!isParamTypeObject) {
       options += `${key}=${params[key]}&`;

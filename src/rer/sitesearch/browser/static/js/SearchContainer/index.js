@@ -28,6 +28,11 @@ class SearchContainer extends Component {
         types: '',
         categories: '',
         temi: '',
+        state: null, //Ricerca specifica - Bandi: stato dei bandi
+        bando_type: null, //Ricerca specifica - Bandi: tipo di bando
+        beneficiari: null, //Ricerca specifica - Bandi: beneficari
+        fondo: null, //Ricerca specifica - Bandi: fondo
+        materia: null, //Ricerca specifica - Bandi: materia
       },
       setFilters: this.setFilters,
       isMobile: false,
@@ -57,17 +62,22 @@ class SearchContainer extends Component {
     ];
 
     Promise.all(fetches).then(data => {
+      let newState = { ...this.state };
       if (data[0]) {
         const searchResults = data[0].data;
 
-        this.setState({
-          ...this.state,
+        newState = {
+          ...newState,
           portalType: this.getPortalTypeFromQuery(searchResults),
           results: searchResults.items,
           batching: searchResults.batching,
-          translations: data[1],
-        });
+        };
       }
+      if (data[1]) {
+        newState = { ...newState, translations: data[1] };
+      }
+
+      this.setState(newState);
     });
   }
 
@@ -118,6 +128,7 @@ class SearchContainer extends Component {
   }
 
   render() {
+    console.log(this.state.translations);
     return (
       <div className="rer-search-container">
         <SearchContext.Provider value={this.state}>

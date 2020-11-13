@@ -1,4 +1,5 @@
 import React from 'react';
+import SearchContext from '../utils/searchContext';
 import Header from './Header';
 import InEvidenceResults from './InEvidenceResults';
 import Pagination from './Pagination';
@@ -61,26 +62,30 @@ const SearchResults = () => {
     },
   ];
   return (
-    <div className="search-results">
-      <h2 className="sr-only" id="search-results">
-        Risultati della ricerca
-      </h2>
-      <a href="#search-filters" className="sr-only skip-link">
-        Vai ai filtri
-      </a>
+    <SearchContext.Consumer>
+      {({ translations }) => (
+        <div className="search-results">
+          <h2 className="sr-only" id="search-results">
+            {translations['Risultati della ricerca']}
+          </h2>
+          <a href="#search-filters" className="sr-only skip-link">
+            {translations['Vai ai filtri']}
+          </a>
 
-      <Header searchHasFilters={true} />
-      <InEvidenceResults results={inEvidenceResults} />
+          <Header searchHasFilters={true} />
+          <InEvidenceResults results={inEvidenceResults} />
 
-      <div className="results-list">
-        {results.map(item => (
-          <div key={item.id}>
-            <ResultItem item={item} />
+          <div className="results-list">
+            {results.map(item => (
+              <div key={item.id}>
+                <ResultItem item={item} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <Pagination />
-    </div>
+          <Pagination />
+        </div>
+      )}
+    </SearchContext.Consumer>
   );
 };
 
