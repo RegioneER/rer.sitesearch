@@ -30,13 +30,22 @@ class SearchContainer extends Component {
         temi: '',
       },
       setFilters: this.setFilters,
+      isMobile: false,
     };
 
     this.setFilters = this.setFilters.bind(this);
     this.getPortalTypeFromQuery = this.getPortalTypeFromQuery.bind(this);
   }
 
+  handleResize() {
+    this.setState({
+      isMobile: window.innerWidth < 1200,
+    });
+  }
+
   componentDidMount() {
+    this.handleResize();
+    window.addEventListener('resize', this.handleResize);
     const fetches = [
       apiFetch({
         url: '/@@search',
@@ -60,6 +69,10 @@ class SearchContainer extends Component {
         });
       }
     });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
   }
 
   setFilters(newFilters) {
@@ -113,7 +126,7 @@ class SearchContainer extends Component {
               <SearchFilters />
             </div>
             <div className="col col-md-9">
-              <SpecificFilters />
+              {!this.state.isMobile && <SpecificFilters />}
               <SearchResults />
             </div>
           </div>
