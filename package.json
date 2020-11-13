@@ -70,6 +70,8 @@
         "webpack-dev-server": "^3.2.1"
     },
     "dependencies": {
+        "axios": "^0.21.0",
+        "date-fns": "^2.16.1",
         "plone-less-base": "git+https://git@github.com/RedTurtle/plone-less-base#master",
         "query-string": "^6.13.7",
         "react": "^16.8.5",
