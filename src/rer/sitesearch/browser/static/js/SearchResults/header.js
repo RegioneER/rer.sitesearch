@@ -10,7 +10,11 @@ const Header = ({ searchHasFilters = false }) => {
   return (
     <div className="results-header">
       <div className="total-items">
-        <span>40 elementi su 70 filtrati</span>{' '}
+        <span>
+          40 <span className="desktop-only">elementi su </span>
+          <span className="mobile-only">/ </span> 70{' '}
+          <span className="desktop-only">filtrati</span>
+        </span>{' '}
         {searchHasFilters && (
           <a href="javascript:0" onClick={() => {}}>
             (Annulla filtri)
@@ -18,7 +22,7 @@ const Header = ({ searchHasFilters = false }) => {
         )}
       </div>
       <div className="order-by">
-        <div className="select-label">Ordina per </div>
+        <div className="select-label desktop-only">Ordina per </div>
         <div className="select">
           <Select
             options={[

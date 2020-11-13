@@ -3,6 +3,29 @@
     background-color: #eee;
     margin-bottom: 1em;
 
+    .row-specific-filters {
+        display: flex;
+        .col-specific-filters {
+            flex: 1 1 auto;
+            padding: 0.5em;
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+
+        @media (max-width: @plone-screen-md-max) {
+            flex-wrap: wrap;
+            .col-specific-filters {
+                flex: 1 1 100%;
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+    }
+
     .title {
         font-weight: bold;
         margin-bottom: 1em;

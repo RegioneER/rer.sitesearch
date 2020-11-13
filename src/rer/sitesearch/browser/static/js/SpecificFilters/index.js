@@ -7,8 +7,8 @@ const SpecificFilters = () => {
       <div className="title">
         Filtra i bandi per finanziamenti ed opportunità
       </div>
-      <div className="row">
-        <div className="col-xs-2">
+      <div className="row-specific-filters">
+        <div className="col-specific-filters">
           <Select
             options={[
               { value: 'aperto', label: 'Aperto' },
@@ -28,7 +28,7 @@ const SpecificFilters = () => {
             //  }
           />
         </div>
-        <div className="col-xs-2">
+        <div className="col-specific-filters">
           <Select
             options={[
               { value: 'tipo-a', label: 'Tipo A' },
@@ -47,7 +47,7 @@ const SpecificFilters = () => {
             //  }
           />
         </div>
-        <div className="col-xs-2">
+        <div className="col-specific-filters">
           <Select
             options={[
               { value: 'tipo-a', label: 'Tipo A' },
@@ -66,7 +66,7 @@ const SpecificFilters = () => {
             //  }
           />
         </div>
-        <div className="col-xs-2">
+        <div className="col-specific-filters">
           <Select
             options={[
               { value: 'tipo-a', label: 'Tipo A' },
@@ -84,7 +84,7 @@ const SpecificFilters = () => {
             //  }
           />
         </div>
-        <div className="col-xs-2">
+        <div className="col-specific-filters">
           <Select
             options={[
               { value: 'tipo-a', label: 'Tipo A' },
