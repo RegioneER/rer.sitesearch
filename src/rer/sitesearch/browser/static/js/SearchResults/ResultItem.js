@@ -135,7 +135,7 @@ const ResultItem = ({ item, inEvidence = false }) => {
                       <i className="fas fa-folder" />{' '}
                       {breadcrumbs.map((brdc, index) => {
                         return (
-                          <>
+                          <span key={brdc.url}>
                             <a
                               href={brdc.url}
                               className={brdcIsInPath(brdc) ? 'active' : ''}
@@ -143,7 +143,7 @@ const ResultItem = ({ item, inEvidence = false }) => {
                               {brdc.title}
                             </a>{' '}
                             {index < breadcrumbs.length - 1 && <> {'>'} </>}
-                          </>
+                          </span>
                         );
                       })}
                     </div>
