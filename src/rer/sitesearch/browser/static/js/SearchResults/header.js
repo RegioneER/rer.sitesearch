@@ -10,7 +10,7 @@ const Header = ({ searchHasFilters = false }) => {
   return (
     <div className="results-header">
       <div className="total-items">
-        <span aria-live="polit">40 elementi su 70 filtrati</span>{' '}
+        <span>40 elementi su 70 filtrati</span>{' '}
         {searchHasFilters && (
           <a href="javascript:0" onClick={() => {}}>
             (Annulla filtri)

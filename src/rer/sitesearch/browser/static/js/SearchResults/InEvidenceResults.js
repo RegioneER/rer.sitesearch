@@ -3,12 +3,11 @@ import ResultItem from './ResultItem';
 
 const InEvidenceResults = ({ results = [] }) => {
   return results.length > 0 ? (
-    <div className="inevidence-results">
-      <div className="inevidence-title">In evidenza</div>
+    <>
       {results.map(item => (
-        <ResultItem item={item} key={item.id} inEvidence={true} />
+        <ResultItem item={item} key={item.id + 'evidence'} inEvidence={true} />
       ))}
-    </div>
+    </>
   ) : null;
 };
 

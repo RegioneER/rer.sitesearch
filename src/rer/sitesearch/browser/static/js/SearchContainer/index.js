@@ -5,7 +5,7 @@ import SpecificFilters from '../SpecificFilters';
 
 const SearchContainer = () => (
   <div>
-    <div className="row">
+    <div className="row" aria-live="polite">
       <div className="col col-md-3">
         <SearchFilters />
       </div>
