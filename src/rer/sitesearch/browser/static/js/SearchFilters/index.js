@@ -39,7 +39,7 @@ const SearchFilters = () => {
               type="button"
               aria-label="Cerca"
             >
-              <span className="glyphicon glyphicon-search" aria-hidden="true" />
+              <i className="fas fa-search" />
             </button>
           </span>
         </div>
@@ -107,7 +107,6 @@ const SearchFilters = () => {
         </div>
         <div className="radio">
           <label className={types === 'Documenti' ? 'selected' : ''}>
-            <i className="fas fa-file"></i>
             <input
               type="radio"
               name="types"
@@ -115,12 +114,12 @@ const SearchFilters = () => {
               checked={types === 'Documenti'}
               onChange={e => setTypes(e.target.value)}
             />
+            <i className="fas fa-file"></i>
             Documenti (15)
           </label>
         </div>
         <div className="radio">
           <label className={types === 'Allegati e norme' ? 'selected' : ''}>
-            <i className="fas fa-archive"></i>
             <input
               type="radio"
               name="types"
@@ -128,12 +127,12 @@ const SearchFilters = () => {
               checked={types === 'Allegati e norme'}
               onChange={e => setTypes(e.target.value)}
             />
+            <i className="fas fa-archive"></i>
             Allegati e norme (45)
           </label>
         </div>
         <div className="radio">
           <label className={types === 'Bandi' ? 'selected' : ''}>
-            <i className="fas fa-broadcast-tower"></i>
             <input
               type="radio"
               name="types"
@@ -141,6 +140,7 @@ const SearchFilters = () => {
               checked={types === 'Bandi'}
               onChange={e => setTypes(e.target.value)}
             />
+            <i className="fas fa-broadcast-tower"></i>
             Bandi (2)
           </label>
         </div>
