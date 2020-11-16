@@ -84,25 +84,25 @@ msgid "Ordina per"
 msgstr ""
 
 
-msgid ""
+msgid "type_Document"
 msgstr ""
 
-msgid ""
+msgid "type_Event"
 msgstr ""
 
-msgid ""
+msgid "type_Folder"
 msgstr ""
 
-msgid ""
+msgid "type_News Item"
 msgstr ""
 
-msgid ""
+msgid "type_Bando"
 msgstr ""
 
-msgid ""
+msgid "pubblicato il"
 msgstr ""
 
-msgid ""
+msgid "ultima modifica"
 msgstr ""
 
 msgid ""

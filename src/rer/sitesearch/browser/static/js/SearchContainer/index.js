@@ -7,6 +7,8 @@ import { getTranslationCatalog } from '../utils/i18n';
 import apiFetch from '../utils/apiFetch';
 import qs from 'query-string';
 
+import PropTypes from 'prop-types';
+
 class SearchContainer extends Component {
   constructor(props) {
     super(props);
@@ -18,10 +20,12 @@ class SearchContainer extends Component {
      */
     this.state = {
       results: [],
+      query: Object.keys(query).length > 0 ? query : null,
       batching: { numpages: 0, current_page: 0, pagesize: 0 },
       translations: {},
       filters: {
-        fullobjects: true,
+        metadata_fields: ['Date', 'Subject', 'scadenza_bando', 'effective'], //temi
+        // (oppure effective e modified e prendo la piu recente)
         searchableText:
           query && query.SearchableText ? query.SearchableText : '',
         path: '',
@@ -39,7 +43,6 @@ class SearchContainer extends Component {
     };
 
     this.setFilters = this.setFilters.bind(this);
-    this.getPortalTypeFromQuery = this.getPortalTypeFromQuery.bind(this);
   }
 
   handleResize() {
@@ -51,12 +54,15 @@ class SearchContainer extends Component {
   componentDidMount() {
     this.handleResize();
     window.addEventListener('resize', this.handleResize);
+
+    const endPoint = this.state.query ? '/@search' : '/@search-filters';
+    const params = this.state.query ? this.state.filters : null;
+
     const fetches = [
       apiFetch({
-        url: '/@@search',
-        params: this.state.filters,
+        url: this.props.baseUrl + endPoint,
+        params: params,
         method: 'GET',
-        restApi: true,
       }),
       getTranslationCatalog(),
     ];
@@ -68,7 +74,7 @@ class SearchContainer extends Component {
 
         newState = {
           ...newState,
-          portalType: this.getPortalTypeFromQuery(searchResults),
+
           results: searchResults.items,
           batching: searchResults.batching,
         };
@@ -103,10 +109,9 @@ class SearchContainer extends Component {
     });
 
     apiFetch({
-      url: '/@@search',
+      url: this.props.baseUrl + '/@search',
       params: filters,
       method: 'GET',
-      restApi: true,
     }).then(({ data }) => {
       this.setState({
         ...this.state,
@@ -117,18 +122,7 @@ class SearchContainer extends Component {
     });
   }
 
-  getPortalTypeFromQuery(data) {
-    let portalType = [];
-    data.query.forEach(criteria => {
-      if (criteria.i === 'portal_type') {
-        portalType = criteria.v;
-      }
-    });
-    return portalType;
-  }
-
   render() {
-    console.log(this.state.translations);
     return (
       <div className="rer-search-container">
         <SearchContext.Provider value={this.state}>
@@ -146,5 +140,9 @@ class SearchContainer extends Component {
     );
   }
 }
+
+SearchContainer.propTypes = {
+  baseUrl: PropTypes.string,
+};
 
 export default SearchContainer;

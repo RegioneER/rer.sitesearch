@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import SearchContext from '../../utils/searchContext';
 import Bando from './Bando';
 
@@ -15,13 +16,25 @@ const ResultItem = ({ item, inEvidence = false }) => {
     { url: '/temi/luoghi-da-scoprire/parchi', title: 'parchi' },
   ];
 
-  //[ToDo] da fare. Adesso è solo di esempio
-  let title_parts = [
-    'creato da Marcella Bongiovanni',
-    'pubblicato 19/06/2013',
-    'ultima modifica 31/01/2020 10:14',
-  ];
-  const title = title_parts.join(' - ');
+  const getTitleHover = (item, translations) => {
+    let title_parts = [
+      // 'creato da Marcella Bongiovanni',
+      // 'pubblicato 19/06/2013',
+      // 'ultima modifica 31/01/2020 10:14',
+    ];
+    title_parts.push(
+      translations['pubblicato il'] +
+        ' ' +
+        moment(item.effective).format('D/MM/YYYY'),
+    );
+    title_parts.push(
+      translations['ultima modifica'] +
+        ' ' +
+        moment(item.Date).format('D/MM/YYYY'),
+    );
+
+    return title_parts.join(' - ');
+  };
 
   const brdcIsInPath = brdc => {
     //[ToDo] da fare. Adesso è solo di esempio
@@ -32,7 +45,7 @@ const ResultItem = ({ item, inEvidence = false }) => {
     //[ToDo] da fare. Adesso è solo di esempio
     if (type === 'theme') {
       return item === 'parchi';
-    } else if (type === 'category') {
+    } else if (type === 'Subject') {
       return item === 'cittadini';
     }
     return false;
@@ -46,15 +59,17 @@ const ResultItem = ({ item, inEvidence = false }) => {
     if (item['@type'] === 'Event') {
       return 'fas fa-calendar-alt';
     }
+    // if (item['@type'] === 'File') {
+    //   return 'fas fa-paperclip';
+    // }
     if (item['@type'] === 'News Item') {
       return 'fas fa-newspaper';
     }
     return 'fas fa-file';
   };
 
-  // [ToDo]: sistemare la get del nome del tipo di contenuto che si deve mostrare quando si va in hover sull'icona
-  const getItemTypeLabel = item => {
-    return item['@type'] || 'Documento';
+  const getItemTypeLabel = (item, translations) => {
+    return translations['type_' + item['@type']] || item['@type'];
   };
 
   return item['@type'] === 'Bando' ? (
@@ -63,38 +78,50 @@ const ResultItem = ({ item, inEvidence = false }) => {
     <SearchContext.Consumer>
       {({ translations }) => (
         <div className={`result-item ${inEvidence ? 'in-evidence' : ''}`}>
+          {/* in evidenza */}
           {inEvidence && (
             <div className="in-evidence-title desktop-only">
               {translations['In evidenza']}
             </div>
           )}
 
-          {(item.date || item.path) && !inEvidence && (
+          {/* data + path */}
+          {!inEvidence && (
             <div className="row-item row-item-infos">
               <div className="col-icon"></div>
               <div className="col-content">
                 <div className="item-infos">
-                  {item.date && <div className="item-date">{item.date}</div>}
-                  {item.path && <div className="item-path">{item.path}</div>}
+                  {item.Date && (
+                    <div className="item-date">
+                      {moment(item.Date).format('D/MM/YYYY')}
+                    </div>
+                  )}
+                  <div className="item-path">{item['@id']}</div>
                 </div>
               </div>
             </div>
           )}
 
           <div className="row-item row-item-content">
+            {/* colonna icona */}
             <div className="col-icon">
               <div className="main">
                 <i
                   className={`${getIcon(item)}`}
-                  title={getItemTypeLabel(item)}
+                  title={getItemTypeLabel(item, translations)}
                 ></i>
-                <span className="mobile-only">{getItemTypeLabel(item)}</span>
+                <span className="mobile-only">
+                  {getItemTypeLabel(item, translations)}
+                </span>
               </div>
             </div>
+            {/* item content */}
             <div className="col-content">
               <div className="item-title">
-                <a href={item.url}>
-                  <h3 title={title}>{item.title}</h3>
+                <a href={item['@id']}>
+                  <h3 title={getTitleHover(item, translations)}>
+                    {item.title}
+                  </h3>
                 </a>
               </div>
               {(item.description || hasSimilarResults) && (
@@ -148,7 +175,7 @@ const ResultItem = ({ item, inEvidence = false }) => {
                         </div>
                       )}
 
-                      {(item.themes || item.categories) && (
+                      {(item.themes || item.Subject) && (
                         <div className="item-tags">
                           {item.themes && (
                             <div className="item-themes">
@@ -166,15 +193,15 @@ const ResultItem = ({ item, inEvidence = false }) => {
                               ))}
                             </div>
                           )}
-                          {item.categories && (
+                          {item.Subject && item.Subject.length > 0 && (
                             <div className="item-categories">
                               <i className="fas fa-list" />
-                              {item.categories.map(cat => (
+                              {item.Subject.map(cat => (
                                 <a
                                   href="#"
                                   key={cat}
                                   className={
-                                    isInFilters('category', cat) ? 'active' : ''
+                                    isInFilters('Subject', cat) ? 'active' : ''
                                   }
                                 >
                                   {cat}

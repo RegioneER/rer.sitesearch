@@ -23,11 +23,11 @@ const parseParams = params => {
   return options ? options.slice(0, -1) : options;
 };
 
-const apiFetch = ({ url, params, method, restApi }) => {
+const apiFetch = ({ url, params, method }) => {
   if (!method) {
     method = 'GET';
   }
-  var headers = restApi ? { Accept: 'application/json' } : null;
+  var headers = { Accept: 'application/json' };
 
   return axios({
     method,

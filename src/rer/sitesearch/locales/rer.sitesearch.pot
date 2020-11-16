@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-11-13 16:25+0000\n"
+"POT-Creation-Date: 2020-11-16 11:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
+"Domain: unife.masterschool\n"
 
 msgid "Annulla filtri"
 msgstr ""
@@ -175,6 +175,9 @@ msgstr ""
 msgid "previous_label"
 msgstr ""
 
+msgid "pubblicato il"
+msgstr ""
+
 #. Default: "Allowable indexes in catalog"
 #: ../custom_fields.py:54
 msgid "sitesearch_allowable"
@@ -215,6 +218,21 @@ msgstr ""
 msgid "sitesearch_tab_title_help"
 msgstr ""
 
+msgid "type_Bando"
+msgstr ""
+
+msgid "type_Document"
+msgstr ""
+
+msgid "type_Event"
+msgstr ""
+
+msgid "type_Folder"
+msgstr ""
+
+msgid "type_News Item"
+msgstr ""
+
 #. Default: "If you fill this field, you can group search results by content-types."
 #: ../interfaces/settings.py:92
 msgid "types_grouping_help"
@@ -243,4 +261,7 @@ msgstr ""
 #. Default: "Portal types"
 #: ../interfaces/settings.py:25
 msgid "types_mapping_types_label"
+msgstr ""
+
+msgid "ultima modifica"
 msgstr ""

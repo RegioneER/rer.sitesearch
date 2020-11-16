@@ -15,7 +15,6 @@ const Vocabulary = {
       var f = apiFetch({
         url: '@vocabularies/' + domain + '.' + name,
         method: 'GET',
-        restApi: true,
       });
       fetches.push(f);
     });

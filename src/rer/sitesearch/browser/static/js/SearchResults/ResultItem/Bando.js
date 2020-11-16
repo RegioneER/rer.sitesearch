@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import SearchContext from '../../utils/searchContext';
 import ResultItem from './ResultItem';
 
@@ -9,13 +10,25 @@ const Bando = ({ item, inEvidence = false }) => {
 
   const [showSimilarResults, setShowSimilarResults] = useState(false);
 
-  //[ToDo] da fare. Adesso è solo di esempio
-  let title_parts = [
-    'creato da Marcella Bongiovanni',
-    'pubblicato 19/06/2013',
-    'ultima modifica 31/01/2020 10:14',
-  ];
-  const title = title_parts.join(' - ');
+  const getTitleHover = (item, translations) => {
+    let title_parts = [
+      // 'creato da Marcella Bongiovanni',
+      // 'pubblicato 19/06/2013',
+      // 'ultima modifica 31/01/2020 10:14',
+    ];
+    title_parts.push(
+      translations['pubblicato il'] +
+        ' ' +
+        moment(item.effective).format('D/MM/YYYY'),
+    );
+    title_parts.push(
+      translations['ultima modifica'] +
+        ' ' +
+        moment(item.Date).format('D/MM/YYYY'),
+    );
+
+    return title_parts.join(' - ');
+  };
 
   return (
     <SearchContext.Consumer>
@@ -29,13 +42,17 @@ const Bando = ({ item, inEvidence = false }) => {
           )}
 
           {/* data + path */}
-          {(item.date || item.path) && !inEvidence && (
+          {!inEvidence && (
             <div className="row-item row-item-infos">
               <div className="col-icon"></div>
               <div className="col-content">
                 <div className="item-infos">
-                  {item.date && <div className="item-date">{item.date}</div>}
-                  {item.path && <div className="item-path">{item.path}</div>}
+                  {item.Date && (
+                    <div className="item-date">
+                      {moment(item.Date).format('D/MM/YYYY')}
+                    </div>
+                  )}
+                  <div className="item-path">{item['@id']}</div>
                 </div>
               </div>
             </div>
@@ -47,9 +64,9 @@ const Bando = ({ item, inEvidence = false }) => {
               <div className="main">
                 <i
                   className="fas fa-broadcast-tower"
-                  title={translations.ct_Bando}
+                  title={translations.type_Bando}
                 ></i>
-                <span className="mobile-only">{translations.ct_Bando}</span>
+                <span className="mobile-only">{translations.type_Bando}</span>
               </div>
               <div className="more">
                 <div className="bandoInfos">
@@ -62,8 +79,10 @@ const Bando = ({ item, inEvidence = false }) => {
             {/* item content */}
             <div className="col-content">
               <div className="item-title">
-                <a href={item.url}>
-                  <h3 title={title}>{item.title}</h3>
+                <a href={item['@id']}>
+                  <h3 title={getTitleHover(item, translations)}>
+                    {item.title}
+                  </h3>
                 </a>
               </div>
               {(item.description || hasSimilarResults) && (
@@ -96,10 +115,10 @@ const Bando = ({ item, inEvidence = false }) => {
 
               {!showSimilarResults && (
                 <>
-                  {item.expire_date && (
+                  {item.scadenza_bando && (
                     <div className="expire">
                       {translations['Scadenza partecipazione']}:{' '}
-                      {item.expire_date}
+                      {moment(item.scadenza_bando).format('D/MM/YYYY')}
                     </div>
                   )}
                 </>

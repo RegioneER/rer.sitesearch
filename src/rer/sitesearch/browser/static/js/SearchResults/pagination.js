@@ -7,7 +7,7 @@ const Pagination = () => {
   return (
     <SearchContext.Consumer>
       {({ setFilters, batching, translations }) => {
-        const { numpages, pagesize, current_page } = batching;
+        const { numpages, pagesize, current_page } = batching || {};
 
         const handlePageChange = data => {
           setFilters({ b_start: data.selected * pagesize });

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-11-13 16:25+0000\n"
+"POT-Creation-Date: 2020-11-16 11:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Andrea Cecchi <andrea.cecchi@redturtle.net>\n"
 "Language-Team: LANGUAGE <sviluppoplone@redturtle.net>\n"
@@ -176,6 +176,9 @@ msgstr "Successiva"
 msgid "previous_label"
 msgstr "Precedente"
 
+msgid "pubblicato il"
+msgstr "pubblicato il"
+
 #. Default: "Allowable indexes in catalog"
 #: ../custom_fields.py:54
 msgid "sitesearch_allowable"
@@ -216,6 +219,21 @@ msgstr ""
 msgid "sitesearch_tab_title_help"
 msgstr ""
 
+msgid "type_Bando"
+msgstr "Bando"
+
+msgid "type_Document"
+msgstr "Pagina"
+
+msgid "type_Event"
+msgstr "Evento"
+
+msgid "type_Folder"
+msgstr "Cartella"
+
+msgid "type_News Item"
+msgstr "News"
+
 #. Default: "If you fill this field, you can group search results by content-types."
 #: ../interfaces/settings.py:92
 msgid "types_grouping_help"
@@ -245,3 +263,6 @@ msgstr "Seleziona quali tipi di contenuto mostrare in questo gruppo."
 #: ../interfaces/settings.py:25
 msgid "types_mapping_types_label"
 msgstr "Tipi di contenuto"
+
+msgid "ultima modifica"
+msgstr "ultima modifica"
