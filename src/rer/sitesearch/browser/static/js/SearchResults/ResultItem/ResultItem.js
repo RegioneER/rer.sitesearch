@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import SearchContext from '../utils/searchContext';
+import SearchContext from '../../utils/searchContext';
+import Bando from './Bando';
 
 const ResultItem = ({ item, inEvidence = false }) => {
   const hasSimilarResults =
@@ -39,9 +40,6 @@ const ResultItem = ({ item, inEvidence = false }) => {
 
   //[ToDo]: sistemare la get icon con tipi e icone corretti
   const getIcon = item => {
-    if (item['@type'] === 'Bando') {
-      return 'fas fa-broadcast-tower';
-    }
     if (item['@type'] === 'Folder') {
       return 'fas fa-folder-open';
     }
@@ -59,7 +57,9 @@ const ResultItem = ({ item, inEvidence = false }) => {
     return item['@type'] || 'Documento';
   };
 
-  return (
+  return item['@type'] === 'Bando' ? (
+    <Bando item={item} inEvidence={inEvidence} />
+  ) : (
     <SearchContext.Consumer>
       {({ translations }) => (
         <div className={`result-item ${inEvidence ? 'in-evidence' : ''}`}>
@@ -90,7 +90,6 @@ const ResultItem = ({ item, inEvidence = false }) => {
                 ></i>
                 <span className="mobile-only">{getItemTypeLabel(item)}</span>
               </div>
-              <div className="more">+ stato bando</div>
             </div>
             <div className="col-content">
               <div className="item-title">
@@ -128,13 +127,6 @@ const ResultItem = ({ item, inEvidence = false }) => {
 
               {!showSimilarResults && (
                 <>
-                  {item.expire_date && (
-                    <div className="expire">
-                      {translations['Scadenza partecipazione']}:{' '}
-                      {item.expire_date}
-                    </div>
-                  )}
-
                   {!inEvidence && (
                     <>
                       {breadcrumbs && breadcrumbs.length > 0 && (

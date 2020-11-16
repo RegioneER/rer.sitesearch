@@ -3,7 +3,7 @@ import SearchContext from '../utils/searchContext';
 import Header from './Header';
 import InEvidenceResults from './InEvidenceResults';
 import Pagination from './Pagination';
-import ResultItem from './ResultItem';
+import ResultItem from './ResultItem/ResultItem';
 
 const SearchResults = () => {
   let results = [];
