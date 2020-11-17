@@ -9,12 +9,6 @@ const ResultItem = ({ item, inEvidence = false }) => {
     item.similarResults != null && item.similarResults.length > 0;
 
   const [showSimilarResults, setShowSimilarResults] = useState(false);
-  //[ToDo] le breadcrumbs saranno una proprietà dentro item, che verrà ritornata da plone
-  let breadcrumbs = [
-    { url: '/temi', title: 'temi' },
-    { url: '/temi/luoghi-da-scoprire', title: 'Luoghi da scoprire' },
-    { url: '/temi/luoghi-da-scoprire/parchi', title: 'parchi' },
-  ];
 
   const getTitleHover = (item, translations) => {
     let title_parts = [
@@ -156,6 +150,8 @@ const ResultItem = ({ item, inEvidence = false }) => {
                 <>
                   {!inEvidence && (
                     <>
+                      {/*
+                      //la RER ha rinunaciato alle breadcrumbs, ma se un giorno qualcuno le vuole, hanno già gli stili.
                       {breadcrumbs && breadcrumbs.length > 0 && (
                         <div className="item-breadcrumbs">
                           <i className="fas fa-folder" />{' '}
@@ -173,7 +169,7 @@ const ResultItem = ({ item, inEvidence = false }) => {
                             );
                           })}
                         </div>
-                      )}
+                      )} */}
 
                       {(item.themes || item.Subject) && (
                         <div className="item-tags">
