@@ -15,14 +15,18 @@ const SearchFilters = () => {
   }, [isMobile]);
 
   return (
-    <SearchContext.Consumer>
+    <SearchContext.Consumer key="search-filters">
       {({ setFilters, filters, isMobile, translations }) => (
         <div className="filters-wrapper">
           <h2 className="sr-only" id="search-filters">
-            {translations['Parametri di ricerca']}
+            {translations['Parametri di ricerca']
+              ? translations['Parametri di ricerca']
+              : 'Parametri di ricerca'}
           </h2>
           <a href="#search-results" className="sr-only skip-link">
-            {translations['Vai ai risultati']}
+            {translations['Vai ai risultati']
+              ? translations['Vai ai risultati']
+              : 'Vai ai risultati'}
           </a>
 
           {/* Cerca */}
@@ -42,7 +46,11 @@ const SearchFilters = () => {
                   <button
                     className="btn btn-default"
                     type="button"
-                    aria-label={translations['button_Cerca']}
+                    aria-label={
+                      translations['button_Cerca']
+                        ? translations['button_Cerca']
+                        : 'Cerca'
+                    }
                   >
                     <i className="fas fa-search" />
                   </button>
@@ -54,9 +62,10 @@ const SearchFilters = () => {
                     setShowAdvancedSearch(!showAdvancedSearch);
                   }}
                   className="plone-btn plone-btn-primary"
-                  title={translations['Ricerca avanzata']}
                 >
-                  {translations['Ricerca avanzata']}
+                  {translations['Ricerca avanzata']
+                    ? translations['Ricerca avanzata']
+                    : 'Ricerca avanzata'}
                   <i className="fas fa-chevron-right" />
                 </button>
               )}
@@ -64,7 +73,9 @@ const SearchFilters = () => {
           </div>
 
           <div
-            className={`advanced-search ${showAdvancedSearch ? '' : 'hide'}`}
+            className={`advanced-search ${
+              showAdvancedSearch ? 'open' : 'close'
+            }`}
           >
             {isMobile && (
               <>
@@ -74,13 +85,21 @@ const SearchFilters = () => {
                       setShowAdvancedSearch(false);
                     }}
                     className="plone-btn plone-btn-link"
-                    title={translations['Chiudi la ricerca avanzata']}
+                    title={
+                      translations['Chiudi la ricerca avanzata']
+                        ? translations['Chiudi la ricerca avanzata']
+                        : 'Chiudi la ricerca avanzata'
+                    }
                   >
                     <i className="fas fa-times" />
                   </button>
                 </div>
 
-                <h3>{translations['Ricerca avanzata']}</h3>
+                <h3>
+                  {translations['Ricerca avanzata']
+                    ? translations['Ricerca avanzata']
+                    : 'Ricerca avanzata'}
+                </h3>
               </>
             )}
 
@@ -89,16 +108,18 @@ const SearchFilters = () => {
               <h3>
                 Dove <i className="fas fa-folder"></i>
               </h3>
-              <label className={filters.path === '' ? 'selected' : ''}>
-                <input
-                  type="radio"
-                  name="path"
-                  value=""
-                  checked={filters.path === ''}
-                  onChange={e => setFilters({ path: e.target.value })}
-                />
-                In tutta la Regione Emilia-Romagna
-              </label>
+              <div className="radio">
+                <label className={filters.path === '' ? 'selected' : ''}>
+                  <input
+                    type="radio"
+                    name="path"
+                    value=""
+                    checked={filters.path === ''}
+                    onChange={e => setFilters({ path: e.target.value })}
+                  />
+                  In tutta la Regione Emilia-Romagna
+                </label>
+              </div>
               <div className="radio">
                 <label
                   className={filters.path === '/ambiente' ? 'selected' : ''}
@@ -231,14 +252,18 @@ const SearchFilters = () => {
               />
             </div>
 
-            {isMobile && <SpecificFilters />}
+            {isMobile && <SpecificFilters id="search-filters" />}
             {isMobile && (
               <div className="submit-wrapper">
                 <button
                   className="plone-btn plone-btn-primary"
-                  title={translations['Filtra i risultati']}
+                  onClick={() => {
+                    setShowAdvancedSearch(false);
+                  }}
                 >
-                  {translations['Filtra i risultati']}
+                  {translations['Filtra i risultati']
+                    ? translations['Filtra i risultati']
+                    : 'Filtra i risultati'}
                 </button>
               </div>
             )}

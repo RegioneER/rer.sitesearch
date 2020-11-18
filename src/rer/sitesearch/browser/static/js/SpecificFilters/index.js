@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
 import SearchContext from '../utils/searchContext';
 
-const SpecificFilters = () => {
+const SpecificFilters = ({ id }) => {
   return (
-    <SearchContext.Consumer>
-      {({ setFilters, translations }) => (
+    <SearchContext.Consumer key={`specific-filters-${id}`}>
+      {({ setFilters, filters, translations }) => (
         <div className="specific-filters">
           <div className="title">
             {translations['Filtra i bandi per finanziamenti ed opportunità']}
@@ -21,7 +22,8 @@ const SpecificFilters = () => {
                 isMulti={true}
                 isClearable={true}
                 placeholder={translations['bando_Stato']}
-                onChange={option => setFilters({ state: option.value })}
+                value={filters.state}
+                onChange={options => setFilters({ state: options })}
               />
             </div>
             <div className="col-specific-filters">
@@ -34,7 +36,8 @@ const SpecificFilters = () => {
                 isMulti={true}
                 isClearable={true}
                 placeholder={translations['bando_Tipologia']}
-                onChange={option => setFilters({ bando_type: option.value })}
+                value={filters.bando_type}
+                onChange={options => setFilters({ bando_type: options })}
               />
             </div>
             <div className="col-specific-filters">
@@ -47,7 +50,8 @@ const SpecificFilters = () => {
                 isMulti={true}
                 isClearable={true}
                 placeholder={translations['bando_Beneficiari']}
-                onChange={option => setFilters({ beneficari: option.value })}
+                value={filters.beneficiari}
+                onChange={options => setFilters({ beneficiari: options })}
               />
             </div>
             <div className="col-specific-filters">
@@ -59,7 +63,8 @@ const SpecificFilters = () => {
                 ]}
                 isClearable={true}
                 placeholder={translations['bando_Fondo']}
-                onChange={option => setFilters({ fondo: option.value })}
+                value={filters.fondo}
+                onChange={options => setFilters({ fondo: options })}
               />
             </div>
             <div className="col-specific-filters">
@@ -71,7 +76,8 @@ const SpecificFilters = () => {
                 ]}
                 isClearable={true}
                 placeholder={translations['bando_Materia']}
-                onChange={option => setFilters({ materia: option.value })}
+                value={filters.materia}
+                onChange={options => setFilters({ materia: options })}
               />
             </div>
           </div>
@@ -79,6 +85,10 @@ const SpecificFilters = () => {
       )}
     </SearchContext.Consumer>
   );
+};
+
+SpecificFilters.propTypes = {
+  id: PropTypes.string.isRequired,
 };
 
 export default SpecificFilters;

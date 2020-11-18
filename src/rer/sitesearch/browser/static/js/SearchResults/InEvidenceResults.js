@@ -5,7 +5,11 @@ const InEvidenceResults = ({ results = [] }) => {
   return results.length > 0 ? (
     <>
       {results.map(item => (
-        <ResultItem item={item} key={item.id + 'evidence'} inEvidence={true} />
+        <ResultItem
+          item={item}
+          key={item['@id'] + '-inevidence'}
+          inEvidence={true}
+        />
       ))}
     </>
   ) : null;

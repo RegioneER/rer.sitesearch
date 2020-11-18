@@ -6,7 +6,8 @@
             font-size: 16px;
             font-weight: 600;
 
-            i {
+            i,
+            svg {
                 margin-left: 0.5rem;
                 color: #6c6c6c;
             }
@@ -16,9 +17,17 @@
             @media (max-width: @plone-screen-md-max) {
                 display: flex;
                 justify-content: space-between;
+
                 .input-group {
                     flex: 1 1 auto;
                     margin-right: 0.5em;
+                }
+
+                button {
+                    svg,
+                    i {
+                        margin-left: 0.5rem;
+                    }
                 }
             }
         }
@@ -37,63 +46,97 @@
                     margin-left: 0.5rem;
                 }
 
-                i {
+                i,
+                svg {
+                    width: 1em;
                     margin-right: 0.5rem;
                     font-size: 1em;
                 }
             }
         }
     }
+
     .advanced-search {
-        transition: all 0.5s ease-in-out;
-        &.hide {
-            right: -100%;
+        transition: all 0.3s ease-in-out;
+
+        &.close {
+            z-index: -1;
+            top: 10vh;
+            left: 10vw;
+            width: 80vw;
+            height: 80vh;
+            opacity: 0;
         }
 
         @media (max-width: @plone-screen-md-max) {
             position: fixed;
-            top: 0;
-            right: 0;
-            background-color: rgba(0, 0, 0, 0.9);
             z-index: 9999;
-            width: 100%;
+            top: 0;
+            left: 0;
+            width: 100vw;
             height: 100vh;
-            padding: 2em;
+            padding: 2em 2em 4em;
+            background-color: #2f2f2f;
             color: #fff;
+            opacity: 1;
             overflow-y: scroll;
 
+            svg,
             .far,
             .fas,
             .fa {
                 color: #fff;
             }
+
             .css-yk16xz-control,
             .css-26l3qy-menu {
                 color: @plone-text-color;
             }
 
-            .close-advanced-search {
-                text-align: right;
-                margin-right: -1em;
-                margin-top: -1em;
+            .filter-item,
+            .col-specific-filters {
+                i,
+                svg {
+                    color: @plone-text-color;
+                }
 
-                i {
+                h3,
+                .radio label {
+                    i,
+                    svg {
+                        color: #ccc;
+                    }
+                }
+            }
+
+            .close-advanced-search {
+                margin-top: -1em;
+                margin-right: -1em;
+                text-align: right;
+
+                i,
+                svg {
                     font-size: 2em;
                 }
             }
 
             .close-advanced-search + h3 {
-                margin-top: 0;
                 border-bottom: 1px solid #ccc;
+                margin-top: 0;
             }
 
             .specific-filters {
-                background-color: transparent;
                 padding: 0;
+                background-color: transparent;
             }
 
             .submit-wrapper {
+                margin: 1em 0 2em;
                 text-align: right;
+
+                button {
+                    font-size: 1.75rem;
+                }
             }
         }
     }

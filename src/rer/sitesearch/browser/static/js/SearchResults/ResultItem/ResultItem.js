@@ -30,10 +30,10 @@ const ResultItem = ({ item, inEvidence = false }) => {
     return title_parts.join(' - ');
   };
 
-  const brdcIsInPath = brdc => {
-    //[ToDo] da fare. Adesso è solo di esempio
-    return brdc.url === '/temi/luoghi-da-scoprire';
-  };
+  // const brdcIsInPath = brdc => {
+  //   //[ToDo] da fare. Adesso è solo di esempio
+  //   return brdc.url === '/temi/luoghi-da-scoprire';
+  // };
 
   const isInFilters = (type, item) => {
     //[ToDo] da fare. Adesso è solo di esempio
@@ -69,7 +69,7 @@ const ResultItem = ({ item, inEvidence = false }) => {
   return item['@type'] === 'Bando' ? (
     <Bando item={item} inEvidence={inEvidence} />
   ) : (
-    <SearchContext.Consumer>
+    <SearchContext.Consumer key={item['@id']}>
       {({ translations }) => (
         <div className={`result-item ${inEvidence ? 'in-evidence' : ''}`}>
           {/* in evidenza */}

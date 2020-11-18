@@ -15,6 +15,35 @@ class SearchContainer extends Component {
 
     const query = qs.parse(window.location.search);
 
+    this.setFilters = newFilters => {
+      let filters = JSON.parse(JSON.stringify(this.state.filters));
+
+      // always clean batching
+      delete filters.b_start;
+
+      Object.keys(newFilters).forEach(key => {
+        const value = newFilters[key];
+        if (value || value.length > 0) {
+          filters[key] = value;
+        } else if (key in filters) {
+          delete filters[key];
+        }
+      });
+
+      apiFetch({
+        url: this.props.baseUrl + '/@search',
+        params: filters,
+        method: 'GET',
+      }).then(({ data }) => {
+        this.setState({
+          ...this.state,
+          filters,
+          results: data.items,
+          batching: data.batching,
+        });
+      });
+    };
+
     /**
      * TODO: parse query string for default filters
      */
@@ -41,8 +70,6 @@ class SearchContainer extends Component {
       setFilters: this.setFilters,
       isMobile: false,
     };
-
-    this.setFilters = this.setFilters.bind(this);
   }
 
   handleResize() {
@@ -91,37 +118,6 @@ class SearchContainer extends Component {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  setFilters(newFilters) {
-    let { filters } = this.state;
-
-    // always clean batching
-    delete filters.b_start;
-
-    Object.keys(newFilters).forEach(key => {
-      const value = newFilters[key];
-      if (value || value.length > 0) {
-        filters[key] = value;
-      } else {
-        if (filters.hasOwnProperty(key)) {
-          delete filters[key];
-        }
-      }
-    });
-
-    apiFetch({
-      url: this.props.baseUrl + '/@search',
-      params: filters,
-      method: 'GET',
-    }).then(({ data }) => {
-      this.setState({
-        ...this.state,
-        filters,
-        results: data.items,
-        batching: data.batching,
-      });
-    });
-  }
-
   render() {
     return (
       <div className="rer-search-container">
@@ -131,7 +127,9 @@ class SearchContainer extends Component {
               <SearchFilters />
             </div>
             <div className="col col-md-9">
-              {!this.state.isMobile && <SpecificFilters />}
+              {!this.state.isMobile && (
+                <SpecificFilters id="search-container" />
+              )}
               <SearchResults />
             </div>
           </div>
