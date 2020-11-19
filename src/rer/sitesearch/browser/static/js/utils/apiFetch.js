@@ -1,27 +1,28 @@
 import axios from 'axios';
+import qs from 'query-string';
 
-const parseParams = params => {
-  const keys = Object.keys(params);
-  let options = '';
+// const parseParams = params => {
+//   const keys = Object.keys(params);
+//   let options = '';
 
-  keys.forEach(key => {
-    const isParamTypeObject = typeof params[key] === 'object';
-    const isParamTypeArray =
-      isParamTypeObject && params[key] !== null && params[key].length >= 0;
+//   keys.forEach(key => {
+//     const isParamTypeObject = typeof params[key] === 'object';
+//     const isParamTypeArray =
+//       isParamTypeObject && params[key] !== null && params[key].length >= 0;
 
-    if (!isParamTypeObject) {
-      options += `${key}=${params[key]}&`;
-    }
+//     if (!isParamTypeObject) {
+//       options += `${key}=${params[key]}&`;
+//     }
 
-    if (isParamTypeObject && isParamTypeArray) {
-      params[key].forEach(element => {
-        options += `${key}=${element}&`;
-      });
-    }
-  });
+//     if (isParamTypeObject && isParamTypeArray) {
+//       params[key].forEach(element => {
+//         options += `${key}=${element}&`;
+//       });
+//     }
+//   });
 
-  return options ? options.slice(0, -1) : options;
-};
+//   return options ? options.slice(0, -1) : options;
+// };
 
 const apiFetch = ({ url, params, method }) => {
   if (!method) {
@@ -33,7 +34,8 @@ const apiFetch = ({ url, params, method }) => {
     method,
     url,
     params,
-    paramsSerializer: params => parseParams(params),
+    paramsSerializer: params =>
+      qs.stringify(params, { skipNull: true, skipEmptyString: true }),
     headers,
   }).catch(function(error) {
     // handle error

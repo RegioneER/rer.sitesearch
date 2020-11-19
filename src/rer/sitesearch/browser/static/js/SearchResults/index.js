@@ -22,7 +22,7 @@ const SearchResults = () => {
   ];
   return (
     <SearchContext.Consumer key="search-results">
-      {({ translations, results }) => {
+      {({ translations, loading, results }) => {
         console.log(results);
         return (
           <div className="search-results">
@@ -33,17 +33,28 @@ const SearchResults = () => {
               {translations['Vai ai filtri']}
             </a>
 
-            <Header searchHasFilters={true} />
-            <InEvidenceResults results={inEvidenceResults} />
+            {loading ? (
+              <div className="loading-wrapper">
+                <i className="fas fa-circle-notch fa-spin"></i>
+                <p>Loading...</p>
+              </div>
+            ) : results && results.length > 0 ? (
+              <>
+                <Header searchHasFilters={true} />
+                <InEvidenceResults results={inEvidenceResults} />
 
-            <div className="results-list">
-              {results.map(item => (
-                <div key={item['@id']}>
-                  <ResultItem item={item} />
+                <div className="results-list">
+                  {results.map(item => (
+                    <div key={item['@id']}>
+                      <ResultItem item={item} />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <Pagination />
+                <Pagination />
+              </>
+            ) : (
+              <div>Nessun risultato soddisfa la tua ricerca</div>
+            )}
           </div>
         );
       }}

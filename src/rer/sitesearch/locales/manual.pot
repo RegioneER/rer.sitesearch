@@ -83,7 +83,6 @@ msgstr ""
 msgid "Ordina per"
 msgstr ""
 
-
 msgid "type_Document"
 msgstr ""
 
@@ -105,5 +104,11 @@ msgstr ""
 msgid "ultima modifica"
 msgstr ""
 
-msgid ""
+msgid "relevance"
+msgstr ""
+
+msgid "effective"
+msgstr ""
+
+msgid "sortable_title"
 msgstr ""

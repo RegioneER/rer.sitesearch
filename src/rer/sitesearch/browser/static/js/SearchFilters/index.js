@@ -6,6 +6,7 @@ import SearchContext from '../utils/searchContext';
 
 const SearchFilters = () => {
   const { isMobile } = useContext(SearchContext);
+  const [searchableText, setSearchableText] = useState(null);
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(
     isMobile ? false : true,
   );
@@ -38,14 +39,26 @@ const SearchFilters = () => {
                   type="search"
                   className="form-control"
                   placeholder={translations['Digita il testo da cercare...']}
-                  name="searchableText"
-                  value={filters.searchableText}
-                  onChange={e => setFilters({ searchableText: e.target.value })}
+                  name="SearchableText"
+                  value={
+                    searchableText !== null
+                      ? searchableText
+                      : filters.SearchableText
+                  }
+                  onChange={e => setSearchableText(e.target.value)}
                 />
                 <span className="input-group-btn">
                   <button
                     className="btn btn-default"
                     type="button"
+                    onClick={() =>
+                      setFilters({
+                        SearchableText:
+                          searchableText !== null
+                            ? searchableText
+                            : filters.SearchableText,
+                      })
+                    }
                     aria-label={
                       translations['button_Cerca']
                         ? translations['button_Cerca']

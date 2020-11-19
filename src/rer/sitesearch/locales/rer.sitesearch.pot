@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-11-16 11:45+0000\n"
+"POT-Creation-Date: 2020-11-19 11:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -145,6 +145,9 @@ msgstr ""
 msgid "button_Cerca"
 msgstr ""
 
+msgid "effective"
+msgstr ""
+
 msgid "elementi su"
 msgstr ""
 
@@ -176,6 +179,9 @@ msgid "previous_label"
 msgstr ""
 
 msgid "pubblicato il"
+msgstr ""
+
+msgid "relevance"
 msgstr ""
 
 #. Default: "Allowable indexes in catalog"
@@ -216,6 +222,9 @@ msgstr ""
 #. Default: "Insert a title for this tab. You can provide translations for this title with a proper translation file for rer.sitesearch domain."
 #: ../custom_fields.py:23
 msgid "sitesearch_tab_title_help"
+msgstr ""
+
+msgid "sortable_title"
 msgstr ""
 
 msgid "type_Bando"
