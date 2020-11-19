@@ -4,3 +4,4 @@
 - [ ] sembra segare via i parametri per l'ordinamento
 - [ ] verifiche al resize
 - [ ] dove metto * in SearchableText, fare solo se stringa non vuota
+- [ ] traduzione loading...
