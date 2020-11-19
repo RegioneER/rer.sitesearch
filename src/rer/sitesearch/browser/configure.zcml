@@ -28,6 +28,17 @@
         layer="rer.sitesearch.interfaces.IRERSiteSearchLayer"
         template="templates/search.pt"
         />
+  
+  <!-- keep default search view for debug -->
+  <configure package="Products.CMFPlone.browser">
+      <browser:page
+            name="search-debug"
+            class=".search.Search"
+            permission="zope2.View"
+            for="plone.app.layout.navigation.interfaces.INavigationRoot"
+            template="templates/search.pt"
+            />
+  </configure>
 
   <browser:page
         name="sitesearch-settings"

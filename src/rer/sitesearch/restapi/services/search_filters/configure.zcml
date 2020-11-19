@@ -9,6 +9,7 @@
     for="Products.CMFCore.interfaces.ISiteRoot"
     factory=".get.SearchFiltersGet"
     permission="zope2.View"
+    layer="rer.sitesearch.interfaces.IRERSiteSearchLayer"
     />
 
 </configure>
