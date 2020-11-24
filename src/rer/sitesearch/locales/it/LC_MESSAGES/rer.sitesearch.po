@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-11-19 11:12+0000\n"
+"POT-Creation-Date: 2020-11-23 11:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Andrea Cecchi <andrea.cecchi@redturtle.net>\n"
 "Language-Team: LANGUAGE <sviluppoplone@redturtle.net>\n"
@@ -173,8 +173,14 @@ msgstr "Imposta qual'è la lunghezza massima di parole consentite nella ricerca.
 msgid "help_sitesearch_settings_editform"
 msgstr "Configura la ricerca del sito"
 
+msgid "loading"
+msgstr "Caricamento..."
+
 msgid "next_label"
 msgstr "Successiva"
+
+msgid "no_results_label"
+msgstr "Nessun risultato soddisfa la tua ricerca"
 
 msgid "previous_label"
 msgstr "Precedente"

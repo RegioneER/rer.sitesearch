@@ -112,3 +112,9 @@ msgstr ""
 
 msgid "sortable_title"
 msgstr ""
+
+msgid "no_results_label"
+msgstr ""
+
+msgid "loading"
+msgstr ""

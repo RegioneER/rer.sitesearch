@@ -12,10 +12,33 @@ import PropTypes from 'prop-types';
 
 const handleSearchableText = filters => {
   if ('SearchableText' in filters) {
-    return { ...filters, SearchableText: `${filters.SearchableText}*` };
+    return {
+      ...filters,
+      SearchableText:
+        filters.SearchableText && filters.SearchableText.length > 0
+          ? `${filters.SearchableText}*`
+          : null,
+    };
   }
 
   return filters;
+};
+
+const defaultFilters = {
+  metadata_fields: ['Date', 'Subject', 'scadenza_bando', 'effective'], //temi
+  // (oppure effective e modified e prendo la piu recente)
+  SearchableText: '',
+  sort_on: null,
+  sort_order: null,
+  path: '',
+  types: '',
+  categories: '',
+  temi: '',
+  state: null, //Ricerca specifica - Bandi: stato dei bandi
+  bando_type: null, //Ricerca specifica - Bandi: tipo di bando
+  beneficiari: null, //Ricerca specifica - Bandi: beneficari
+  fondo: null, //Ricerca specifica - Bandi: fondo
+  materia: null, //Ricerca specifica - Bandi: materia
 };
 
 class SearchContainer extends Component {
@@ -25,19 +48,28 @@ class SearchContainer extends Component {
     const query = qs.parse(window.location.search);
 
     this.setFilters = newFilters => {
-      let filters = JSON.parse(JSON.stringify(this.state.filters));
+      let filters = {};
 
-      // always clean batching
-      delete filters.b_start;
+      if (newFilters === null) {
+        filters = { ...defaultFilters };
+        this.setState({
+          filters: defaultFilters,
+        });
+      } else {
+        filters = JSON.parse(JSON.stringify(this.state.filters));
 
-      Object.keys(newFilters).forEach(key => {
-        const value = newFilters[key];
-        if (value && value.length > 0) {
-          filters[key] = value;
-        } else if (key in filters) {
-          delete filters[key];
-        }
-      });
+        // always clean batching
+        delete filters.b_start;
+
+        Object.keys(newFilters).forEach(key => {
+          const value = newFilters[key];
+          if (value && value.length > 0) {
+            filters[key] = value;
+          } else if (key in filters) {
+            delete filters[key];
+          }
+        });
+      }
 
       if (!this.state.loading) this.setState({ loading: true });
 
@@ -72,26 +104,14 @@ class SearchContainer extends Component {
     this.state = {
       results: [],
       total: 0,
-      loading: true,
+      loading: Object.keys(query).length > 0,
       query: Object.keys(query).length > 0 ? query : null,
       batching: { numpages: 0, current_page: 0, pagesize: 0 },
       translations: {},
       filters: {
-        metadata_fields: ['Date', 'Subject', 'scadenza_bando', 'effective'], //temi
-        // (oppure effective e modified e prendo la piu recente)
-        SearchableText:
-          query && query.SearchableText ? query.SearchableText : '',
-        sort_on: null,
-        sort_order: null,
-        path: '',
-        types: '',
-        categories: '',
-        temi: '',
-        state: null, //Ricerca specifica - Bandi: stato dei bandi
-        bando_type: null, //Ricerca specifica - Bandi: tipo di bando
-        beneficiari: null, //Ricerca specifica - Bandi: beneficari
-        fondo: null, //Ricerca specifica - Bandi: fondo
-        materia: null, //Ricerca specifica - Bandi: materia
+        ...defaultFilters,
+        ...query,
+        SearchableText: query.SearchableText ? query.SearchableText : '',
       },
       setFilters: debounce(this.setFilters, 100),
       isMobile: window.innerWidth < 1200,
@@ -100,40 +120,49 @@ class SearchContainer extends Component {
 
   handleResize() {
     console.log('mobile: ', window.innerWidth < 1200);
-    // this.setState({
-    //   isMobile: window.innerWidth < 1200,
-    // });
+    this.setState({
+      isMobile: window.innerWidth < 1200,
+    });
   }
 
   componentDidMount() {
-    // this.handleResize();
     window.addEventListener('resize', this.handleResize);
 
-    const endPoint = this.state.query ? '/@search' : '/@search-filters';
-    const params = this.state.query ? this.state.filters : null;
+    const fetches = [getTranslationCatalog()];
+    const searchParams = JSON.parse(JSON.stringify(this.state.query));
+    if (searchParams.metadata_fields) delete searchParams.metadata_fields;
+    if (
+      searchParams.SearchableText !== undefined &&
+      searchParams.SearchableText.length === 0
+    ) {
+      delete searchParams.SearchableText;
+    }
 
-    const searchParams = qs.stringify(this.state.filters, {
-      skipNull: true,
-      skipEmptyString: true,
-    });
-    window.history.pushState(
-      {},
-      '',
-      `${this.props.baseUrl}/@@search?${searchParams}`,
-    );
-    const fetches = [
-      apiFetch({
-        url: this.props.baseUrl + endPoint,
-        params: handleSearchableText(params),
-        method: 'GET',
-      }),
-      getTranslationCatalog(),
-    ];
+    if (Object.keys(searchParams).length > 0) {
+      const endPoint = '/@search';
+
+      window.history.pushState(
+        {},
+        '',
+        `${this.props.baseUrl}/@@search?${qs.stringify(searchParams)}`,
+      );
+      fetches.push(
+        apiFetch({
+          url: this.props.baseUrl + endPoint,
+          params: handleSearchableText(searchParams),
+          method: 'GET',
+        }),
+      );
+    }
 
     Promise.all(fetches).then(data => {
       let newState = { ...this.state };
+
       if (data[0]) {
-        const searchResults = data[0].data;
+        newState = { ...newState, translations: data[0] };
+      }
+      if (data[1]) {
+        const searchResults = data[1].data;
 
         newState = {
           ...newState,
@@ -142,9 +171,8 @@ class SearchContainer extends Component {
           total: searchResults.items_total,
           batching: searchResults.batching,
         };
-      }
-      if (data[1]) {
-        newState = { ...newState, translations: data[1] };
+      } else {
+        newState = { ...newState, loading: false };
       }
 
       this.setState(newState);

@@ -29,14 +29,15 @@ const Header = ({ searchHasFilters = false }) => (
             <span className="desktop-only">{translations['filtrati']}</span>
           </span>{' '}
           {searchHasFilters && (
-            <a
-              href="#"
+            <button
+              className="reset-filters"
               onClick={e => {
                 e.preventDefault();
+                setFilters({});
               }}
             >
               ({translations['Annulla filtri']})
-            </a>
+            </button>
           )}
         </div>
         <div className="order-by">

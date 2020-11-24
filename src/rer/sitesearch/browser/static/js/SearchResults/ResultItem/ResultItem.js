@@ -3,6 +3,15 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import SearchContext from '../../utils/searchContext';
 import Bando from './Bando';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTag,
+  faList,
+  faFolderOpen,
+  faCalendarAlt,
+  faNewspaper,
+  faFile,
+} from '@fortawesome/free-solid-svg-icons';
 
 const ResultItem = ({ item, inEvidence = false }) => {
   const hasSimilarResults =
@@ -48,18 +57,18 @@ const ResultItem = ({ item, inEvidence = false }) => {
   //[ToDo]: sistemare la get icon con tipi e icone corretti
   const getIcon = item => {
     if (item['@type'] === 'Folder') {
-      return 'fas fa-folder-open';
+      return faFolderOpen;
     }
     if (item['@type'] === 'Event') {
-      return 'fas fa-calendar-alt';
+      return faCalendarAlt;
     }
     // if (item['@type'] === 'File') {
-    //   return 'fas fa-paperclip';
+    //   return 'fa-paperclip';
     // }
     if (item['@type'] === 'News Item') {
-      return 'fas fa-newspaper';
+      return faNewspaper;
     }
-    return 'fas fa-file';
+    return faFile;
   };
 
   const getItemTypeLabel = (item, translations) => {
@@ -100,10 +109,10 @@ const ResultItem = ({ item, inEvidence = false }) => {
             {/* colonna icona */}
             <div className="col-icon">
               <div className="main">
-                <i
-                  className={`${getIcon(item)}`}
+                <FontAwesomeIcon
+                  icon={getIcon(item)}
                   title={getItemTypeLabel(item, translations)}
-                ></i>
+                />
                 <span className="mobile-only">
                   {getItemTypeLabel(item, translations)}
                 </span>
@@ -154,7 +163,7 @@ const ResultItem = ({ item, inEvidence = false }) => {
                       //la RER ha rinunaciato alle breadcrumbs, ma se un giorno qualcuno le vuole, hanno già gli stili.
                       {breadcrumbs && breadcrumbs.length > 0 && (
                         <div className="item-breadcrumbs">
-                          <i className="fas fa-folder" />{' '}
+                          <FontAwesomeIcon icon={faFolder} />{' '}
                           {breadcrumbs.map((brdc, index) => {
                             return (
                               <span key={brdc.url}>
@@ -175,7 +184,7 @@ const ResultItem = ({ item, inEvidence = false }) => {
                         <div className="item-tags">
                           {item.themes && (
                             <div className="item-themes">
-                              <i className="fas fa-tag" />
+                              <FontAwesomeIcon icon={faTag} />
                               {item.themes.map(theme => (
                                 <a
                                   href="#"
@@ -191,7 +200,7 @@ const ResultItem = ({ item, inEvidence = false }) => {
                           )}
                           {item.Subject && item.Subject.length > 0 && (
                             <div className="item-categories">
-                              <i className="fas fa-list" />
+                              <FontAwesomeIcon icon={faList} />
                               {item.Subject.map(cat => (
                                 <a
                                   href="#"

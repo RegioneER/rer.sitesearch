@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-11-19 11:12+0000\n"
+"POT-Creation-Date: 2020-11-23 11:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -172,7 +172,13 @@ msgstr ""
 msgid "help_sitesearch_settings_editform"
 msgstr ""
 
+msgid "loading"
+msgstr ""
+
 msgid "next_label"
+msgstr ""
+
+msgid "no_results_label"
 msgstr ""
 
 msgid "previous_label"

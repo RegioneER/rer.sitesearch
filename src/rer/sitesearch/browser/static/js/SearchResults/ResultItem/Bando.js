@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import SearchContext from '../../utils/searchContext';
 import ResultItem from './ResultItem';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
 
 const Bando = ({ item, inEvidence = false }) => {
   const hasSimilarResults =
@@ -62,10 +64,10 @@ const Bando = ({ item, inEvidence = false }) => {
             {/* colonna icona */}
             <div className="col-icon">
               <div className="main">
-                <i
-                  className="fas fa-broadcast-tower"
-                  title={translations.type_Bando}
-                ></i>
+                <FontAwesomeIcon
+                  icon={faBroadcastTower}
+                  title={translations.type_bando}
+                />
                 <span className="mobile-only">{translations.type_Bando}</span>
               </div>
               <div className="more">

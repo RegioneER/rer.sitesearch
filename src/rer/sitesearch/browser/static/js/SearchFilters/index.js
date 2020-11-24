@@ -3,6 +3,18 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import SpecificFilters from '../SpecificFilters';
 import SearchContext from '../utils/searchContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faSearch,
+  faChevronRight,
+  faTimes,
+  faFolder,
+  faFile,
+  faArchive,
+  faBroadcastTower,
+  faTags,
+  faListUl,
+} from '@fortawesome/free-solid-svg-icons';
 
 const SearchFilters = () => {
   const { isMobile } = useContext(SearchContext);
@@ -65,7 +77,7 @@ const SearchFilters = () => {
                         : 'Cerca'
                     }
                   >
-                    <i className="fas fa-search" />
+                    <FontAwesomeIcon icon={faSearch} />
                   </button>
                 </span>
               </div>
@@ -79,7 +91,7 @@ const SearchFilters = () => {
                   {translations['Ricerca avanzata']
                     ? translations['Ricerca avanzata']
                     : 'Ricerca avanzata'}
-                  <i className="fas fa-chevron-right" />
+                  <FontAwesomeIcon icon={faChevronRight} />
                 </button>
               )}
             </div>
@@ -104,7 +116,7 @@ const SearchFilters = () => {
                         : 'Chiudi la ricerca avanzata'
                     }
                   >
-                    <i className="fas fa-times" />
+                    <FontAwesomeIcon icon={faTimes} />
                   </button>
                 </div>
 
@@ -119,7 +131,7 @@ const SearchFilters = () => {
             {/* Dove */}
             <div className="filter-item">
               <h3>
-                Dove <i className="fas fa-folder"></i>
+                Dove <FontAwesomeIcon icon={faFolder} />
               </h3>
               <div className="radio">
                 <label className={filters.path === '' ? 'selected' : ''}>
@@ -193,7 +205,7 @@ const SearchFilters = () => {
                     checked={filters.types === 'Documenti'}
                     onChange={e => setFilters({ types: e.target.value })}
                   />
-                  <i className="fas fa-file"></i>
+                  <FontAwesomeIcon icon={faFile} />
                   Documenti (15)
                 </label>
               </div>
@@ -210,7 +222,7 @@ const SearchFilters = () => {
                     checked={filters.types === 'Allegati e norme'}
                     onChange={e => setFilters({ types: e.target.value })}
                   />
-                  <i className="fas fa-archive"></i>
+                  <FontAwesomeIcon icon={faArchive} />
                   Allegati e norme (45)
                 </label>
               </div>
@@ -223,7 +235,7 @@ const SearchFilters = () => {
                     checked={filters.types === 'Bandi'}
                     onChange={e => setFilters({ types: e.target.value })}
                   />
-                  <i className="fas fa-broadcast-tower"></i>
+                  <FontAwesomeIcon icon={faBroadcastTower} />
                   Bandi (2)
                 </label>
               </div>
@@ -232,7 +244,7 @@ const SearchFilters = () => {
             {/* categories */}
             <div className="filter-item">
               <h3>
-                Categorie <i className="fas fa-tags"></i>
+                Categorie <FontAwesomeIcon icon={faTags} />
               </h3>
               <Select
                 options={[
@@ -250,7 +262,7 @@ const SearchFilters = () => {
             {/* temi */}
             <div className="filter-item">
               <h3>
-                Temi <i className="fas fa-list-ul"></i>
+                Temi <FontAwesomeIcon icon={faListUl} />
               </h3>
               <Select
                 options={[

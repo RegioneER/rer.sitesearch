@@ -4,6 +4,8 @@ import Header from './Header';
 import InEvidenceResults from './InEvidenceResults';
 import Pagination from './Pagination';
 import ResultItem from './ResultItem/ResultItem';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 const SearchResults = () => {
   let inEvidenceResults = [
@@ -35,8 +37,12 @@ const SearchResults = () => {
 
             {loading ? (
               <div className="loading-wrapper">
-                <i className="fas fa-circle-notch fa-spin"></i>
-                <p>Loading...</p>
+                <FontAwesomeIcon icon={faCircleNotch} spin />
+                <p>
+                  {translations['loading']
+                    ? translations['loading']
+                    : 'Loading...'}
+                </p>
               </div>
             ) : results && results.length > 0 ? (
               <>
@@ -53,7 +59,11 @@ const SearchResults = () => {
                 <Pagination />
               </>
             ) : (
-              <div>Nessun risultato soddisfa la tua ricerca</div>
+              <p>
+                {translations['no_results_label']
+                  ? translations['no_results_label']
+                  : 'Nessun risultato soddisfa la tua ricerca'}
+              </p>
             )}
           </div>
         );
