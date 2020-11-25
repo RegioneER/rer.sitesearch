@@ -52,4 +52,12 @@
     component=".vocabularies.IndexesVocabularyFactory"
     name="rer.sitesearch.vocabularies.IndexesVocabulary"
     />
+  <utility
+    component=".vocabularies.AdvancedFiltersVocabularyFactory"
+    name="rer.sitesearch.vocabularies.AdvancedFiltersVocabulary"
+    />
+  <utility
+    component=".vocabularies.GroupIconsVocabularyFactory"
+    name="rer.sitesearch.vocabularies.GroupIconsVocabulary"
+    />
 </configure>

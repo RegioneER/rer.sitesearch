@@ -30,6 +30,27 @@ class ITypesMappingRowSchema(model.Schema):
         required=True,
         value_type=schema.TextLine(),
     )
+    icon = schema.Choice(
+        title=_("types_mapping_icon_label", default=u"Icon"),
+        description=_(
+            "types_mapping_icon_help",
+            default=u"Select an icon for this group.",
+        ),
+        required=False,
+        vocabulary=u"rer.sitesearch.vocabularies.GroupIconsVocabulary",
+    )
+    advanced_filters = schema.Choice(
+        title=_(
+            "types_mapping_advanced_filters_label", default=u"Advanced filters"
+        ),
+        description=_(
+            "types_mapping_advanced_filters_help",
+            default=u"Select a preset of advanced filters for this group.",
+        ),
+        required=False,
+        vocabulary=u"rer.sitesearch.vocabularies.AdvancedFiltersVocabulary",
+        default=u"",
+    )
     directives.widget(
         "types",
         AjaxSelectFieldWidget,

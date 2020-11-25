@@ -36,12 +36,12 @@ class LazyCatalogResultSerializer(BaseSerializer):
             "indexes": get_indexes_mapping(),
         }
         for brain in brains:
-            for group in facets["groups"]["values"].values():
+            for group in facets["groups"].get("values", {}).values():
                 if brain.portal_type in group["types"]:
                     group["count"] += 1
-            for index_id, index_settings in facets["indexes"][
-                "values"
-            ].items():
+            for index_id, index_settings in (
+                facets["indexes"].get("values", {}).items()
+            ):
                 try:
                     value = getattr(brain, index_id)
                 except AttributeError:

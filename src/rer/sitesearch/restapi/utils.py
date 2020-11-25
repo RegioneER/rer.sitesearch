@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 from plone import api
 from rer.sitesearch.interfaces import IRERSiteSearchSettings
+from zope.component import getMultiAdapter
+from zope.component import ComponentLookupError
+from rer.sitesearch.interfaces import ISiteSearchCustomFilters
+from zope.globalrequest import getRequest
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def get_types_groups():
@@ -10,10 +18,28 @@ def get_types_groups():
     if not values:
         return {}
     res = {"order": [], "values": {}}
+    portal = api.portal.get()
+    request = getRequest()
     for value in values:
         label = _extract_label(value.get("label", ""))
         res["order"].append(label)
         res["values"][label] = {"types": value.get("types", []), "count": 0}
+        advanced_filters = value.get("advanced_filters", "")
+        icon = value.get("icon", "")
+        if icon:
+            res["values"][label]["icon"] = icon
+        if advanced_filters:
+            try:
+                adapter = getMultiAdapter(
+                    (portal, request),
+                    ISiteSearchCustomFilters,
+                    name=advanced_filters,
+                )
+                res["values"][label]["advanced_filters"] = adapter()
+            except ComponentLookupError:
+                logger.error(
+                    'Unable to get adapter "{}"'.format(advanced_filters)
+                )
     return res
 
 

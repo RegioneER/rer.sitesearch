@@ -14,7 +14,7 @@ Settings
 ========
 In the control panel (RER Sitesearch) you can set some search parameters.
 
-Tabs grouping
+Types grouping
 --------------
 
 You can create groups of portal_types (with custom label) to filter results by type.
@@ -24,7 +24,6 @@ Another tab "News and Events" that may contain News Items and Events.
 
 And so on.
 
-
 Indexes
 -------
 The search view shows a list of parameters (indexes in catalog) in the left column to refine the results.
@@ -32,6 +31,72 @@ The search view shows a list of parameters (indexes in catalog) in the left colu
 In Sitesearch control-panel you can define which indexes to show, with which label and the order.
 
 
+Advanced filters for groups
+===========================
+
+In each group types you can select an advanced filter.
+
+Advanced filters are a list of preset filters that allow to add some extra filters when that group is selected in search.
+
+In rer.sitesearch there are only one advanced filter called "Events" that add start and end date filters, but you can add more
+presets in your custom package.
+
+Register new advanced filters
+-----------------------------
+
+Advanced filters are a list of named adapters, so you can add more and override existing ones if needed.
+
+You just need to register a new named adapter::
+
+    <adapter
+      factory = ".my_filters.MyNewFilters"
+      name= "my-filters"
+    />
+
+And you adapter should have a `label` attribute (needed to show a human-readable name in sitesearch-settings view) and 
+return the schema for the additional indexes::
+
+    from zope.component import adapter
+    from zope.interface import implementer
+    from rer.sitesearch.interfaces import ISiteSearchCustomFilters
+    from zope.interface import Interface
+    from my.package import _
+    from zope.i18n import translate
+
+
+    @adapter(Interface, Interface)
+    @implementer(ISiteSearchCustomFilters)
+    class MyNewFilters(object):
+    """
+    """
+
+    label = _("some_labelid", default=u"Additional filters")
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def __call__(self):
+        return {
+            "index_a": {
+                "type": "string",
+                "label": translate(
+                    _("filter_index_a_label", default=u"Index A"),
+                    context=self.request,
+                ),
+            },
+            "index_b": {
+                "type": "date",
+                "label": translate(
+                    _("filter_index_b_label", default=u"Index B"),
+                    context=self.request,
+                ),
+            },
+        }
+
+Where `index_a` and `index_b` are Plone's catalog indexes.
+
+ 
 Restapi endpoint
 ================
 
