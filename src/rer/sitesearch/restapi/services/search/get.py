@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from plone import api
+from plone.api.exc import InvalidParameterError
 from plone.restapi.search.handler import SearchHandler
 from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.services import Service
-from rer.sitesearch.restapi.utils import get_types_groups
 from rer.sitesearch.restapi.utils import get_indexes_mapping
+from rer.sitesearch.restapi.utils import get_types_groups
 
 try:
     from rer.solrpush.interfaces.settings import IRerSolrpushSettings
@@ -22,9 +23,12 @@ class SearchGet(Service):
         query = self.request.form.copy()
         query = unflatten_dotted_dict(query)
         if HAS_SOLR:
-            search_enabled = api.portal.get_registry_record(
-                "search_with_solr", interface=IRerSolrpushSettings
-            )
+            try:
+                search_enabled = api.portal.get_registry_record(
+                    "search_with_solr", interface=IRerSolrpushSettings
+                )
+            except (KeyError, InvalidParameterError):
+                search_enabled = False
             if search_enabled:
                 query["facets"] = True
                 query["facet_fields"] = ["portal_type"]
@@ -39,8 +43,7 @@ class SearchGet(Service):
                 )
                 data["facets"] = self.remap_solr_facets(data, groups, indexes)
                 return data
-        else:
-            return SearchHandler(self.context, self.request).search(query)
+        return SearchHandler(self.context, self.request).search(query)
 
     def remap_solr_facets(self, data, groups, indexes):
         new_facets = {
