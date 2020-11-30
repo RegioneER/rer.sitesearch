@@ -23,21 +23,22 @@ const Header = ({ searchHasFilters = false }) => (
       <div className="results-header">
         <div className="total-items">
           <span>
-            {results.length}{' '}
+            <strong>{results.length}</strong>{' '}
             <span className="desktop-only">{translations['elementi su']} </span>
             <span className="mobile-only">/ </span> {total}{' '}
             <span className="desktop-only">{translations['filtrati']}</span>
           </span>{' '}
           {searchHasFilters && (
-            <button
+            <a
+              href="#"
               className="reset-filters"
               onClick={e => {
                 e.preventDefault();
-                setFilters({});
+                setFilters(null);
               }}
             >
               ({translations['Annulla filtri']})
-            </button>
+            </a>
           )}
         </div>
         <div className="order-by">
