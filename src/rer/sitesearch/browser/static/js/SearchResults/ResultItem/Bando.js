@@ -4,7 +4,9 @@ import moment from 'moment';
 import SearchContext from '../../utils/searchContext';
 import ResultItem from './ResultItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
+import { icons } from '../../utils/icons';
+
+const { faBroadcastTower } = icons;
 
 const Bando = ({ item, inEvidence = false }) => {
   const hasSimilarResults =

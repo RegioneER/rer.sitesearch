@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
-from rer.sitesearch import _
 
 GROUP_ICONS = [
-    {"id": "car", "label": _("group_icon_car", default=u"Car")},
-    {"id": "clock", "label": _("group_icon_clock", default=u"Clock")},
+    {"id": "faArchive", "label": "Archive"},
+    {"id": "faBroadcastTower", "label": "Broadcast Tower"},
+    {"id": "faCalendarAlt", "label": "Calendar Alt"},
+    {"id": "faFile", "label": "File"},
+    {"id": "faFolder", "label": "Folder"},
+    {"id": "faFolderOpen", "label": "Folder Open"},
+    {"id": "faList", "label": "List"},
+    {"id": "faNewspaper", "label": "Newspaper"},
+    {"id": "faTag", "label": "Tag"},
 ]

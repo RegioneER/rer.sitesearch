@@ -4,14 +4,16 @@ import moment from 'moment';
 import SearchContext from '../../utils/searchContext';
 import Bando from './Bando';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
+import { icons } from '../../utils/icons';
+
+const {
   faTag,
   faList,
   faFolderOpen,
   faCalendarAlt,
   faNewspaper,
   faFile,
-} from '@fortawesome/free-solid-svg-icons';
+} = icons;
 
 const ResultItem = ({ item, inEvidence = false }) => {
   const hasSimilarResults =

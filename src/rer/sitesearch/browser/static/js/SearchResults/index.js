@@ -5,7 +5,9 @@ import InEvidenceResults from './InEvidenceResults';
 import Pagination from './Pagination';
 import ResultItem from './ResultItem/ResultItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { icons } from '../utils/icons';
+
+const { faCircleNotch } = icons;
 
 const SearchResults = () => {
   let inEvidenceResults = [

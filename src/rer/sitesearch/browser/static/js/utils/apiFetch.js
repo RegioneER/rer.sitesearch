@@ -24,6 +24,8 @@ import qs from 'query-string';
 //   return options ? options.slice(0, -1) : options;
 // };
 
+const metadata_fields = ['Date', 'Subject', 'scadenza_bando', 'effective'];
+
 const apiFetch = ({ url, params, method }) => {
   if (!method) {
     method = 'GET';
@@ -33,7 +35,7 @@ const apiFetch = ({ url, params, method }) => {
   return axios({
     method,
     url,
-    params,
+    params: params ? { ...params, metadata_fields } : null,
     paramsSerializer: params =>
       qs.stringify(params, { skipNull: true, skipEmptyString: true }),
     headers,

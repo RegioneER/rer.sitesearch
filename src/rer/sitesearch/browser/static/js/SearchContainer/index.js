@@ -24,9 +24,18 @@ const handleSearchableText = filters => {
   return filters;
 };
 
+const handleTypes = (facets, filters) => {
+  if ('types' in filters && facets && facets.groups) {
+    return {
+      ...filters,
+      types: facets.groups.values[filters.types].types,
+    };
+  }
+
+  return filters;
+};
+
 const defaultFilters = {
-  metadata_fields: ['Date', 'Subject', 'scadenza_bando', 'effective'], //temi
-  // (oppure effective e modified e prendo la piu recente)
   SearchableText: '',
   sort_on: null,
   sort_order: null,
@@ -46,6 +55,8 @@ class SearchContainer extends Component {
     super(props);
 
     const query = qs.parse(window.location.search);
+
+    this.setFacets = facets => this.setState({ facets });
 
     this.setFilters = newFilters => {
       let filters = {};
@@ -85,12 +96,14 @@ class SearchContainer extends Component {
 
       apiFetch({
         url: this.props.baseUrl + '/@search',
-        params: handleSearchableText(filters),
+        params: handleTypes(this.state.facets, handleSearchableText(filters)),
         method: 'GET',
       }).then(({ data }) => {
+        console.log(data);
         this.setState({
           filters,
           results: data.items,
+          facets: data.facets,
           total: data.items_total,
           batching: data.batching,
           loading: false,
@@ -109,10 +122,9 @@ class SearchContainer extends Component {
       batching: { numpages: 0, current_page: 0, pagesize: 0 },
       translations: {},
       filters: {
-        ...defaultFilters,
         ...query,
-        SearchableText: query.SearchableText ? query.SearchableText : '',
       },
+      setFacets: this.setFacets,
       setFilters: debounce(this.setFilters, 100),
       isMobile: window.innerWidth < 1200,
     };
@@ -129,6 +141,7 @@ class SearchContainer extends Component {
     window.addEventListener('resize', this.handleResize);
 
     const fetches = [getTranslationCatalog()];
+
     const searchParams = JSON.parse(JSON.stringify(this.state.query));
     if (searchParams.metadata_fields) delete searchParams.metadata_fields;
     if (
@@ -168,6 +181,7 @@ class SearchContainer extends Component {
           ...newState,
 
           results: searchResults.items,
+          facets: searchResults.facets,
           total: searchResults.items_total,
           batching: searchResults.batching,
         };
@@ -189,7 +203,7 @@ class SearchContainer extends Component {
         <SearchContext.Provider value={this.state}>
           <div className="row" aria-live="polite">
             <div className="col col-md-3">
-              <SearchFilters />
+              <SearchFilters baseUrl={this.props.baseUrl} />
             </div>
             <div className="col col-md-9">
               {!this.state.isMobile && (
