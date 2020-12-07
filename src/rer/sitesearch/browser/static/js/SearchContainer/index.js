@@ -25,22 +25,37 @@ const handleSearchableText = filters => {
 };
 
 const handleTypes = (facets, filters) => {
-  if ('types' in filters && facets && facets.groups) {
+  if ('portal_type' in filters && facets && facets.groups) {
     return {
       ...filters,
-      types: facets.groups.values[filters.types].types,
+      portal_type: facets.groups.values[filters.portal_type].types,
     };
   }
 
   return filters;
 };
 
+const handleSelectFields = filters => {
+  let selectFields = ['Subject', 'Temi'];
+  let parsedFilters = JSON.parse(JSON.stringify(filters));
+
+  selectFields.forEach(field => {
+    if (field in parsedFilters && !!parsedFilters[field].value) {
+      debugger;
+      parsedFilters[field] = parsedFilters[field].value;
+    }
+  });
+
+  return parsedFilters;
+};
+
+/*
 const defaultFilters = {
   SearchableText: '',
   sort_on: null,
   sort_order: null,
   path: '',
-  types: '',
+  portal_type: '',
   categories: '',
   temi: '',
   state: null, //Ricerca specifica - Bandi: stato dei bandi
@@ -48,6 +63,13 @@ const defaultFilters = {
   beneficiari: null, //Ricerca specifica - Bandi: beneficari
   fondo: null, //Ricerca specifica - Bandi: fondo
   materia: null, //Ricerca specifica - Bandi: materia
+};
+*/
+
+const nullState = {
+  filters: null,
+  results: [],
+  loading: false,
 };
 
 class SearchContainer extends Component {
@@ -59,12 +81,10 @@ class SearchContainer extends Component {
     this.setFacets = facets => this.setState({ facets });
 
     this.setFilters = newFilters => {
-      let filters = {};
-
+      let filters = null;
       if (newFilters === null) {
-        filters = { ...defaultFilters };
         this.setState({
-          filters: defaultFilters,
+          ...nullState,
         });
       } else {
         filters = JSON.parse(JSON.stringify(this.state.filters));
@@ -84,7 +104,7 @@ class SearchContainer extends Component {
 
       if (!this.state.loading) this.setState({ loading: true });
 
-      const searchParams = qs.stringify(filters, {
+      const searchParams = qs.stringify(handleSelectFields(filters), {
         skipNull: true,
         skipEmptyString: true,
       });
@@ -96,7 +116,9 @@ class SearchContainer extends Component {
 
       apiFetch({
         url: this.props.baseUrl + '/@search',
-        params: handleTypes(this.state.facets, handleSearchableText(filters)),
+        params: handleSelectFields(
+          handleTypes(this.state.facets, handleSearchableText(filters)),
+        ),
         method: 'GET',
       }).then(({ data }) => {
         console.log(data);
@@ -146,6 +168,7 @@ class SearchContainer extends Component {
     if (searchParams.metadata_fields) delete searchParams.metadata_fields;
     if (
       searchParams.SearchableText !== undefined &&
+      searchParams.SearchableText !== null &&
       searchParams.SearchableText.length === 0
     ) {
       delete searchParams.SearchableText;
@@ -162,7 +185,9 @@ class SearchContainer extends Component {
       fetches.push(
         apiFetch({
           url: this.props.baseUrl + endPoint,
-          params: handleSearchableText(searchParams),
+          params: handleSelectFields(
+            handleTypes(this.state.facets, handleSearchableText(searchParams)),
+          ),
           method: 'GET',
         }),
       );
@@ -184,6 +209,7 @@ class SearchContainer extends Component {
           facets: searchResults.facets,
           total: searchResults.items_total,
           batching: searchResults.batching,
+          loading: false,
         };
       } else {
         newState = { ...newState, loading: false };
@@ -206,7 +232,16 @@ class SearchContainer extends Component {
               <SearchFilters baseUrl={this.props.baseUrl} />
             </div>
             <div className="col col-md-9">
-              {!this.state.isMobile && (
+              {!this.state.isMobile &&
+                this.state.filters &&
+                this.state.filters.portal_type &&
+                this.state.facets &&
+                this.state.facets.groups &&
+                this.state.facets.groups.values[
+                  this.state.filters.portal_type
+                ] &&
+                this.state.facets.groups.values[this.state.filters.portal_type]
+                  .advanced_filters && (
                 <SpecificFilters id="search-container" />
               )}
               <SearchResults />

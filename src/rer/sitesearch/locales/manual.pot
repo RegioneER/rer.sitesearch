@@ -98,6 +98,9 @@ msgstr ""
 msgid "type_Bando"
 msgstr ""
 
+msgid "any_portal_type"
+msgstr ""
+
 msgid "pubblicato il"
 msgstr ""
 

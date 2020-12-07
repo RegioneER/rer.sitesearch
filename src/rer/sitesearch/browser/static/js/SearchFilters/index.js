@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icons, getIcon } from '../utils/icons';
 import apiFetch from '../utils/apiFetch';
 
-const { faSearch, faChevronRight, faTimes, faFolder, faTags, faListUl } = icons;
+// faFolder
+const { faSearch, faChevronRight, faTimes, faTags, faListUl } = icons;
 
 const SearchFilters = ({ baseUrl }) => {
   const {
@@ -17,6 +18,7 @@ const SearchFilters = ({ baseUrl }) => {
     filters,
     facets,
     translations,
+    results,
   } = useContext(SearchContext);
   const [searchableText, setSearchableText] = useState(null);
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(
@@ -135,6 +137,7 @@ const SearchFilters = ({ baseUrl }) => {
         )}
 
         {/* Dove */}
+        {/*
         <div className="filter-item">
           <h3>
             Dove <FontAwesomeIcon icon={faFolder} />
@@ -178,6 +181,7 @@ const SearchFilters = ({ baseUrl }) => {
             </label>
           </div>
         </div>
+        */}
 
         {/* Cosa */}
         <div className="filter-item">
@@ -186,28 +190,33 @@ const SearchFilters = ({ baseUrl }) => {
             <i className="far fa-question-circle"></i>
           </h3>
           <div className="radio">
-            <label className={filters.types === '' ? 'selected' : ''}>
+            <label className={!filters.portal_type ? 'selected' : ''}>
               <input
                 type="radio"
-                name="types"
+                name="portal_type"
                 value=""
-                checked={filters.types === ''}
-                onChange={e => setFilters({ types: e.target.value })}
+                checked={!filters.portal_type}
+                onChange={() => setFilters({ portal_type: null })}
               />
-              Tutti i tipi di contenuto (70)
+              {translations['any_portal_type']
+                ? translations['any_portal_type']
+                : 'Tutti i tipi di contenuto'}
+              {` (${results.length})`}
             </label>
           </div>
           {facets &&
             facets.groups &&
             facets.groups.order.map((group, idx) => (
               <div className="radio" key={group + idx}>
-                <label className={filters.type === group ? 'selected' : ''}>
+                <label
+                  className={filters.portal_type === group ? 'selected' : ''}
+                >
                   <input
                     type="radio"
                     name="types"
                     value={group}
-                    checked={filters.types === group}
-                    onChange={() => setFilters({ types: group })}
+                    checked={filters.portal_type === group}
+                    onChange={() => setFilters({ portal_type: group })}
                   />
                   <FontAwesomeIcon
                     icon={getIcon(facets.groups.values[group].icon)}
@@ -218,43 +227,37 @@ const SearchFilters = ({ baseUrl }) => {
             ))}
         </div>
 
-        {/* categories */}
-        <div className="filter-item">
-          <h3>
-            Categorie <FontAwesomeIcon icon={faTags} />
-          </h3>
-          <Select
-            options={[
-              { value: 'cittadini', label: 'Cittadini' },
-              { value: 'ambient', label: 'Ambiente' },
-            ]}
-            isClearable
-            isMulti
-            placeholder="Cerca per categorie"
-            defaultValue={filters.categories}
-            onChange={option => setFilters({ categories: option })}
-          />
-        </div>
+        {results.length > 0 &&
+          facets &&
+          facets.indexes &&
+          facets.indexes.order.map((index, idx) => Object.keys(facets.indexes.values[index].values).length > 0 ? (
+            <div className="filter-item" key={index + idx}>
+              <h3>
+                {facets.indexes.values[index].label}{' '}
+                {index === 'Subject' && <FontAwesomeIcon icon={faTags} />}
+                {index === 'Temi' && <FontAwesomeIcon icon={faListUl} />}
+              </h3>
+              <Select
+                options={Object.values(facets.indexes.values[index].values).map(index =>  ({
+                  value: index, label: index,
+                }))}
+                isMulti
+                isClearable
+                placeholder="Cerca per categorie"
+                defaultValue={filters.Subject}
+                onChange={option => setFilters({ Subject: option })}
+              />
+            </div>
+          ) : null)}
 
-        {/* temi */}
-        <div className="filter-item">
-          <h3>
-            Temi <FontAwesomeIcon icon={faListUl} />
-          </h3>
-          <Select
-            options={[
-              { value: 'cittadini', label: 'Cittadini' },
-              { value: 'ambient', label: 'Ambiente' },
-            ]}
-            isMulti
-            isClearable
-            placeholder="Cerca per temi"
-            defaultValue={filters.temi}
-            onChange={option => setFilters({ temi: option })}
-          />
-        </div>
-
-        {isMobile && <SpecificFilters id="search-filters" />}
+        {isMobile &&
+          filters &&
+          filters.portal_type &&
+          facets &&
+          facets.groups &&
+          facets.groups.values[filters.portal_type].advanced_filters && (
+          <SpecificFilters id="search-filters" />
+        )}
         {isMobile && (
           <div className="submit-wrapper">
             <button

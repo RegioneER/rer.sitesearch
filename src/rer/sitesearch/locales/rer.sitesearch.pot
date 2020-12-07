@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-11-30 10:57+0000\n"
+"POT-Creation-Date: 2020-12-01 11:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,6 +97,9 @@ msgstr ""
 msgid "Vai ai risultati"
 msgstr ""
 
+msgid "any_portal_type"
+msgstr ""
+
 #. Default: "Select which additional filters to show in the column."
 #: ../interfaces/settings.py:124
 msgid "available_indexes_help"
@@ -170,16 +173,6 @@ msgid "filters_title_Cerca"
 msgstr ""
 
 msgid "filtrati"
-msgstr ""
-
-#. Default: "Car"
-#: ../utils.py:5
-msgid "group_icon_car"
-msgstr ""
-
-#. Default: "Clock"
-#: ../utils.py:6
-msgid "group_icon_clock"
 msgstr ""
 
 #. Default: "Set what is the maximum length of a single search word. Longer words will be omitted from the search."
