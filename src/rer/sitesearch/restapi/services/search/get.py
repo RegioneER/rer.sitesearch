@@ -25,13 +25,13 @@ class SearchGet(Service):
         if HAS_SOLR:
             try:
                 search_enabled = api.portal.get_registry_record(
-                    "search_with_solr", interface=IRerSolrpushSettings
+                    "active", interface=IRerSolrpushSettings
                 )
             except (KeyError, InvalidParameterError):
                 search_enabled = False
             if search_enabled:
                 query["facets"] = True
-                query["facet_fields"] = ["portal_type"]
+                query["facet_fields"] = ["portal_type", "site_name"]
 
                 groups = get_types_groups()
                 indexes = get_indexes_mapping()
@@ -49,9 +49,15 @@ class SearchGet(Service):
         new_facets = {
             "groups": get_types_groups(),
             "indexes": get_indexes_mapping(),
+            "sites": {"order": [], "values": {}},
         }
         for index_id, index_values in data["facets"].items():
-            if index_id == "portal_type":
+            if index_id == "site_name":
+                entry = new_facets["sites"]["values"]
+                for site_mapping in index_values:
+                    for key, value in site_mapping.items():
+                        entry[key] = value
+            elif index_id == "portal_type":
                 # groups
                 group_values = new_facets["groups"]["values"]
                 for type_mapping in index_values:
