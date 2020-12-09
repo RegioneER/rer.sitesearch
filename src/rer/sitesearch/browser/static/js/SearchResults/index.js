@@ -10,24 +10,23 @@ import { icons } from '../utils/icons';
 const { faCircleNotch } = icons;
 
 const SearchResults = () => {
-  let inEvidenceResults = [
-    {
-      '@id': '/ambiente/i-giovani-alberi',
-      title: 'I giovani alberi',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipiscing elit dui vivamus suscipit sed risus, dictum porttitor laoreet sodales aenean vestibulum iaculis aliquam auctor vel sem. Sociis enim nostra egestas',
-    },
-    {
-      '@id': '/ambiente/i-vecchi-alberi',
-      title: 'I vecchi alberi',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipiscing elit dui vivamus suscipit sed risus, dictum porttitor laoreet sodales aenean vestibulum iaculis aliquam auctor vel sem. Sociis enim nostra egestas',
-    },
-  ];
+  let inEvidenceResults = [];
+  //   {
+  //     '@id': '/ambiente/i-giovani-alberi',
+  //     title: 'I giovani alberi',
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur adipiscing elit dui vivamus suscipit sed risus, dictum porttitor laoreet sodales aenean vestibulum iaculis aliquam auctor vel sem. Sociis enim nostra egestas',
+  //   },
+  //   {
+  //     '@id': '/ambiente/i-vecchi-alberi',
+  //     title: 'I vecchi alberi',
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur adipiscing elit dui vivamus suscipit sed risus, dictum porttitor laoreet sodales aenean vestibulum iaculis aliquam auctor vel sem. Sociis enim nostra egestas',
+  //   },
+  // ];
   return (
     <SearchContext.Consumer key="search-results">
       {({ translations, loading, results }) => {
-        console.log(results);
         return (
           <div className="search-results">
             <h2 className="sr-only" id="search-results">

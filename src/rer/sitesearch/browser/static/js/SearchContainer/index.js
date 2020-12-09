@@ -4,67 +4,29 @@ import SearchResults from '../SearchResults';
 import SpecificFilters from '../SpecificFilters';
 import SearchContext from '../utils/searchContext';
 import { getTranslationCatalog } from '../utils/i18n';
-import apiFetch from '../utils/apiFetch';
+import apiFetch, { updateHistory } from '../utils/apiFetch';
 import qs from 'query-string';
 import debounce from 'lodash.debounce';
+import DataObjectParser from 'dataobject-parser';
 
 import PropTypes from 'prop-types';
 
-const handleSearchableText = filters => {
-  if ('SearchableText' in filters) {
-    return {
-      ...filters,
-      SearchableText:
-        filters.SearchableText && filters.SearchableText.length > 0
-          ? `${filters.SearchableText}*`
-          : null,
-    };
+const fixQuery = ({ params, facets }) => {
+  const newParams = JSON.parse(JSON.stringify(params));
+  const { group, SearchableText } = newParams;
+  if (group && facets && facets.groups) {
+    newParams['portal_type'] = facets.groups.values[group].types;
+    delete newParams.group;
   }
-
-  return filters;
-};
-
-const handleTypes = (facets, filters) => {
-  if ('portal_type' in filters && facets && facets.groups) {
-    return {
-      ...filters,
-      portal_type: facets.groups.values[filters.portal_type].types,
-    };
+  if (
+    SearchableText &&
+    SearchableText.length > 0 &&
+    SearchableText.indexOf('*') !== SearchableText.length
+  ) {
+    newParams.SearchableText = `${newParams.SearchableText}*`;
   }
-
-  return filters;
+  return newParams;
 };
-
-const handleSelectFields = filters => {
-  let selectFields = ['Subject', 'Temi'];
-  let parsedFilters = JSON.parse(JSON.stringify(filters));
-
-  selectFields.forEach(field => {
-    if (field in parsedFilters && !!parsedFilters[field].value) {
-      debugger;
-      parsedFilters[field] = parsedFilters[field].value;
-    }
-  });
-
-  return parsedFilters;
-};
-
-/*
-const defaultFilters = {
-  SearchableText: '',
-  sort_on: null,
-  sort_order: null,
-  path: '',
-  portal_type: '',
-  categories: '',
-  temi: '',
-  state: null, //Ricerca specifica - Bandi: stato dei bandi
-  bando_type: null, //Ricerca specifica - Bandi: tipo di bando
-  beneficiari: null, //Ricerca specifica - Bandi: beneficari
-  fondo: null, //Ricerca specifica - Bandi: fondo
-  materia: null, //Ricerca specifica - Bandi: materia
-};
-*/
 
 const nullState = {
   filters: null,
@@ -76,8 +38,10 @@ class SearchContainer extends Component {
   constructor(props) {
     super(props);
 
-    const query = qs.parse(window.location.search);
-
+    const requestQuery = qs.parse(window.location.search);
+    const query = requestQuery
+      ? DataObjectParser.transpose(requestQuery).data()
+      : {};
     this.setFacets = facets => this.setState({ facets });
 
     this.setFilters = newFilters => {
@@ -94,7 +58,7 @@ class SearchContainer extends Component {
 
         Object.keys(newFilters).forEach(key => {
           const value = newFilters[key];
-          if (value && value.length > 0) {
+          if (value) {
             filters[key] = value;
           } else if (key in filters) {
             delete filters[key];
@@ -104,24 +68,13 @@ class SearchContainer extends Component {
 
       if (!this.state.loading) this.setState({ loading: true });
 
-      const searchParams = qs.stringify(handleSelectFields(filters), {
-        skipNull: true,
-        skipEmptyString: true,
-      });
-      window.history.pushState(
-        {},
-        '',
-        `${this.props.baseUrl}/@@search?${searchParams}`,
-      );
+      updateHistory({ url: `${this.props.baseUrl}/@@search`, params: filters });
 
       apiFetch({
         url: this.props.baseUrl + '/@search',
-        params: handleSelectFields(
-          handleTypes(this.state.facets, handleSearchableText(filters)),
-        ),
+        params: fixQuery({ params: filters, facets: this.state.facets }),
         method: 'GET',
       }).then(({ data }) => {
-        console.log(data);
         this.setState({
           filters,
           results: data.items,
@@ -153,7 +106,6 @@ class SearchContainer extends Component {
   }
 
   handleResize() {
-    console.log('mobile: ', window.innerWidth < 1200);
     this.setState({
       isMobile: window.innerWidth < 1200,
     });
@@ -161,41 +113,22 @@ class SearchContainer extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
-
+    const { query, facets } = this.state;
     const fetches = [getTranslationCatalog()];
 
-    const searchParams = JSON.parse(JSON.stringify(this.state.query));
-    if (searchParams.metadata_fields) delete searchParams.metadata_fields;
-    if (
-      searchParams.SearchableText !== undefined &&
-      searchParams.SearchableText !== null &&
-      searchParams.SearchableText.length === 0
-    ) {
-      delete searchParams.SearchableText;
-    }
+    const endPoint = '/@search';
+    updateHistory({ url: `${this.props.baseUrl}/@@search`, params: query });
 
-    if (Object.keys(searchParams).length > 0) {
-      const endPoint = '/@search';
-
-      window.history.pushState(
-        {},
-        '',
-        `${this.props.baseUrl}/@@search?${qs.stringify(searchParams)}`,
-      );
-      fetches.push(
-        apiFetch({
-          url: this.props.baseUrl + endPoint,
-          params: handleSelectFields(
-            handleTypes(this.state.facets, handleSearchableText(searchParams)),
-          ),
-          method: 'GET',
-        }),
-      );
-    }
+    fetches.push(
+      apiFetch({
+        url: this.props.baseUrl + endPoint,
+        params: fixQuery({ params: query, facets }),
+        method: 'GET',
+      }),
+    );
 
     Promise.all(fetches).then(data => {
       let newState = { ...this.state };
-
       if (data[0]) {
         newState = { ...newState, translations: data[0] };
       }
@@ -204,7 +137,6 @@ class SearchContainer extends Component {
 
         newState = {
           ...newState,
-
           results: searchResults.items,
           facets: searchResults.facets,
           total: searchResults.items_total,
@@ -214,7 +146,6 @@ class SearchContainer extends Component {
       } else {
         newState = { ...newState, loading: false };
       }
-
       this.setState(newState);
     });
   }
@@ -224,6 +155,15 @@ class SearchContainer extends Component {
   }
 
   render() {
+    const { isMobile, filters, facets } = this.state;
+    const showSearchContainer =
+      !isMobile &&
+      filters &&
+      filters.group &&
+      facets &&
+      facets.groups &&
+      facets.groups.values[filters.group] &&
+      facets.groups.values[filters.group].advanced_filters;
     return (
       <div className="rer-search-container">
         <SearchContext.Provider value={this.state}>
@@ -232,18 +172,7 @@ class SearchContainer extends Component {
               <SearchFilters baseUrl={this.props.baseUrl} />
             </div>
             <div className="col col-md-9">
-              {!this.state.isMobile &&
-                this.state.filters &&
-                this.state.filters.portal_type &&
-                this.state.facets &&
-                this.state.facets.groups &&
-                this.state.facets.groups.values[
-                  this.state.filters.portal_type
-                ] &&
-                this.state.facets.groups.values[this.state.filters.portal_type]
-                  .advanced_filters && (
-                <SpecificFilters id="search-container" />
-              )}
+              {showSearchContainer && <SpecificFilters id="search-container" />}
               <SearchResults />
             </div>
           </div>

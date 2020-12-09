@@ -1,25 +1,19 @@
 import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select';
 import SpecificFilters from '../SpecificFilters';
+import GroupsFilter from '../GroupsFilter';
+import IndexesFilters from '../IndexesFilters';
 import SearchContext from '../utils/searchContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { icons, getIcon } from '../utils/icons';
-import apiFetch from '../utils/apiFetch';
+import { icons } from '../utils/icons';
 
 // faFolder
-const { faSearch, faChevronRight, faTimes, faTags, faListUl } = icons;
+const { faSearch, faChevronRight, faTimes } = icons;
 
-const SearchFilters = ({ baseUrl }) => {
-  const {
-    isMobile,
-    setFilters,
-    setFacets,
-    filters,
-    facets,
-    translations,
-    results,
-  } = useContext(SearchContext);
+const SearchFilters = () => {
+  const { isMobile, setFilters, filters, facets, translations } = useContext(
+    SearchContext,
+  );
   const [searchableText, setSearchableText] = useState(null);
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(
     isMobile ? false : true,
@@ -29,15 +23,13 @@ const SearchFilters = ({ baseUrl }) => {
     setShowAdvancedSearch(isMobile ? false : true);
   }, [isMobile]);
 
-  useEffect(() => {
-    if (!facets) {
-      apiFetch({
-        url: baseUrl + '/@search-filters',
-        params: {},
-        method: 'GET',
-      }).then(data => setFacets(data.data));
-    }
-  }, []);
+  const showMobileFilters =
+    isMobile &&
+    filters &&
+    filters.group &&
+    facets &&
+    facets.groups &&
+    facets.groups.values[filters.group].advanced_filters;
 
   return (
     <div className="filters-wrapper">
@@ -183,81 +175,10 @@ const SearchFilters = ({ baseUrl }) => {
         </div>
         */}
 
-        {/* Cosa */}
-        <div className="filter-item">
-          <h3>
-            {translations['Cosa'] ? translations['Cosa'] : 'Cosa'}{' '}
-            <i className="far fa-question-circle"></i>
-          </h3>
-          <div className="radio">
-            <label className={!filters.portal_type ? 'selected' : ''}>
-              <input
-                type="radio"
-                name="portal_type"
-                value=""
-                checked={!filters.portal_type}
-                onChange={() => setFilters({ portal_type: null })}
-              />
-              {translations['any_portal_type']
-                ? translations['any_portal_type']
-                : 'Tutti i tipi di contenuto'}
-              {` (${results.length})`}
-            </label>
-          </div>
-          {facets &&
-            facets.groups &&
-            facets.groups.order.map((group, idx) => (
-              <div className="radio" key={group + idx}>
-                <label
-                  className={filters.portal_type === group ? 'selected' : ''}
-                >
-                  <input
-                    type="radio"
-                    name="types"
-                    value={group}
-                    checked={filters.portal_type === group}
-                    onChange={() => setFilters({ portal_type: group })}
-                  />
-                  <FontAwesomeIcon
-                    icon={getIcon(facets.groups.values[group].icon)}
-                  />
-                  {`${group} (${facets.groups.values[group].count})`}
-                </label>
-              </div>
-            ))}
-        </div>
+        <GroupsFilter></GroupsFilter>
+        <IndexesFilters></IndexesFilters>
 
-        {results.length > 0 &&
-          facets &&
-          facets.indexes &&
-          facets.indexes.order.map((index, idx) => Object.keys(facets.indexes.values[index].values).length > 0 ? (
-            <div className="filter-item" key={index + idx}>
-              <h3>
-                {facets.indexes.values[index].label}{' '}
-                {index === 'Subject' && <FontAwesomeIcon icon={faTags} />}
-                {index === 'Temi' && <FontAwesomeIcon icon={faListUl} />}
-              </h3>
-              <Select
-                options={Object.values(facets.indexes.values[index].values).map(index =>  ({
-                  value: index, label: index,
-                }))}
-                isMulti
-                isClearable
-                placeholder="Cerca per categorie"
-                defaultValue={filters.Subject}
-                onChange={option => setFilters({ Subject: option })}
-              />
-            </div>
-          ) : null)}
-
-        {isMobile &&
-          filters &&
-          filters.portal_type &&
-          facets &&
-          facets.groups &&
-          facets.groups.values[filters.portal_type].advanced_filters && (
-          <SpecificFilters id="search-filters" />
-        )}
+        {showMobileFilters && <SpecificFilters id="search-filters" />}
         {isMobile && (
           <div className="submit-wrapper">
             <button

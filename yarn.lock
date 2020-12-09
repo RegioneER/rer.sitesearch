@@ -3673,6 +3673,11 @@ data-urls@^1.0.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
+dataobject-parser@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/dataobject-parser/-/dataobject-parser-1.2.1.tgz#87da1992cd892aea1006cdb475cb4df9c5e4ad6e"
+  integrity sha512-1XMF0e8Dkfano8WY9TOCWLUQqosXI/Hf6GQrPESCnIn+NbYwy5kVUto0l2L6EVOIRflq8D820QnfQgVapckmTQ==
+
 date-fns@^2.16.1:
   version "2.16.1"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.16.1.tgz#05775792c3f3331da812af253e1a935851d3834b"
