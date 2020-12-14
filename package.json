@@ -73,6 +73,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.32",
         "@fortawesome/free-solid-svg-icons": "^5.15.1",
         "@fortawesome/react-fontawesome": "^0.1.12",
+        "array-move": "^3.0.1",
         "axios": "^0.21.0",
         "dataobject-parser": "^1.2.1",
         "date-fns": "^2.16.1",
@@ -82,7 +83,7 @@
         "query-string": "^6.13.7",
         "react": "^16.8.5",
         "react-dom": "^16.8.5",
-        "react-paginate": "^6.3.0",
+        "react-paginate": "^6.5.0",
         "react-select": "^3.0.3"
     }
 }

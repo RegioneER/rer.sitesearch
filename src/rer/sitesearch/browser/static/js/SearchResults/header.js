@@ -20,6 +20,9 @@ const searchOrderMapping = {
 const Header = ({ searchHasFilters = false }) => (
   <SearchContext.Consumer key="search-results-header">
     {({ translations, facets, filters, setFilters, total }) => {
+      const allTotal = facets.groups.values
+        ? facets.groups.values['All content types'].count
+        : 0;
       const group = filters.group;
       const groupCount = group ? facets.groups.values[group].count : total;
       return (
@@ -30,7 +33,7 @@ const Header = ({ searchHasFilters = false }) => (
               <span className="desktop-only">
                 {translations['elementi su']}{' '}
               </span>
-              <span className="mobile-only">/ </span> {total}{' '}
+              <span className="mobile-only">/ </span> {allTotal}{' '}
               <span className="desktop-only">{translations['filtrati']}</span>
             </span>{' '}
             {searchHasFilters && (

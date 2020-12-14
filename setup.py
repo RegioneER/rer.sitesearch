@@ -43,7 +43,7 @@ setup(
         "plone.api>=1.8.4",
         "plone.restapi",
         "plone.app.dexterity",
-        "collective.z3cform.datagridfield",
+        "collective.z3cform.jsonwidget",
     ],
     extras_require={
         "test": [

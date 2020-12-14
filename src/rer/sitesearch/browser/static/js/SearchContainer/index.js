@@ -11,13 +11,9 @@ import DataObjectParser from 'dataobject-parser';
 
 import PropTypes from 'prop-types';
 
-const fixQuery = ({ params, facets }) => {
+const fixQuery = ({ params }) => {
   const newParams = JSON.parse(JSON.stringify(params));
-  const { group, SearchableText } = newParams;
-  if (group && facets && facets.groups) {
-    newParams['portal_type'] = facets.groups.values[group].types;
-    delete newParams.group;
-  }
+  const { SearchableText } = newParams;
   if (
     SearchableText &&
     SearchableText.length > 0 &&
@@ -42,8 +38,37 @@ class SearchContainer extends Component {
     const query = requestQuery
       ? DataObjectParser.transpose(requestQuery).data()
       : {};
-    this.setFacets = facets => this.setState({ facets });
 
+    this.doSearch = data => {
+      const { facets } = this.state;
+      let params = this.state.params;
+      if (data && data.params) {
+        params = data.params;
+      }
+      updateHistory({ url: `${this.props.baseUrl}/@@search`, params });
+
+      // enable if we want allow to change b_size
+      // if (!params.b_size) {
+      //   params.b_size = b_size;
+      // }
+      apiFetch({
+        url: this.props.baseUrl + '/@search',
+        params: fixQuery({ params, facets }),
+        method: 'GET',
+      }).then(({ data }) => {
+        this.setState({
+          filters: params,
+          results: data.items,
+          facets: data.facets,
+          total: data.items_total,
+          batching: data.batching,
+          path_infos: data.path_infos,
+          loading: false,
+        });
+      });
+    };
+
+    this.setFacets = facets => this.setState({ facets });
     this.setFilters = newFilters => {
       let filters = null;
       if (newFilters === null) {
@@ -68,22 +93,7 @@ class SearchContainer extends Component {
 
       if (!this.state.loading) this.setState({ loading: true });
 
-      updateHistory({ url: `${this.props.baseUrl}/@@search`, params: filters });
-
-      apiFetch({
-        url: this.props.baseUrl + '/@search',
-        params: fixQuery({ params: filters, facets: this.state.facets }),
-        method: 'GET',
-      }).then(({ data }) => {
-        this.setState({
-          filters,
-          results: data.items,
-          facets: data.facets,
-          total: data.items_total,
-          batching: data.batching,
-          loading: false,
-        });
-      });
+      this.doSearch({ params: filters });
     };
 
     /**
@@ -94,14 +104,17 @@ class SearchContainer extends Component {
       total: 0,
       loading: Object.keys(query).length > 0,
       query: Object.keys(query).length > 0 ? query : null,
-      batching: { numpages: 0, current_page: 0, pagesize: 0 },
+      b_size: 20,
       translations: {},
       filters: {
         ...query,
       },
+      facets: {},
+      doSearch: this.doSearch,
       setFacets: this.setFacets,
       setFilters: debounce(this.setFilters, 100),
       isMobile: window.innerWidth < 1200,
+      path_infos: {},
     };
   }
 
@@ -115,17 +128,18 @@ class SearchContainer extends Component {
     window.addEventListener('resize', this.handleResize);
     const { query, facets } = this.state;
     const fetches = [getTranslationCatalog()];
+    if (query) {
+      updateHistory({ url: `${this.props.baseUrl}/@@search`, params: query });
+      const endPoint = '/@search';
 
-    const endPoint = '/@search';
-    updateHistory({ url: `${this.props.baseUrl}/@@search`, params: query });
-
-    fetches.push(
-      apiFetch({
-        url: this.props.baseUrl + endPoint,
-        params: fixQuery({ params: query, facets }),
-        method: 'GET',
-      }),
-    );
+      fetches.push(
+        apiFetch({
+          url: this.props.baseUrl + endPoint,
+          params: fixQuery({ params: query, facets }),
+          method: 'GET',
+        }),
+      );
+    }
 
     Promise.all(fetches).then(data => {
       let newState = { ...this.state };
@@ -134,12 +148,12 @@ class SearchContainer extends Component {
       }
       if (data[1]) {
         const searchResults = data[1].data;
-
         newState = {
           ...newState,
-          results: searchResults.items,
-          facets: searchResults.facets,
-          total: searchResults.items_total,
+          results: searchResults.items || [],
+          facets: searchResults.facets || {},
+          total: searchResults.items_total || 0,
+          path_infos: searchResults.path_infos || {},
           batching: searchResults.batching,
           loading: false,
         };

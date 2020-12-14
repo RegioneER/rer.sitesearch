@@ -3,7 +3,7 @@ from Products.Five import BrowserView
 from plone import api
 from plone.memoize import ram
 from time import time
-
+from Products.CMFPlone.resources import add_bundle_on_request
 import logging
 import pkg_resources
 
@@ -17,6 +17,10 @@ CSS_TEMPLATE = "{portal_url}/++plone++rer.sitesearch/dist/{env_mode}/{name}.css?
 class View(BrowserView):
     """
     """
+
+    def __call__(self):
+        add_bundle_on_request(self.request, "sitesearch-bundle")
+        return super(View, self).__call__()
 
     @ram.cache(lambda *args: time() // (60 * 60))
     def get_version(self):

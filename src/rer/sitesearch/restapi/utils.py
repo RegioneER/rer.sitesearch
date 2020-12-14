@@ -5,8 +5,11 @@ from zope.component import getMultiAdapter
 from zope.component import ComponentLookupError
 from rer.sitesearch.interfaces import ISiteSearchCustomFilters
 from zope.globalrequest import getRequest
+from zope.i18n import translate
+from rer.sitesearch import _
 
 import logging
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -17,9 +20,16 @@ def get_types_groups():
     )
     if not values:
         return {}
-    res = {"order": [], "values": {}}
-    portal = api.portal.get()
+    values = json.loads(values)
     request = getRequest()
+    all_label = translate(
+        _("all_types_label", default=u"All content types"), context=request
+    )
+    res = {
+        "order": [all_label],
+        "values": {all_label: {"count": 0, "types": []}},
+    }
+    portal = api.portal.get()
     for value in values:
         label = _extract_label(value.get("label", ""))
         res["order"].append(label)
@@ -49,6 +59,7 @@ def get_indexes_mapping():
     )
     if not values:
         return {}
+    values = json.loads(values)
     res = {"order": [], "values": {}}
     for value in values:
         label = _extract_label(value.get("label", ""))

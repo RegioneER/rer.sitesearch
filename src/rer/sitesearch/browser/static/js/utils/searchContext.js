@@ -6,9 +6,12 @@ const SearchContext = React.createContext({
   loading: false,
   translations: {},
   filters: {},
-  setFilters: () => {},
   facets: {},
+  path_infos: {},
+  b_size: 20,
+  setFilters: () => {},
   setFacets: () => {},
+  doSearch: () => {},
 });
 
 export default SearchContext;

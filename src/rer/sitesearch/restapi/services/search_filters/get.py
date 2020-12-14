@@ -14,4 +14,4 @@ class SearchFiltersGet(Service):
             "indexes": get_indexes_mapping(),
         }
 
-        return params
+        return {"facets": params}

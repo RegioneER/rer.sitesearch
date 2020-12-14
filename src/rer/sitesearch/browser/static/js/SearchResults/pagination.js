@@ -6,30 +6,32 @@ import SearchContext from '../utils/searchContext';
 const Pagination = () => {
   return (
     <SearchContext.Consumer>
-      {({ setFilters, batching, translations }) => {
-        const { numpages, pagesize, current_page } = batching || {};
+      {({ setFilters, b_size, filters, translations, total }) => {
+        const b_start = filters.b_start || 0;
+        const currentPage = b_start === 0 ? 0 : b_start / b_size;
 
         const handlePageChange = data => {
-          setFilters({ b_start: data.selected * pagesize });
+          setFilters({ b_start: data.selected * b_size });
         };
 
-        if (numpages && numpages > 1) {
+        if (total && total > b_size) {
           return (
             <div className="navigation">
               <ReactPaginate
+                initialPage={currentPage}
+                disableInitialCallback={true}
                 previousLabel={
                   translations ? translations.previous_label : 'Previous >'
                 }
                 nextLabel={translations ? translations.next_label : '< Next'}
                 breakLabel={'...'}
                 breakClassName={'break-me'}
-                pageCount={numpages}
-                forcePage={current_page - 1}
+                pageCount={Math.ceil(total / b_size)}
                 onPageChange={handlePageChange}
                 containerClassName={'pagination'}
                 subContainerClassName={'pages pagination'}
                 activeClassName={'active'}
-              />
+              ></ReactPaginate>
             </div>
           );
         } else {

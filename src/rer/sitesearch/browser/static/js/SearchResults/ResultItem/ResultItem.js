@@ -15,7 +15,8 @@ const {
   faFile,
 } = icons;
 
-const ResultItem = ({ item, inEvidence = false }) => {
+const ResultItem = ({ item }) => {
+  const inEvidence = item['[elevated]'];
   const hasSimilarResults =
     item.similarResults != null && item.similarResults.length > 0;
 
@@ -72,11 +73,10 @@ const ResultItem = ({ item, inEvidence = false }) => {
     }
     return faFile;
   };
-
+  console.log(item);
   const getItemTypeLabel = (item, translations) => {
     return translations['type_' + item['@type']] || item['@type'];
   };
-
   return item['@type'] === 'Bando' ? (
     <Bando item={item} inEvidence={inEvidence} />
   ) : (
@@ -91,20 +91,21 @@ const ResultItem = ({ item, inEvidence = false }) => {
           )}
 
           {/* data + path */}
-          {!inEvidence && (
+          {!inEvidence && item.effective ? (
             <div className="row-item row-item-infos">
               <div className="col-icon"></div>
               <div className="col-content">
                 <div className="item-infos">
-                  {item.Date && (
+                  {item.effective && (
                     <div className="item-date">
-                      {moment(item.Date).format('D/MM/YYYY')}
+                      {moment(item.effective).format('D/MM/YYYY')}
                     </div>
                   )}
-                  <div className="item-path">{item['@id']}</div>
                 </div>
               </div>
             </div>
+          ) : (
+            ''
           )}
 
           <div className="row-item row-item-content">
@@ -129,9 +130,9 @@ const ResultItem = ({ item, inEvidence = false }) => {
                   </h3>
                 </a>
               </div>
-              {(item.description || hasSimilarResults) && (
+              {(item.Description || hasSimilarResults) && (
                 <div className="description">
-                  {item.description}
+                  {item.Description}
                   {hasSimilarResults && (
                     <a
                       href="#"

@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-from collective.z3cform.datagridfield.registry import DictRow
 from plone.app.z3cform.widget import AjaxSelectFieldWidget
 from plone.autoform import directives
 from plone.supermodel import model
 from rer.sitesearch import _
 from zope import schema
-from zope.interface import Interface
 
 
 class ITypesMappingRowSchema(model.Schema):
@@ -82,7 +80,7 @@ class IIndexesRowSchema(model.Schema):
     )
 
 
-class IRERSiteSearchSettings(Interface):
+class IRERSiteSearchSettings(model.Schema):
     """
     """
 
@@ -108,7 +106,7 @@ class IRERSiteSearchSettings(Interface):
         required=False,
     )
 
-    types_grouping = schema.List(
+    types_grouping = schema.SourceText(
         title=_("types_grouping_label", default=u"Types grouping"),
         description=_(
             "types_grouping_help",
@@ -116,15 +114,13 @@ class IRERSiteSearchSettings(Interface):
             u"content-types.",
         ),
         required=False,
-        value_type=DictRow(title=u"", schema=ITypesMappingRowSchema),
     )
 
-    available_indexes = schema.List(
+    available_indexes = schema.SourceText(
         title=_("available_indexes_label", default=u"Available indexes"),
         description=_(
             "available_indexes_help",
             default=u"Select which additional filters to show in the column.",
         ),
         required=False,
-        value_type=DictRow(title=u"", schema=IIndexesRowSchema),
     )

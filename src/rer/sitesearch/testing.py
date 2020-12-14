@@ -9,7 +9,7 @@ from plone.testing import z2
 
 import rer.sitesearch
 import plone.restapi
-import collective.z3cform.datagridfield
+import collective.z3cform.jsonwidget
 
 
 class RERSiteSearchLayer(PloneSandboxLayer):
@@ -22,7 +22,7 @@ class RERSiteSearchLayer(PloneSandboxLayer):
         # layer.
         self.loadZCML(package=plone.restapi)
         self.loadZCML(package=rer.sitesearch)
-        self.loadZCML(package=collective.z3cform.datagridfield)
+        self.loadZCML(package=collective.z3cform.jsonwidget)
 
     def setUpPloneSite(self, portal):
         applyProfile(portal, "rer.sitesearch:default")
@@ -54,7 +54,7 @@ class RERSiteSearchRestApiLayer(PloneRestApiDXLayer):
 
         self.loadZCML(package=plone.restapi)
         self.loadZCML(package=rer.sitesearch)
-        self.loadZCML(package=collective.z3cform.datagridfield)
+        self.loadZCML(package=collective.z3cform.jsonwidget)
 
     def setUpPloneSite(self, portal):
 
