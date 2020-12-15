@@ -1,15 +1,5 @@
 import axios from 'axios';
 
-// const getTranslationFor = ({ msgid, defaultLabel }) => {
-//   return getTranslationCatalog().then(catalog => {
-//     if (!catalog) {
-//       return '';
-//     }
-//     const { data } = catalog;
-//     return data[msgid] ? data[msgid] : defaultLabel;
-//   });
-// };
-
 export const getTranslationCatalog = (domain = 'rer.sitesearch') => {
   const catalogUrl = document
     .querySelector('body')

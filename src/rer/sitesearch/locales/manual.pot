@@ -5,106 +5,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: unife.masterschool\n"
+"Domain: rer.sitesearch\n"
 
-#search
-msgid "Parametri di ricerca"
+msgid "Sort on"
 msgstr ""
 
-msgid "Vai ai risultati"
+msgid "items on"
 msgstr ""
 
-msgid "filters_title_Cerca"
+msgid "filtered"
 msgstr ""
 
-msgid "Digita il testo da cercare..."
+msgid "Reset Filters"
 msgstr ""
 
-msgid "button_Cerca"
-msgstr ""
-
-msgid "Ricerca avanzata"
-msgstr ""
-
-msgid "Chiudi la ricerca avanzata"
-msgstr ""
-
-msgid "Filtra i risultati"
-msgstr ""
-
-msgid "Filtra i bandi per finanziamenti ed opportunità"
-msgstr ""
-
-msgid "bando_Stato"
-msgstr ""
-
-msgid "bando_Tipologia"
-msgstr ""
-
-msgid "bando_Beneficiari"
-msgstr ""
-
-msgid "bando_Fondo"
-msgstr ""
-
-msgid "bando_Materia"
-msgstr ""
-
-msgid "Risultati della ricerca"
-msgstr ""
-
-msgid "Vai ai filtri"
-msgstr ""
-
-msgid "In evidenza"
-msgstr ""
-
-msgid "Risultati simili"
-msgstr ""
-
-msgid "Scadenza partecipazione"
-msgstr ""
-
-msgid "previous_label"
-msgstr ""
-
-msgid "next_label"
-msgstr ""
-
-msgid "elementi su"
-msgstr ""
-
-msgid "filtrati"
-msgstr ""
-
-msgid "Annulla filtri"
-msgstr ""
-
-msgid "Ordina per"
-msgstr ""
-
-msgid "type_Document"
-msgstr ""
-
-msgid "type_Event"
-msgstr ""
-
-msgid "type_Folder"
-msgstr ""
-
-msgid "type_News Item"
-msgstr ""
-
-msgid "type_Bando"
-msgstr ""
-
-msgid "any_portal_type"
-msgstr ""
-
-msgid "pubblicato il"
-msgstr ""
-
-msgid "ultima modifica"
+msgid "Relevance"
 msgstr ""
 
 msgid "relevance"
@@ -114,10 +29,4 @@ msgid "effective"
 msgstr ""
 
 msgid "sortable_title"
-msgstr ""
-
-msgid "no_results_label"
-msgstr ""
-
-msgid "loading"
 msgstr ""

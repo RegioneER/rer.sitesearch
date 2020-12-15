@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-01 11:06+0000\n"
+"POT-Creation-Date: 2020-12-15 13:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,197 +12,131 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: unife.masterschool\n"
+"Domain: rer.sitesearch\n"
 
-msgid "Annulla filtri"
-msgstr ""
-
-msgid "Chiudi la ricerca avanzata"
-msgstr ""
-
-msgid "Digita il testo da cercare..."
-msgstr ""
-
-msgid "Filtra i bandi per finanziamenti ed opportunità"
-msgstr ""
-
-msgid "Filtra i risultati"
-msgstr ""
-
-msgid "In evidenza"
-msgstr ""
-
-#: ../configure.zcml:28
+#: rer/sitesearch/configure.zcml:28
 msgid "Installs the rer.sitesearch add-on."
 msgstr ""
 
-#: ../interfaces/settings.py:90
+#: rer/sitesearch/interfaces/settings.py:88
 msgid "Maximum number of characters in a single word"
 msgstr ""
 
-#: ../interfaces/settings.py:101
+#: rer/sitesearch/interfaces/settings.py:99
 msgid "Maximum number of words in search query"
 msgstr ""
 
-#: ../configure.zcml:45
+#: rer/sitesearch/configure.zcml:45
 msgid "Migrate to new version"
 msgstr ""
 
-msgid "Ordina per"
-msgstr ""
-
-# search
-msgid "Parametri di ricerca"
-msgstr ""
-
-#: ../profiles/default/controlpanel.xml
+#: rer/sitesearch/profiles/default/controlpanel.xml
 msgid "RER Sitesearch"
 msgstr ""
 
-#: ../configure.zcml:28
+#: rer/sitesearch/configure.zcml:28
 msgid "RER: Site Search"
 msgstr ""
 
-#: ../configure.zcml:37
+#: rer/sitesearch/configure.zcml:37
 msgid "RER: Site Search (uninstall)"
 msgstr ""
 
-msgid "Ricerca avanzata"
+msgid "Relevance"
 msgstr ""
 
-msgid "Risultati della ricerca"
+msgid "Reset Filters"
 msgstr ""
 
-msgid "Risultati simili"
-msgstr ""
-
-msgid "Scadenza partecipazione"
-msgstr ""
-
-#: ../browser/templates/search.pt:15
+#: rer/sitesearch/browser/templates/search.pt:15
 msgid "Search results"
 msgstr ""
 
-#: ../browser/controlpanel.py:17
+#: rer/sitesearch/browser/controlpanel.py:20
 msgid "Site Search settings"
 msgstr ""
 
-#: ../configure.zcml:37
+msgid "Sort on"
+msgstr ""
+
+#: rer/sitesearch/configure.zcml:37
 msgid "Uninstalls the rer.sitesearch add-on."
 msgstr ""
 
-msgid "Vai ai filtri"
-msgstr ""
-
-msgid "Vai ai risultati"
-msgstr ""
-
-msgid "any_portal_type"
+#. Default: "All content types"
+#: rer/sitesearch/restapi/serializer/catalog.py:84
+#: rer/sitesearch/restapi/services/search/get.py:129
+#: rer/sitesearch/restapi/utils.py:26
+msgid "all_types_label"
 msgstr ""
 
 #. Default: "Select which additional filters to show in the column."
-#: ../interfaces/settings.py:124
+#: rer/sitesearch/interfaces/settings.py:121
 msgid "available_indexes_help"
 msgstr ""
 
 #. Default: "Select which catalog index to use as filter."
-#: ../interfaces/settings.py:76
+#: rer/sitesearch/interfaces/settings.py:74
 msgid "available_indexes_index_help"
 msgstr ""
 
 #. Default: "Index"
-#: ../interfaces/settings.py:75
+#: rer/sitesearch/interfaces/settings.py:73
 msgid "available_indexes_index_label"
 msgstr ""
 
 #. Default: "Available indexes"
-#: ../interfaces/settings.py:123
+#: rer/sitesearch/interfaces/settings.py:120
 msgid "available_indexes_label"
 msgstr ""
 
 #. Default: "Insert the label for this index. One per row. If the site has only one language, type the simple name. If it has multiple languages, insert one row per language in the following format: lang|label. For example: it|Keywords"
-#: ../interfaces/settings.py:64
+#: rer/sitesearch/interfaces/settings.py:62
 msgid "available_indexes_label_help"
 msgstr ""
 
 #. Default: "Label"
-#: ../interfaces/settings.py:63
+#: rer/sitesearch/interfaces/settings.py:61
 msgid "available_indexes_label_label"
-msgstr ""
-
-msgid "bando_Beneficiari"
-msgstr ""
-
-msgid "bando_Fondo"
-msgstr ""
-
-msgid "bando_Materia"
-msgstr ""
-
-msgid "bando_Stato"
-msgstr ""
-
-msgid "bando_Tipologia"
-msgstr ""
-
-msgid "button_Cerca"
 msgstr ""
 
 msgid "effective"
 msgstr ""
 
-msgid "elementi su"
-msgstr ""
-
 #. Default: "Events"
-#: ../adapters/custom_filters.py:16
+#: rer/sitesearch/adapters/custom_filters.py:16
 msgid "event_adapter_label"
 msgstr ""
 
 #. Default: "End date"
-#: ../adapters/custom_filters.py:34
+#: rer/sitesearch/adapters/custom_filters.py:34
 msgid "filter_end_label"
 msgstr ""
 
 #. Default: "Start date"
-#: ../adapters/custom_filters.py:27
+#: rer/sitesearch/adapters/custom_filters.py:27
 msgid "filter_start_label"
 msgstr ""
 
-msgid "filters_title_Cerca"
-msgstr ""
-
-msgid "filtrati"
+msgid "filtered"
 msgstr ""
 
 #. Default: "Set what is the maximum length of a single search word. Longer words will be omitted from the search."
-#: ../interfaces/settings.py:91
+#: rer/sitesearch/interfaces/settings.py:89
 msgid "help_max_word_len"
 msgstr ""
 
 #. Default: "Set what is the maximum number of words in the search query. The other words will be omitted from the search."
-#: ../interfaces/settings.py:102
+#: rer/sitesearch/interfaces/settings.py:100
 msgid "help_max_words"
 msgstr ""
 
 #. Default: "Set site search configurations"
-#: ../browser/controlpanel.py:18
+#: rer/sitesearch/browser/controlpanel.py:21
 msgid "help_sitesearch_settings_editform"
 msgstr ""
 
-msgid "loading"
-msgstr ""
-
-msgid "next_label"
-msgstr ""
-
-msgid "no_results_label"
-msgstr ""
-
-msgid "previous_label"
-msgstr ""
-
-msgid "pubblicato il"
+msgid "items on"
 msgstr ""
 
 msgid "relevance"
@@ -211,70 +145,52 @@ msgstr ""
 msgid "sortable_title"
 msgstr ""
 
-msgid "type_Bando"
-msgstr ""
-
-msgid "type_Document"
-msgstr ""
-
-msgid "type_Event"
-msgstr ""
-
-msgid "type_Folder"
-msgstr ""
-
-msgid "type_News Item"
-msgstr ""
-
 #. Default: "If you fill this field, you can group search results by content-types."
-#: ../interfaces/settings.py:113
+#: rer/sitesearch/interfaces/settings.py:111
 msgid "types_grouping_help"
 msgstr ""
 
 #. Default: "Types grouping"
-#: ../interfaces/settings.py:112
+#: rer/sitesearch/interfaces/settings.py:110
 msgid "types_grouping_label"
 msgstr ""
 
 #. Default: "Select a preset of advanced filters for this group."
-#: ../interfaces/settings.py:46
+#: rer/sitesearch/interfaces/settings.py:44
 msgid "types_mapping_advanced_filters_help"
 msgstr ""
 
 #. Default: "Advanced filters"
-#: ../interfaces/settings.py:43
+#: rer/sitesearch/interfaces/settings.py:41
 msgid "types_mapping_advanced_filters_label"
 msgstr ""
 
 #. Default: "Select an icon for this group."
-#: ../interfaces/settings.py:35
+#: rer/sitesearch/interfaces/settings.py:33
 msgid "types_mapping_icon_help"
 msgstr ""
 
 #. Default: "Icon"
-#: ../interfaces/settings.py:34
+#: rer/sitesearch/interfaces/settings.py:32
 msgid "types_mapping_icon_label"
 msgstr ""
 
 #. Default: "Insert the label for this group. One per row. If the site has only one language, type the simple name. If it has multiple languages, insert one row per language in the following format: lang|label. For example: it|Documenti"
-#: ../interfaces/settings.py:14
+#: rer/sitesearch/interfaces/settings.py:12
 msgid "types_mapping_label_help"
 msgstr ""
 
 #. Default: "Label"
-#: ../interfaces/settings.py:13
+#: rer/sitesearch/interfaces/settings.py:11
 msgid "types_mapping_label_label"
 msgstr ""
 
 #. Default: "Select which portal_types to show in this group."
-#: ../interfaces/settings.py:26
+#: rer/sitesearch/interfaces/settings.py:24
 msgid "types_mapping_types_help"
 msgstr ""
 
 #. Default: "Portal types"
-#: ../interfaces/settings.py:25
+#: rer/sitesearch/interfaces/settings.py:23
 msgid "types_mapping_types_label"
-msgstr ""
-
-msgid "ultima modifica"
 msgstr ""

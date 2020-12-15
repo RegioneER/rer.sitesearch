@@ -39,6 +39,10 @@ class SearchContainer extends Component {
       ? DataObjectParser.transpose(requestQuery).data()
       : {};
 
+    this.getTranslationFor = msgid => {
+      const { translations } = this.state;
+      return translations[msgid] || msgid;
+    };
     this.doSearch = data => {
       const { facets } = this.state;
       let params = this.state.params;
@@ -115,6 +119,7 @@ class SearchContainer extends Component {
       setFilters: debounce(this.setFilters, 100),
       isMobile: window.innerWidth < 1200,
       path_infos: {},
+      getTranslationFor: this.getTranslationFor,
     };
   }
 
