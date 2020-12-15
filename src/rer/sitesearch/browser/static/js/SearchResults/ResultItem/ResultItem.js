@@ -73,7 +73,6 @@ const ResultItem = ({ item }) => {
     }
     return faFile;
   };
-  console.log(item);
   const getItemTypeLabel = (item, translations) => {
     return translations['type_' + item['@type']] || item['@type'];
   };
