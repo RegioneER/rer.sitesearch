@@ -86,8 +86,8 @@ class LazyCatalogResultSerializer(BaseSerializer):
     def get_groups_facets(self, brains):
         """
         We need to have the right count for groups facets because these are
-        not proper facets, and the number of results should be the same
-        also if we select a different group (groups only needs to show grouped
+        not proper facets, and the number of results should be the same also
+        if we select a different group (groups only needs to show grouped
         informations, not to filter).
         If we are filtering by type, this means that we need to do an another
         catalog search for get the proper counters for each group.
