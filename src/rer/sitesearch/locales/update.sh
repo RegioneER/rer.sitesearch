@@ -8,17 +8,5 @@
 
 domain=rer.sitesearch
 
-#
-# Do we need to merge manual PO entries from a file called manual.pot.
-# this option is later passed to i18ndude
-#
-if test -e manual.pot; then
-        echo "Manual PO entries detected"
-        MERGE="--merge manual.pot"
-else
-        echo "No manual PO entries detected"
-        MERGE=""
-fi
-
-i18ndude rebuild-pot --pot $domain.pot $MERGE --create $domain ../
+i18ndude rebuild-pot --pot $domain.pot --create $domain --merge manual.pot ../
 i18ndude sync --pot $domain.pot */LC_MESSAGES/$domain.po

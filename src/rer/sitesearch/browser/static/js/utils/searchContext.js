@@ -12,6 +12,7 @@ const SearchContext = React.createContext({
   setFilters: () => {},
   setFacets: () => {},
   doSearch: () => {},
+  getTranslationFor: () => {},
 });
 
 export default SearchContext;

@@ -6,7 +6,7 @@ import SearchContext from '../utils/searchContext';
 const Pagination = () => {
   return (
     <SearchContext.Consumer>
-      {({ setFilters, b_size, filters, translations, total }) => {
+      {({ setFilters, b_size, filters, total }) => {
         const b_start = filters.b_start || 0;
         const currentPage = b_start === 0 ? 0 : b_start / b_size;
 
@@ -20,10 +20,8 @@ const Pagination = () => {
               <ReactPaginate
                 initialPage={currentPage}
                 disableInitialCallback={true}
-                previousLabel={
-                  translations ? translations.previous_label : 'Previous >'
-                }
-                nextLabel={translations ? translations.next_label : '< Next'}
+                previousLabel="<"
+                nextLabel=">"
                 breakLabel={'...'}
                 breakClassName={'break-me'}
                 pageCount={Math.ceil(total / b_size)}

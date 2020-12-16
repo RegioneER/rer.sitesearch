@@ -2,27 +2,30 @@ import React, { useContext } from 'react';
 import SearchContext from '../utils/searchContext';
 
 const PathFilters = () => {
-  const { setFilters, filters, path_infos } = useContext(SearchContext);
+  const { setFilters, filters, path_infos, facets } = useContext(SearchContext);
   const { path } = filters;
   if (!path || path.length === 0 || !path_infos) {
     return '';
   }
   const { root, site_name, path_title } = path_infos;
-
+  console.log(path_infos);
   return (
     <React.Fragment>
-      <div className="radio">
-        <label className={path === root ? 'selected' : ''}>
-          <input
-            type="radio"
-            name="path"
-            value={root}
-            checked={path === root}
-            onChange={() => setFilters({ path: '' })}
-          />
-          In tutto <strong>{site_name}</strong>
-        </label>
-      </div>
+      {!facets.sites ||
+        (facets.sites.order.length === 0 && (
+          <div className="radio">
+            <label className={path === root ? 'selected' : ''}>
+              <input
+                type="radio"
+                name="path"
+                value={root}
+                checked={path === root}
+                onChange={() => setFilters({ path: '' })}
+              />
+              In tutto <strong>{site_name}</strong>
+            </label>
+          </div>
+        ))}
       <div className="radio">
         <label className={path !== root ? 'selected' : ''}>
           <input
@@ -44,6 +47,7 @@ const SitesFilters = () => {
   if (!facets || !facets.sites || facets.sites.order.length === 0) {
     return '';
   }
+  const { path } = filters;
   return (
     <React.Fragment>
       <div className="radio">
@@ -58,8 +62,10 @@ const SitesFilters = () => {
             type="radio"
             name="site_name"
             value=""
-            checked={!filters.site_name || filters.site_name.length === 0}
-            onChange={e => setFilters({ site_name: e.target.value })}
+            checked={
+              !path && (!filters.site_name || filters.site_name.length === 0)
+            }
+            onChange={e => setFilters({ site_name: e.target.value, path: '' })}
           />
           in <strong>Regione Emilia-Romagna</strong>
         </label>
@@ -74,7 +80,9 @@ const SitesFilters = () => {
                 name="site_name"
                 value={siteName}
                 checked={site_name === siteName}
-                onChange={e => setFilters({ site_name: e.target.value })}
+                onChange={e =>
+                  setFilters({ site_name: e.target.value, path: '' })
+                }
               />
               {siteName} ({facets.sites.values[siteName]})
             </label>

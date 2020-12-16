@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
+from copy import deepcopy
 from plone import api
 from plone.api.exc import InvalidParameterError
+from plone.registry.interfaces import IRegistry
 from plone.restapi.search.handler import SearchHandler
 from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.services import Service
+from rer.sitesearch import _
 from rer.sitesearch.restapi.utils import get_indexes_mapping
 from rer.sitesearch.restapi.utils import get_types_groups
-from rer.sitesearch import _
+from zope.component import getUtility
 from zope.i18n import translate
-from copy import deepcopy
 
 try:
     from rer.solrpush.interfaces.settings import IRerSolrpushSettings
@@ -20,11 +22,27 @@ try:
 except ImportError:
     HAS_SOLR = False
 
+try:
+    # rer.agidtheme overrides site tile field
+    from rer.agidtheme.base.interfaces import IRERSiteSchema as ISiteSchema
+    from rer.agidtheme.base.utility.interfaces import ICustomFields
+
+    RER_THEME = True
+except ImportError:
+    from Products.CMFPlone.interfaces.controlpanel import ISiteSchema
+
+    RER_THEME = False
+
+
+import six
+
 
 class SearchGet(Service):
     def reply(self):
         query = deepcopy(self.request.form)
         query = unflatten_dotted_dict(query)
+        path_infos = self.get_path_infos(query=query)
+
         if "group" in query:
             groups = get_types_groups()
             for group_id, group_data in groups.get("values", {}).items():
@@ -55,8 +73,13 @@ class SearchGet(Service):
                     query
                 )
                 data["facets"] = self.remap_solr_facets(data=data, query=query)
-                return data
-        return SearchHandler(self.context, self.request).search(query)
+            else:
+                data = SearchHandler(self.context, self.request).search(query)
+        else:
+            data = SearchHandler(self.context, self.request).search(query)
+        if path_infos:
+            data["path_infos"] = path_infos
+        return data
 
     def remap_solr_facets(self, data, query):
         new_facets = {
@@ -133,3 +156,32 @@ class SearchGet(Service):
             for name, count in site_mapping.items():
                 if count:
                     sites[name] = count
+
+    def get_path_infos(self, query):
+        if "path" not in query:
+            return {}
+        registry = getUtility(IRegistry)
+        site_settings = registry.forInterface(
+            ISiteSchema, prefix="plone", check=False
+        )
+        site_title = getattr(site_settings, "site_title") or ""
+        if RER_THEME:
+            fields_value = getUtility(ICustomFields)
+            site_title = fields_value.titleLang(site_title)
+        if six.PY2:
+            site_title = site_title.decode("utf-8")
+
+        path = query["path"]
+        if isinstance(path, dict):
+            path = path.get("query", "")
+        root_path = "/".join(api.portal.get().getPhysicalPath())
+
+        data = {
+            "site_name": site_title,
+            "root": "/".join(api.portal.get().getPhysicalPath()),
+        }
+        if path != root_path:
+            folder = api.content.get(path)
+            if folder:
+                data["path_title"] = folder.title
+        return data

@@ -19,9 +19,9 @@ const searchOrderMapping = {
 
 const Header = ({ searchHasFilters = false }) => (
   <SearchContext.Consumer key="search-results-header">
-    {({ translations, facets, filters, setFilters, total }) => {
+    {({ getTranslationFor, facets, filters, setFilters, total }) => {
       const allTotal = facets.groups.values
-        ? facets.groups.values['All content types'].count
+        ? facets.groups.values[getTranslationFor('all_types_label')].count
         : 0;
       const group = filters.group;
       const groupCount = group ? facets.groups.values[group].count : total;
@@ -31,10 +31,12 @@ const Header = ({ searchHasFilters = false }) => (
             <span>
               <strong>{groupCount}</strong>{' '}
               <span className="desktop-only">
-                {translations['elementi su']}{' '}
+                {getTranslationFor('items on')}{' '}
               </span>
               <span className="mobile-only">/ </span> {allTotal}{' '}
-              <span className="desktop-only">{translations['filtrati']}</span>
+              <span className="desktop-only">
+                {getTranslationFor('filtered')}
+              </span>
             </span>{' '}
             {searchHasFilters && (
               <a
@@ -45,28 +47,27 @@ const Header = ({ searchHasFilters = false }) => (
                   setFilters(null);
                 }}
               >
-                ({translations['Annulla filtri']})
+                ({getTranslationFor('Reset Filters')})
               </a>
             )}
           </div>
           <div className="order-by">
             <div className="select-label desktop-only">
-              {translations['Ordina per']}{' '}
+              {getTranslationFor('Sort on')}{' '}
             </div>
             <div className="select">
               <Select
                 options={Object.keys(searchOrderMapping).map(value => ({
                   value,
-                  label: translations[value],
+                  label: getTranslationFor(value),
                 }))}
                 isClearable={false}
-                placeholder={translations['Ordina per']}
+                placeholder={getTranslationFor('Sort on')}
                 value={{
                   value: filters.sort_on ? filters.sort_on : 'relevance',
-                  label:
-                    translations[
-                      filters.sort_on ? filters.sort_on : 'relevance'
-                    ],
+                  label: getTranslationFor(
+                    filters.sort_on ? filters.sort_on : 'Relevance',
+                  ),
                 }}
                 onChange={option =>
                   setFilters(searchOrderMapping[option.value])

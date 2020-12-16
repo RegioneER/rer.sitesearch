@@ -2,7 +2,6 @@
 from copy import deepcopy
 from plone import api
 from plone.indexer.interfaces import IIndexableObject
-from plone.registry.interfaces import IRegistry
 from plone.restapi.interfaces import ISerializeToJson
 from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.serializer.catalog import (
@@ -14,25 +13,12 @@ from rer.sitesearch.interfaces import IRERSiteSearchLayer
 from rer.sitesearch.restapi.utils import get_indexes_mapping
 from rer.sitesearch.restapi.utils import get_types_groups
 from zope.component import adapter
-from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.i18n import translate
 from zope.interface import implementer
 
-try:
-    # rer.agidtheme overrides site tile field
-    from rer.agidtheme.base.interfaces import IRERSiteSchema as ISiteSchema
-    from rer.agidtheme.base.utility.interfaces import ICustomFields
-
-    RER_THEME = True
-except ImportError:
-    from Products.CMFPlone.interfaces.controlpanel import ISiteSchema
-
-    RER_THEME = False
-
 
 import Missing
-import six
 
 
 @implementer(ISerializeToJson)
@@ -46,7 +32,6 @@ class LazyCatalogResultSerializer(BaseSerializer):
         data.update(
             {"facets": self.extract_facets(brains=self.lazy_resultset)}
         )
-        data.update({"path_infos": self.add_path_infos()})
         return data
 
     def extract_facets(self, brains):
@@ -86,8 +71,8 @@ class LazyCatalogResultSerializer(BaseSerializer):
     def get_groups_facets(self, brains):
         """
         We need to have the right count for groups facets because these are
-        not proper facets, and the number of results should be the same
-        also if we select a different group (groups only needs to show grouped
+        not proper facets, and the number of results should be the same also
+        if we select a different group (groups only needs to show grouped
         informations, not to filter).
         If we are filtering by type, this means that we need to do an another
         catalog search for get the proper counters for each group.
@@ -115,35 +100,3 @@ class LazyCatalogResultSerializer(BaseSerializer):
             "count"
         ] = brains_to_iterate.actual_result_count
         return groups
-
-    def add_path_infos(self):
-        query = self.request.form.copy()
-        query = unflatten_dotted_dict(query)
-
-        if "path" not in query:
-            return {}
-        registry = getUtility(IRegistry)
-        site_settings = registry.forInterface(
-            ISiteSchema, prefix="plone", check=False
-        )
-        site_title = getattr(site_settings, "site_title") or ""
-        if RER_THEME:
-            fields_value = getUtility(ICustomFields)
-            site_title = fields_value.titleLang(site_title)
-        if six.PY2:
-            site_title = site_title.decode("utf-8")
-
-        path = query["path"]
-        if isinstance(path, dict):
-            path = path.get("query", "")
-        root_path = "/".join(api.portal.get().getPhysicalPath())
-
-        data = {
-            "site_name": site_title,
-            "root": "/".join(api.portal.get().getPhysicalPath()),
-        }
-        if path != root_path:
-            folder = api.content.get(path)
-            if folder:
-                data["path_title"] = folder.title
-        return data
