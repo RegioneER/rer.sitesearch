@@ -18,7 +18,7 @@ const SearchableTextFilter = () => {
   return (
     <div className="filter-item">
       <h3>{translations['filters_title_Cerca']}</h3>
-      <div className="default-search">
+      <form className="default-search">
         <div className="input-group">
           <input
             type="search"
@@ -33,15 +33,16 @@ const SearchableTextFilter = () => {
           <span className="input-group-btn">
             <button
               className="btn btn-default"
-              type="button"
-              onClick={() =>
+              type="submit"
+              onClick={e => {
+                e.preventDefault();
                 setFilters({
                   SearchableText:
                     searchableText !== null
                       ? searchableText
                       : filters.SearchableText,
-                })
-              }
+                });
+              }}
               aria-label={
                 translations['button_Cerca']
                   ? translations['button_Cerca']
@@ -65,7 +66,7 @@ const SearchableTextFilter = () => {
             <FontAwesomeIcon icon={faChevronRight} />
           </button>
         )}
-      </div>
+      </form>
     </div>
   );
 };
