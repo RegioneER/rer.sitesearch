@@ -37,3 +37,4 @@ report.html
 !.travis.yml
 !src/rer
 .Python
+.vscode

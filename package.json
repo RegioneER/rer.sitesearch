@@ -82,6 +82,7 @@
         "plone-less-base": "git+https://git@github.com/RedTurtle/plone-less-base#master",
         "query-string": "^6.13.7",
         "react": "^16.8.5",
+        "react-day-picker": "^7.4.8",
         "react-dom": "^16.8.5",
         "react-paginate": "^6.5.0",
         "react-select": "^3.0.3"
