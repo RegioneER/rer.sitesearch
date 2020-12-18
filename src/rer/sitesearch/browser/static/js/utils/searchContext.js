@@ -9,6 +9,7 @@ const SearchContext = React.createContext({
   facets: {},
   path_infos: {},
   b_size: 20,
+  baseUrl: '',
   setFilters: () => {},
   setFacets: () => {},
   doSearch: () => {},

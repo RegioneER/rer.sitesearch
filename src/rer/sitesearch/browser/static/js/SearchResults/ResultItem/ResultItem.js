@@ -80,7 +80,7 @@ const ResultItem = ({ item }) => {
     <Bando item={item} inEvidence={inEvidence} />
   ) : (
     <SearchContext.Consumer key={item['@id']}>
-      {({ translations }) => (
+      {({ translations, baseUrl }) => (
         <div className={`result-item ${inEvidence ? 'in-evidence' : ''}`}>
           {/* in evidenza */}
           {inEvidence && (
@@ -205,7 +205,7 @@ const ResultItem = ({ item }) => {
                               <FontAwesomeIcon icon={faList} />
                               {item.Subject.map(cat => (
                                 <a
-                                  href="#"
+                                  href={`${baseUrl}/@@search?Subject.operator=and&Subject.query=${cat}`}
                                   key={cat}
                                   className={
                                     isInFilters('Subject', cat) ? 'active' : ''

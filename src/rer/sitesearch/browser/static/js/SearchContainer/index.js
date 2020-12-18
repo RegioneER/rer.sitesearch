@@ -24,11 +24,11 @@ const fixQuery = ({ params }) => {
   return newParams;
 };
 
-const nullState = {
-  filters: null,
-  results: [],
-  loading: false,
-};
+// const nullState = {
+//   filters: null,
+//   results: [],
+//   loading: false,
+// };
 
 class SearchContainer extends Component {
   constructor(props) {
@@ -74,10 +74,10 @@ class SearchContainer extends Component {
 
     this.setFacets = facets => this.setState({ facets });
     this.setFilters = newFilters => {
-      let filters = null;
+      let filters = {};
       if (newFilters === null) {
         this.setState({
-          ...nullState,
+          filters: {},
         });
       } else {
         filters = JSON.parse(JSON.stringify(this.state.filters));
@@ -120,6 +120,7 @@ class SearchContainer extends Component {
       isMobile: window.innerWidth < 1200,
       path_infos: {},
       getTranslationFor: this.getTranslationFor,
+      baseUrl: this.props.baseUrl,
     };
   }
 
