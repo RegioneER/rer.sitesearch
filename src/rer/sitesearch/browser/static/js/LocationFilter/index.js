@@ -21,6 +21,7 @@ const PathFilters = () => {
                 value={root}
                 checked={path === root}
                 onChange={() => setFilters({ path: '' })}
+                aria-controls="sitesearch-results-list"
               />
               In tutto <strong>{site_name}</strong>
             </label>
@@ -34,6 +35,7 @@ const PathFilters = () => {
             value={path}
             checked={true}
             onChange={e => setFilters({ path: e.target.value })}
+            aria-controls="sitesearch-results-list"
           />
           nella sezione <strong>{path_title}</strong>
         </label>
@@ -54,7 +56,7 @@ const SitesFilters = () => {
         <label
           className={
             !filters.site_name || filters.site_name.length === 0
-              ? 'selected'
+              ? 'selected text-primary'
               : ''
           }
         >
@@ -74,7 +76,9 @@ const SitesFilters = () => {
         const { site_name } = filters;
         return (
           <div className="radio" key={`site-${siteName}`}>
-            <label className={site_name === siteName ? 'selected' : ''}>
+            <label
+              className={site_name === siteName ? 'selected text-primary' : ''}
+            >
               <input
                 type="radio"
                 name="site_name"
@@ -111,8 +115,8 @@ const LocationFilter = () => {
   return (
     <div className="filter-item">
       <h3>
-        {translations['Dove'] ? translations['Dove'] : 'Dove'}{' '}
-        <i className="far fa-folder"></i>
+        <i className="far fa-folder"></i>{' '}
+        {translations['Dove'] ? translations['Dove'] : 'Dove'}
       </h3>
       <PathFilters></PathFilters>
       <SitesFilters></SitesFilters>

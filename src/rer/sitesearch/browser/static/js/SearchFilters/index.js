@@ -30,7 +30,7 @@ const SearchFilters = () => {
     facets.groups &&
     facets.groups.values[filters.group].advanced_filters;
   return (
-    <div className="filters-wrapper">
+    <aside className="filters-wrapper">
       <h2 className="sr-only" id="search-filters">
         {translations['Parametri di ricerca']
           ? translations['Parametri di ricerca']
@@ -91,7 +91,7 @@ const SearchFilters = () => {
           </div>
         )}
       </div>
-    </div>
+    </aside>
   );
 };
 

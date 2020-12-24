@@ -95,7 +95,9 @@ const ResultItem = ({ item }) => {
               <div className="col-icon"></div>
               <div className="col-content">
                 <div className="item-infos">
-                  {item.effective && (
+                  {item.effective &&
+                    moment(item.effective).format('D/MM/YYYY') !==
+                      '31/12/1969' && (
                     <div className="item-date">
                       {moment(item.effective).format('D/MM/YYYY')}
                     </div>
@@ -125,7 +127,9 @@ const ResultItem = ({ item }) => {
               <div className="item-title">
                 <a href={item['@id']}>
                   <h3 title={getTitleHover(item, translations)}>
-                    {item.title}
+                    {item.title && item.title.length > 0
+                      ? item.title
+                      : item['@id'].split('/').pop()}
                   </h3>
                 </a>
               </div>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
 import SearchContext from '../utils/searchContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icons } from '../utils/icons';
@@ -24,15 +24,23 @@ const IndexesFilters = () => {
     return Object.keys(facetValues).length > 0 ? (
       <div className="filter-item" key={index + idx}>
         <h3>
-          {facet.label}{' '}
           {index === 'Subject' && <FontAwesomeIcon icon={faTags} />}
-          {index === 'Temi' && <FontAwesomeIcon icon={faListUl} />}
+          {index === 'Temi' && <FontAwesomeIcon icon={faListUl} />}{' '}
+          {facet.label}
         </h3>
         <Select
           options={options}
           isMulti
           isClearable
+          components={{
+            // eslint-disable-next-line react/display-name
+            MultiValueLabel: props => (
+              <components.MultiValueLabel {...props} className="text-primary" />
+            ),
+          }}
+          className="rer-sitesearch-select text-primary"
           placeholder="Cerca per categorie"
+          aria-controls="sitesearch-results-list"
           value={options.filter(option =>
             filters[index]
               ? filters[index].query.includes(option.value)

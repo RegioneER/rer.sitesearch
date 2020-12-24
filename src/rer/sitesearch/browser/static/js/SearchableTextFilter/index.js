@@ -17,13 +17,21 @@ const SearchableTextFilter = () => {
 
   return (
     <div className="filter-item">
-      <h3>{translations['filters_title_Cerca']}</h3>
+      {translations['filters_title_Cerca'] && (
+        <h3>{translations['filters_title_Cerca']}</h3>
+      )}
       <form className="default-search">
         <div className="input-group">
           <input
             type="search"
             className="form-control"
             placeholder={translations['Digita il testo da cercare...']}
+            aria-label={
+              translations['Digita il testo da cercare...']
+                ? translations['Digita il testo da cercare...']
+                : 'Digita il testo da cercare...'
+            }
+            aria-controls="sitesearch-results-list"
             name="SearchableText"
             value={
               searchableText !== null ? searchableText : filters.SearchableText

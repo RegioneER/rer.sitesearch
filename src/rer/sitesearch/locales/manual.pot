@@ -30,3 +30,60 @@ msgstr ""
 
 msgid "sortable_title"
 msgstr ""
+
+msgid "Risultati della ricerca"
+msgstr ""
+
+msgid "Vai ai filtri"
+msgstr "Vai ai filtri"
+
+msgid "loading"
+msgstr ""
+
+msgid "no_results_label"
+msgstr ""
+
+msgid "pubblicato il"
+msgstr ""
+
+msgid "ultima modifica"
+msgstr ""
+
+msgid "In evidenza"
+msgstr ""
+
+msgid "Risultati simili"
+msgstr ""
+
+msgid "Scadenza partecipazione"
+msgstr ""
+
+msgid "Cosa"
+msgstr ""
+
+msgid "Dove"
+msgstr ""
+
+msgid "filters_title_Cerca"
+msgstr ""
+
+msgid "Digita il testo da cercare..."
+msgstr ""
+
+msgid "button_Cerca"
+msgstr ""
+
+msgid "Ricerca avanzata"
+msgstr ""
+
+msgid "Parametri di ricerca"
+msgstr ""
+
+msgid "Vai ai risultati"
+msgstr ""
+
+msgid "Chiudi la ricerca avanzata"
+msgstr ""
+
+msgid "Filtra i risultati"
+msgstr ""

@@ -13,7 +13,7 @@ const SearchResults = () => {
     <SearchContext.Consumer key="search-results">
       {({ translations, loading, results }) => {
         return (
-          <div className="search-results">
+          <main className="search-results">
             <h2 className="sr-only" id="search-results">
               {translations['Risultati della ricerca']}
             </h2>
@@ -43,13 +43,13 @@ const SearchResults = () => {
                 <Pagination />
               </>
             ) : (
-              <p>
+              <p className="no-results-label">
                 {translations['no_results_label']
                   ? translations['no_results_label']
                   : 'Nessun risultato soddisfa la tua ricerca'}
               </p>
             )}
-          </div>
+          </main>
         );
       }}
     </SearchContext.Consumer>

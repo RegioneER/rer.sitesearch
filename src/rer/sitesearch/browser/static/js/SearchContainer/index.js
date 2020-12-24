@@ -122,6 +122,8 @@ class SearchContainer extends Component {
       getTranslationFor: this.getTranslationFor,
       baseUrl: this.props.baseUrl,
     };
+
+    this.handleResize = this.handleResize.bind(this);
   }
 
   handleResize() {

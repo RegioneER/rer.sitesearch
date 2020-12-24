@@ -13,8 +13,8 @@ const GroupsFilter = () => {
   return (
     <div className="filter-item">
       <h3>
-        {translations['Cosa'] ? translations['Cosa'] : 'Cosa'}{' '}
-        <i className="far fa-question-circle"></i>
+        <i className="far fa-question-circle"></i>{' '}
+        {translations['Cosa'] ? translations['Cosa'] : 'Cosa'}
       </h3>
       {facets &&
         facets.groups &&
@@ -30,12 +30,13 @@ const GroupsFilter = () => {
           }
           return (
             <div className="radio" key={group + idx}>
-              <label className={selected ? 'selected' : ''}>
+              <label className={selected ? 'selected text-primary' : ''}>
                 <input
                   type="radio"
                   name="types"
                   value={group}
                   checked={selected}
+                  aria-controls="sitesearch-results-list"
                   onChange={() => setFilters({ group })}
                 />
                 {groupData.icon && (
