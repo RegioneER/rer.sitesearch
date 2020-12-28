@@ -61,6 +61,7 @@ const SpecificFilters = ({ id }) => {
               value={filters[advFilter]}
               setFilters={setFilters}
               filters={filters}
+              translations={translations}
             />
           </div>
         ))}

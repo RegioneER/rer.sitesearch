@@ -56,7 +56,7 @@ const Bando = ({ item, inEvidence = false }) => {
                       {moment(item.Date).format('D/MM/YYYY')}
                     </div>
                   )}
-                  <div className="item-path">{item['@id']}</div>
+                  {/* <div className="item-path">{item['@id']}</div> */}
                 </div>
               </div>
             </div>

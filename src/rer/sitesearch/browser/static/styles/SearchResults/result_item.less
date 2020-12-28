@@ -6,8 +6,13 @@
         display: flex;
         align-items: center;
 
+        &.row-item-content {
+            align-items: flex-start;
+        }
+
         .col-icon {
             flex: 0 0 5em;
+            margin-top: 1rem;
             text-align: center;
 
             svg,
@@ -67,12 +72,13 @@
 
     .item-title {
         h3 {
-            margin: 0.5rem 0;
+            margin: 0.5rem 0 1rem;
         }
     }
 
     .item-breadcrumbs {
         margin-top: 0.5em;
+
         a.active {
             font-weight: bold;
         }
@@ -91,10 +97,11 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            float: left;
 
             a {
                 margin: 0 0.5rem;
+                line-height: 1.2;
+
                 &.active {
                     font-weight: bold;
                 }

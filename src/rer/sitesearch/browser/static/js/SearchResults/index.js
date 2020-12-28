@@ -11,7 +11,14 @@ const { faCircleNotch } = icons;
 const SearchResults = () => {
   return (
     <SearchContext.Consumer key="search-results">
-      {({ translations, loading, results }) => {
+      {({
+        translations,
+        loading,
+        results,
+        getTranslationFor,
+        filters,
+        setFilters,
+      }) => {
         return (
           <main className="search-results">
             <h2 className="sr-only" id="search-results">
@@ -43,11 +50,27 @@ const SearchResults = () => {
                 <Pagination />
               </>
             ) : (
-              <p className="no-results-label">
-                {translations['no_results_label']
-                  ? translations['no_results_label']
-                  : 'Nessun risultato soddisfa la tua ricerca'}
-              </p>
+              <div className="no-results-label">
+                <p>
+                  {translations['no_results_label']
+                    ? translations['no_results_label']
+                    : 'Nessun risultato soddisfa la tua ricerca'}
+                </p>
+                {Object.keys(filters).length > 0 && (
+                  <p>
+                    <a
+                      href="#"
+                      className="reset-filters"
+                      onClick={e => {
+                        e.preventDefault();
+                        setFilters(null);
+                      }}
+                    >
+                      ({getTranslationFor('Reset Filters')})
+                    </a>
+                  </p>
+                )}
+              </div>
             )}
           </main>
         );

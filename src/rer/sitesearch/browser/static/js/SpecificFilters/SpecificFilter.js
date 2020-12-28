@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import MomentLocaleUtils, {
   formatDate,
@@ -15,23 +15,32 @@ moment.locale('it');
 
 const SpecificFilterArray = ({
   id,
-  placeholder = '',
+  placeholder,
   value,
-  values,
+  options = [],
   label,
   setFilters,
+  translations,
 }) => (
   <div id={`advanced-filter-array-${id}`}>
     <label htmlFor={id}>{label}</label>
     <Select
       id={id}
-      options={values}
+      options={options}
       isMulti={true}
       isClearable={true}
-      placeholder={placeholder}
-      value={values.filter(option =>
+      placeholder={
+        placeholder ? placeholder : translations['select_placeholder']
+      }
+      value={options.filter(option =>
         value ? value.query.includes(option.value) : false,
       )}
+      components={{
+        // eslint-disable-next-line react/display-name
+        MultiValueLabel: props => (
+          <components.MultiValueLabel {...props} className="text-primary" />
+        ),
+      }}
       aria-controls="sitesearch-results-list"
       onChange={option => {
         if (!option || option.length == 0) {
@@ -52,10 +61,11 @@ const SpecificFilterArray = ({
 SpecificFilterArray.propTypes = {
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  value: PropTypes.any.isRequired,
-  values: PropTypes.array.isRequired,
+  value: PropTypes.any,
+  options: PropTypes.array.isRequired,
   label: PropTypes.string,
   setFilters: PropTypes.func,
+  translations: PropTypes.object,
 };
 
 const SpecificFilterDate = ({ id, label = '', value, setFilters }) => (
@@ -86,19 +96,39 @@ SpecificFilterDate.propTypes = {
   label: PropTypes.string,
   value: PropTypes.any,
   setFilters: PropTypes.func.isRequired,
+  translations: PropTypes.object,
 };
 
-const SpecificFilterDateRange = ({ id, start, end, filters, setFilters }) => {
+const date_fmt = 'YYYY-MM-DD HH:mm';
+
+const getDateFromQuery = (filter, index) => {
+  if (!filter) return null;
+
+  const date =
+    filter.query && Array.isArray(filter.query)
+      ? filter.query[index]
+      : filter.query;
+
+  console.log(moment(date));
+  return moment(date);
+};
+
+const SpecificFilterDateRange = ({
+  id,
+  start,
+  end,
+  filters,
+  setFilters,
+  translations,
+}) => {
   const [rangeStart, setRangeStart] = React.useState(
-    filters.start ? filters.start : null,
+    getDateFromQuery(filters.start, 0),
   );
   const [rangeEnd, setRangeEnd] = React.useState(
-    filters.end ? filters.end : null,
+    getDateFromQuery(filters.end, 1),
   );
 
   React.useEffect(() => {
-    const date_fmt = 'YYYY-MM-DD HH:mm';
-
     let filters = {};
     if (rangeStart) {
       let start = moment(rangeStart)
@@ -112,15 +142,17 @@ const SpecificFilterDateRange = ({ id, start, end, filters, setFilters }) => {
 
       if (start && end) {
         filters.start = {
-          operator: 'plone.app.querystring.operation.date.between',
+          range: 'min:max',
           query: [start, end],
         };
       } else {
         filters.start = {
-          operator: 'plone.app.querystring.operation.date.largerThan',
+          range: 'min',
           query: start,
         };
       }
+    } else {
+      filters.start = null;
     }
 
     if (rangeEnd) {
@@ -135,18 +167,19 @@ const SpecificFilterDateRange = ({ id, start, end, filters, setFilters }) => {
 
       if (start && end) {
         filters.end = {
-          operator: 'plone.app.querystring.operation.date.between',
+          range: 'min:max',
           query: [start, end],
         };
       } else {
         filters.end = {
-          operator: 'plone.app.querystring.operation.date.lessThan',
+          range: 'max',
           query: end,
         };
       }
+    } else {
+      filters.end = null;
     }
 
-    console.dir(filters);
     setFilters(filters);
   }, [rangeStart, rangeEnd]);
 
@@ -158,13 +191,18 @@ const SpecificFilterDateRange = ({ id, start, end, filters, setFilters }) => {
           id="date-start"
           formatDate={formatDate}
           parseDate={parseDate}
-          value={rangeStart}
+          value={rangeStart ? moment(rangeStart).format('DD/MM/YYYY') : null}
           placeholder={`${formatDate(new Date())}`}
           onDayChange={setRangeStart}
           dayPickerProps={{
             locale: 'it',
             localeUtils: MomentLocaleUtils,
           }}
+          todayButton={
+            translations['datepicker_today_button']
+              ? translations['datepicker_today_button']
+              : 'Oggi'
+          }
           aria-controls="sitesearch-results-list"
         />
       </div>
@@ -174,13 +212,18 @@ const SpecificFilterDateRange = ({ id, start, end, filters, setFilters }) => {
           id="date-end"
           formatDate={formatDate}
           parseDate={parseDate}
-          value={rangeEnd}
+          value={rangeEnd ? moment(rangeEnd).format('DD/MM/YYYY') : null}
           placeholder={`${formatDate(new Date())}`}
           onDayChange={setRangeEnd}
           dayPickerProps={{
             locale: 'it',
             localeUtils: MomentLocaleUtils,
           }}
+          todayButton={
+            translations['datepicker_today_button']
+              ? translations['datepicker_today_button']
+              : 'Oggi'
+          }
           aria-controls="sitesearch-results-list"
         />
       </div>
@@ -194,6 +237,7 @@ SpecificFilterDateRange.propTypes = {
   setFilters: PropTypes.func.isRequired,
   filters: PropTypes.object,
   value: PropTypes.object,
+  translations: PropTypes.object,
   start: PropTypes.shape({
     type: PropTypes.string,
     label: PropTypes.string,
@@ -207,7 +251,7 @@ SpecificFilterDateRange.propTypes = {
 const SpecificFilter = ({ type, ...rest }) => {
   if (type === 'date') {
     return <SpecificFilterDate {...rest} />;
-  } else if (type === 'array') {
+  } else if (type === 'array' || type === 'select') {
     return <SpecificFilterArray {...rest} />;
   } else if (type === 'date_range') {
     return <SpecificFilterDateRange {...rest} />;

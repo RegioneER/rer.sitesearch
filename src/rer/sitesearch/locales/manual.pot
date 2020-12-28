@@ -87,3 +87,9 @@ msgstr ""
 
 msgid "Filtra i risultati"
 msgstr ""
+
+msgid "datepicker_today_button"
+msgstr ""
+
+msgid "select_placeholder"
+msgstr ""
