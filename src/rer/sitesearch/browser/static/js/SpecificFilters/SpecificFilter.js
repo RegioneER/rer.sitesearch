@@ -13,6 +13,14 @@ import 'moment/locale/it';
 
 moment.locale('it');
 
+const optionsToQuery = option =>
+  option.reduce((acc, val) => {
+    return {
+      ...acc,
+      ...val.value,
+    };
+  }, {});
+
 const SpecificFilterArray = ({
   id,
   placeholder,
@@ -26,14 +34,17 @@ const SpecificFilterArray = ({
     <label htmlFor={id}>{label}</label>
     <Select
       id={id}
-      options={options}
+      options={options.filter(opt => opt.value && opt.value !== '')}
       isMulti={true}
       isClearable={true}
       placeholder={
         placeholder ? placeholder : translations['select_placeholder']
       }
       value={options.filter(option =>
-        value ? value.query.includes(option.value) : false,
+        value
+          ? value.query.includes(option.value) ||
+            value.query.includes(option.label)
+          : false,
       )}
       components={{
         // eslint-disable-next-line react/display-name
@@ -45,6 +56,14 @@ const SpecificFilterArray = ({
       onChange={option => {
         if (!option || option.length == 0) {
           setFilters({ [id]: '' });
+        } else if (id === 'stato_bandi') {
+          setFilters({
+            [id]: {
+              query: option.map(({ label }) => label),
+              operator: 'and',
+            },
+            ...optionsToQuery(option),
+          });
         } else {
           setFilters({
             [id]: {
@@ -252,7 +271,12 @@ const SpecificFilter = ({ type, ...rest }) => {
   if (type === 'date') {
     return <SpecificFilterDate {...rest} />;
   } else if (type === 'array' || type === 'select') {
-    return <SpecificFilterArray {...rest} />;
+    return (
+      <SpecificFilterArray
+        {...rest}
+        options={rest.options.filter(opt => opt.value && opt.value !== '')}
+      />
+    );
   } else if (type === 'date_range') {
     return <SpecificFilterDateRange {...rest} />;
   } else {
