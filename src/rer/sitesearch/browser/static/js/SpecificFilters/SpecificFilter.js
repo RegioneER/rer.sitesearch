@@ -13,14 +13,6 @@ import 'moment/locale/it';
 
 moment.locale('it');
 
-const optionsToQuery = option =>
-  option.reduce((acc, val) => {
-    return {
-      ...acc,
-      ...val.value,
-    };
-  }, {});
-
 const SpecificFilterArray = ({
   id,
   placeholder,
@@ -29,13 +21,14 @@ const SpecificFilterArray = ({
   label,
   setFilters,
   translations,
+  multivalued = true,
 }) => (
   <div id={`advanced-filter-array-${id}`}>
     <label htmlFor={id}>{label}</label>
     <Select
       id={id}
       options={options.filter(opt => opt.value && opt.value !== '')}
-      isMulti={true}
+      isMulti={multivalued}
       isClearable={true}
       placeholder={
         placeholder ? placeholder : translations['select_placeholder']
@@ -55,21 +48,36 @@ const SpecificFilterArray = ({
       aria-controls="sitesearch-results-list"
       onChange={option => {
         if (!option || option.length == 0) {
-          setFilters({ [id]: '' });
+          if (id === 'stato_bandi') {
+            setFilters({
+              chiusura_procedimento_bando: null,
+              scadenza_bando: null,
+              [id]: ''
+            });
+          } else {
+            setFilters({ [id]: '' });
+          }
         } else if (id === 'stato_bandi') {
           setFilters({
             [id]: {
-              query: option.map(({ label }) => label),
-              operator: 'and',
+              query: option.label,
             },
-            ...optionsToQuery(option),
+            chiusura_procedimento_bando: null,
+            scadenza_bando: null,
+            ...option.value,
           });
-        } else {
+        } else if (multivalued) {
           setFilters({
             [id]: {
               query: option.map(({ value }) => value),
               operator: 'and',
             },
+          });
+        } else {
+          setFilters({
+            [id]: {
+              query: option.value,
+            }
           });
         }
       }}
@@ -85,6 +93,7 @@ SpecificFilterArray.propTypes = {
   label: PropTypes.string,
   setFilters: PropTypes.func,
   translations: PropTypes.object,
+  multivalued: PropTypes.bool,
 };
 
 const SpecificFilterDate = ({ id, label = '', value, setFilters }) => (
