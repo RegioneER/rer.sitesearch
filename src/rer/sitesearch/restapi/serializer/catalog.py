@@ -96,7 +96,7 @@ class LazyCatalogResultSerializer(BaseSerializer):
             for group in groups.get("values", {}).values():
                 if brain.portal_type in group.get("types", []):
                     group["count"] += 1
-        groups["values"][all_label][
-            "count"
-        ] = brains_to_iterate.actual_result_count
+        groups["values"][all_label]["count"] = getattr(
+            brains_to_iterate, "actual_result_count", len(brains_to_iterate)
+        )
         return groups
