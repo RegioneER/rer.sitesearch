@@ -12,6 +12,16 @@ const Pagination = () => {
 
         const handlePageChange = data => {
           setFilters({ b_start: data.selected * b_size });
+          console.log('scroll, ', data.selected);
+          setTimeout(() => {
+            let resultsList = document.getElementById('content');
+            if (resultsList && resultsList.scrollIntoView) {
+              resultsList.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+            }
+          }, 300);
         };
 
         if (total && total > b_size) {
