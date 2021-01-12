@@ -11,7 +11,7 @@ import DataObjectParser from 'dataobject-parser';
 
 import PropTypes from 'prop-types';
 
-const fixQuery = ({ params }) => {
+const fixQuery = ({ params = {} }) => {
   const newParams = JSON.parse(JSON.stringify(params));
   const { SearchableText } = newParams;
   if (
@@ -100,9 +100,6 @@ class SearchContainer extends Component {
       this.doSearch({ params: filters });
     };
 
-    /**
-     * TODO: parse query string for default filters
-     */
     this.state = {
       results: [],
       total: 0,
@@ -134,16 +131,19 @@ class SearchContainer extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
-    const { query, facets } = this.state;
+    const { query, facets, isMobile } = this.state;
     const fetches = [getTranslationCatalog()];
-    if (query) {
-      updateHistory({ url: `${this.props.baseUrl}/@@search`, params: query });
+    if (query || isMobile) {
+      updateHistory({
+        url: `${this.props.baseUrl}/@@search`,
+        params: query ? query : {},
+      });
       const endPoint = '/@search';
 
       fetches.push(
         apiFetch({
           url: this.props.baseUrl + endPoint,
-          params: fixQuery({ params: query, facets }),
+          params: fixQuery({ params: query ? query : {}, facets }),
           method: 'GET',
         }),
       );

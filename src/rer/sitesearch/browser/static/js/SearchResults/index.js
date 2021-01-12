@@ -20,7 +20,7 @@ const SearchResults = () => {
         setFilters,
       }) => {
         return (
-          <main className="search-results">
+          <main className="search-results" role="main">
             <h2 className="sr-only" id="search-results">
               {translations['Risultati della ricerca']}
             </h2>
