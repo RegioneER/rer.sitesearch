@@ -62,6 +62,7 @@ const Header = ({ searchHasFilters = false }) => (
                   label: getTranslationFor(value),
                 }))}
                 isClearable={false}
+                isSearchable={false}
                 placeholder={getTranslationFor('Sort on')}
                 value={{
                   value: filters.sort_on ? filters.sort_on : 'relevance',

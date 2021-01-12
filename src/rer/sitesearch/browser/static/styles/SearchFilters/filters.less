@@ -63,9 +63,9 @@
                 }
             }
         }
-        
+
         .rer-sitesearch-select {
-            div[class*="multiValue"] {
+            div[class*='multiValue'] {
                 background: currentColor;
 
                 > * {
@@ -73,7 +73,7 @@
                 }
             }
 
-            div[class*="menu"] {
+            div[class*='menu'] {
                 color: initial;
             }
         }
@@ -116,6 +116,15 @@
                 color: @plone-text-color;
             }
 
+            .css-yk16xz-control {
+                color: inherit;
+
+                svg,
+                svg.css-6q0nyr-Svg {
+                    color: #fff;
+                }
+            }
+
             .filter-item,
             .col-specific-filters {
                 i,
@@ -128,6 +137,11 @@
                     i,
                     svg {
                         color: #ccc;
+                    }
+
+                    &.text-primary {
+                        color: #fff;
+                        font-weight: 600;
                     }
                 }
             }

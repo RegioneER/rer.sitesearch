@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import SearchContext from '../utils/searchContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icons } from '../utils/icons';
@@ -6,14 +7,11 @@ import { icons } from '../utils/icons';
 // faFolder
 const { faSearch, faChevronRight } = icons;
 
-const SearchableTextFilter = () => {
+const SearchableTextFilter = ({ toggleAdvancedFilters }) => {
   const { isMobile, setFilters, filters, translations } = useContext(
     SearchContext,
   );
   const [searchableText, setSearchableText] = useState(null);
-  const [showAdvancedSearch, setShowAdvancedSearch] = useState(
-    isMobile ? false : true,
-  );
 
   return (
     <div className="filter-item">
@@ -63,8 +61,9 @@ const SearchableTextFilter = () => {
         </div>
         {isMobile && (
           <button
-            onClick={() => {
-              setShowAdvancedSearch(!showAdvancedSearch);
+            onClick={e => {
+              e.preventDefault();
+              toggleAdvancedFilters();
             }}
             className="plone-btn plone-btn-primary"
           >
@@ -79,6 +78,8 @@ const SearchableTextFilter = () => {
   );
 };
 
-SearchableTextFilter.propTypes = {};
+SearchableTextFilter.propTypes = {
+  toggleAdvancedFilters: PropTypes.func,
+};
 
 export default SearchableTextFilter;

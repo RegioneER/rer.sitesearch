@@ -41,7 +41,9 @@ const SearchFilters = () => {
           ? translations['Vai ai risultati']
           : 'Vai ai risultati'}
       </a>
-      <SearchableTextFilter></SearchableTextFilter>
+      <SearchableTextFilter
+        toggleAdvancedFilters={() => setShowAdvancedSearch(!showAdvancedSearch)}
+      ></SearchableTextFilter>
       <div
         className={`advanced-search ${showAdvancedSearch ? 'open' : 'close'}`}
       >
