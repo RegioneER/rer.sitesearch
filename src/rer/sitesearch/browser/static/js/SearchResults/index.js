@@ -39,7 +39,7 @@ const SearchResults = () => {
               </div>
             ) : results && results.length > 0 ? (
               <>
-                <Header searchHasFilters={true} />
+                <Header />
                 <div className="results-list">
                   {results.map(item => (
                     <div key={item['@id']}>

@@ -10,6 +10,10 @@
     <link rel="stylesheet" type="text/css" href="${view/get_resource_css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
   </metal:styles>
+  <metal:override fill-slot="top_slot"
+                  tal:define="disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                              disable_column_two python:request.set('disable_plone.rightcolumn',1)"
+                  />
   <metal:content-title fill-slot="content-title">
     <metal:content-title define-macro="content-title">
       <h1 class="documentFirstHeading"

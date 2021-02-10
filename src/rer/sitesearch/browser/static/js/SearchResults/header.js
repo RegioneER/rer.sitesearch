@@ -17,7 +17,7 @@ const searchOrderMapping = {
   },
 };
 
-const Header = ({ searchHasFilters = false }) => (
+const Header = () => (
   <SearchContext.Consumer key="search-results-header">
     {({ getTranslationFor, facets, filters, setFilters, total }) => {
       const allTotal = facets.groups.values
@@ -27,18 +27,22 @@ const Header = ({ searchHasFilters = false }) => (
       const groupCount = group ? facets.groups.values[group].count : total;
       return (
         <div className="results-header">
-          <div className="total-items">
-            <span>
-              <strong>{groupCount}</strong>{' '}
-              <span className="desktop-only">
-                {getTranslationFor('items on')}{' '}
-              </span>
-              <span className="mobile-only">/ </span> {allTotal}{' '}
-              <span className="desktop-only">
-                {getTranslationFor('filtered')}
-              </span>
-            </span>{' '}
-            {searchHasFilters && (
+          {Object.keys(filters).length > 0 && (
+            <div className="total-items">
+              {groupCount < allTotal  && (
+                <>
+                  <span>
+                    <strong>{groupCount}</strong>{' '}
+                    <span className="desktop-only">
+                      {getTranslationFor('items on')}{' '}
+                    </span>
+                    <span className="mobile-only">/ </span> {allTotal}{' '}
+                    <span className="desktop-only">
+                      {getTranslationFor('filtered')}
+                    </span>
+                  </span>{' '}
+                </>
+              )}
               <a
                 href="#"
                 className="reset-filters"
@@ -49,8 +53,8 @@ const Header = ({ searchHasFilters = false }) => (
               >
                 ({getTranslationFor('Reset Filters')})
               </a>
-            )}
-          </div>
+            </div>
+          )}
           <div className="order-by">
             <div className="select-label desktop-only">
               {getTranslationFor('Sort on')}{' '}
