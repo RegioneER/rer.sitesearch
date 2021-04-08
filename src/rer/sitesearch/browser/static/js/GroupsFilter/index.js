@@ -34,10 +34,12 @@ const GroupsFilter = () => {
                 <input
                   type="radio"
                   name="types"
-                  value={group}
+                  value={groupData.types.length ? group : ''}
                   checked={selected}
                   aria-controls="sitesearch-results-list"
-                  onChange={() => setFilters({ group })}
+                  onChange={e => {
+                    setFilters({ group: e.target.value });
+                  }}
                 />
                 {groupData.icon && (
                   <FontAwesomeIcon icon={getIcon(groupData.icon)} />

@@ -24,9 +24,9 @@ import Missing
 @implementer(ISerializeToJson)
 @adapter(Lazy, IRERSiteSearchLayer)
 class LazyCatalogResultSerializer(BaseSerializer):
-    def __call__(self, metadata_fields=(), fullobjects=False):
+    def __call__(self, fullobjects=False):
         data = super(LazyCatalogResultSerializer, self).__call__(
-            metadata_fields=metadata_fields, fullobjects=fullobjects
+            fullobjects=fullobjects
         )
         # add facets informations
         data.update(

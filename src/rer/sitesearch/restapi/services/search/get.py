@@ -17,6 +17,7 @@ try:
     from rer.solrpush.restapi.services.solr_search.solr_search_handler import (
         SolrSearchHandler,
     )
+    from rer.solrpush.utils.solr_indexer import get_site_title
 
     HAS_SOLR = True
 except ImportError:
@@ -61,7 +62,10 @@ class SearchGet(Service):
                 query["facets"] = True
                 query["facet_fields"] = ["portal_type", "site_name"]
 
+                # if "all" in query.get("site_name", []):
+                #     del query["site_name"]
                 indexes = get_indexes_mapping()
+
                 if indexes:
                     query["facet_fields"].extend(indexes["order"])
                 if "metadata_fields" not in query:
@@ -73,6 +77,7 @@ class SearchGet(Service):
                     query
                 )
                 data["facets"] = self.remap_solr_facets(data=data, query=query)
+                data["current_site"] = get_site_title()
             else:
                 data = SearchHandler(self.context, self.request).search(query)
         else:

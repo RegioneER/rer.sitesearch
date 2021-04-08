@@ -15,6 +15,7 @@
       }
     ],
     "no-console": "off",
-    "no-debugger": "off"
+    "no-debugger": "off",
+    "indent": "off"
   }
 }

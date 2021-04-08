@@ -15,12 +15,6 @@ logger = logging.getLogger(__name__)
 
 
 def get_types_groups():
-    values = api.portal.get_registry_record(
-        "types_grouping", interface=IRERSiteSearchSettings, default=[]
-    )
-    if not values:
-        return {}
-    values = json.loads(values)
     request = getRequest()
     all_label = translate(
         _("all_types_label", default=u"All content types"), context=request
@@ -29,6 +23,12 @@ def get_types_groups():
         "order": [all_label],
         "values": {all_label: {"count": 0, "types": []}},
     }
+    values = api.portal.get_registry_record(
+        "types_grouping", interface=IRERSiteSearchSettings, default=[]
+    )
+    if not values:
+        return res
+    values = json.loads(values)
     portal = api.portal.get()
     for value in values:
         label = _extract_label(value.get("label", ""))
@@ -54,13 +54,13 @@ def get_types_groups():
 
 
 def get_indexes_mapping():
+    res = {"order": [], "values": {}}
     values = api.portal.get_registry_record(
         "available_indexes", interface=IRERSiteSearchSettings, default=[]
     )
     if not values:
-        return {}
+        return res
     values = json.loads(values)
-    res = {"order": [], "values": {}}
     for value in values:
         label = _extract_label(value.get("label", ""))
         index = value.get("index", "")

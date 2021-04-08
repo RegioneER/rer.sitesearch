@@ -52,7 +52,7 @@ const SpecificFilterArray = ({
             setFilters({
               chiusura_procedimento_bando: null,
               scadenza_bando: null,
-              [id]: ''
+              [id]: '',
             });
           } else {
             setFilters({ [id]: '' });
@@ -77,7 +77,7 @@ const SpecificFilterArray = ({
           setFilters({
             [id]: {
               query: option.value,
-            }
+            },
           });
         }
       }}
@@ -164,8 +164,8 @@ const SpecificFilterDateRange = ({
         .format(date_fmt);
       let end = rangeEnd
         ? moment(rangeEnd)
-          .endOf('day')
-          .format(date_fmt)
+            .endOf('day')
+            .format(date_fmt)
         : null;
 
       if (start && end) {
@@ -189,8 +189,8 @@ const SpecificFilterDateRange = ({
         .format(date_fmt);
       let start = rangeStart
         ? moment(rangeStart)
-          .startOf('day')
-          .format(date_fmt)
+            .startOf('day')
+            .format(date_fmt)
         : null;
 
       if (start && end) {

@@ -29,7 +29,7 @@ const Header = () => (
         <div className="results-header">
           {Object.keys(filters).length > 0 && (
             <div className="total-items">
-              {groupCount < allTotal  && (
+              {groupCount < allTotal && (
                 <>
                   <span>
                     <strong>{groupCount}</strong>{' '}
@@ -43,16 +43,21 @@ const Header = () => (
                   </span>{' '}
                 </>
               )}
-              <a
-                href="#"
-                className="reset-filters"
-                onClick={e => {
-                  e.preventDefault();
-                  setFilters(null);
-                }}
-              >
-                ({getTranslationFor('Reset Filters')})
-              </a>
+              {!(
+                Object.keys(filters).length === 1 &&
+                Object.keys(filters)[0] === 'SearchableText'
+              ) && (
+                <a
+                  href="#"
+                  className="reset-filters"
+                  onClick={e => {
+                    e.preventDefault();
+                    setFilters(null);
+                  }}
+                >
+                  ({getTranslationFor('Reset Filters')})
+                </a>
+              )}
             </div>
           )}
           <div className="order-by">

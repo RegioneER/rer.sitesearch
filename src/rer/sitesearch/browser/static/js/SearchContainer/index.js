@@ -76,12 +76,22 @@ class SearchContainer extends Component {
     this.setFilters = newFilters => {
       let filters = {};
       if (newFilters === null) {
-        this.setState({
-          filters: {},
-        });
+        if (
+          this.state.filters.SearchableText &&
+          this.state.filters.SearchableText.length > 0
+        ) {
+          // do not remove SearchableText
+          filters = { SearchableText: this.state.filters.SearchableText };
+          this.setState({
+            filters,
+          });
+        } else {
+          this.setState({
+            filters: {},
+          });
+        }
       } else {
         filters = JSON.parse(JSON.stringify(this.state.filters));
-
         // always clean batching
         delete filters.b_start;
 

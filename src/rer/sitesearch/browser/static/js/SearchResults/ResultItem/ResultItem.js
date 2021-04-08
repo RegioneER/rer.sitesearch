@@ -98,10 +98,10 @@ const ResultItem = ({ item }) => {
                   {item.effective &&
                     moment(item.effective).format('D/MM/YYYY') !==
                       '31/12/1969' && (
-                    <div className="item-date">
-                      {moment(item.effective).format('D/MM/YYYY')}
-                    </div>
-                  )}
+                      <div className="item-date">
+                        {moment(item.effective).format('D/MM/YYYY')}
+                      </div>
+                    )}
                 </div>
               </div>
             </div>

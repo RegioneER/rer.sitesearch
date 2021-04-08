@@ -8,7 +8,6 @@ const PathFilters = () => {
     return '';
   }
   const { root, site_name, path_title } = path_infos;
-  console.log(path_infos);
   return (
     <React.Fragment>
       {!facets.sites ||
@@ -45,10 +44,12 @@ const PathFilters = () => {
 };
 
 const SitesFilters = () => {
-  const { setFilters, filters, facets } = useContext(SearchContext);
+  const { setFilters, filters, facets, path_infos } = useContext(SearchContext);
   if (!facets || !facets.sites || facets.sites.order.length === 0) {
     return '';
   }
+  console.log(path_infos);
+  console.log('ciao');
   const { path } = filters;
   return (
     <React.Fragment>
