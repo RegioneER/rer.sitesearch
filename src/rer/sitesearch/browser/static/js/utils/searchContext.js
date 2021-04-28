@@ -10,6 +10,7 @@ const SearchContext = React.createContext({
   path_infos: {},
   b_size: 20,
   baseUrl: '',
+  current_site: '',
   setFilters: () => {},
   setFacets: () => {},
   doSearch: () => {},

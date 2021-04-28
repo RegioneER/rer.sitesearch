@@ -62,8 +62,11 @@ class SearchGet(Service):
                 query["facets"] = True
                 query["facet_fields"] = ["portal_type", "site_name"]
 
-                # if "all" in query.get("site_name", []):
-                #     del query["site_name"]
+                if not query.get("site_name", []):
+                    query["site_name"] = get_site_title()
+                elif "all" in query.get("site_name", []):
+                    del query["site_name"]
+
                 indexes = get_indexes_mapping()
 
                 if indexes:

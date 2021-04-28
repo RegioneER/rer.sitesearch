@@ -29,7 +29,7 @@ const Header = () => (
         <div className="results-header">
           {Object.keys(filters).length > 0 && (
             <div className="total-items">
-              {groupCount < allTotal && (
+              {groupCount < allTotal ? (
                 <>
                   <span>
                     <strong>{groupCount}</strong>{' '}
@@ -42,6 +42,10 @@ const Header = () => (
                     </span>
                   </span>{' '}
                 </>
+              ) : (
+                <span>
+                  <strong>{allTotal}</strong> {getTranslationFor('items')}{' '}
+                </span>
               )}
               {!(
                 Object.keys(filters).length === 1 &&

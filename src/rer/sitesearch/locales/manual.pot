@@ -10,6 +10,9 @@ msgstr ""
 msgid "Sort on"
 msgstr ""
 
+msgid "items"
+msgstr ""
+
 msgid "items on"
 msgstr ""
 

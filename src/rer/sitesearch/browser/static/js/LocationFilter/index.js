@@ -44,36 +44,44 @@ const PathFilters = () => {
 };
 
 const SitesFilters = () => {
-  const { setFilters, filters, facets, path_infos } = useContext(SearchContext);
+  const { setFilters, filters, facets, current_site, total } = useContext(
+    SearchContext,
+  );
   if (!facets || !facets.sites || facets.sites.order.length === 0) {
     return '';
   }
-  console.log(path_infos);
-  console.log('ciao');
-  const { path } = filters;
+  const { path, site_name } = filters;
   return (
     <React.Fragment>
       <div className="radio">
         <label
-          className={
-            !filters.site_name || filters.site_name.length === 0
-              ? 'selected text-primary'
-              : ''
-          }
+          className={filters.site_name === 'all' ? 'selected text-primary' : ''}
         >
           <input
             type="radio"
             name="site_name"
-            value=""
-            checked={
-              !path && (!filters.site_name || filters.site_name.length === 0)
-            }
+            value="all"
+            checked={!path && filters.site_name == 'all'}
             onChange={e => setFilters({ site_name: e.target.value, path: '' })}
           />
-          in <strong>Regione Emilia-Romagna</strong>
+          in <strong>Regione Emilia-Romagna</strong> ({total})
         </label>
       </div>
-      {facets.sites.order.map(siteName => {
+      <div className="radio">
+        <label
+          className={site_name === current_site ? 'selected text-primary' : ''}
+        >
+          <input
+            type="radio"
+            name="site_name"
+            value={current_site}
+            checked={site_name === current_site || !site_name}
+            onChange={e => setFilters({ site_name: e.target.value, path: '' })}
+          />
+          {current_site} ({facets.sites.values[current_site]})
+        </label>
+      </div>
+      {/* {facets.sites.order.map(siteName => {
         const { site_name } = filters;
         return (
           <div className="radio" key={`site-${siteName}`}>
@@ -93,7 +101,7 @@ const SitesFilters = () => {
             </label>
           </div>
         );
-      })}
+      })} */}
     </React.Fragment>
   );
 };
