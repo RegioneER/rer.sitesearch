@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import SearchContext from '../../utils/searchContext';
 import Bando from './Bando';
+import DateAndPosition from './DateAndPosition';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icons } from '../../utils/icons';
 
@@ -76,6 +77,7 @@ const ResultItem = ({ item }) => {
   const getItemTypeLabel = (item, translations) => {
     return translations['type_' + item['@type']] || item['@type'];
   };
+
   return item['@type'] === 'Bando' ? (
     <Bando item={item} inEvidence={inEvidence} />
   ) : (
@@ -90,24 +92,7 @@ const ResultItem = ({ item }) => {
           )}
 
           {/* data + path */}
-          {!inEvidence && item.effective ? (
-            <div className="row-item row-item-infos">
-              <div className="col-icon"></div>
-              <div className="col-content">
-                <div className="item-infos">
-                  {item.effective &&
-                    moment(item.effective).format('D/MM/YYYY') !==
-                      '31/12/1969' && (
-                      <div className="item-date">
-                        {moment(item.effective).format('D/MM/YYYY')}
-                      </div>
-                    )}
-                </div>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
+          {!inEvidence ? <DateAndPosition item={item} /> : ''}
 
           <div className="row-item row-item-content">
             {/* colonna icona */}

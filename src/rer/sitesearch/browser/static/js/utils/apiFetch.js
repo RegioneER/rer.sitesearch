@@ -18,7 +18,14 @@ export const dotify = params => {
   recurse(params);
   return res;
 };
-const metadata_fields = ['Date', 'Subject', 'scadenza_bando', 'effective'];
+const metadata_fields = [
+  'Date',
+  'Subject',
+  'scadenza_bando',
+  'effective',
+  'path',
+  'path_depth',
+];
 
 export const updateHistory = ({ url, params }) => {
   const searchParams = qs.stringify(dotify(params), {
