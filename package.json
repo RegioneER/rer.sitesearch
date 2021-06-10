@@ -86,5 +86,8 @@
         "react-dom": "^16.8.5",
         "react-paginate": "^6.5.0",
         "react-select": "^3.0.3"
+    },
+    "volta": {
+        "node": "10.24.1"
     }
 }

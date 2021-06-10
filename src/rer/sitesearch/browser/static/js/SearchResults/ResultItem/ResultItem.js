@@ -9,7 +9,7 @@ import { icons } from '../../utils/icons';
 
 const {
   faTag,
-  faList,
+  faTags,
   faFolderOpen,
   faCalendarAlt,
   faNewspaper,
@@ -41,21 +41,6 @@ const ResultItem = ({ item }) => {
     );
 
     return title_parts.join(' - ');
-  };
-
-  // const brdcIsInPath = brdc => {
-  //   //[ToDo] da fare. Adesso è solo di esempio
-  //   return brdc.url === '/temi/luoghi-da-scoprire';
-  // };
-
-  const isInFilters = (type, item) => {
-    //[ToDo] da fare. Adesso è solo di esempio
-    if (type === 'theme') {
-      return item === 'parchi';
-    } else if (type === 'Subject') {
-      return item === 'cittadini';
-    }
-    return false;
   };
 
   //[ToDo]: sistemare la get icon con tipi e icone corretti
@@ -94,10 +79,9 @@ const ResultItem = ({ item }) => {
           {/* data + path */}
           {!inEvidence ? <DateAndPosition item={item} /> : ''}
 
-          <div className="row-item row-item-content">
-            {/* colonna icona */}
-            <div className="col-icon">
-              <div className="main">
+          <div className="row-item row-item-title">
+            <div className="item-title">
+              <div className="item-icon">
                 <FontAwesomeIcon
                   icon={getIcon(item)}
                   title={getItemTypeLabel(item, translations)}
@@ -106,51 +90,49 @@ const ResultItem = ({ item }) => {
                   {getItemTypeLabel(item, translations)}
                 </span>
               </div>
-            </div>
-            {/* item content */}
-            <div className="col-content">
-              <div className="item-title">
+              <h3 title={getTitleHover(item, translations)}>
                 <a href={item['@id']}>
-                  <h3 title={getTitleHover(item, translations)}>
-                    {item.title && item.title.length > 0
-                      ? item.title
-                      : item['@id'].split('/').pop()}
-                  </h3>
+                  {item.title && item.title.length > 0
+                    ? item.title
+                    : item['@id'].split('/').pop()}
                 </a>
+              </h3>
+            </div>
+          </div>
+          <div className="row-item row-item-details">
+            {(item.Description || item.description || hasSimilarResults) && (
+              <div className="description">
+                <p>{item.Description || item.description}</p>
+                {hasSimilarResults && (
+                  <a
+                    href="#"
+                    role="button"
+                    className="similar-results-link"
+                    onClick={e => {
+                      e.preventDefault();
+                      setShowSimilarResults(!showSimilarResults);
+                    }}
+                  >
+                    {' '}
+                    | {translations['Risultati simili']}
+                  </a>
+                )}
+
+                {showSimilarResults && (
+                  <div className="similar-results">
+                    {item.similarResults.map(sr => (
+                      <ResultItem item={sr} key={sr.id} />
+                    ))}
+                  </div>
+                )}
               </div>
-              {(item.Description || hasSimilarResults) && (
-                <div className="description">
-                  {item.Description}
-                  {hasSimilarResults && (
-                    <a
-                      href="#"
-                      role="button"
-                      className="similar-results-link"
-                      onClick={e => {
-                        e.preventDefault();
-                        setShowSimilarResults(!showSimilarResults);
-                      }}
-                    >
-                      {' '}
-                      | {translations['Risultati simili']}
-                    </a>
-                  )}
+            )}
 
-                  {showSimilarResults && (
-                    <div className="similar-results">
-                      {item.similarResults.map(sr => (
-                        <ResultItem item={sr} key={sr.id} />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {!showSimilarResults && (
-                <>
-                  {!inEvidence && (
-                    <>
-                      {/*
+            {!showSimilarResults && (
+              <>
+                {!inEvidence && (
+                  <>
+                    {/*
                       //la RER ha rinunaciato alle breadcrumbs, ma se un giorno qualcuno le vuole, hanno già gli stili.
                       {breadcrumbs && breadcrumbs.length > 0 && (
                         <div className="item-breadcrumbs">
@@ -171,47 +153,37 @@ const ResultItem = ({ item }) => {
                         </div>
                       )} */}
 
-                      {(item.themes || item.Subject) && (
-                        <div className="item-tags">
-                          {item.themes && (
-                            <div className="item-themes">
-                              <FontAwesomeIcon icon={faTag} />
-                              {item.themes.map(theme => (
-                                <a
-                                  href="#"
-                                  key={theme}
-                                  className={
-                                    isInFilters('theme', theme) ? 'active' : ''
-                                  }
-                                >
-                                  {theme}
-                                </a>
-                              ))}
-                            </div>
-                          )}
-                          {item.Subject && item.Subject.length > 0 && (
-                            <div className="item-categories">
-                              <FontAwesomeIcon icon={faList} />
-                              {item.Subject.map(cat => (
-                                <a
-                                  href={`${baseUrl}/@@search?Subject.operator=and&Subject.query=${cat}`}
-                                  key={cat}
-                                  className={
-                                    isInFilters('Subject', cat) ? 'active' : ''
-                                  }
-                                >
-                                  {cat}
-                                </a>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
-            </div>
+                    {(item.themes || item.Subject) && (
+                      <div className="item-tags">
+                        {item.themes && (
+                          <div className="item-themes">
+                            <FontAwesomeIcon icon={faTag} />
+                            {item.themes.map(theme => (
+                              <a href="#" key={theme}>
+                                {theme}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                        {item.Subject && item.Subject.length > 0 && (
+                          <div className="item-categories">
+                            <FontAwesomeIcon icon={faTags} />
+                            {item.Subject.map(cat => (
+                              <a
+                                href={`${baseUrl}/@@search?Subject.operator=and&Subject.query=${cat}`}
+                                key={cat}
+                              >
+                                {cat}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </>
+                )}
+              </>
+            )}
           </div>
         </div>
       )}

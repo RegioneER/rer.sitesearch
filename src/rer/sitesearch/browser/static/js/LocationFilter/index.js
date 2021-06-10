@@ -64,7 +64,7 @@ const SitesFilters = () => {
             checked={!path && filters.site_name == 'all'}
             onChange={e => setFilters({ site_name: e.target.value, path: '' })}
           />
-          in <strong>Regione Emilia-Romagna</strong> ({total})
+          Regione Emilia-Romagna ({total})
         </label>
       </div>
       <div className="radio">

@@ -3,48 +3,53 @@
     margin-bottom: 2.5em;
 
     .row-item {
-        display: flex;
-        align-items: center;
+        &:not(.row-item-title) {
+            padding-left: 5rem;
 
-        &.row-item-content {
-            align-items: flex-start;
+            @media (max-width: @plone-screen-md-max) {
+                padding-left: 0;
+            }
         }
 
-        .col-icon {
-            flex: 0 0 5em;
-            margin-top: 1rem;
+        .item-title {
+            display: flex;
+            align-items: center;
+
+            @media (max-width: @plone-screen-md-max) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .item-icon {
             text-align: center;
+            width: 5rem;
 
             svg,
             .fa,
             .far,
             .fas {
-                font-size: 2em;
+                font-size: 3rem;
+                width: auto;
+                height: auto;
+                max-width: 3rem;
+                max-height: 3rem;
+                display: inline-block;
+                margin-right: 2rem;
             }
 
             @media (max-width: @plone-screen-md-max) {
-                display: flex;
-                justify-content: space-between;
-                text-align: left;
+                width: 100%;
 
                 svg,
                 .fa,
                 .far,
                 .fas {
-                    margin-right: 0.5em;
-                    font-size: 1em;
+                    font-size: 2rem;
+                    max-width: 2rem;
+                    max-height: 2rem;
+                    margin-right: 1rem;
                 }
-            }
-        }
-
-        .col-content {
-            padding: 0 0.5em;
-        }
-
-        @media (max-width: @plone-screen-md-max) {
-            flex-wrap: wrap;
-            .col-icon {
-                flex: 1 1 100%;
             }
         }
     }
@@ -71,9 +76,18 @@
     }
 
     .item-title {
+        margin: 0.5rem 0 1.5rem;
+
         h3 {
-            margin: 0.5rem 0 1rem;
+            margin: 0;
         }
+    }
+
+    .item-position {
+        display: inline-block;
+        margin-left: 1em;
+        font-size: 1.5rem;
+        color: #6c6c6c;
     }
 
     .item-breadcrumbs {

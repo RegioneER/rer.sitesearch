@@ -37,6 +37,11 @@ const SpecificFilters = ({ id }) => {
     }, {});
   }
 
+  const getTranslationFor = key => {
+    if (translations[key]) return translations[key];
+    return key;
+  };
+
   return (
     <section
       className="specific-filters"
@@ -44,11 +49,9 @@ const SpecificFilters = ({ id }) => {
       aria-labelledby="specific-filters-title"
     >
       <div className="title" id="specific-filters-title">
-        {
-          translations[
-            'Filtra i contenuti con filtri specifici per questo gruppo'
-          ]
-        }
+        {getTranslationFor(
+          'Filtra i contenuti con filtri specifici per questo gruppo',
+        )}
       </div>
       <div className="row-specific-filters">
         {Object.keys(advancedFilters).map(advFilter => (

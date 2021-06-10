@@ -6,14 +6,19 @@ const DateAndPosition = ({ item }) => {
   const getItemPosition = item => {
     const url = new URL(item['@id']);
     const domain = url.host;
-    if (item.path_depth) {
-      if (item.path_depth == 1) {
+    const path = item.path ? item.path : url.pathname;
+    const path_depth = item.path_depth
+      ? item.path_depth
+      : path.split('/').length - 2;
+
+    if (path_depth) {
+      if (path_depth === 1) {
         return domain;
-      } else if (item.path_depth == 2) {
+      } else if (path_depth === 2) {
         return (
           domain +
           '/' +
-          item.path
+          path
             .split('/')
             .slice(2, -1)
             .join('/')
@@ -22,7 +27,7 @@ const DateAndPosition = ({ item }) => {
         return (
           domain +
           '/…/' +
-          item.path
+          path
             .split('/')
             .slice(-3, -1)
             .join('/')
@@ -31,19 +36,17 @@ const DateAndPosition = ({ item }) => {
     }
   };
 
+  const itemPosition = getItemPosition(item);
+
   return (
     <div className="row-item row-item-infos">
-      <div className="col-icon"></div>
-      <div className="col-content">
-        <div className="item-infos">
-          {item.effective &&
-            moment(item.effective).format('YYYY') !== '1969' && (
-              <div className="item-date">
-                {moment(item.effective).format('D/MM/YYYY')}
-              </div>
-            )}
-          {getItemPosition(item)}
-        </div>
+      <div className="item-infos">
+        {item.effective && moment(item.effective).format('YYYY') !== '1969' && (
+          <span className="item-date">
+            {moment(item.effective).format('D/MM/YYYY')}
+          </span>
+        )}
+        {itemPosition && <span className="item-position">{itemPosition}</span>}
       </div>
     </div>
   );
