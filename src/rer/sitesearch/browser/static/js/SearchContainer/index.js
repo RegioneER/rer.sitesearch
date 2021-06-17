@@ -203,10 +203,10 @@ class SearchContainer extends Component {
       <div className="rer-search-container">
         <SearchContext.Provider value={this.state}>
           <div className="row" aria-live="polite">
-            <div className="col col-md-3">
+            <div className="col col-md-4">
               <SearchFilters baseUrl={this.props.baseUrl} />
             </div>
-            <div className="col col-md-9">
+            <div className="col col-md-8">
               {showSearchContainer && <SpecificFilters id="search-container" />}
               <SearchResults />
             </div>
