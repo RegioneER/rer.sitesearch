@@ -69,7 +69,11 @@ const SitesFilters = () => {
       </div>
       <div className="radio">
         <label
-          className={site_name === current_site ? 'selected text-primary' : ''}
+          className={
+            site_name === current_site || !site_name
+              ? 'selected text-primary'
+              : ''
+          }
         >
           <input
             type="radio"
