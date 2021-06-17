@@ -5,7 +5,7 @@ import moment from 'moment';
 const DateAndPosition = ({ item }) => {
   const getItemPosition = item => {
     const url = new URL(item['@id']);
-    const domain = url.host;
+    const domain = url.host.replace('.emilia-romagna.it', '');
     const path = item.path ? item.path : url.pathname;
     const path_depth = item.path_depth
       ? item.path_depth
