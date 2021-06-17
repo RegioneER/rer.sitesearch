@@ -2,6 +2,10 @@
     padding: 0 1em;
     margin-bottom: 2.5em;
 
+    @media (max-width: @plone-screen-md-max) {
+        padding: 0;
+    }
+
     .row-item {
         &:not(.row-item-title) {
             padding-left: 5rem;
@@ -40,7 +44,7 @@
             }
 
             @media (max-width: @plone-screen-md-max) {
-                width: 100%;
+                display: none;
 
                 svg,
                 .fa,
@@ -81,6 +85,7 @@
 
         h3 {
             margin: 0;
+            line-height: 1.5em;
         }
     }
 

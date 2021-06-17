@@ -86,9 +86,6 @@ const ResultItem = ({ item }) => {
                   icon={getIcon(item)}
                   title={getItemTypeLabel(item, translations)}
                 />
-                <span className="mobile-only">
-                  {getItemTypeLabel(item, translations)}
-                </span>
               </div>
               <h3 title={getTitleHover(item, translations)}>
                 <a href={item['@id']}>

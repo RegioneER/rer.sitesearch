@@ -54,11 +54,10 @@ const Bando = ({ item, inEvidence = false }) => {
               <div className="item-icon">
                 <FontAwesomeIcon
                   icon={faBroadcastTower}
-                  title={translations.type_bando}
+                  title={
+                    translations.type_Bando ? translations.type_Bando : 'Bando'
+                  }
                 />
-                <span className="mobile-only">
-                  {translations.type_Bando ? translations.type_Bando : 'Bando'}
-                </span>
               </div>
               <h3 title={getTitleHover(item, translations)}>
                 <a href={item['@id']}>{item.title}</a>
