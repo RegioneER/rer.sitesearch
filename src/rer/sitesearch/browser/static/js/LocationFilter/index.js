@@ -44,13 +44,17 @@ const PathFilters = () => {
 };
 
 const SitesFilters = () => {
-  const { setFilters, filters, facets, current_site, total } = useContext(
+  const { setFilters, filters, facets, current_site } = useContext(
     SearchContext,
   );
   if (!facets || !facets.sites || facets.sites.order.length === 0) {
     return '';
   }
   const { path, site_name } = filters;
+  const totalResultsFacets = Object.values(facets.sites.values).reduce(
+    (acc, site) => acc + site,
+    0,
+  );
   return (
     <React.Fragment>
       <div className="radio">
@@ -64,7 +68,7 @@ const SitesFilters = () => {
             checked={!path && filters.site_name == 'all'}
             onChange={e => setFilters({ site_name: e.target.value, path: '' })}
           />
-          Regione Emilia-Romagna ({total})
+          Regione Emilia-Romagna ({totalResultsFacets})
         </label>
       </div>
       <div className="radio">
