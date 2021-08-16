@@ -11,6 +11,7 @@ from rer.sitesearch.restapi.utils import get_indexes_mapping
 from rer.sitesearch.restapi.utils import get_types_groups
 from zope.component import getUtility
 from zope.i18n import translate
+from plone.memoize.view import memoize
 
 try:
     from rer.solrpush.interfaces.settings import IRerSolrpushSettings
@@ -50,6 +51,16 @@ class SearchGet(Service):
         except (KeyError, InvalidParameterError):
             return False
 
+    @property
+    @memoize
+    def searchable_portal_types(self):
+        groups = get_types_groups()
+        types = set([])
+        for group_id, group_data in groups.get("values", {}).items():
+            if group_data.get("types", []):
+                types.update(group_data["types"])
+        return sorted(list(types))
+
     def reply(self):
         query = deepcopy(self.request.form)
         query = unflatten_dotted_dict(query)
@@ -64,11 +75,7 @@ class SearchGet(Service):
             del query["group"]
         else:
             # by default, search only in types set in settings
-            types = set([])
-            for group_id, group_data in groups.get("values", {}).items():
-                if group_data.get("types", []):
-                    types.update(group_data["types"])
-            query["portal_type"] = sorted(list(types))
+            query["portal_type"] = self.searchable_portal_types
         if self.solr_search_enabled:
             data = self.do_solr_search(query=query)
         else:
@@ -129,19 +136,19 @@ class SearchGet(Service):
         return new_facets
 
     def handle_groups_facet(self, groups, index_values, query):
+        # we need to do a second query in solr, to get the results
+        # with all searchable types
         portal_types = query.get("portal_type", "")
-        if portal_types:
-            # we need to do a second query in solr, to get the results
-            # unfiltered by types
+        if portal_types == self.searchable_portal_types:
+            indexes = index_values
+        else:
             new_query = deepcopy(query)
-            del new_query["portal_type"]
+            new_query["portal_type"] = self.searchable_portal_types
             # simplify returned result data
             new_query["facet_fields"] = ["portal_type"]
             new_query["metadata_fields"] = ["UID"]
             new_data = SolrSearchHandler(self.context, self.request).search(new_query)
             indexes = new_data["facets"]["portal_type"]
-        else:
-            indexes = index_values
         all_label = translate(
             _("all_types_label", default=u"All content types"), context=self.request,
         )
