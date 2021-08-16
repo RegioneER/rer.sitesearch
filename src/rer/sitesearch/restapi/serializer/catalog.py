@@ -29,9 +29,7 @@ class LazyCatalogResultSerializer(BaseSerializer):
             fullobjects=fullobjects
         )
         # add facets informations
-        data.update(
-            {"facets": self.extract_facets(brains=self.lazy_resultset)}
-        )
+        data.update({"facets": self.extract_facets(brains=self.lazy_resultset)})
         return data
 
     def extract_facets(self, brains):
@@ -41,9 +39,7 @@ class LazyCatalogResultSerializer(BaseSerializer):
             "indexes": get_indexes_mapping(),
         }
         for brain in brains:
-            for index_id, index_settings in (
-                facets["indexes"].get("values", {}).items()
-            ):
+            for index_id, index_settings in facets["indexes"].get("values", {}).items():
                 try:
                     value = getattr(brain, index_id)
                 except AttributeError:
@@ -81,21 +77,22 @@ class LazyCatalogResultSerializer(BaseSerializer):
         query = unflatten_dotted_dict(query)
         groups = get_types_groups()
         all_label = translate(
-            _("all_types_label", default=u"All content types"),
-            context=self.request,
+            _("all_types_label", default=u"All content types"), context=self.request,
         )
-        portal_types = query.get("portal_type", "")
-        if portal_types:
-            new_query = deepcopy(query)
-            if "portal_type" in new_query:
-                del new_query["portal_type"]
-            brains_to_iterate = api.content.find(**new_query)
-        else:
-            brains_to_iterate = brains
+        new_query = deepcopy(query)
+        if "portal_type" in new_query:
+            del new_query["portal_type"]
+        portal_types = set([])
+        for group_id, group_data in groups.get("values", {}).items():
+            if group_data.get("types", []):
+                portal_types.update(group_data["types"])
+        new_query["portal_type"] = list(portal_types)
+        brains_to_iterate = api.content.find(**new_query)
         for brain in brains_to_iterate:
             for group in groups.get("values", {}).values():
                 if brain.portal_type in group.get("types", []):
                     group["count"] += 1
+
         groups["values"][all_label]["count"] = getattr(
             brains_to_iterate, "actual_result_count", len(brains_to_iterate)
         )
