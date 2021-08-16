@@ -35,6 +35,8 @@ const Pagination = () => {
                 breakLabel={'...'}
                 breakClassName={'break-me'}
                 pageCount={Math.ceil(total / b_size)}
+                pageRangeDisplayed={2}
+                marginPagesDisplayed={2}
                 onPageChange={handlePageChange}
                 containerClassName={'pagination'}
                 subContainerClassName={'pages pagination'}

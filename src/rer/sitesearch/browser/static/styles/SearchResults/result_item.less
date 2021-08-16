@@ -4,7 +4,7 @@
 
     @media (max-width: @plone-screen-md-max) {
         padding: 0;
-        margin-bottom: 1.5rem;
+        margin-bottom: 3.5rem;
     }
 
     .row-item {
@@ -61,22 +61,13 @@
     }
 
     .row-item-infos {
-        .col-content {
-            @media (max-width: @plone-screen-md-max) {
-                padding-right: 0;
-                padding-left: 0;
+        .item-infos {
+            display: flex;
+            .item-date {
+                margin-right: 1.5em;
             }
-
-            .item-infos {
-                display: flex;
-                .item-date {
-                    margin-right: 1.5em;
-                }
-                @media (max-width: @plone-screen-md-max) {
-                    .item-path {
-                        display: none;
-                    }
-                }
+            @media (max-width: @plone-screen-sm-max) {
+                display: none;
             }
         }
     }
