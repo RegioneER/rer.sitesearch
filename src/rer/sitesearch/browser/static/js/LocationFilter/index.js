@@ -86,30 +86,9 @@ const SitesFilters = () => {
             checked={site_name === current_site || !site_name}
             onChange={e => setFilters({ site_name: e.target.value, path: '' })}
           />
-          {current_site} ({facets.sites.values[current_site]})
+          {current_site} ({facets.sites.values[current_site] || 0})
         </label>
       </div>
-      {/* {facets.sites.order.map(siteName => {
-        const { site_name } = filters;
-        return (
-          <div className="radio" key={`site-${siteName}`}>
-            <label
-              className={site_name === siteName ? 'selected text-primary' : ''}
-            >
-              <input
-                type="radio"
-                name="site_name"
-                value={siteName}
-                checked={site_name === siteName}
-                onChange={e =>
-                  setFilters({ site_name: e.target.value, path: '' })
-                }
-              />
-              {siteName} ({facets.sites.values[siteName]})
-            </label>
-          </div>
-        );
-      })} */}
     </React.Fragment>
   );
 };
