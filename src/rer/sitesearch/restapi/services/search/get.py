@@ -73,9 +73,6 @@ class SearchGet(Service):
                     query["portal_type"] = group_data["types"]
 
             del query["group"]
-        else:
-            # by default, search only in types set in settings
-            query["portal_type"] = self.searchable_portal_types
         if self.solr_search_enabled:
             data = self.do_solr_search(query=query)
         else:
@@ -117,7 +114,9 @@ class SearchGet(Service):
             if index_id == "site_name":
                 entry = new_facets["sites"]["values"]
                 self.handle_sites_facet(
-                    sites=entry, index_values=index_values, query=query,
+                    sites=entry,
+                    index_values=index_values,
+                    query=query,
                 )
                 new_facets["sites"]["order"] = sorted(entry.keys())
             elif index_id == "portal_type":
@@ -150,7 +149,8 @@ class SearchGet(Service):
             new_data = SolrSearchHandler(self.context, self.request).search(new_query)
             indexes = new_data["facets"]["portal_type"]
         all_label = translate(
-            _("all_types_label", default=u"All content types"), context=self.request,
+            _("all_types_label", default=u"All content types"),
+            context=self.request,
         )
         for type_mapping in indexes:
             for ptype, count in type_mapping.items():
