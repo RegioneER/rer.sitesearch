@@ -136,18 +136,18 @@ class SearchGet(Service):
 
     def handle_groups_facet(self, groups, index_values, query):
         # we need to do a second query in solr, to get the results
-        # with all searchable types
+        # unfiltered by types
         portal_types = query.get("portal_type", "")
-        if portal_types == self.searchable_portal_types:
-            indexes = index_values
-        else:
+        if portal_types:
             new_query = deepcopy(query)
-            new_query["portal_type"] = self.searchable_portal_types
+            del new_query["portal_type"]
             # simplify returned result data
             new_query["facet_fields"] = ["portal_type"]
             new_query["metadata_fields"] = ["UID"]
             new_data = SolrSearchHandler(self.context, self.request).search(new_query)
             indexes = new_data["facets"]["portal_type"]
+        else:
+            indexes = index_values
         all_label = translate(
             _("all_types_label", default=u"All content types"),
             context=self.request,
