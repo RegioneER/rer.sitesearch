@@ -60,4 +60,8 @@
     component=".vocabularies.GroupIconsVocabularyFactory"
     name="rer.sitesearch.vocabularies.GroupIconsVocabulary"
     />
+  <utility
+    component=".vocabularies.GroupingTypesVocabularyFactory"
+    name="rer.sitesearch.vocabularies.GroupingTypesVocabulary"
+    />
 </configure>

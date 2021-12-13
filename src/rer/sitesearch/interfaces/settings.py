@@ -38,9 +38,7 @@ class ITypesMappingRowSchema(model.Schema):
         vocabulary=u"rer.sitesearch.vocabularies.GroupIconsVocabulary",
     )
     advanced_filters = schema.Choice(
-        title=_(
-            "types_mapping_advanced_filters_label", default=u"Advanced filters"
-        ),
+        title=_("types_mapping_advanced_filters_label", default=u"Advanced filters"),
         description=_(
             "types_mapping_advanced_filters_help",
             default=u"Select a preset of advanced filters for this group.",
@@ -52,7 +50,7 @@ class ITypesMappingRowSchema(model.Schema):
     directives.widget(
         "types",
         AjaxSelectFieldWidget,
-        vocabulary=u"plone.app.vocabularies.ReallyUserFriendlyTypes",
+        vocabulary=u"rer.sitesearch.vocabularies.GroupingTypesVocabulary",
     )
 
 
@@ -81,8 +79,7 @@ class IIndexesRowSchema(model.Schema):
 
 
 class IRERSiteSearchSettings(model.Schema):
-    """
-    """
+    """ """
 
     max_word_len = schema.Int(
         title=_(u"Maximum number of characters in a single word"),

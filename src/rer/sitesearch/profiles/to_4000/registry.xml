@@ -29,7 +29,7 @@
     </records>
 
   <records prefix="plone.bundles/sitesearch"
-            interface='Products.CMFPlone.interfaces.IBundleRegistry' remove="TRue">
+            interface='Products.CMFPlone.interfaces.IBundleRegistry' remove="True">
   </records>
 
 </registry>
