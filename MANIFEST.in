@@ -12,3 +12,4 @@ exclude .nvmrc
 exclude .python-version
 exclude publiccode.yml
 prune src/rer/sitesearch/browser/static/dist/dev
+prune src/rer/sitesearch/locales/__pycache__
