@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-04-28 09:08+0000\n"
+"POT-Creation-Date: 2021-12-20 14:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,11 +36,11 @@ msgstr ""
 msgid "Installs the rer.sitesearch add-on."
 msgstr ""
 
-#: rer/sitesearch/interfaces/settings.py:88
+#: rer/sitesearch/interfaces/settings.py:85
 msgid "Maximum number of characters in a single word"
 msgstr ""
 
-#: rer/sitesearch/interfaces/settings.py:99
+#: rer/sitesearch/interfaces/settings.py:96
 msgid "Maximum number of words in search query"
 msgstr ""
 
@@ -104,39 +104,39 @@ msgid "Vai ai risultati"
 msgstr ""
 
 #. Default: "All content types"
-#: rer/sitesearch/restapi/serializer/catalog.py:84
-#: rer/sitesearch/restapi/services/search/get.py:135
+#: rer/sitesearch/restapi/serializer/catalog.py:80
+#: rer/sitesearch/restapi/services/search/get.py:152
 #: rer/sitesearch/restapi/utils.py:20
 msgid "all_types_label"
 msgstr ""
 
 #. Default: "Select which additional filters to show in the column."
-#: rer/sitesearch/interfaces/settings.py:121
+#: rer/sitesearch/interfaces/settings.py:118
 msgid "available_indexes_help"
 msgstr ""
 
 #. Default: "Select which catalog index to use as filter."
-#: rer/sitesearch/interfaces/settings.py:74
+#: rer/sitesearch/interfaces/settings.py:72
 msgid "available_indexes_index_help"
 msgstr ""
 
 #. Default: "Index"
-#: rer/sitesearch/interfaces/settings.py:73
+#: rer/sitesearch/interfaces/settings.py:71
 msgid "available_indexes_index_label"
 msgstr ""
 
 #. Default: "Available indexes"
-#: rer/sitesearch/interfaces/settings.py:120
+#: rer/sitesearch/interfaces/settings.py:117
 msgid "available_indexes_label"
 msgstr ""
 
 #. Default: "Insert the label for this index. One per row. If the site has only one language, type the simple name. If it has multiple languages, insert one row per language in the following format: lang|label. For example: it|Keywords"
-#: rer/sitesearch/interfaces/settings.py:62
+#: rer/sitesearch/interfaces/settings.py:60
 msgid "available_indexes_label_help"
 msgstr ""
 
 #. Default: "Label"
-#: rer/sitesearch/interfaces/settings.py:61
+#: rer/sitesearch/interfaces/settings.py:59
 msgid "available_indexes_label_label"
 msgstr ""
 
@@ -171,12 +171,12 @@ msgid "filters_title_Cerca"
 msgstr ""
 
 #. Default: "Set what is the maximum length of a single search word. Longer words will be omitted from the search."
-#: rer/sitesearch/interfaces/settings.py:89
+#: rer/sitesearch/interfaces/settings.py:86
 msgid "help_max_word_len"
 msgstr ""
 
 #. Default: "Set what is the maximum number of words in the search query. The other words will be omitted from the search."
-#: rer/sitesearch/interfaces/settings.py:100
+#: rer/sitesearch/interfaces/settings.py:97
 msgid "help_max_words"
 msgstr ""
 
@@ -206,21 +206,27 @@ msgstr ""
 msgid "select_placeholder"
 msgstr ""
 
+msgid "sites_all_label"
+msgstr ""
+
+msgid "sites_local_label"
+msgstr ""
+
 msgid "sortable_title"
 msgstr ""
 
 #. Default: "If you fill this field, you can group search results by content-types."
-#: rer/sitesearch/interfaces/settings.py:111
+#: rer/sitesearch/interfaces/settings.py:108
 msgid "types_grouping_help"
 msgstr ""
 
 #. Default: "Types grouping"
-#: rer/sitesearch/interfaces/settings.py:110
+#: rer/sitesearch/interfaces/settings.py:107
 msgid "types_grouping_label"
 msgstr ""
 
 #. Default: "Select a preset of advanced filters for this group."
-#: rer/sitesearch/interfaces/settings.py:44
+#: rer/sitesearch/interfaces/settings.py:42
 msgid "types_mapping_advanced_filters_help"
 msgstr ""
 

@@ -4,7 +4,8 @@ Changelog
 4.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix label for LocationFilter.
+  [cekk]
 
 
 4.0.0 (2021-12-20)

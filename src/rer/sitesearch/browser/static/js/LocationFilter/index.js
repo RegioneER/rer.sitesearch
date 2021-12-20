@@ -44,9 +44,13 @@ const PathFilters = () => {
 };
 
 const SitesFilters = () => {
-  const { setFilters, filters, facets, current_site } = useContext(
-    SearchContext,
-  );
+  const {
+    setFilters,
+    filters,
+    facets,
+    current_site,
+    translations,
+  } = useContext(SearchContext);
   if (!facets || !facets.sites || facets.sites.order.length === 0) {
     return '';
   }
@@ -55,6 +59,15 @@ const SitesFilters = () => {
     (acc, site) => acc + site,
     0,
   );
+
+  const allLabel = translations.sites_all_label
+    ? translations.sites_all_label
+    : 'In all available sites';
+
+  const currentSiteLabel = translations.sites_local_label
+    ? translations.sites_local_label
+    : 'In this site';
+  console.log(translations.sites_local_label);
   return (
     <React.Fragment>
       <div className="radio">
@@ -68,7 +81,7 @@ const SitesFilters = () => {
             checked={!path && filters.site_name == 'all'}
             onChange={e => setFilters({ site_name: e.target.value, path: '' })}
           />
-          Regione Emilia-Romagna ({totalResultsFacets})
+          {allLabel} ({totalResultsFacets})
         </label>
       </div>
       <div className="radio">
@@ -86,7 +99,7 @@ const SitesFilters = () => {
             checked={site_name === current_site || !site_name}
             onChange={e => setFilters({ site_name: e.target.value, path: '' })}
           />
-          {current_site} ({facets.sites.values[current_site] || 0})
+          {currentSiteLabel} ({facets.sites.values[current_site] || 0})
         </label>
       </div>
     </React.Fragment>

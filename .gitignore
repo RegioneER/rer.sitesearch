@@ -18,6 +18,7 @@ node_modules/
 parts/
 src/*
 src/rer/sitesearch/browser/static/dist/dev/*
+src/rer/sitesearch/locales/__pycache__/
 test.plone_addon/
 var/
 # files

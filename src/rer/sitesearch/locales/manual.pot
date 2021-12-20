@@ -96,3 +96,9 @@ msgstr ""
 
 msgid "select_placeholder"
 msgstr ""
+
+msgid "sites_all_label"
+msgstr ""
+
+msgid "sites_local_label"
+msgstr ""
