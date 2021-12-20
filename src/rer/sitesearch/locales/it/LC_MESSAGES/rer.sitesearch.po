@@ -1,0 +1,263 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2021-04-28 09:08+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: Andrea Cecchi <andrea.cecchi@redturtle.net>\n"
+"Language-Team: LANGUAGE <sviluppoplone@redturtle.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: it\n"
+"Language-Name: Italian\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: rer.sitesearch\n"
+
+msgid "Chiudi la ricerca avanzata"
+msgstr "Chiudi la ricerca avanzata"
+
+msgid "Cosa"
+msgstr "Cosa"
+
+msgid "Digita il testo da cercare..."
+msgstr "Digita il testo da cercare..."
+
+msgid "Dove"
+msgstr "Dove"
+
+msgid "Filtra i risultati"
+msgstr "Filtra i risultati"
+
+msgid "In evidenza"
+msgstr "In evidenza"
+
+#: rer/sitesearch/configure.zcml:28
+msgid "Installs the rer.sitesearch add-on."
+msgstr "Install rer.sitesearch"
+
+#: rer/sitesearch/interfaces/settings.py:88
+msgid "Maximum number of characters in a single word"
+msgstr "Numero massimo di caratteri per una singola ricerca"
+
+#: rer/sitesearch/interfaces/settings.py:99
+msgid "Maximum number of words in search query"
+msgstr "Numero massimo di parole in una singola ricerca"
+
+#: rer/sitesearch/configure.zcml:45
+msgid "Migrate to new version"
+msgstr "Migra alla nuova versione"
+
+msgid "Parametri di ricerca"
+msgstr "Parametri di ricerca"
+
+#: rer/sitesearch/profiles/default/controlpanel.xml
+msgid "RER Sitesearch"
+msgstr "RER Site Search"
+
+#: rer/sitesearch/configure.zcml:28
+msgid "RER: Site Search"
+msgstr "RER: Site Search"
+
+#: rer/sitesearch/configure.zcml:37
+msgid "RER: Site Search (uninstall)"
+msgstr "RER: Site Search (disinstalla)"
+
+msgid "Relevance"
+msgstr "Rilevanza"
+
+msgid "Reset Filters"
+msgstr "Azzera filtri"
+
+msgid "Ricerca avanzata"
+msgstr "Ricerca avanzata"
+
+msgid "Risultati della ricerca"
+msgstr "Risultati della ricerca"
+
+msgid "Risultati simili"
+msgstr "Risultati simili"
+
+msgid "Scadenza partecipazione"
+msgstr "Scadenza partecipazione"
+
+#: rer/sitesearch/browser/templates/search.pt:19
+msgid "Search results"
+msgstr "Risultati della ricerca"
+
+#: rer/sitesearch/browser/controlpanel.py:20
+msgid "Site Search settings"
+msgstr "Impostazioni Site Search"
+
+msgid "Sort on"
+msgstr "Ordina per"
+
+#: rer/sitesearch/configure.zcml:37
+msgid "Uninstalls the rer.sitesearch add-on."
+msgstr "Disinstalla rer.sitesearch."
+
+#. Default: "Vai ai filtri"
+msgid "Vai ai filtri"
+msgstr "Vai ai filtri"
+
+msgid "Vai ai risultati"
+msgstr "Vai ai risultati"
+
+#. Default: "All content types"
+#: rer/sitesearch/restapi/serializer/catalog.py:84
+#: rer/sitesearch/restapi/services/search/get.py:135
+#: rer/sitesearch/restapi/utils.py:20
+msgid "all_types_label"
+msgstr "Tutti i contenuti"
+
+#. Default: "Select which additional filters to show in the column."
+#: rer/sitesearch/interfaces/settings.py:121
+msgid "available_indexes_help"
+msgstr "Seleziona quali filtri aggiuntivi da mostrare in colonna."
+
+#. Default: "Select which catalog index to use as filter."
+#: rer/sitesearch/interfaces/settings.py:74
+msgid "available_indexes_index_help"
+msgstr "Seleziona quale indice in catalogo da usare come filtro."
+
+#. Default: "Index"
+#: rer/sitesearch/interfaces/settings.py:73
+msgid "available_indexes_index_label"
+msgstr "Indice"
+
+#. Default: "Available indexes"
+#: rer/sitesearch/interfaces/settings.py:120
+msgid "available_indexes_label"
+msgstr "Indici disponibili"
+
+#. Default: "Insert the label for this index. One per row. If the site has only one language, type the simple name. If it has multiple languages, insert one row per language in the following format: lang|label. For example: it|Keywords"
+#: rer/sitesearch/interfaces/settings.py:62
+msgid "available_indexes_label_help"
+msgstr "Inserisci un'etichetta per questo indice. Una per riga. Se il sito ha una sola lingua disponibile, scrivi un nome semplice tipo \"Parole chiave\". Se il sito è multilingua, inserisci una riga per lingua nel seguente formato: lingua|etichetta. Per esempio: it|Parole chiave."
+
+#. Default: "Label"
+#: rer/sitesearch/interfaces/settings.py:61
+msgid "available_indexes_label_label"
+msgstr "Etichetta"
+
+msgid "button_Cerca"
+msgstr "Cerca"
+
+msgid "datepicker_today_button"
+msgstr "Ogg"
+
+msgid "effective"
+msgstr "Data"
+
+#. Default: "Events"
+#: rer/sitesearch/adapters/custom_filters.py:16
+msgid "event_adapter_label"
+msgstr "Eventi"
+
+#. Default: "End date"
+#: rer/sitesearch/adapters/custom_filters.py:34
+msgid "filter_end_label"
+msgstr "Data di fine"
+
+#. Default: "Start date"
+#: rer/sitesearch/adapters/custom_filters.py:27
+msgid "filter_start_label"
+msgstr "Data di inizio"
+
+msgid "filtered"
+msgstr "filtrati"
+
+msgid "filters_title_Cerca"
+msgstr "Cerca"
+
+#. Default: "Set what is the maximum length of a single search word. Longer words will be omitted from the search."
+#: rer/sitesearch/interfaces/settings.py:89
+msgid "help_max_word_len"
+msgstr "Imposta qual'è la lunghezza massima di una singola parola ricercata. Parole più lunghe verranno omesse dalla ricerca."
+
+#. Default: "Set what is the maximum number of words in the search query. The other words will be omitted from the search."
+#: rer/sitesearch/interfaces/settings.py:100
+msgid "help_max_words"
+msgstr "Imposta qual'è la lunghezza massima di parole consentite nella ricerca. Eventuali parole successive verranno omesse dalla ricerca."
+
+#. Default: "Set site search configurations"
+#: rer/sitesearch/browser/controlpanel.py:21
+msgid "help_sitesearch_settings_editform"
+msgstr "Configura la ricerca del sito"
+
+msgid "items"
+msgstr "elementi"
+
+msgid "items on"
+msgstr "elementi su"
+
+msgid "loading"
+msgstr "Caricamento..."
+
+msgid "no_results_label"
+msgstr "Nessun risultato soddisfa la tua ricerca"
+
+msgid "pubblicato il"
+msgstr "pubblicato il"
+
+msgid "relevance"
+msgstr "Rilevanza"
+
+msgid "select_placeholder"
+msgstr ""
+
+msgid "sortable_title"
+msgstr "Titolo"
+
+#. Default: "If you fill this field, you can group search results by content-types."
+#: rer/sitesearch/interfaces/settings.py:111
+msgid "types_grouping_help"
+msgstr "Se compili questo campo, potrai raggruppare i risultati della ricerca per tipo di contenuto."
+
+#. Default: "Types grouping"
+#: rer/sitesearch/interfaces/settings.py:110
+msgid "types_grouping_label"
+msgstr "Raggruppamento risultati"
+
+#. Default: "Select a preset of advanced filters for this group."
+#: rer/sitesearch/interfaces/settings.py:44
+msgid "types_mapping_advanced_filters_help"
+msgstr "Seleziona un set di filtri avanzati specifici per questo gruppo tra quelli disponibili."
+
+#. Default: "Advanced filters"
+#: rer/sitesearch/interfaces/settings.py:41
+msgid "types_mapping_advanced_filters_label"
+msgstr "Filtri avanzati"
+
+#. Default: "Select an icon for this group."
+#: rer/sitesearch/interfaces/settings.py:33
+msgid "types_mapping_icon_help"
+msgstr "Seleziona un'icona per questo gruppo."
+
+#. Default: "Icon"
+#: rer/sitesearch/interfaces/settings.py:32
+msgid "types_mapping_icon_label"
+msgstr "Icona"
+
+#. Default: "Insert the label for this group. One per row. If the site has only one language, type the simple name. If it has multiple languages, insert one row per language in the following format: lang|label. For example: it|Documenti"
+#: rer/sitesearch/interfaces/settings.py:12
+msgid "types_mapping_label_help"
+msgstr "Inserisci un'etichetta per questo gruppo. Una per riga. Se il sito ha una sola lingua disponibile, scrivi un nome semplice tipo \"Documenti\". Se il sito è multilingua, inserisci una riga per lingua nel seguente formato: lingua|etichetta. Per esempio: it|Documenti."
+
+#. Default: "Label"
+#: rer/sitesearch/interfaces/settings.py:11
+msgid "types_mapping_label_label"
+msgstr "Etichetta"
+
+#. Default: "Select which portal_types to show in this group."
+#: rer/sitesearch/interfaces/settings.py:24
+msgid "types_mapping_types_help"
+msgstr "Seleziona quali tipi di contenuto mostrare in questo gruppo."
+
+#. Default: "Portal types"
+#: rer/sitesearch/interfaces/settings.py:23
+msgid "types_mapping_types_label"
+msgstr "Tipi di contenuto"
+
+msgid "ultima modifica"
+msgstr "ultima modifica"

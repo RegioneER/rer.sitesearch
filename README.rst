@@ -1,34 +1,28 @@
 Introduction
 ============
-A product that override basic plone search template and add some new features.
+A product that override basic Plone search template.
+
 It has a left column with the search form and some additional fields to refine the search:
 
-- A radio button for choose if search in the current path or all portal
-- A list of indexes customizable from control panel
+- Group results by content-types
+- List of facets to refine the search
 
-In the central frame there are the results, grouped in tabs (customized in the control panel)
+These are all configurable through Plone control panel.
 
 
 Settings
 ========
 In the control panel (RER Sitesearch) you can set some search parameters.
-The most important are "tabs", "indexes" and "hidden indexes".
 
-Tabs
-----
+Types grouping
+--------------
 
-There is always a generic tab "All" that shows all search results.
-In this configuration panel, you can set a list of additional tabs that will group results by portal_type.
+You can create groups of portal_types (with custom label) to filter results by type.
 
-For example you can add a tab "Documents" that contains documents and files.
-Another tab "News/events" may contain News Items and Events.
+For example you can add a "Documents" group that contains Document and File contents.
+Another tab "News and Events" that may contain News Items and Events.
 
 And so on.
-
-You can also define the order of these tabs.
-
-If you are a developer and provide a translation file with "rer.sitesearch" domain, you can translate the tabs
-in different languages.
 
 Indexes
 -------
@@ -37,58 +31,130 @@ The search view shows a list of parameters (indexes in catalog) in the left colu
 In Sitesearch control-panel you can define which indexes to show, with which label and the order.
 
 
-Hidden indexes
---------------
-Sometimes the users came in the search form after clicking somewhere in the site, for example in a calendar portlet.
-The generated url add some query parameters like "start" and "end" to perform the search and show only the events
-in the selected dates.
+Advanced filters for groups
+===========================
 
-The search engine of rer.sitesearch remove all indexes passed in the query that don't match with it's indexes configuration,
-to avoid unwanted searches, so for example if you don't want to show some date filters in the sidebar, these filters (start and end)
-will be stripped from the query and the search will be useful.
+In each group types you can select an advanced filter.
 
-Hidden indexes configuration allows to define a set of indexes that needs to be kept for special searches like these.
-So if a parameter matches this list will be included in the query and not stripped.
+Advanced filters are a list of preset filters that allow to add some extra filters when that group is selected in search.
+
+In rer.sitesearch there are only one advanced filter called "Events" that add start and end date filters, but you can add more
+presets in your custom package.
+
+Register new advanced filters
+-----------------------------
+
+Advanced filters are a list of named adapters, so you can add more and override existing ones if needed.
+
+You just need to register a new named adapter::
+
+    <adapter
+      factory = ".my_filters.MyNewFilters"
+      name= "my-filters"
+    />
+
+And you adapter should have a `label` attribute (needed to show a human-readable name in sitesearch-settings view) and 
+return the schema for the additional indexes::
+
+    from zope.component import adapter
+    from zope.interface import implementer
+    from rer.sitesearch.interfaces import ISiteSearchCustomFilters
+    from zope.interface import Interface
+    from my.package import _
+    from zope.i18n import translate
 
 
-Development
-===========
+    @adapter(Interface, Interface)
+    @implementer(ISiteSearchCustomFilters)
+    class MyNewFilters(object):
+    """
+    """
 
-Resources are registered on a separate bundle, and are compiled and minified by a grunt task.
+    label = _("some_labelid", default=u"Additional filters")
 
-To setup node/grunt environment, first of all you need to launch this command::
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
 
-  yarn install
+    def __call__(self):
+        return {
+            "index_a": {
+                "type": "string",
+                "label": translate(
+                    _("filter_index_a_label", default=u"Index A"),
+                    context=self.request,
+                ),
+            },
+            "index_b": {
+                "type": "date",
+                "label": translate(
+                    _("filter_index_b_label", default=u"Index B"),
+                    context=self.request,
+                ),
+            },
+        }
 
+Where `index_a` and `index_b` are Plone's catalog indexes.
 
-When you need to change some resources, you need to recompile them, and you have two ways.
+ 
+Restapi endpoint
+================
 
-::
+@search-filters
+---------------
 
-  yarn develop
+There is an helper api endpoint that returns the list of available groups and indexes for the search interface: *@search-filters*::
 
-this start a watch demon that listen to changes and recompile them automatically
+    > curl -i http://localhost:8080/Plone/@search-filters -H 'Accept: application/json'
 
-::
+And will return a response like this::
 
-  yarn compile
-
-compile all resources
-
+    {
+      "grouping": [
+        {
+          "label":
+            "Documents"
+          ],
+          "types": [
+            "Document",
+            "File"
+          ]
+        },
+        {
+          "label": "News and Events",
+          "types": [
+            "News Item",
+            "Event"
+          ]
+        },
+      ],
+      "indexes": [
+        {
+          "label": [
+            "Type"
+          ],
+          "index": "portal_type"
+        },
+        {
+          "label": "Keywords",
+          "index": "Subject"
+        },
+      ]
+    }
 
 Dependencies
 ============
 
-This product works only on Plone > 5.0
+This product works only on Plone > 5.1 and with Python 2 and 3.
 
-Previous versions (<3.0.0) still works with Plone4, but aren't on pypi (only on github on branch `plone4`).
-
+Since version 4.0.0, we made an hard rewrite of the package and we now use plone.restapi `@search` endpoint
+and React.
 
 Contribute
 ==========
 
-- Issue Tracker: https://github.com/PloneGov-It/rer.sitesearch/issues
-- Source Code: https://github.com/PloneGov-It/rer.sitesearch
+- Issue Tracker: https://github.com/RegioneER/rer.sitesearch/issues
+- Source Code: https://github.com/RegioneER/rer.sitesearch
 
 
 Credits
@@ -109,6 +175,6 @@ Authors
 
 This product was developed by RedTurtle Technology team.
 
-.. image:: http://www.redturtle.net/redturtle_banner.png
+.. image:: https://avatars1.githubusercontent.com/u/1087171?s=100&v=4
    :alt: RedTurtle Technology Site
    :target: http://www.redturtle.net/

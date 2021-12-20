@@ -1,0 +1,3 @@
+<registry>
+    <records interface="rer.sitesearch.interfaces.IRERSiteSearchSettings" remove="True"/>
+</registry>

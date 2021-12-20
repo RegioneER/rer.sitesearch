@@ -1,0 +1,51 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="rer.sitesearch">
+  
+  <plone:static
+      directory="static"
+      type="plone"
+      name="rer.sitesearch"
+      />
+
+  <browser:page
+        name="search"
+        class=".search.View"
+        permission="zope2.View"
+        for="plone.app.layout.navigation.interfaces.INavigationRoot"
+        layer="rer.sitesearch.interfaces.IRERSiteSearchLayer"
+        template="templates/search.pt"
+        />
+
+  <browser:page
+        name="search"
+        class=".search.View"
+        permission="zope2.View"
+        for="*"
+        layer="rer.sitesearch.interfaces.IRERSiteSearchLayer"
+        template="templates/search.pt"
+        />
+  
+  <!-- keep default search view for debug -->
+  <configure package="Products.CMFPlone.browser">
+      <browser:page
+            name="search-debug"
+            class=".search.Search"
+            permission="zope2.View"
+            for="plone.app.layout.navigation.interfaces.INavigationRoot"
+            template="templates/search.pt"
+            />
+  </configure>
+
+  <browser:page
+        name="sitesearch-settings"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".controlpanel.RERSiteSearchSettingsControlPanel"
+        permission="rer.sitesearch.ManageSettings"
+        layer="rer.sitesearch.interfaces.IRERSiteSearchLayer"
+        />
+
+</configure>

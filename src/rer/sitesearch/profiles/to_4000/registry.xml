@@ -1,0 +1,35 @@
+<registry>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="max_word_len"
+            delete="True"/>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="max_words"
+            delete="True"/>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="solr_search_enabled"
+            delete="True"/>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="tabs_mapping"
+            delete="True"/>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="tabs_order"
+            delete="True"/>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="available_indexes"
+            delete="True"/>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="indexes_order"
+            delete="True"/>
+    <record interface="rer.sitesearch.interfaces.IRERSiteSearchSettings"
+            field="hidden_indexes"
+            delete="True"/>
+    
+    <records prefix="plone.resources/sitesearch"
+       interface='Products.CMFPlone.interfaces.IResourceRegistry' remove="True">
+    </records>
+
+  <records prefix="plone.bundles/sitesearch"
+            interface='Products.CMFPlone.interfaces.IBundleRegistry' remove="True">
+  </records>
+
+</registry>

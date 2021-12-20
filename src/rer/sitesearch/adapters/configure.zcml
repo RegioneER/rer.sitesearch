@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="plone">
+
+  <adapter factory=".permission_checker.SiteSearchSettingsPermissionChecker" />
+
+  <!-- advanced filters -->
+  <adapter
+      factory=".custom_filters.EventsAdapter"
+      name="events"
+  />
+
+
+</configure>

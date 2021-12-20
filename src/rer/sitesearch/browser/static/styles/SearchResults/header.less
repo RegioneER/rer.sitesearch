@@ -1,0 +1,30 @@
+.results-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2em;
+
+    .order-by {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+
+        .select-label {
+            margin-right: 0.5em;
+        }
+
+        .select {
+            min-width: 150px;
+            flex: 1 1 auto;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .total-items {
+            span {
+                display: block;
+            }
+        }
+    }
+}

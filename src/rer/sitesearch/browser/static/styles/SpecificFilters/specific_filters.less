@@ -1,0 +1,55 @@
+.specific-filters {
+    padding: 0.5em 1em;
+    background-color: #eee;
+    margin-bottom: 1em;
+
+    .row-specific-filters {
+        display: flex;
+        flex-wrap: wrap;
+
+        .col-specific-filters {
+            flex: 1 1 auto;
+            padding: 0.5em;
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+
+        label {
+            display: block;
+        }
+
+        .DayPickerInput {
+            .DayPickerInput-OverlayWrapper,
+            .DayPicker,
+            .DayPicker-Caption,
+            .DayPicker-Weekday,
+            .DayPicker-Day {
+                font-size: 1.25rem !important;
+            }
+        }
+
+        #advanced-filter-date-date-start,
+        #advanced-filter-date-date-end {
+            display: inline-block;
+            width: 50%;
+        }
+
+        @media (max-width: @plone-screen-md-max) {
+            flex-wrap: wrap;
+            .col-specific-filters {
+                flex: 1 1 100%;
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+    }
+
+    .title {
+        font-weight: bold;
+        margin-bottom: 1em;
+    }
+}

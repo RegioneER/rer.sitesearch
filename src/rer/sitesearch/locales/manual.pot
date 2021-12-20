@@ -1,0 +1,98 @@
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: rer.sitesearch\n"
+
+msgid "Sort on"
+msgstr ""
+
+msgid "items"
+msgstr ""
+
+msgid "items on"
+msgstr ""
+
+msgid "filtered"
+msgstr ""
+
+msgid "Reset Filters"
+msgstr ""
+
+msgid "Relevance"
+msgstr ""
+
+msgid "relevance"
+msgstr ""
+
+msgid "effective"
+msgstr ""
+
+msgid "sortable_title"
+msgstr ""
+
+msgid "Risultati della ricerca"
+msgstr ""
+
+msgid "Vai ai filtri"
+msgstr "Vai ai filtri"
+
+msgid "loading"
+msgstr ""
+
+msgid "no_results_label"
+msgstr ""
+
+msgid "pubblicato il"
+msgstr ""
+
+msgid "ultima modifica"
+msgstr ""
+
+msgid "In evidenza"
+msgstr ""
+
+msgid "Risultati simili"
+msgstr ""
+
+msgid "Scadenza partecipazione"
+msgstr ""
+
+msgid "Cosa"
+msgstr ""
+
+msgid "Dove"
+msgstr ""
+
+msgid "filters_title_Cerca"
+msgstr ""
+
+msgid "Digita il testo da cercare..."
+msgstr ""
+
+msgid "button_Cerca"
+msgstr ""
+
+msgid "Ricerca avanzata"
+msgstr ""
+
+msgid "Parametri di ricerca"
+msgstr ""
+
+msgid "Vai ai risultati"
+msgstr ""
+
+msgid "Chiudi la ricerca avanzata"
+msgstr ""
+
+msgid "Filtra i risultati"
+msgstr ""
+
+msgid "datepicker_today_button"
+msgstr ""
+
+msgid "select_placeholder"
+msgstr ""

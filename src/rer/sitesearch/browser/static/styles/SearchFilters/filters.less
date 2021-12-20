@@ -1,0 +1,184 @@
+.filters-wrapper {
+    .filter-item {
+        margin-bottom: 3rem;
+
+        h3 {
+            // font-size: 1em;
+            font-weight: 600;
+            // margin: 0 0 1rem;
+
+            i,
+            svg {
+                margin-right: 0.5rem;
+                color: #6c6c6c;
+            }
+        }
+
+        .default-search {
+            @media (max-width: @plone-screen-md-max) {
+                display: flex;
+                justify-content: space-between;
+
+                .input-group {
+                    flex: 1 1 auto;
+                    margin-right: 0.5em;
+                }
+
+                button {
+                    svg,
+                    i {
+                        margin-left: 0.5rem;
+                    }
+                }
+            }
+
+            button[type='submit'] {
+                border-color: #ccc;
+                background-color: #fff;
+                border-radius: 0 4px 4px 0;
+                color: #333;
+                font-size: 18px;
+            }
+        }
+
+        .radio {
+            label {
+                display: flex;
+                align-items: center;
+                font-weight: normal;
+
+                input[type='radio'] {
+                    margin-right: 1rem;
+                }
+
+                strong {
+                    margin-left: 0.5rem;
+                }
+
+                &.selected {
+                    font-weight: 600;
+                }
+
+                i,
+                svg {
+                    width: 1em;
+                    margin-right: 0.5rem;
+                    font-size: 1em;
+                }
+            }
+        }
+
+        .rer-sitesearch-select {
+            div[class*='multiValue'] {
+                background: currentColor;
+
+                > * {
+                    color: #fff;
+                }
+            }
+
+            div[class*='menu'] {
+                color: initial;
+            }
+        }
+    }
+
+    .advanced-search {
+        transition: all 0.3s ease-in-out;
+
+        &.close {
+            z-index: -1;
+            top: 10vh;
+            left: 10vw;
+            width: 80vw;
+            height: 80vh;
+            opacity: 0;
+        }
+
+        @media (max-width: @plone-screen-md-max) {
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            padding: 2em 2em 4em;
+            background-color: #2f2f2f;
+            color: #fff;
+            opacity: 1;
+            overflow-y: scroll;
+
+            svg,
+            .far,
+            .fas,
+            .fa {
+                color: #fff;
+            }
+
+            .css-yk16xz-control,
+            .css-26l3qy-menu {
+                color: @plone-text-color;
+            }
+
+            .css-yk16xz-control {
+                color: inherit;
+
+                svg,
+                svg.css-6q0nyr-Svg {
+                    color: #fff;
+                }
+            }
+
+            .filter-item,
+            .col-specific-filters {
+                i,
+                svg {
+                    color: @plone-text-color;
+                }
+
+                h3,
+                .radio label {
+                    i,
+                    svg {
+                        color: #ccc;
+                    }
+
+                    &.text-primary {
+                        color: #fff;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            .close-advanced-search {
+                margin-top: -1em;
+                margin-right: -1em;
+                text-align: right;
+
+                i,
+                svg {
+                    font-size: 2em;
+                }
+            }
+
+            .close-advanced-search + h3 {
+                border-bottom: 1px solid #ccc;
+                margin-top: 0;
+            }
+
+            .specific-filters {
+                padding: 0;
+                background-color: transparent;
+            }
+
+            .submit-wrapper {
+                margin: 1em 0 2em;
+                text-align: right;
+
+                button {
+                    font-size: 1.75rem;
+                }
+            }
+        }
+    }
+}
