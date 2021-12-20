@@ -4,7 +4,8 @@ Changelog
 3.2.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- New sitesearch layout and logic (included rer.solrpush support).
+  [cekk]
 
 
 3.2.6 (2020-09-21)
