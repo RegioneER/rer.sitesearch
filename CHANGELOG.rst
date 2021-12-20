@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.2.7 (unreleased)
+4.0.0 (2021-12-20)
 ------------------
 
 - New sitesearch layout and logic (included rer.solrpush support).
