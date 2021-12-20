@@ -1,13 +1,14 @@
-recursive-include docs *
-recursive-include rer *
-global-exclude *pyc
+graft src/rer
+graft docs
 include *.rst
-include *.yml
-exclude .nvmrc
-exclude Gruntfile.js
-exclude package.json
-exclude *.cfg
-exclude requirements.txt
-exclude *.lock
+global-exclude *.pyc
+include *.GPL
+include *.js
+include *.json
+include *.lock
 include *.txt
-exclude node_modules
+exclude .babelrc
+exclude .nvmrc
+exclude .python-version
+exclude publiccode.yml
+prune src/rer/sitesearch/browser/static/dist/dev
