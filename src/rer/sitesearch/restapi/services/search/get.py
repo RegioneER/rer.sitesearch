@@ -204,3 +204,9 @@ class SearchGet(Service):
             if folder:
                 data["path_title"] = folder.title
         return data
+
+
+class SearchLocalGet(SearchGet):
+    @property
+    def solr_search_enabled(self):
+        return False

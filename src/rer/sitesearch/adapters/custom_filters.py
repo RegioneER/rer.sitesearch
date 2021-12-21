@@ -10,8 +10,7 @@ from zope.i18n import translate
 @adapter(Interface, Interface)
 @implementer(ISiteSearchCustomFilters)
 class EventsAdapter(object):
-    """
-    """
+    """ """
 
     label = _("event_adapter_label", default=u"Events")
 

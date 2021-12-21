@@ -39,6 +39,10 @@ class SearchContainer extends Component {
       ? DataObjectParser.transpose(requestQuery).data()
       : {};
 
+    const { baseUrl, searchEndpoint } = this.props;
+    const searchEndpointUrl = `${baseUrl}/@${searchEndpoint}`;
+    const searchUrl = `${baseUrl}/@@${searchEndpoint}`;
+
     this.getTranslationFor = msgid => {
       const { translations } = this.state;
       return translations[msgid] || msgid;
@@ -49,14 +53,14 @@ class SearchContainer extends Component {
       if (data && data.params) {
         params = data.params;
       }
-      updateHistory({ url: `${this.props.baseUrl}/@@search`, params });
+      updateHistory({ url: searchUrl, params });
 
       // enable if we want allow to change b_size
       // if (!params.b_size) {
       //   params.b_size = b_size;
       // }
       apiFetch({
-        url: this.props.baseUrl + '/@search',
+        url: searchEndpointUrl,
         params: fixQuery({ params, facets }),
         method: 'GET',
       }).then(({ data }) => {
@@ -129,7 +133,8 @@ class SearchContainer extends Component {
       isMobile: window.innerWidth < 1200,
       path_infos: {},
       getTranslationFor: this.getTranslationFor,
-      baseUrl: this.props.baseUrl,
+      baseUrl,
+      searchEndpoint,
     };
 
     this.handleResize = this.handleResize.bind(this);
@@ -143,18 +148,17 @@ class SearchContainer extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
-    const { query, facets, isMobile } = this.state;
+    const { query, facets, isMobile, baseUrl, searchEndpoint } = this.state;
     const fetches = [getTranslationCatalog()];
     if (query || isMobile) {
       updateHistory({
-        url: `${this.props.baseUrl}/@@search`,
+        url: `${baseUrl}/@@${searchEndpoint}`,
         params: query ? query : {},
       });
-      const endPoint = '/@search';
 
       fetches.push(
         apiFetch({
-          url: this.props.baseUrl + endPoint,
+          url: `${baseUrl}/@${searchEndpoint}`,
           params: fixQuery({ params: query ? query : {}, facets }),
           method: 'GET',
         }),
@@ -204,7 +208,7 @@ class SearchContainer extends Component {
         <SearchContext.Provider value={this.state}>
           <div className="row" aria-live="polite">
             <div className="col col-md-4">
-              <SearchFilters baseUrl={this.props.baseUrl} />
+              <SearchFilters />
             </div>
             <div className="col col-md-8">
               {showSearchContainer && <SpecificFilters id="search-container" />}
@@ -219,6 +223,7 @@ class SearchContainer extends Component {
 
 SearchContainer.propTypes = {
   baseUrl: PropTypes.string,
+  searchEndpoint: PropTypes.string,
 };
 
 export default SearchContainer;

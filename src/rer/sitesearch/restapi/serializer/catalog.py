@@ -77,7 +77,8 @@ class LazyCatalogResultSerializer(BaseSerializer):
         query = unflatten_dotted_dict(query)
         groups = get_types_groups()
         all_label = translate(
-            _("all_types_label", default=u"All content types"), context=self.request,
+            _("all_types_label", default=u"All content types"),
+            context=self.request,
         )
         new_query = deepcopy(query)
         if "portal_type" in new_query:
@@ -86,7 +87,8 @@ class LazyCatalogResultSerializer(BaseSerializer):
         for group_id, group_data in groups.get("values", {}).items():
             if group_data.get("types", []):
                 portal_types.update(group_data["types"])
-        new_query["portal_type"] = list(portal_types)
+        if portal_types:
+            new_query["portal_type"] = list(portal_types)
         brains_to_iterate = api.content.find(**new_query)
         for brain in brains_to_iterate:
             for group in groups.get("values", {}).values():

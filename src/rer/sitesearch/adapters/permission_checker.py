@@ -15,8 +15,7 @@ except ImportError:
 @adapter(IRerSiteSearchSettingsForm)
 @implementer(IFieldPermissionChecker)
 class SiteSearchSettingsPermissionChecker(GenericFormFieldPermissionChecker):
-    """
-    """
+    """ """
 
     def validate(self, field_name, vocabulary_name=None):
         if field_name in ["types"]:

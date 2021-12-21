@@ -99,7 +99,6 @@ const SearchFilters = () => {
 
 SearchFilters.propTypes = {
   isMobile: PropTypes.bool,
-  baseUrl: PropTypes.string,
 };
 
 export default SearchFilters;

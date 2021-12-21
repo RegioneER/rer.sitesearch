@@ -49,7 +49,7 @@ const apiFetch = ({ url, params, method }) => {
     headers,
   }).catch(function(error) {
     // handle error
-    console.log(error);
+    console.error(error);
   });
 };
 

@@ -10,13 +10,14 @@ import pkg_resources
 logger = logging.getLogger(__name__)
 
 
-JS_TEMPLATE = "{portal_url}/++plone++rer.sitesearch/dist/{env_mode}/{name}.js?v={version}"  # noqa
+JS_TEMPLATE = (
+    "{portal_url}/++plone++rer.sitesearch/dist/{env_mode}/{name}.js?v={version}"  # noqa
+)
 CSS_TEMPLATE = "{portal_url}/++plone++rer.sitesearch/dist/{env_mode}/{name}.css?v={version}"  # noqa
 
 
 class View(BrowserView):
-    """
-    """
+    """ """
 
     def __call__(self):
         add_bundle_on_request(self.request, "sitesearch-bundle")
