@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import os
 
 version = "4.0.2.dev0"
 
@@ -20,7 +19,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python",
     ],
-    keywords="",
+    keywords="Python Plone Search",
     author="RedTurtle Technology",
     author_email="sviluppo@redturtle.it",
     url="https://github.com/RegioneER/rer.sitesearch",
