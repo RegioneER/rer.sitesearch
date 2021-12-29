@@ -19,7 +19,7 @@ export const dotify = params => {
   return res;
 };
 const metadata_fields = [
-  'Date',
+  'modified',
   'Subject',
   'scadenza_bando',
   'effective',

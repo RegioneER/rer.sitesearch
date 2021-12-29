@@ -29,7 +29,7 @@ const Bando = ({ item, inEvidence = false }) => {
     title_parts.push(
       translations['ultima modifica'] +
         ' ' +
-        moment(item.Date).format('D/MM/YYYY'),
+        moment(item.modified).format('D/MM/YYYY'),
     );
 
     return title_parts.join(' - ');

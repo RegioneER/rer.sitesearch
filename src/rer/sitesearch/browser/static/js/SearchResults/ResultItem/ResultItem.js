@@ -29,15 +29,17 @@ const ResultItem = ({ item }) => {
       // 'pubblicato 19/06/2013',
       // 'ultima modifica 31/01/2020 10:14',
     ];
-    title_parts.push(
-      translations['pubblicato il'] +
-        ' ' +
-        moment(item.effective).format('D/MM/YYYY'),
-    );
+    if (!item.effective.startsWith('1969-12-30')) {
+      title_parts.push(
+        translations['pubblicato il'] +
+          ' ' +
+          moment(item.effective).format('D/MM/YYYY'),
+      );
+    }
     title_parts.push(
       translations['ultima modifica'] +
         ' ' +
-        moment(item.Date).format('D/MM/YYYY'),
+        moment(item.modified).format('D/MM/YYYY'),
     );
 
     return title_parts.join(' - ');
