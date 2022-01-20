@@ -47,9 +47,7 @@ def get_types_groups():
                 )
                 res["values"][label]["advanced_filters"] = adapter()
             except ComponentLookupError:
-                logger.error(
-                    'Unable to get adapter "{}"'.format(advanced_filters)
-                )
+                logger.error('Unable to get adapter "{}"'.format(advanced_filters))
     return res
 
 

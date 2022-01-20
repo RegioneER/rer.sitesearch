@@ -48,9 +48,7 @@ class RERSiteSearchRestApiLayer(PloneRestApiDXLayer):
     defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        super(RERSiteSearchRestApiLayer, self).setUpZope(
-            app, configurationContext
-        )
+        super(RERSiteSearchRestApiLayer, self).setUpZope(app, configurationContext)
 
         self.loadZCML(package=plone.restapi)
         self.loadZCML(package=rer.sitesearch)

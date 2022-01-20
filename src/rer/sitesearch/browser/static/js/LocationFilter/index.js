@@ -67,7 +67,6 @@ const SitesFilters = () => {
   const currentSiteLabel = translations.sites_local_label
     ? translations.sites_local_label
     : 'In this site';
-  console.log(translations.sites_local_label);
   return (
     <React.Fragment>
       <div className="radio">
@@ -96,7 +95,7 @@ const SitesFilters = () => {
             type="radio"
             name="site_name"
             value={current_site}
-            checked={site_name === current_site || !site_name}
+            checked={path ? false : site_name === current_site || !site_name}
             onChange={e => setFilters({ site_name: e.target.value, path: '' })}
           />
           {currentSiteLabel} ({facets.sites.values[current_site] || 0})

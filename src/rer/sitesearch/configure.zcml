@@ -1,17 +1,18 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:five="http://namespaces.zope.org/five"
-    xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="rer.sitesearch">
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="rer.sitesearch"
+    >
 
   <i18n:registerTranslations directory="locales" />
 
   <!--Register permission id-->
   <permission
-     id="rer.sitesearch.ManageSettings"
-     title="rer.sitesearch: Manage Settings"
-     />
+      id="rer.sitesearch.ManageSettings"
+      title="rer.sitesearch: Manage Settings"
+      />
 
   <include file="upgrades.zcml" />
   <include package=".adapters" />
@@ -21,47 +22,48 @@
   <genericsetup:registerProfile
       name="default"
       title="RER: Site Search"
-      directory="profiles/default"
       description="Installs the rer.sitesearch add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/default"
       post_handler=".setuphandlers.post_install"
       />
 
   <genericsetup:registerProfile
       name="uninstall"
       title="RER: Site Search (uninstall)"
-      directory="profiles/uninstall"
       description="Uninstalls the rer.sitesearch add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/uninstall"
       post_handler=".setuphandlers.uninstall"
       />
-  
+
   <genericsetup:registerProfile
       name="to_4000"
       title="Migrate to new version"
-      directory="profiles/to_4000"
       description=""
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/to_4000"
       />
 
   <utility
       factory=".setuphandlers.HiddenProfiles"
-      name="rer.sitesearch-hiddenprofiles" />
+      name="rer.sitesearch-hiddenprofiles"
+      />
 
   <utility
-    component=".vocabularies.IndexesVocabularyFactory"
-    name="rer.sitesearch.vocabularies.IndexesVocabulary"
-    />
+      name="rer.sitesearch.vocabularies.IndexesVocabulary"
+      component=".vocabularies.IndexesVocabularyFactory"
+      />
   <utility
-    component=".vocabularies.AdvancedFiltersVocabularyFactory"
-    name="rer.sitesearch.vocabularies.AdvancedFiltersVocabulary"
-    />
+      name="rer.sitesearch.vocabularies.AdvancedFiltersVocabulary"
+      component=".vocabularies.AdvancedFiltersVocabularyFactory"
+      />
   <utility
-    component=".vocabularies.GroupIconsVocabularyFactory"
-    name="rer.sitesearch.vocabularies.GroupIconsVocabulary"
-    />
+      name="rer.sitesearch.vocabularies.GroupIconsVocabulary"
+      component=".vocabularies.GroupIconsVocabularyFactory"
+      />
   <utility
-    component=".vocabularies.GroupingTypesVocabularyFactory"
-    name="rer.sitesearch.vocabularies.GroupingTypesVocabulary"
-    />
+      name="rer.sitesearch.vocabularies.GroupingTypesVocabulary"
+      component=".vocabularies.GroupingTypesVocabularyFactory"
+      />
 </configure>

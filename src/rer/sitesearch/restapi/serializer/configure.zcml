@@ -1,8 +1,9 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:zcml="http://namespaces.zope.org/zcml"
-    i18n_domain="rer.sitesearch">
-    
-    <adapter factory=".catalog.LazyCatalogResultSerializer" />
-    
+    i18n_domain="rer.sitesearch"
+    >
+
+  <adapter factory=".catalog.LazyCatalogResultSerializer" />
+
 </configure>

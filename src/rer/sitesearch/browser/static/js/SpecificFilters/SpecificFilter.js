@@ -137,7 +137,6 @@ const getDateFromQuery = (filter, index) => {
       ? filter.query[index]
       : filter.query;
 
-  console.log(moment(date));
   return moment(date);
 };
 

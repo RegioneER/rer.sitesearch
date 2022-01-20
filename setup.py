@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import os
 
 version = "4.0.2.dev0"
 
@@ -7,12 +6,11 @@ setup(
     name="rer.sitesearch",
     version=version,
     description="A product that change the base site search of Plone with some new features.",
-    long_description=open("README.rst").read()
-    + "\n"
-    + open("CHANGELOG.rst").read(),
+    long_description=open("README.rst").read() + "\n" + open("CHANGELOG.rst").read(),
     # Get more strings from
     # http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
+        "Development Status :: 5 - Production/Stable",
         "Framework :: Plone :: 5.1",
         "Framework :: Plone :: 5.2",
         "Framework :: Plone :: Addon",
@@ -21,7 +19,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python",
     ],
-    keywords="",
+    keywords="Python Plone Search",
     author="RedTurtle Technology",
     author_email="sviluppo@redturtle.it",
     url="https://github.com/RegioneER/rer.sitesearch",

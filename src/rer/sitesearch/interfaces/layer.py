@@ -3,8 +3,7 @@ from z3c.form.interfaces import IForm
 
 
 class IRERSiteSearchLayer(IDefaultBrowserLayer):
-    """A layer specific for rer.sitesearch
-    """
+    """A layer specific for rer.sitesearch"""
 
 
 class IRerSiteSearchSettingsForm(IForm):

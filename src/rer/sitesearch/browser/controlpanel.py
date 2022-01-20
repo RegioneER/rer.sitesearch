@@ -12,8 +12,7 @@ from zope.interface import implementer
 
 
 class RERSiteSearchSettingsEditForm(controlpanel.RegistryEditForm):
-    """
-    """
+    """ """
 
     schema = IRERSiteSearchSettings
     id = "RERSiteSearchSettingsEditForm"
@@ -38,8 +37,7 @@ class RERSiteSearchSettingsEditForm(controlpanel.RegistryEditForm):
 
 @implementer(IRerSiteSearchSettingsForm)
 class RERSiteSearchSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
-    """
-    """
+    """ """
 
     def __call__(self):
         add_bundle_on_request(self.request, "z3cform-jsonwidget-bundle")

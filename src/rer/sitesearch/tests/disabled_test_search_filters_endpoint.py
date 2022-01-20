@@ -35,21 +35,15 @@ class SearchFiltersTest(unittest.TestCase):
         transaction.commit()
 
     def tearDown(self):
-        set_registry_record(
-            "available_indexes", [], interface=IRERSiteSearchSettings
-        )
+        set_registry_record("available_indexes", [], interface=IRERSiteSearchSettings)
         #  reset elevate
-        set_registry_record(
-            "types_grouping", [], interface=IRERSiteSearchSettings
-        )
+        set_registry_record("types_grouping", [], interface=IRERSiteSearchSettings)
         self.api_session.close()
 
     def test_route_exists(self):
         response = self.api_session.get("/@search-filters")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.headers.get("Content-Type"), "application/json"
-        )
+        self.assertEqual(response.headers.get("Content-Type"), "application/json")
 
     def test_return_empty_list_if_not_set(self):
         response = self.api_session.get("/@search-filters")

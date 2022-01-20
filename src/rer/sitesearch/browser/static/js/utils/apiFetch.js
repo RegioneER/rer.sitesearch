@@ -19,7 +19,7 @@ export const dotify = params => {
   return res;
 };
 const metadata_fields = [
-  'Date',
+  'modified',
   'Subject',
   'scadenza_bando',
   'effective',
@@ -49,7 +49,7 @@ const apiFetch = ({ url, params, method }) => {
     headers,
   }).catch(function(error) {
     // handle error
-    console.log(error);
+    console.error(error);
   });
 };
 

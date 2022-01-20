@@ -24,6 +24,6 @@ export const getTranslationCatalog = (domain = 'rer.sitesearch') => {
     })
     .catch(function(error) {
       // handle error
-      console.log(error);
+      console.error(error);
     });
 };
