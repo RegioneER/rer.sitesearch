@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.0.2 (unreleased)
+4.1.0 (2022-01-20)
 ------------------
 
 - Interface improvements.
