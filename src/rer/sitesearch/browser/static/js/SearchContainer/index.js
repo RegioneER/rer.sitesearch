@@ -39,6 +39,7 @@ class SearchContainer extends Component {
       ? DataObjectParser.transpose(requestQuery).data()
       : {};
 
+    // fix queries
     Object.entries(query).forEach(([key, value]) => {
       if (typeof value === 'object' && value !== null) {
         if (value.list) {
@@ -47,7 +48,7 @@ class SearchContainer extends Component {
             query: Array.isArray(value.list) ? value.list : [value.list],
           };
         }
-      } else if (typeof value === 'string') {
+      } else if (typeof value === 'string' && key !== 'SearchableText') {
         query[key] = { query: value };
       }
     });
