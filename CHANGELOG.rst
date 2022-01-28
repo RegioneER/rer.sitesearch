@@ -4,7 +4,8 @@ Changelog
 4.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix search logic for filters.
+  [cekk]
 
 
 4.1.0 (2022-01-20)
