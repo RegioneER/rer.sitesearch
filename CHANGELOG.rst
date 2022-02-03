@@ -4,7 +4,8 @@ Changelog
 4.1.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix location filters logic.
+  [cekk]
 
 
 4.1.1 (2022-02-03)

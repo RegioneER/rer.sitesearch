@@ -4,7 +4,7 @@ import SearchContext from '../utils/searchContext';
 const PathFilters = () => {
   const { setFilters, filters, path_infos } = useContext(SearchContext);
   let { path } = filters;
-  if (typeof path !== 'string') {
+  if (path && typeof path !== 'string') {
     path = path.query;
   }
   if (!path || path.length === 0 || !path_infos) {
@@ -91,22 +91,7 @@ const SitesFilters = () => {
 };
 
 const LocationFilter = () => {
-  const { filters, translations, path_infos, facets } = useContext(
-    SearchContext,
-  );
-  let { path } = filters;
-  if (typeof path !== 'string') {
-    path = path.query;
-  }
-  let canShow = false;
-  if (path && path.length > 0 && path_infos) {
-    canShow = true;
-  } else if (facets.sites && facets.sites.order.length > 0) {
-    canShow = true;
-  }
-  if (!canShow) {
-    return '';
-  }
+  const { translations } = useContext(SearchContext);
 
   return (
     <div className="filter-item">
