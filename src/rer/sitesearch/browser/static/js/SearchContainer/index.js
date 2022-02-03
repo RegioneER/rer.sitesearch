@@ -35,9 +35,23 @@ class SearchContainer extends Component {
     super(props);
 
     const requestQuery = qs.parse(window.location.search);
-    const query = requestQuery
+    let query = requestQuery
       ? DataObjectParser.transpose(requestQuery).data()
       : {};
+
+    // fix queries
+    Object.entries(query).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null) {
+        if (value.list) {
+          query[key] = {
+            operator: 'and',
+            query: Array.isArray(value.list) ? value.list : [value.list],
+          };
+        }
+      } else if (typeof value === 'string' && key !== 'SearchableText') {
+        query[key] = { query: value };
+      }
+    });
 
     const { baseUrl, searchEndpoint } = this.props;
     const searchEndpointUrl = `${baseUrl}/@${searchEndpoint}`;
@@ -96,18 +110,26 @@ class SearchContainer extends Component {
           });
         }
       } else {
-        filters = JSON.parse(JSON.stringify(this.state.filters));
-        // always clean batching
-        delete filters.b_start;
+        if (
+          Object.keys(newFilters).length == 1 &&
+          Object.keys(newFilters)[0] == 'SearchableText'
+        ) {
+          // we're updating SearchableText, so reset other filters
+          filters = { SearchableText: newFilters.SearchableText };
+        } else {
+          filters = JSON.parse(JSON.stringify(this.state.filters));
+          // always clean batching
+          delete filters.b_start;
 
-        Object.keys(newFilters).forEach(key => {
-          const value = newFilters[key];
-          if (value) {
-            filters[key] = value;
-          } else if (key in filters) {
-            delete filters[key];
-          }
-        });
+          Object.keys(newFilters).forEach(key => {
+            const value = newFilters[key];
+            if (value) {
+              filters[key] = value;
+            } else if (key in filters) {
+              delete filters[key];
+            }
+          });
+        }
       }
 
       if (!this.state.loading) this.setState({ loading: true });
@@ -136,7 +158,6 @@ class SearchContainer extends Component {
       baseUrl,
       searchEndpoint,
     };
-
     this.handleResize = this.handleResize.bind(this);
   }
 

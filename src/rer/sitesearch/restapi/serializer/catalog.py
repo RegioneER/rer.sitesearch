@@ -81,15 +81,17 @@ class LazyCatalogResultSerializer(BaseSerializer):
             context=self.request,
         )
         new_query = deepcopy(query)
-        if "portal_type" in new_query:
-            del new_query["portal_type"]
-        portal_types = set([])
-        for group_id, group_data in groups.get("values", {}).items():
-            if group_data.get("types", []):
-                portal_types.update(group_data["types"])
-        if portal_types:
-            new_query["portal_type"] = list(portal_types)
-        brains_to_iterate = api.content.find(**new_query)
+        for index in ["metadata_fields", "portal_type"]:
+            if index in new_query:
+                del new_query[index]
+        # portal_types = set([])
+        # for group_id, group_data in groups.get("values", {}).items():
+        #     if group_data.get("types", []):
+        #         portal_types.update(group_data["types"])
+        # if portal_types:
+        #     new_query["portal_type"] = list(portal_types)
+        portal_catalog = api.portal.get_tool(name="portal_catalog")
+        brains_to_iterate = portal_catalog(**new_query)
         for brain in brains_to_iterate:
             for group in groups.get("values", {}).values():
                 if brain.portal_type in group.get("types", []):

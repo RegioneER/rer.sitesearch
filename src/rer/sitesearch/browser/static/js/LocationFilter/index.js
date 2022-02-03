@@ -2,30 +2,17 @@ import React, { useContext } from 'react';
 import SearchContext from '../utils/searchContext';
 
 const PathFilters = () => {
-  const { setFilters, filters, path_infos, facets } = useContext(SearchContext);
-  const { path } = filters;
+  const { setFilters, filters, path_infos } = useContext(SearchContext);
+  let { path } = filters;
+  if (typeof path !== 'string') {
+    path = path.query;
+  }
   if (!path || path.length === 0 || !path_infos) {
     return '';
   }
-  const { root, site_name, path_title } = path_infos;
+  const { root, path_title } = path_infos;
   return (
     <React.Fragment>
-      {!facets.sites ||
-        (facets.sites.order.length === 0 && (
-          <div className="radio">
-            <label className={path === root ? 'selected' : ''}>
-              <input
-                type="radio"
-                name="path"
-                value={root}
-                checked={path === root}
-                onChange={() => setFilters({ path: '' })}
-                aria-controls="sitesearch-results-list"
-              />
-              In tutto <strong>{site_name}</strong>
-            </label>
-          </div>
-        ))}
       <div className="radio">
         <label className={path !== root ? 'selected' : ''}>
           <input
@@ -36,7 +23,7 @@ const PathFilters = () => {
             onChange={e => setFilters({ path: e.target.value })}
             aria-controls="sitesearch-results-list"
           />
-          nella sezione <strong>{path_title}</strong>
+          Nella sezione <strong>{path_title}</strong>
         </label>
       </div>
     </React.Fragment>
@@ -51,15 +38,13 @@ const SitesFilters = () => {
     current_site,
     translations,
   } = useContext(SearchContext);
-  if (!facets || !facets.sites || facets.sites.order.length === 0) {
-    return '';
-  }
   const { path, site_name } = filters;
-  const totalResultsFacets = Object.values(facets.sites.values).reduce(
-    (acc, site) => acc + site,
-    0,
-  );
-
+  const totalResultsFacets = facets.sites
+    ? Object.values(facets.sites.values).reduce((acc, site) => acc + site, 0)
+    : 0;
+  const currentResultsFacets = facets.sites
+    ? facets.sites.values[current_site]
+    : 0;
   const allLabel = translations.sites_all_label
     ? translations.sites_all_label
     : 'In all available sites';
@@ -98,7 +83,7 @@ const SitesFilters = () => {
             checked={path ? false : site_name === current_site || !site_name}
             onChange={e => setFilters({ site_name: e.target.value, path: '' })}
           />
-          {currentSiteLabel} ({facets.sites.values[current_site] || 0})
+          {currentSiteLabel} ({currentResultsFacets || 0})
         </label>
       </div>
     </React.Fragment>
@@ -109,7 +94,10 @@ const LocationFilter = () => {
   const { filters, translations, path_infos, facets } = useContext(
     SearchContext,
   );
-  const { path } = filters;
+  let { path } = filters;
+  if (typeof path !== 'string') {
+    path = path.query;
+  }
   let canShow = false;
   if (path && path.length > 0 && path_infos) {
     canShow = true;
