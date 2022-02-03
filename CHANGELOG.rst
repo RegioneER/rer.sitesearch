@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.1.1 (unreleased)
+4.1.1 (2022-02-03)
 ------------------
 
 - Fix search logic for filters.
