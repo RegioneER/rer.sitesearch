@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.1.2 (unreleased)
+4.1.2 (2022-02-03)
 ------------------
 
 - Fix location filters logic.
