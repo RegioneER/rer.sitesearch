@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.1.3 (unreleased)
+4.1.3 (2022-02-24)
 ------------------
 
 - Do not show sites filters when solr is disabled.
