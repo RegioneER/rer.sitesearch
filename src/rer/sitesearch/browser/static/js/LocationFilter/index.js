@@ -39,6 +39,9 @@ const SitesFilters = () => {
     translations,
   } = useContext(SearchContext);
   const { path, site_name } = filters;
+  if (!facets.sites) {
+    return '';
+  }
   const totalResultsFacets = facets.sites
     ? Object.values(facets.sites.values).reduce((acc, site) => acc + site, 0)
     : 0;
@@ -91,8 +94,21 @@ const SitesFilters = () => {
 };
 
 const LocationFilter = () => {
-  const { translations } = useContext(SearchContext);
-
+  const { translations, filters, path_infos, facets } = useContext(
+    SearchContext,
+  );
+  let hasPath = true;
+  let hasSites = facets.sites ? true : false;
+  let { path } = filters;
+  if (path && typeof path !== 'string') {
+    path = path.query;
+  }
+  if (!path || path.length === 0 || !path_infos) {
+    hasPath = false;
+  }
+  if (!hasPath && !hasSites) {
+    return '';
+  }
   return (
     <div className="filter-item">
       <h3>

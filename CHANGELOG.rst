@@ -4,7 +4,8 @@ Changelog
 4.1.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Do not show sites filters when solr is disabled.
+  [cekk]
 
 
 4.1.2 (2022-02-03)
