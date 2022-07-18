@@ -17,7 +17,7 @@ export const getTranslationCatalog = (domain = 'rer.sitesearch') => {
   return axios({
     method: 'GET',
     url: catalogUrl,
-    params: { domain, language },
+    params: { domain, language, sitesearch_domains: true },
   })
     .then(({ data }) => {
       return { ...data, language };

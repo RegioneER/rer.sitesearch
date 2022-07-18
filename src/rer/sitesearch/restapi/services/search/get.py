@@ -65,7 +65,6 @@ class SearchGet(Service):
         query = deepcopy(self.request.form)
         query = unflatten_dotted_dict(query)
         path_infos = self.get_path_infos(query=query)
-
         groups = get_types_groups()
         if "group" in query:
             for group_id, group_data in groups.get("values", {}).items():
@@ -79,6 +78,7 @@ class SearchGet(Service):
             data = SearchHandler(self.context, self.request).search(query)
         if path_infos:
             data["path_infos"] = path_infos
+
         return data
 
     def do_solr_search(self, query):

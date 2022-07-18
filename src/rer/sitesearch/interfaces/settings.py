@@ -121,3 +121,19 @@ class IRERSiteSearchSettings(model.Schema):
         ),
         required=False,
     )
+
+    i18n_additional_domains = schema.List(
+        title=_(
+            "i18n_additional_domains_label", default=u"Additional translation domains"
+        ),
+        description=_(
+            "i18n_additional_domains_help",
+            default=u"Insert a list of additional translations domains (other "
+            u'than the default one "rer.sitesearch"). One per line.'
+            u"Translation domains can be provided by some Plone add-ons to "
+            u"help translate some Indexes values.",
+        ),
+        required=False,
+        value_type=schema.TextLine(),
+        default=[],
+    )

@@ -71,6 +71,7 @@ const ResultItem = ({ item }) => {
     <SearchContext.Consumer key={item['@id']}>
       {({ translations, baseUrl, searchEndpoint, filters }) => {
         const { site_name } = filters;
+        const { additional_html } = item;
         return (
           <div className={`result-item ${inEvidence ? 'in-evidence' : ''}`}>
             {/* in evidenza */}
@@ -192,6 +193,11 @@ const ResultItem = ({ item }) => {
                 </>
               )}
             </div>
+            {additional_html ? (
+              <div dangerouslySetInnerHTML={{ __html: additional_html }} />
+            ) : (
+              ''
+            )}
           </div>
         );
       }}

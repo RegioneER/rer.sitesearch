@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import Select, { components } from 'react-select';
 import SearchContext from '../utils/searchContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icons } from '../utils/icons';
+import SelectField from './select';
+import BooleanField from './boolean';
 
 // faFolder
 const { faTags, faListUl } = icons;
@@ -17,10 +18,29 @@ const IndexesFilters = () => {
   const filtersData = facets.indexes.order.map((index, idx) => {
     const facet = facets.indexes.values[index];
     const facetValues = facet.values;
-    const options = Object.keys(facetValues).map(key => ({
-      value: key,
-      label: `${key} (${facetValues[key]})`,
-    }));
+    let field = '';
+    switch (facet.type) {
+      case 'BooleanIndex':
+        field = (
+          <BooleanField
+            values={facetValues}
+            filters={filters}
+            index={index}
+            setFilters={setFilters}
+          />
+        );
+        break;
+      default:
+        field = (
+          <SelectField
+            values={facetValues}
+            filters={filters}
+            index={index}
+            setFilters={setFilters}
+          />
+        );
+        break;
+    }
     return Object.keys(facetValues).length > 0 ? (
       <div className="filter-item" key={index + idx}>
         <h3>
@@ -28,37 +48,7 @@ const IndexesFilters = () => {
           {index === 'Temi' && <FontAwesomeIcon icon={faListUl} />}{' '}
           {facet.label}
         </h3>
-        <Select
-          options={options}
-          isMulti
-          isClearable
-          components={{
-            // eslint-disable-next-line react/display-name
-            MultiValueLabel: props => (
-              <components.MultiValueLabel {...props} className="text-primary" />
-            ),
-          }}
-          className="rer-sitesearch-select text-primary"
-          placeholder="Cerca per categorie"
-          aria-controls="sitesearch-results-list"
-          value={options.filter(option =>
-            filters[index]
-              ? filters[index].query.includes(option.value)
-              : false,
-          )}
-          onChange={option => {
-            if (!option || option.length == 0) {
-              setFilters({ [index]: '' });
-            } else {
-              setFilters({
-                [index]: {
-                  query: option.map(({ value }) => value),
-                  operator: 'and',
-                },
-              });
-            }
-          }}
-        />
+        {field}
       </div>
     ) : null;
   });

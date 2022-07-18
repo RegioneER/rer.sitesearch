@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-12-20 14:10+0000\n"
+"POT-Creation-Date: 2022-07-14 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgstr ""
 msgid "In evidenza"
 msgstr ""
 
-#: rer/sitesearch/configure.zcml:28
+#: rer/sitesearch/configure.zcml:29
 msgid "Installs the rer.sitesearch add-on."
 msgstr ""
 
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Maximum number of words in search query"
 msgstr ""
 
-#: rer/sitesearch/configure.zcml:45
+#: rer/sitesearch/configure.zcml:46
 msgid "Migrate to new version"
 msgstr ""
 
@@ -55,11 +55,11 @@ msgstr ""
 msgid "RER Sitesearch"
 msgstr ""
 
-#: rer/sitesearch/configure.zcml:28
+#: rer/sitesearch/configure.zcml:29
 msgid "RER: Site Search"
 msgstr ""
 
-#: rer/sitesearch/configure.zcml:37
+#: rer/sitesearch/configure.zcml:38
 msgid "RER: Site Search (uninstall)"
 msgstr ""
 
@@ -82,17 +82,18 @@ msgid "Scadenza partecipazione"
 msgstr ""
 
 #: rer/sitesearch/browser/templates/search.pt:19
+#: rer/sitesearch/browser/templates/search_local.pt:19
 msgid "Search results"
 msgstr ""
 
-#: rer/sitesearch/browser/controlpanel.py:20
+#: rer/sitesearch/browser/controlpanel.py:19
 msgid "Site Search settings"
 msgstr ""
 
 msgid "Sort on"
 msgstr ""
 
-#: rer/sitesearch/configure.zcml:37
+#: rer/sitesearch/configure.zcml:38
 msgid "Uninstalls the rer.sitesearch add-on."
 msgstr ""
 
@@ -104,8 +105,8 @@ msgid "Vai ai risultati"
 msgstr ""
 
 #. Default: "All content types"
-#: rer/sitesearch/restapi/serializer/catalog.py:80
-#: rer/sitesearch/restapi/services/search/get.py:152
+#: rer/sitesearch/restapi/serializer/catalog.py:81
+#: rer/sitesearch/restapi/services/search/get.py:151
 #: rer/sitesearch/restapi/utils.py:20
 msgid "all_types_label"
 msgstr ""
@@ -150,17 +151,20 @@ msgid "effective"
 msgstr ""
 
 #. Default: "Events"
-#: rer/sitesearch/adapters/custom_filters.py:16
+#: rer/sitesearch/adapters/custom_filters.py:15
 msgid "event_adapter_label"
 msgstr ""
 
+msgid "false"
+msgstr ""
+
 #. Default: "End date"
-#: rer/sitesearch/adapters/custom_filters.py:34
+#: rer/sitesearch/adapters/custom_filters.py:33
 msgid "filter_end_label"
 msgstr ""
 
 #. Default: "Start date"
-#: rer/sitesearch/adapters/custom_filters.py:27
+#: rer/sitesearch/adapters/custom_filters.py:26
 msgid "filter_start_label"
 msgstr ""
 
@@ -181,7 +185,7 @@ msgid "help_max_words"
 msgstr ""
 
 #. Default: "Set site search configurations"
-#: rer/sitesearch/browser/controlpanel.py:21
+#: rer/sitesearch/browser/controlpanel.py:20
 msgid "help_sitesearch_settings_editform"
 msgstr ""
 
@@ -213,6 +217,9 @@ msgid "sites_local_label"
 msgstr ""
 
 msgid "sortable_title"
+msgstr ""
+
+msgid "true"
 msgstr ""
 
 #. Default: "If you fill this field, you can group search results by content-types."

@@ -69,4 +69,11 @@
       layer="rer.sitesearch.interfaces.IRERSiteSearchLayer"
       />
 
+  <browser:view
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    name="plonejsi18n"
+    class=".i18n.View"
+    permission="zope2.View"
+    layer="rer.sitesearch.interfaces.IRERSiteSearchLayer"
+    />
 </configure>

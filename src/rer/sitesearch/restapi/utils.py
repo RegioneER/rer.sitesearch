@@ -14,6 +14,13 @@ import json
 logger = logging.getLogger(__name__)
 
 
+def get_value_from_registry(field):
+    try:
+        return api.portal.get_registry_record(field, interface=IRERSiteSearchSettings)
+    except KeyError:
+        return None
+
+
 def get_types_groups():
     request = getRequest()
     all_label = translate(
@@ -23,9 +30,7 @@ def get_types_groups():
         "order": [all_label],
         "values": {all_label: {"count": 0, "types": []}},
     }
-    values = api.portal.get_registry_record(
-        "types_grouping", interface=IRERSiteSearchSettings, default=[]
-    )
+    values = get_value_from_registry(field="types_grouping")
     if not values:
         return res
     values = json.loads(values)
@@ -47,23 +52,26 @@ def get_types_groups():
                 )
                 res["values"][label]["advanced_filters"] = adapter()
             except ComponentLookupError:
-                logger.error('Unable to get adapter "{}"'.format(advanced_filters))
+                continue
     return res
 
 
 def get_indexes_mapping():
     res = {"order": [], "values": {}}
-    values = api.portal.get_registry_record(
-        "available_indexes", interface=IRERSiteSearchSettings, default=[]
-    )
+    values = get_value_from_registry(field="available_indexes")
     if not values:
         return res
     values = json.loads(values)
+    pc = api.portal.get_tool(name="portal_catalog")
     for value in values:
         label = _extract_label(value.get("label", ""))
         index = value.get("index", "")
         res["order"].append(index)
-        res["values"][index] = {"label": label, "values": {}}
+        res["values"][index] = {
+            "label": label,
+            "values": {},
+            "type": pc.Indexes[index].__class__.__name__,
+        }
     return res
 
 

@@ -49,19 +49,20 @@ class LazyCatalogResultSerializer(BaseSerializer):
                     adapter = queryMultiAdapter((item, pc), IIndexableObject)
                     value = getattr(adapter, index_id, None)
                 if not value or value == Missing.Value:
-                    continue
-                else:
-                    if isinstance(value, list) or isinstance(value, tuple):
-                        for single_value in value:
-                            if single_value not in index_settings["values"]:
-                                index_settings["values"][single_value] = 1
-                            else:
-                                index_settings["values"][single_value] += 1
-                    else:
-                        if value not in index_settings["values"]:
-                            index_settings["values"][value] = 1
+                    if not isinstance(value, bool) and not isinstance(value, int):
+                        # bool and numbers can be False or 0
+                        continue
+                if isinstance(value, list) or isinstance(value, tuple):
+                    for single_value in value:
+                        if single_value not in index_settings["values"]:
+                            index_settings["values"][single_value] = 1
                         else:
-                            index_settings["values"][value] += 1
+                            index_settings["values"][single_value] += 1
+                else:
+                    if value not in index_settings["values"]:
+                        index_settings["values"][value] = 1
+                    else:
+                        index_settings["values"][value] += 1
         return facets
 
     def get_groups_facets(self, brains):
@@ -73,17 +74,23 @@ class LazyCatalogResultSerializer(BaseSerializer):
         If we are filtering by type, this means that we need to do an another
         catalog search for get the proper counters for each group.
         """
-        query = self.request.form.copy()
+        query = deepcopy(self.request.form)
         query = unflatten_dotted_dict(query)
         groups = get_types_groups()
         all_label = translate(
             _("all_types_label", default=u"All content types"),
             context=self.request,
         )
-        new_query = deepcopy(query)
+
+        for key, value in query.items():
+            if value in ["false", "False"]:
+                query[key] = False
+            if value in ["true", "True"]:
+                query[key] = True
+
         for index in ["metadata_fields", "portal_type"]:
-            if index in new_query:
-                del new_query[index]
+            if index in query:
+                del query[index]
         # portal_types = set([])
         # for group_id, group_data in groups.get("values", {}).items():
         #     if group_data.get("types", []):
@@ -91,7 +98,7 @@ class LazyCatalogResultSerializer(BaseSerializer):
         # if portal_types:
         #     new_query["portal_type"] = list(portal_types)
         portal_catalog = api.portal.get_tool(name="portal_catalog")
-        brains_to_iterate = portal_catalog(**new_query)
+        brains_to_iterate = portal_catalog(**query)
         for brain in brains_to_iterate:
             for group in groups.get("values", {}).values():
                 if brain.portal_type in group.get("types", []):
