@@ -25,8 +25,8 @@ class View(BaseView):
         else:
             catalog = self._gettext_catalog(domain, language)
         if self.request.form.get("sitesearch_domains", False):
-            additional_domains = self.get_value_from_registry(
-                field="i18n_additional_domains"
+            additional_domains = (
+                self.get_value_from_registry(field="i18n_additional_domains") or []
             )
             for additional_domain in additional_domains:
                 catalog.update(

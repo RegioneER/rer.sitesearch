@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 const SelectField = ({ values, filters, index, setFilters }) => {
   const { translations } = useContext(SearchContext);
   const options = Object.keys(values).map(key => {
-    const label = `${translations[key] ? translations[key] : key} (${
-      values[key]
-    })`;
+    const label = `${
+      translations[key.trim()] ? translations[key.trim()] : key
+    } (${values[key]})`;
     return {
       value: key,
       label,
