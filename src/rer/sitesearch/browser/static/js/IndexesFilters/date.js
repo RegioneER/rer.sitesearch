@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import SearchContext from '../utils/searchContext';
 import PropTypes from 'prop-types';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
@@ -32,10 +32,10 @@ const DateField = ({ filters, index, setFilters }) => {
     return moment(date);
   };
 
-  const [rangeStart, setRangeStart] = React.useState(getDateFromQuery(0));
-  const [rangeEnd, setRangeEnd] = React.useState(getDateFromQuery(1));
+  const [rangeStart, setRangeStart] = useState(getDateFromQuery(0));
+  const [rangeEnd, setRangeEnd] = useState(getDateFromQuery(1));
 
-  React.useEffect(() => {
+  useEffect(() => {
     let dateFilters = {};
     let start = rangeStart
       ? moment(rangeStart)
@@ -47,6 +47,7 @@ const DateField = ({ filters, index, setFilters }) => {
           .endOf('day')
           .format(date_fmt)
       : null;
+
     if (start && end) {
       dateFilters = {
         range: 'min:max',
@@ -66,7 +67,6 @@ const DateField = ({ filters, index, setFilters }) => {
       dateFilters = null;
     }
 
-    console.log({ [index]: dateFilters });
     setFilters({ [index]: dateFilters });
   }, [rangeStart, rangeEnd]);
 
@@ -93,7 +93,7 @@ const DateField = ({ filters, index, setFilters }) => {
             }
             aria-controls="sitesearch-results-list"
           />
-          <button type="button" onClick={setRangeStart}>
+          <button type="button" onClick={() => setRangeStart(null)}>
             <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
@@ -119,7 +119,7 @@ const DateField = ({ filters, index, setFilters }) => {
             }
             aria-controls="sitesearch-results-list"
           />
-          <button type="button" onClick={setRangeEnd}>
+          <button type="button" onClick={() => setRangeEnd(null)}>
             <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
