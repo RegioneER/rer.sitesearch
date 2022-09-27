@@ -73,52 +73,56 @@ const DateField = ({ filters, index, setFilters }) => {
   return (
     <React.Fragment>
       <div className="rer-sitesearch-date" id={`advanced-filter-date-${index}`}>
-        <label htmlFor="date-start">{translations.from}</label>
-        <DayPickerInput
-          id="date-start"
-          formatDate={formatDate}
-          parseDate={parseDate}
-          value={rangeStart ? moment(rangeStart).format('DD/MM/YYYY') : null}
-          placeholder=""
-          onDayChange={setRangeStart}
-          dayPickerProps={{
-            locale: 'it',
-            localeUtils: MomentLocaleUtils,
-          }}
-          todayButton={
-            translations['datepicker_today_button']
-              ? translations['datepicker_today_button']
-              : 'Oggi'
-          }
-          aria-controls="sitesearch-results-list"
-        />
-        <button type="button" onClick={setRangeStart}>
-          <FontAwesomeIcon icon={faTimes} />
-        </button>
+        <label htmlFor="date-start-label">{translations.from}</label>
+        <div className="date-wrapper">
+          <DayPickerInput
+            id="date-start"
+            formatDate={formatDate}
+            parseDate={parseDate}
+            value={rangeStart ? moment(rangeStart).format('DD/MM/YYYY') : null}
+            placeholder=""
+            onDayChange={setRangeStart}
+            dayPickerProps={{
+              locale: 'it',
+              localeUtils: MomentLocaleUtils,
+            }}
+            todayButton={
+              translations['datepicker_today_button']
+                ? translations['datepicker_today_button']
+                : 'Oggi'
+            }
+            aria-controls="sitesearch-results-list"
+          />
+          <button type="button" onClick={setRangeStart}>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+        </div>
       </div>
       <div className="rer-sitesearch-date" id={`advanced-filter-date-${index}`}>
-        <label htmlFor="date-end">{translations.to}</label>
-        <DayPickerInput
-          id="date-end"
-          formatDate={formatDate}
-          parseDate={parseDate}
-          value={rangeEnd ? moment(rangeEnd).format('DD/MM/YYYY') : null}
-          placeholder=""
-          onDayChange={setRangeEnd}
-          dayPickerProps={{
-            locale: 'it',
-            localeUtils: MomentLocaleUtils,
-          }}
-          todayButton={
-            translations['datepicker_today_button']
-              ? translations['datepicker_today_button']
-              : 'Oggi'
-          }
-          aria-controls="sitesearch-results-list"
-        />
-        <button type="button" onClick={setRangeEnd}>
-          <FontAwesomeIcon icon={faTimes} />
-        </button>
+        <label htmlFor="date-end-label">{translations.to}</label>
+        <div className="date-wrapper">
+          <DayPickerInput
+            id="date-end"
+            formatDate={formatDate}
+            parseDate={parseDate}
+            value={rangeEnd ? moment(rangeEnd).format('DD/MM/YYYY') : null}
+            placeholder=""
+            onDayChange={setRangeEnd}
+            dayPickerProps={{
+              locale: 'it',
+              localeUtils: MomentLocaleUtils,
+            }}
+            todayButton={
+              translations['datepicker_today_button']
+                ? translations['datepicker_today_button']
+                : 'Oggi'
+            }
+            aria-controls="sitesearch-results-list"
+          />
+          <button type="button" onClick={setRangeEnd}>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+        </div>
       </div>
     </React.Fragment>
   );
