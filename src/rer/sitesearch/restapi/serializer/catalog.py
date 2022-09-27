@@ -40,6 +40,9 @@ class LazyCatalogResultSerializer(BaseSerializer):
         }
         for brain in brains:
             for index_id, index_settings in facets["indexes"].get("values", {}).items():
+                if index_settings.get("type", "") == "DateIndex":
+                    # skip it, we need to set some dates in the interface
+                    continue
                 try:
                     value = getattr(brain, index_id)
                 except AttributeError:

@@ -78,7 +78,6 @@ class SearchGet(Service):
             data = SearchHandler(self.context, self.request).search(query)
         if path_infos:
             data["path_infos"] = path_infos
-
         return data
 
     def do_solr_search(self, query):

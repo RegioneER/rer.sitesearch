@@ -108,3 +108,9 @@ msgstr ""
 
 msgid "true"
 msgstr ""
+
+msgid "from"
+msgstr ""
+
+msgid "to"
+msgstr ""

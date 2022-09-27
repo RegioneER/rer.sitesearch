@@ -4,19 +4,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icons } from '../utils/icons';
 import SelectField from './select';
 import BooleanField from './boolean';
+import DateField from './date';
 
 // faFolder
 const { faTags, faListUl } = icons;
 
 const IndexesFilters = () => {
   const { setFilters, filters, facets, results } = useContext(SearchContext);
-  const canShow = results.length > 0 && facets && facets.indexes ? true : false;
+  const facetsIndexes = facets ? facets.indexes : null;
+  const hasDateIndex = facetsIndexes
+    ? Object.values(facetsIndexes.values).filter(
+        index => index.type === 'DateIndex',
+      ).length > 0
+    : false;
+  const canShow =
+    hasDateIndex || (results.length > 0 && facetsIndexes) ? true : false;
   if (!canShow) {
     return '';
   }
 
-  const filtersData = facets.indexes.order.map((index, idx) => {
-    const facet = facets.indexes.values[index];
+  const filtersData = facetsIndexes.order.map((index, idx) => {
+    const facet = facetsIndexes.values[index];
     const facetValues = facet.values;
     let field = '';
     switch (facet.type) {
@@ -30,6 +38,11 @@ const IndexesFilters = () => {
           />
         );
         break;
+      case 'DateIndex':
+        field = (
+          <DateField filters={filters} index={index} setFilters={setFilters} />
+        );
+        break;
       default:
         field = (
           <SelectField
@@ -41,7 +54,7 @@ const IndexesFilters = () => {
         );
         break;
     }
-    return Object.keys(facetValues).length > 0 ? (
+    return facet.type === 'DateIndex' || Object.keys(facetValues).length > 0 ? (
       <div className="filter-item" key={index + idx}>
         <h3>
           {index === 'Subject' && <FontAwesomeIcon icon={faTags} />}
