@@ -45,9 +45,13 @@ class SearchGet(Service):
         if not HAS_SOLR:
             return False
         try:
-            return api.portal.get_registry_record(
+            active = api.portal.get_registry_record(
                 "active", interface=IRerSolrpushSettings
             )
+            search_enabled = api.portal.get_registry_record(
+                "search_enabled", interface=IRerSolrpushSettings
+            )
+            return active and search_enabled
         except (KeyError, InvalidParameterError):
             return False
 
