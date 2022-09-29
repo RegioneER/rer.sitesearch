@@ -102,3 +102,15 @@ msgstr ""
 
 msgid "sites_local_label"
 msgstr ""
+
+msgid "false"
+msgstr ""
+
+msgid "true"
+msgstr ""
+
+msgid "from"
+msgstr ""
+
+msgid "to"
+msgstr ""

@@ -49,7 +49,11 @@ class SearchContainer extends Component {
           };
         }
       } else if (typeof value === 'string' && key !== 'SearchableText') {
-        query[key] = { query: value };
+        if (value == 'true' || value == 'false') {
+          query[key] = value;
+        } else {
+          query[key] = { query: value };
+        }
       }
     });
 

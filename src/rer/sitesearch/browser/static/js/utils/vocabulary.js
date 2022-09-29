@@ -14,6 +14,7 @@ const Vocabulary = {
     vocabularyNames.forEach(name => {
       var f = apiFetch({
         url: '@vocabularies/' + domain + '.' + name,
+        params: { b_size: 1000 },
         method: 'GET',
       });
       fetches.push(f);

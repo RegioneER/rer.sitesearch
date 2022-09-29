@@ -4,7 +4,10 @@ Changelog
 4.1.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Improve customizations.
+  [cekk]
+- Add support for Boolean and Date indexes.
+  [cekk]
 
 
 4.1.3 (2022-02-24)

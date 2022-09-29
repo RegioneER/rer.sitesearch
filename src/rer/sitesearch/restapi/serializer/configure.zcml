@@ -5,5 +5,5 @@
     >
 
   <adapter factory=".catalog.LazyCatalogResultSerializer" />
-
+  <adapter factory=".summary.SiteSearchJSONSummarySerializer" />
 </configure>

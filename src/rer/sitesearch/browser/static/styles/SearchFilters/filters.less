@@ -15,6 +15,11 @@
         }
 
         .default-search {
+            .input-group {
+                input, button {
+                    height: 40px;
+                }
+            }
             @media (max-width: @plone-screen-md-max) {
                 display: flex;
                 justify-content: space-between;
@@ -79,6 +84,35 @@
 
             div[class*='menu'] {
                 color: initial;
+            }
+        }
+
+        .rer-sitesearch-date {
+            .date-wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                button {
+                    height: 46px;
+                    background-color: hsl(0, 0%, 100%);
+                    color: hsl(0, 0%, 80%);
+                    border-radius: 0 4px 4px 0;
+                    border: 1px solid hsl(0, 0%, 80%);
+                    border-left: none;
+                }
+            }
+            .DayPickerInput {
+                width: 100%;
+                margin: 5px 0;
+                input {
+                    width: 100%;
+                    border-radius: 4px;
+                    background-color: hsl(0, 0%, 100%);
+                    border: 1px solid hsl(0, 0%, 80%);
+                    border-radius: 4px 0 0 4px;
+                    height: 46px;
+                    padding-left: 8px;
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-12-20 14:10+0000\n"
+"POT-Creation-Date: 2022-09-27 10:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Andrea Cecchi <andrea.cecchi@redturtle.net>\n"
 "Language-Team: LANGUAGE <sviluppoplone@redturtle.net>\n"
@@ -32,7 +32,7 @@ msgstr "Filtra i risultati"
 msgid "In evidenza"
 msgstr "In evidenza"
 
-#: rer/sitesearch/configure.zcml:28
+#: rer/sitesearch/configure.zcml:29
 msgid "Installs the rer.sitesearch add-on."
 msgstr "Install rer.sitesearch"
 
@@ -44,7 +44,7 @@ msgstr "Numero massimo di caratteri per una singola ricerca"
 msgid "Maximum number of words in search query"
 msgstr "Numero massimo di parole in una singola ricerca"
 
-#: rer/sitesearch/configure.zcml:45
+#: rer/sitesearch/configure.zcml:46
 msgid "Migrate to new version"
 msgstr "Migra alla nuova versione"
 
@@ -55,11 +55,11 @@ msgstr "Parametri di ricerca"
 msgid "RER Sitesearch"
 msgstr "RER Site Search"
 
-#: rer/sitesearch/configure.zcml:28
+#: rer/sitesearch/configure.zcml:29
 msgid "RER: Site Search"
 msgstr "RER: Site Search"
 
-#: rer/sitesearch/configure.zcml:37
+#: rer/sitesearch/configure.zcml:38
 msgid "RER: Site Search (uninstall)"
 msgstr "RER: Site Search (disinstalla)"
 
@@ -82,17 +82,18 @@ msgid "Scadenza partecipazione"
 msgstr "Scadenza partecipazione"
 
 #: rer/sitesearch/browser/templates/search.pt:19
+#: rer/sitesearch/browser/templates/search_local.pt:19
 msgid "Search results"
 msgstr "Risultati della ricerca"
 
-#: rer/sitesearch/browser/controlpanel.py:20
+#: rer/sitesearch/browser/controlpanel.py:19
 msgid "Site Search settings"
 msgstr "Impostazioni Site Search"
 
 msgid "Sort on"
 msgstr "Ordina per"
 
-#: rer/sitesearch/configure.zcml:37
+#: rer/sitesearch/configure.zcml:38
 msgid "Uninstalls the rer.sitesearch add-on."
 msgstr "Disinstalla rer.sitesearch."
 
@@ -104,9 +105,9 @@ msgid "Vai ai risultati"
 msgstr "Vai ai risultati"
 
 #. Default: "All content types"
-#: rer/sitesearch/restapi/serializer/catalog.py:80
-#: rer/sitesearch/restapi/services/search/get.py:152
-#: rer/sitesearch/restapi/utils.py:20
+#: rer/sitesearch/restapi/serializer/catalog.py:84
+#: rer/sitesearch/restapi/services/search/get.py:151
+#: rer/sitesearch/restapi/utils.py:27
 msgid "all_types_label"
 msgstr "Tutti i contenuti"
 
@@ -150,17 +151,20 @@ msgid "effective"
 msgstr "Data"
 
 #. Default: "Events"
-#: rer/sitesearch/adapters/custom_filters.py:16
+#: rer/sitesearch/adapters/custom_filters.py:15
 msgid "event_adapter_label"
 msgstr "Eventi"
 
+msgid "false"
+msgstr "No"
+
 #. Default: "End date"
-#: rer/sitesearch/adapters/custom_filters.py:34
+#: rer/sitesearch/adapters/custom_filters.py:33
 msgid "filter_end_label"
 msgstr "Data di fine"
 
 #. Default: "Start date"
-#: rer/sitesearch/adapters/custom_filters.py:27
+#: rer/sitesearch/adapters/custom_filters.py:26
 msgid "filter_start_label"
 msgstr "Data di inizio"
 
@@ -169,6 +173,9 @@ msgstr "filtrati"
 
 msgid "filters_title_Cerca"
 msgstr "Cerca"
+
+msgid "from"
+msgstr "Dal"
 
 #. Default: "Set what is the maximum length of a single search word. Longer words will be omitted from the search."
 #: rer/sitesearch/interfaces/settings.py:86
@@ -181,9 +188,19 @@ msgid "help_max_words"
 msgstr "Imposta qual'è la lunghezza massima di parole consentite nella ricerca. Eventuali parole successive verranno omesse dalla ricerca."
 
 #. Default: "Set site search configurations"
-#: rer/sitesearch/browser/controlpanel.py:21
+#: rer/sitesearch/browser/controlpanel.py:20
 msgid "help_sitesearch_settings_editform"
 msgstr "Configura la ricerca del sito"
+
+#. Default: "Insert a list of additional translations domains (other than the default one \"rer.sitesearch\"). One per line.Translation domains can be provided by some Plone add-ons to help translate some Indexes values."
+#: rer/sitesearch/interfaces/settings.py:129
+msgid "i18n_additional_domains_help"
+msgstr ""
+
+#. Default: "Additional translation domains"
+#: rer/sitesearch/interfaces/settings.py:126
+msgid "i18n_additional_domains_label"
+msgstr ""
 
 msgid "items"
 msgstr "elementi"
@@ -214,6 +231,12 @@ msgstr "In questo sito web"
 
 msgid "sortable_title"
 msgstr "Titolo"
+
+msgid "to"
+msgstr "Al"
+
+msgid "true"
+msgstr "Si"
 
 #. Default: "If you fill this field, you can group search results by content-types."
 #: rer/sitesearch/interfaces/settings.py:108
