@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import SearchContext from '../utils/searchContext';
 import PropTypes from 'prop-types';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
@@ -19,35 +19,73 @@ const { faTimes } = icons;
 const date_fmt = 'YYYY-MM-DD HH:mm';
 const DateField = ({ filters, index, setFilters }) => {
   const { translations } = useContext(SearchContext);
-  const getDateFromQuery = index => {
+
+  const getStartValue = () => {
     const indexValue = filters[index];
     if (!indexValue) {
       return null;
     }
-    const date =
-      indexValue.query && Array.isArray(indexValue.query)
-        ? indexValue.query[index]
-        : indexValue.query;
-
-    return moment(date);
+    let date;
+    const { query, range } = indexValue;
+    if (Array.isArray(indexValue.query)) {
+      date = query[0];
+    } else if (range === 'min') {
+      date = query;
+    } else {
+      return null;
+    }
+    return moment(date).format('DD/MM/YYYY');
+  };
+  const getEndValue = () => {
+    const indexValue = filters[index];
+    if (!indexValue) {
+      return null;
+    }
+    let date;
+    const { query, range } = indexValue;
+    if (Array.isArray(indexValue.query)) {
+      date = query[1];
+    } else if (range === 'max') {
+      date = query;
+    } else {
+      return null;
+    }
+    return moment(date).format('DD/MM/YYYY');
   };
 
-  const [rangeStart, setRangeStart] = useState(getDateFromQuery(0));
-  const [rangeEnd, setRangeEnd] = useState(getDateFromQuery(1));
+  // const [rangeStart, setRangeStart] = useState(getStartValue());
+  // const [rangeEnd, setRangeEnd] = useState(getEndValue());
 
-  useEffect(() => {
+  console.log(filters);
+  // console.log('rangeStart: ', rangeStart);
+
+  const updateDates = ({ startNew, endNew }) => {
+    const startOld = getStartValue();
+    const endOld = getEndValue();
+
     let dateFilters = {};
-    let start = rangeStart
-      ? moment(rangeStart)
-          .startOf('day')
-          .format(date_fmt)
-      : null;
-    let end = rangeEnd
-      ? moment(rangeEnd)
-          .endOf('day')
-          .format(date_fmt)
-      : null;
-
+    let start;
+    let end;
+    if (startNew === null) {
+      // we are resetting it
+      start = null;
+    } else {
+      start = startNew
+        ? moment(startNew)
+            .startOf('day')
+            .format(date_fmt)
+        : startOld;
+    }
+    if (startNew === null) {
+      // we are resetting it
+      start = null;
+    } else {
+      end = endNew
+        ? moment(endNew)
+            .endOf('day')
+            .format(date_fmt)
+        : endOld;
+    }
     if (start && end) {
       dateFilters = {
         range: 'min:max',
@@ -68,7 +106,7 @@ const DateField = ({ filters, index, setFilters }) => {
     }
 
     setFilters({ [index]: dateFilters });
-  }, [rangeStart, rangeEnd]);
+  };
 
   return (
     <React.Fragment>
@@ -79,9 +117,11 @@ const DateField = ({ filters, index, setFilters }) => {
             id="date-start"
             formatDate={formatDate}
             parseDate={parseDate}
-            value={rangeStart ? moment(rangeStart).format('DD/MM/YYYY') : null}
+            value={getStartValue()}
             placeholder=""
-            onDayChange={setRangeStart}
+            onDayChange={value => {
+              updateDates({ startNew: value });
+            }}
             dayPickerProps={{
               locale: 'it',
               localeUtils: MomentLocaleUtils,
@@ -93,7 +133,7 @@ const DateField = ({ filters, index, setFilters }) => {
             }
             aria-controls="sitesearch-results-list"
           />
-          <button type="button" onClick={() => setRangeStart(null)}>
+          <button type="button" onClick={() => updateDates({ startNew: null })}>
             <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
@@ -105,9 +145,11 @@ const DateField = ({ filters, index, setFilters }) => {
             id="date-end"
             formatDate={formatDate}
             parseDate={parseDate}
-            value={rangeEnd ? moment(rangeEnd).format('DD/MM/YYYY') : null}
+            value={getEndValue()}
             placeholder=""
-            onDayChange={setRangeEnd}
+            onDayChange={value => {
+              updateDates({ endNew: value });
+            }}
             dayPickerProps={{
               locale: 'it',
               localeUtils: MomentLocaleUtils,
@@ -119,7 +161,7 @@ const DateField = ({ filters, index, setFilters }) => {
             }
             aria-controls="sitesearch-results-list"
           />
-          <button type="button" onClick={() => setRangeEnd(null)}>
+          <button type="button" onClick={() => updateDates({ endNew: null })}>
             <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
