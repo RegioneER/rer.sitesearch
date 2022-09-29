@@ -17,6 +17,49 @@ moment.locale('it');
 
 const { faTimes } = icons;
 const date_fmt = 'YYYY-MM-DD HH:mm';
+const currentYear = new Date().getFullYear();
+const fromMonth = new Date(currentYear, 0);
+const toMonth = new Date(currentYear + 10, 11);
+
+function YearMonthForm({ date, localeUtils, onChange }) {
+  const months = localeUtils.getMonths();
+
+  const years = [];
+  for (let i = fromMonth.getFullYear(); i <= toMonth.getFullYear(); i += 1) {
+    years.push(i);
+  }
+
+  const handleChange = function handleChange(e) {
+    const { year, month } = e.target.form;
+    onChange(new Date(year.value, month.value));
+  };
+
+  return (
+    <form className="DayPicker-Caption">
+      <select name="month" onChange={handleChange} value={date.getMonth()}>
+        {months.map((month, i) => (
+          <option key={month} value={i}>
+            {month}
+          </option>
+        ))}
+      </select>
+      <select name="year" onChange={handleChange} value={date.getFullYear()}>
+        {years.map(year => (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        ))}
+      </select>
+    </form>
+  );
+}
+
+YearMonthForm.propTypes = {
+  date: PropTypes.object,
+  localeUtils: PropTypes.object,
+  onChange: PropTypes.func,
+};
+
 const DateField = ({ filters, index, setFilters }) => {
   const { translations } = useContext(SearchContext);
 
@@ -34,7 +77,7 @@ const DateField = ({ filters, index, setFilters }) => {
     } else {
       return null;
     }
-    return moment(date).format('DD/MM/YYYY');
+    return moment(date);
   };
   const getEndValue = () => {
     const indexValue = filters[index];
@@ -50,19 +93,12 @@ const DateField = ({ filters, index, setFilters }) => {
     } else {
       return null;
     }
-    return moment(date).format('DD/MM/YYYY');
+    return moment(date);
   };
 
-  // const [rangeStart, setRangeStart] = useState(getStartValue());
-  // const [rangeEnd, setRangeEnd] = useState(getEndValue());
-
-  console.log(filters);
-  // console.log('rangeStart: ', rangeStart);
-
   const updateDates = ({ startNew, endNew }) => {
-    const startOld = getStartValue();
-    const endOld = getEndValue();
-
+    const startOld = getStartValue() ? getStartValue().format(date_fmt) : null;
+    const endOld = getEndValue() ? getEndValue().format(date_fmt) : null;
     let dateFilters = {};
     let start;
     let end;
@@ -76,9 +112,9 @@ const DateField = ({ filters, index, setFilters }) => {
             .format(date_fmt)
         : startOld;
     }
-    if (startNew === null) {
+    if (endNew === null) {
       // we are resetting it
-      start = null;
+      end = null;
     } else {
       end = endNew
         ? moment(endNew)
@@ -108,6 +144,8 @@ const DateField = ({ filters, index, setFilters }) => {
     setFilters({ [index]: dateFilters });
   };
 
+  const start = getStartValue();
+  const end = getEndValue();
   return (
     <React.Fragment>
       <div className="rer-sitesearch-date" id={`advanced-filter-date-${index}`}>
@@ -117,7 +155,7 @@ const DateField = ({ filters, index, setFilters }) => {
             id="date-start"
             formatDate={formatDate}
             parseDate={parseDate}
-            value={getStartValue()}
+            value={start ? start.format('DD/MM/YYYY') : null}
             placeholder=""
             onDayChange={value => {
               updateDates({ startNew: value });
@@ -132,6 +170,13 @@ const DateField = ({ filters, index, setFilters }) => {
                 : 'Oggi'
             }
             aria-controls="sitesearch-results-list"
+            captionElement={({ date, localeUtils }) => (
+              <YearMonthForm
+                date={date}
+                localeUtils={localeUtils}
+                onChange={this.handleYearMonthChange}
+              />
+            )}
           />
           <button type="button" onClick={() => updateDates({ startNew: null })}>
             <FontAwesomeIcon icon={faTimes} />
@@ -145,7 +190,7 @@ const DateField = ({ filters, index, setFilters }) => {
             id="date-end"
             formatDate={formatDate}
             parseDate={parseDate}
-            value={getEndValue()}
+            value={end ? end.format('DD/MM/YYYY') : null}
             placeholder=""
             onDayChange={value => {
               updateDates({ endNew: value });
