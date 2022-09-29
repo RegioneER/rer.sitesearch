@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.1.4 (unreleased)
+4.2.0 (2022-09-29)
 ------------------
 
 - Improve customizations.
