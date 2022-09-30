@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.2.2 (unreleased)
+4.2.2 (2022-09-30)
 ------------------
 
 - Fix wrong release.
