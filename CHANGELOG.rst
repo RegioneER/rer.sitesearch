@@ -4,8 +4,8 @@ Changelog
 4.2.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fix wrong release.
+  [cekk]
 
 4.2.1 (2022-09-30)
 ------------------
