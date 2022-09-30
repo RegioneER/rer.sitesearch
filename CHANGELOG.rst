@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.2.1 (unreleased)
+4.2.1 (2022-09-30)
 ------------------
 
 - Support rer.solrpush ``search_enabled`` flag to temporary disable search on SOLR.
