@@ -4,7 +4,8 @@ Changelog
 4.2.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Search only content-types enabled in control-panel when using Plone catalog tool.
+  [cekk]
 
 
 4.2.2 (2022-09-30)

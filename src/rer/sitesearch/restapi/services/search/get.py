@@ -79,6 +79,7 @@ class SearchGet(Service):
         if self.solr_search_enabled:
             data = self.do_solr_search(query=query)
         else:
+            query["use_site_search_settings"] = True
             data = SearchHandler(self.context, self.request).search(query)
         if path_infos:
             data["path_infos"] = path_infos
