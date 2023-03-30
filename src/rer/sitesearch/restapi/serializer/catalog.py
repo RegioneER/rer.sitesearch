@@ -17,7 +17,6 @@ from zope.component import queryMultiAdapter
 from zope.i18n import translate
 from zope.interface import implementer
 
-
 import Missing
 
 
@@ -94,12 +93,13 @@ class LazyCatalogResultSerializer(BaseSerializer):
         for index in ["metadata_fields", "portal_type"]:
             if index in query:
                 del query[index]
-        # portal_types = set([])
-        # for group_id, group_data in groups.get("values", {}).items():
-        #     if group_data.get("types", []):
-        #         portal_types.update(group_data["types"])
-        # if portal_types:
-        #     new_query["portal_type"] = list(portal_types)
+
+        # fix portal types
+        types = query.get("portal_type", [])
+        if "query" in types:
+            types = types["query"]
+        query["portal_type"] = self.filter_types(types)
+
         portal_catalog = api.portal.get_tool(name="portal_catalog")
         brains_to_iterate = portal_catalog(**query)
         for brain in brains_to_iterate:
@@ -111,3 +111,12 @@ class LazyCatalogResultSerializer(BaseSerializer):
             brains_to_iterate, "actual_result_count", len(brains_to_iterate)
         )
         return groups
+
+    def filter_types(self, types):
+        """
+        Search only in enabled types in control-panel
+        """
+        plone_utils = api.portal.get_tool(name="plone_utils")
+        if not isinstance(types, list):
+            types = [types]
+        return plone_utils.getUserFriendlyTypes(types)
