@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.2.3 (unreleased)
+4.3.0 (2023-03-30)
 ------------------
 
 - Search only content-types enabled in control-panel when using Plone catalog tool.
