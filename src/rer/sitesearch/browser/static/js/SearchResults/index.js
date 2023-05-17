@@ -20,13 +20,18 @@ const SearchResults = () => {
         setFilters,
       }) => {
         return (
-          <main className="search-results" role="main">
+          <main
+            className="search-results"
+            role="main"
+            id="sitesearch-results-list"
+            aria-live="polite"
+          >
             <h2 className="sr-only" id="search-results">
               {translations['Risultati della ricerca']}
             </h2>
-            <a href="#search-filters" className="sr-only skip-link">
+            {/* <a href="#search-filters" className="sr-only skip-link">
               {translations['Vai ai filtri']}
-            </a>
+            </a> */}
 
             {loading ? (
               <div className="loading-wrapper">

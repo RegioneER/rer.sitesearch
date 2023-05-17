@@ -36,11 +36,11 @@ const SearchFilters = () => {
           ? translations['Parametri di ricerca']
           : 'Parametri di ricerca'}
       </h2>
-      <a href="#search-results" className="sr-only skip-link">
+      {/* <a href="#search-results" className="sr-only skip-link">
         {translations['Vai ai risultati']
           ? translations['Vai ai risultati']
           : 'Vai ai risultati'}
-      </a>
+      </a> */}
       <SearchableTextFilter
         toggleAdvancedFilters={() => setShowAdvancedSearch(!showAdvancedSearch)}
       ></SearchableTextFilter>

@@ -16,7 +16,7 @@ const SearchableTextFilter = ({ toggleAdvancedFilters }) => {
   return (
     <div className="filter-item">
       {translations['filters_title_Cerca'] && (
-        <h3>{translations['filters_title_Cerca']}</h3>
+        <h3 id="search-label-header">{translations['filters_title_Cerca']}</h3>
       )}
       <form className="default-search">
         <div className="input-group">
@@ -29,6 +29,7 @@ const SearchableTextFilter = ({ toggleAdvancedFilters }) => {
                 ? translations['Digita il testo da cercare...']
                 : 'Digita il testo da cercare...'
             }
+            aria-labelledby="search-label-header"
             aria-controls="sitesearch-results-list"
             name="SearchableText"
             value={

@@ -86,6 +86,7 @@ const Header = () => (
                 onChange={option =>
                   setFilters(searchOrderMapping[option.value])
                 }
+                // menuIsOpen={true}
               />
             </div>
           </div>

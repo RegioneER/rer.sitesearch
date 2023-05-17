@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-09-27 10:56+0000\n"
+"POT-Creation-Date: 2023-05-17 08:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,8 +105,8 @@ msgid "Vai ai risultati"
 msgstr ""
 
 #. Default: "All content types"
-#: rer/sitesearch/restapi/serializer/catalog.py:84
-#: rer/sitesearch/restapi/services/search/get.py:151
+#: rer/sitesearch/restapi/serializer/catalog.py:83
+#: rer/sitesearch/restapi/services/search/get.py:156
 #: rer/sitesearch/restapi/utils.py:27
 msgid "all_types_label"
 msgstr ""
@@ -206,6 +206,12 @@ msgid "items"
 msgstr ""
 
 msgid "items on"
+msgstr ""
+
+msgid "jump_backward_label"
+msgstr ""
+
+msgid "jump_forward_label"
 msgstr ""
 
 msgid "loading"

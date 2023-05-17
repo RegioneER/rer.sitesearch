@@ -4,7 +4,8 @@ Changelog
 4.3.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Improve accessibility.
+  [cekk]
 
 
 4.3.0 (2023-03-30)

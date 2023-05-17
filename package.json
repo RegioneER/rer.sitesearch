@@ -84,7 +84,7 @@
         "react": "^16.8.5",
         "react-day-picker": "^7.4.8",
         "react-dom": "^16.8.5",
-        "react-paginate": "^6.5.0",
+        "react-paginate": "8.2.0",
         "react-select": "^3.0.3"
     },
     "volta": {

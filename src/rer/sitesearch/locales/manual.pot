@@ -114,3 +114,9 @@ msgstr ""
 
 msgid "to"
 msgstr ""
+
+msgid "jump_forward_label"
+msgstr ""
+
+msgid "jump_backward_label"
+msgstr ""
