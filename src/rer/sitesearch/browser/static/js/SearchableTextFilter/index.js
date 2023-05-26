@@ -30,7 +30,6 @@ const SearchableTextFilter = ({ toggleAdvancedFilters }) => {
                 : 'Digita il testo da cercare...'
             }
             aria-labelledby="search-label-header"
-            aria-controls="sitesearch-results-list"
             name="SearchableText"
             value={
               searchableText !== null ? searchableText : filters.SearchableText

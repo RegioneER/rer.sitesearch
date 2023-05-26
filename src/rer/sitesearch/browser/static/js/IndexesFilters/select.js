@@ -27,7 +27,6 @@ const SelectField = ({ values, filters, index, setFilters }) => {
       }}
       className="rer-sitesearch-select text-primary"
       placeholder="Seleziona un valore"
-      aria-controls="sitesearch-results-list"
       value={options.filter(option =>
         filters[index] ? filters[index].query.includes(option.value) : false,
       )}

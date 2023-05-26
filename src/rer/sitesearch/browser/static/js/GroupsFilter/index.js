@@ -36,7 +36,6 @@ const GroupsFilter = () => {
                   name="types"
                   value={groupData.types.length ? group : ''}
                   checked={selected}
-                  aria-controls="sitesearch-results-list"
                   onChange={e => {
                     setFilters({ group: e.target.value });
                   }}

@@ -21,7 +21,6 @@ const PathFilters = () => {
             value={path}
             checked={true}
             onChange={e => setFilters({ path: e.target.value })}
-            aria-controls="sitesearch-results-list"
           />
           Nella sezione <strong>{path_title}</strong>
         </label>
