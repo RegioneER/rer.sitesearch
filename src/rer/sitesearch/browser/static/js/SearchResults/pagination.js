@@ -21,7 +21,6 @@ const Pagination = () => {
             }
           }, 300);
         };
-
         if (total && total > b_size) {
           return (
             <div className="navigation">
@@ -30,6 +29,8 @@ const Pagination = () => {
                 disableInitialCallback={true}
                 previousLabel="<"
                 nextLabel=">"
+                nextAriaLabel={getTranslationFor('next_aria_label')}
+                previousAriaLabel={getTranslationFor('prev_aria_label')}
                 breakLabel={'...'}
                 breakAriaLabels={{
                   forward: getTranslationFor('jump_forward_label'),

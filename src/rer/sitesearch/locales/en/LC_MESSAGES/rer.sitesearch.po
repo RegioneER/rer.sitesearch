@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-05-17 08:14+0000\n"
+"POT-Creation-Date: 2023-06-05 08:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -209,16 +209,22 @@ msgid "items on"
 msgstr "items on"
 
 msgid "jump_backward_label"
-msgstr ""
+msgstr "Jump backward"
 
 msgid "jump_forward_label"
-msgstr ""
+msgstr "Jump forward"
 
 msgid "loading"
 msgstr "Loading..."
 
+msgid "next_aria_label"
+msgstr "Next page"
+
 msgid "no_results_label"
 msgstr "No results match your search"
+
+msgid "prev_aria_label"
+msgstr "Previous page"
 
 msgid "pubblicato il"
 msgstr "published on"
