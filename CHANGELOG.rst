@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.3.1 (unreleased)
+4.3.1 (2023-06-27)
 ------------------
 
 - Fix release: do not force python version.
