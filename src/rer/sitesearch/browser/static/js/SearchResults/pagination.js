@@ -29,6 +29,16 @@ const Pagination = () => {
                 disableInitialCallback={true}
                 previousLabel="<"
                 nextLabel=">"
+                ariaLabelBuilder={(index, selected) => {
+                  const pageLabel = getTranslationFor('page_aria_label');
+                  const currentPageLabel = getTranslationFor(
+                    'current_page_aria_label',
+                  );
+                  if (selected) {
+                    return `${pageLabel} ${index} ${currentPageLabel}`;
+                  }
+                  return `${pageLabel} ${index}`;
+                }}
                 nextAriaLabel={getTranslationFor('next_aria_label')}
                 previousAriaLabel={getTranslationFor('prev_aria_label')}
                 breakLabel={'...'}

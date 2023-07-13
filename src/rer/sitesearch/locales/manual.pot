@@ -126,3 +126,9 @@ msgstr ""
 
 msgid "prev_aria_label"
 msgstr ""
+
+msgid "current_page_aria_label"
+msgstr ""
+
+msgid "page_aria_label"
+msgstr ""

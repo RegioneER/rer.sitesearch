@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-06-05 08:08+0000\n"
+"POT-Creation-Date: 2023-07-13 12:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,6 +144,9 @@ msgstr "Label"
 msgid "button_Cerca"
 msgstr "Search"
 
+msgid "current_page_aria_label"
+msgstr "is your current page"
+
 msgid "datepicker_today_button"
 msgstr "Today"
 
@@ -222,6 +225,9 @@ msgstr "Next page"
 
 msgid "no_results_label"
 msgstr "No results match your search"
+
+msgid "page_aria_label"
+msgstr "Page"
 
 msgid "prev_aria_label"
 msgstr "Previous page"
