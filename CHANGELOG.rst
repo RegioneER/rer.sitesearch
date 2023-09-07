@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.3.2 (unreleased)
+4.4.0 (2023-09-07)
 ------------------
 
 - Improve accessibility.
