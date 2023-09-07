@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-09-27 10:56+0000\n"
+"POT-Creation-Date: 2023-07-13 12:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,8 +105,8 @@ msgid "Vai ai risultati"
 msgstr ""
 
 #. Default: "All content types"
-#: rer/sitesearch/restapi/serializer/catalog.py:84
-#: rer/sitesearch/restapi/services/search/get.py:151
+#: rer/sitesearch/restapi/serializer/catalog.py:83
+#: rer/sitesearch/restapi/services/search/get.py:156
 #: rer/sitesearch/restapi/utils.py:27
 msgid "all_types_label"
 msgstr ""
@@ -142,6 +142,9 @@ msgid "available_indexes_label_label"
 msgstr ""
 
 msgid "button_Cerca"
+msgstr ""
+
+msgid "current_page_aria_label"
 msgstr ""
 
 msgid "datepicker_today_button"
@@ -208,10 +211,25 @@ msgstr ""
 msgid "items on"
 msgstr ""
 
+msgid "jump_backward_label"
+msgstr ""
+
+msgid "jump_forward_label"
+msgstr ""
+
 msgid "loading"
 msgstr ""
 
+msgid "next_aria_label"
+msgstr ""
+
 msgid "no_results_label"
+msgstr ""
+
+msgid "page_aria_label"
+msgstr ""
+
+msgid "prev_aria_label"
 msgstr ""
 
 msgid "pubblicato il"

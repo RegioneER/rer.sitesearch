@@ -65,7 +65,7 @@ const Header = () => (
             </div>
           )}
           <div className="order-by">
-            <div className="select-label desktop-only">
+            <div className="select-label desktop-only" id="sort-on">
               {getTranslationFor('Sort on')}{' '}
             </div>
             <div className="select">
@@ -74,8 +74,21 @@ const Header = () => (
                   value,
                   label: getTranslationFor(value),
                 }))}
+                classNamePrefix="react-select-inner"
+                /* for future use 
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderColor: state.isFocused ? 'red' : '',
+                  }),
+                classNames={{
+                  control: (state) =>
+                  state.isFocused ? 'border-red-600' : 'border-grey-300',
+                  }}
+                }}*/
                 isClearable={false}
                 isSearchable={false}
+                aria-labelledby="sort-on"
                 placeholder={getTranslationFor('Sort on')}
                 value={{
                   value: filters.sort_on ? filters.sort_on : 'relevance',
@@ -86,6 +99,7 @@ const Header = () => (
                 onChange={option =>
                   setFilters(searchOrderMapping[option.value])
                 }
+                //menuIsOpen={true}
               />
             </div>
           </div>

@@ -27,7 +27,6 @@ const BooleanField = ({ values, filters, index, setFilters }) => {
       }}
       className="rer-sitesearch-select text-primary"
       placeholder="Seleziona un valore"
-      aria-controls="sitesearch-results-list"
       value={options.filter(option => filters[index] == option.value)}
       onChange={option => {
         if (!option || option.length == 0) {

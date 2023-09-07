@@ -114,3 +114,21 @@ msgstr ""
 
 msgid "to"
 msgstr ""
+
+msgid "jump_forward_label"
+msgstr ""
+
+msgid "jump_backward_label"
+msgstr ""
+
+msgid "next_aria_label"
+msgstr ""
+
+msgid "prev_aria_label"
+msgstr ""
+
+msgid "current_page_aria_label"
+msgstr ""
+
+msgid "page_aria_label"
+msgstr ""

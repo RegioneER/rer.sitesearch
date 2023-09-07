@@ -1,12 +1,11 @@
 import React from 'react';
-//import SearchContext from '../../utils/searchContext';
 import ReactPaginate from 'react-paginate';
 import SearchContext from '../utils/searchContext';
 
 const Pagination = () => {
   return (
     <SearchContext.Consumer>
-      {({ setFilters, b_size, filters, total }) => {
+      {({ setFilters, b_size, filters, total, getTranslationFor }) => {
         const b_start = filters.b_start || 0;
         const currentPage = b_start === 0 ? 0 : b_start / b_size;
 
@@ -22,7 +21,6 @@ const Pagination = () => {
             }
           }, 300);
         };
-
         if (total && total > b_size) {
           return (
             <div className="navigation">
@@ -31,7 +29,23 @@ const Pagination = () => {
                 disableInitialCallback={true}
                 previousLabel="<"
                 nextLabel=">"
+                ariaLabelBuilder={(index, selected) => {
+                  const pageLabel = getTranslationFor('page_aria_label');
+                  const currentPageLabel = getTranslationFor(
+                    'current_page_aria_label',
+                  );
+                  if (selected) {
+                    return `${pageLabel} ${index} ${currentPageLabel}`;
+                  }
+                  return `${pageLabel} ${index}`;
+                }}
+                nextAriaLabel={getTranslationFor('next_aria_label')}
+                previousAriaLabel={getTranslationFor('prev_aria_label')}
                 breakLabel={'...'}
+                breakAriaLabels={{
+                  forward: getTranslationFor('jump_forward_label'),
+                  backward: getTranslationFor('jump_backward_label'),
+                }}
                 breakClassName={'break-me'}
                 pageCount={Math.ceil(total / b_size)}
                 pageRangeDisplayed={2}

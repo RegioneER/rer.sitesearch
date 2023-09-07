@@ -169,7 +169,6 @@ const DateField = ({ filters, index, setFilters }) => {
                 ? translations['datepicker_today_button']
                 : 'Oggi'
             }
-            aria-controls="sitesearch-results-list"
             captionElement={({ date, localeUtils }) => (
               <YearMonthForm
                 date={date}
@@ -204,7 +203,6 @@ const DateField = ({ filters, index, setFilters }) => {
                 ? translations['datepicker_today_button']
                 : 'Oggi'
             }
-            aria-controls="sitesearch-results-list"
           />
           <button type="button" onClick={() => updateDates({ endNew: null })}>
             <FontAwesomeIcon icon={faTimes} />

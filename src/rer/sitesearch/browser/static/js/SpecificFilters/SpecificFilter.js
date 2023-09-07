@@ -45,7 +45,6 @@ const SpecificFilterArray = ({
           <components.MultiValueLabel {...props} className="text-primary" />
         ),
       }}
-      aria-controls="sitesearch-results-list"
       onChange={option => {
         if (!option || option.length == 0) {
           if (id === 'stato_bandi') {
@@ -110,7 +109,6 @@ const SpecificFilterDate = ({ id, label = '', value, setFilters }) => (
           [id]: selectedDay,
         });
       }}
-      aria-controls="sitesearch-results-list"
       dayPickerProps={{
         locale: 'it',
         localeUtils: MomentLocaleUtils,
@@ -230,7 +228,6 @@ const SpecificFilterDateRange = ({
               ? translations['datepicker_today_button']
               : 'Oggi'
           }
-          aria-controls="sitesearch-results-list"
         />
       </div>
       <div id={`advanced-filter-date-${id}-end`}>
@@ -251,7 +248,6 @@ const SpecificFilterDateRange = ({
               ? translations['datepicker_today_button']
               : 'Oggi'
           }
-          aria-controls="sitesearch-results-list"
         />
       </div>
     </React.Fragment>

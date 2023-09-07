@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-09-27 10:56+0000\n"
+"POT-Creation-Date: 2023-07-13 12:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Andrea Cecchi <andrea.cecchi@redturtle.net>\n"
 "Language-Team: LANGUAGE <sviluppoplone@redturtle.net>\n"
@@ -105,8 +105,8 @@ msgid "Vai ai risultati"
 msgstr "Vai ai risultati"
 
 #. Default: "All content types"
-#: rer/sitesearch/restapi/serializer/catalog.py:84
-#: rer/sitesearch/restapi/services/search/get.py:151
+#: rer/sitesearch/restapi/serializer/catalog.py:83
+#: rer/sitesearch/restapi/services/search/get.py:156
 #: rer/sitesearch/restapi/utils.py:27
 msgid "all_types_label"
 msgstr "Tutti i contenuti"
@@ -143,6 +143,9 @@ msgstr "Etichetta"
 
 msgid "button_Cerca"
 msgstr "Cerca"
+
+msgid "current_page_aria_label"
+msgstr "è la pagina corrente"
 
 msgid "datepicker_today_button"
 msgstr "Ogg"
@@ -195,12 +198,12 @@ msgstr "Configura la ricerca del sito"
 #. Default: "Insert a list of additional translations domains (other than the default one \"rer.sitesearch\"). One per line.Translation domains can be provided by some Plone add-ons to help translate some Indexes values."
 #: rer/sitesearch/interfaces/settings.py:129
 msgid "i18n_additional_domains_help"
-msgstr ""
+msgstr "Inserisci una lista di domini di traduzione aggiuntivi (oltre a \"rer.sitesearch\"). Uno per riga. I domini alternativi possono essere forniti dai vari add-on Plone per aggiungere traduzioni ai nomi degli indici."
 
 #. Default: "Additional translation domains"
 #: rer/sitesearch/interfaces/settings.py:126
 msgid "i18n_additional_domains_label"
-msgstr ""
+msgstr "Domini di traduzione alternativi"
 
 msgid "items"
 msgstr "elementi"
@@ -208,11 +211,26 @@ msgstr "elementi"
 msgid "items on"
 msgstr "elementi su"
 
+msgid "jump_backward_label"
+msgstr "Torna indietro"
+
+msgid "jump_forward_label"
+msgstr "Salta in avanti"
+
 msgid "loading"
 msgstr "Caricamento..."
 
+msgid "next_aria_label"
+msgstr "Pagina successiva"
+
 msgid "no_results_label"
 msgstr "Nessun risultato soddisfa la tua ricerca"
+
+msgid "page_aria_label"
+msgstr "Pagina"
+
+msgid "prev_aria_label"
+msgstr "Pagina precedente"
 
 msgid "pubblicato il"
 msgstr "pubblicato il"
@@ -221,7 +239,7 @@ msgid "relevance"
 msgstr "Rilevanza"
 
 msgid "select_placeholder"
-msgstr ""
+msgstr "Seleziona un valore"
 
 msgid "sites_all_label"
 msgstr "In tutti i siti della Regione"
