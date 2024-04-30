@@ -3,12 +3,11 @@ import SearchContext from '../utils/searchContext';
 import Select, { components } from 'react-select';
 import PropTypes from 'prop-types';
 
-const SelectField = ({ values, filters, index, setFilters }) => {
+const SelectField = ({ values, filters, index, setFilters, isMulti }) => {
   const { translations } = useContext(SearchContext);
   const options = Object.keys(values).map(key => {
-    const label = `${
-      translations[key.trim()] ? translations[key.trim()] : key
-    } (${values[key]})`;
+    const label = `${translations[key.trim()] ? translations[key.trim()] : key
+      } (${values[key]})`;
     return {
       value: key,
       label,
@@ -17,7 +16,7 @@ const SelectField = ({ values, filters, index, setFilters }) => {
   return (
     <Select
       options={options}
-      isMulti
+      isMulti={isMulti}
       isClearable
       components={{
         // eslint-disable-next-line react/display-name
@@ -51,6 +50,7 @@ SelectField.propTypes = {
   filters: PropTypes.object,
   index: PropTypes.string,
   setFilters: PropTypes.func,
+  isMulti: PropTypes.bool
 };
 
 export default SelectField;

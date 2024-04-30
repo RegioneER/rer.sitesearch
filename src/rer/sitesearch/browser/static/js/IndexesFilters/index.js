@@ -14,8 +14,8 @@ const IndexesFilters = () => {
   const facetsIndexes = facets ? facets.indexes : null;
   const hasDateIndex = facetsIndexes
     ? Object.values(facetsIndexes.values).filter(
-        index => index.type === 'DateIndex',
-      ).length > 0
+      index => index.type === 'DateIndex',
+    ).length > 0
     : false;
   const canShow =
     hasDateIndex || (results.length > 0 && facetsIndexes) ? true : false;
@@ -41,6 +41,17 @@ const IndexesFilters = () => {
       case 'DateIndex':
         field = (
           <DateField filters={filters} index={index} setFilters={setFilters} />
+        );
+        break;
+      case 'Creator':
+        field = (
+          <SelectField
+            values={facetValues}
+            filters={filters}
+            index={index}
+            setFilters={setFilters}
+            isMulti={false}
+          />
         );
         break;
       default:
