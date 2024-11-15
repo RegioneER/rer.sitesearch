@@ -23,7 +23,10 @@ const Header = () => (
       const allTotal = facets.groups.values
         ? facets.groups.values[getTranslationFor('all_types_label')].count
         : 0;
-      const group = filters.group;
+      let group = filters.group;
+      if (typeof group === 'object' && group !== null) {
+        group = group.query;
+      }
       const groupCount = group ? facets.groups.values[group].count : total;
       return (
         <div className="results-header">

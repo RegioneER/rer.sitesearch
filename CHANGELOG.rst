@@ -4,7 +4,8 @@ Changelog
 4.4.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix grouping in header.
+  [cekk]
 
 
 4.4.0 (2023-09-07)
