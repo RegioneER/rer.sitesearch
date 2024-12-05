@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.4.1 (unreleased)
+4.4.1 (2024-12-05)
 ------------------
 
 - Fix grouping in header.
