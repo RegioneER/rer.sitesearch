@@ -61,7 +61,7 @@
         "react-test-renderer": "^16.8.6",
         "react-testing-library": "^7.0.0",
         "style-loader": "^0.23.1",
-        "stylelint": "^9.10.1",
+        "stylelint": "^15.10.1",
         "stylelint-config-idiomatic-order": "^7.0.0",
         "stylelint-config-prettier": "^4.0.0",
         "stylelint-config-recommended": "^2.1.0",
