@@ -80,7 +80,7 @@ class LazyCatalogResultSerializer(BaseSerializer):
         query = unflatten_dotted_dict(query)
         groups = get_types_groups()
         all_label = translate(
-            _("all_types_label", default=u"All content types"),
+            _("all_types_label", default="All content types"),
             context=self.request,
         )
 
@@ -99,6 +99,23 @@ class LazyCatalogResultSerializer(BaseSerializer):
         if "query" in types:
             types = types["query"]
         query["portal_type"] = self.filter_types(types)
+
+        if "path" in query:
+            vhm_physical_path = self.request.get("VirtualRootPhysicalPath")
+            if vhm_physical_path:
+                path = query["path"].get("query")
+                if path:
+                    if isinstance(path, str):
+                        path = path.lstrip("/")
+                        full_path = "/".join(vhm_physical_path + (path,))
+                        query["path"]["query"] = full_path
+                    if isinstance(path, list):
+                        full_paths = []
+                        for p in path:
+                            p = p.lstrip("/")
+                            full_path = "/".join(vhm_physical_path + (p,))
+                            full_paths.append(full_path)
+                        query["path"]["query"] = full_paths
 
         portal_catalog = api.portal.get_tool(name="portal_catalog")
         brains_to_iterate = portal_catalog(**query)
