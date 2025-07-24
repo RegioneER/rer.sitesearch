@@ -42,12 +42,16 @@ const SearchableTextFilter = ({ toggleAdvancedFilters }) => {
               type="submit"
               onClick={e => {
                 e.preventDefault();
-                setFilters({
+                const urlParams = new URLSearchParams(window.location.search);
+                const pathFromUrl = urlParams.get('path.query');
+                const newFilters = {
                   SearchableText:
                     searchableText !== null
                       ? searchableText
                       : filters.SearchableText,
-                });
+                  ...(pathFromUrl && { 'path.query': pathFromUrl }), // Aggiungi solo se presente
+                };
+                setFilters(newFilters);
               }}
               aria-label={
                 translations['button_Cerca']

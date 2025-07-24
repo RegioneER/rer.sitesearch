@@ -4,8 +4,8 @@ Changelog
 4.4.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Handle path filter if present in search
+  [lucabel]
 
 4.4.1 (2024-12-05)
 ------------------
